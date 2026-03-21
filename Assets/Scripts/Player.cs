@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -17,7 +18,11 @@ public class Player : MonoBehaviour
     [Space]
     [SerializeField] private Volume volume;
     [SerializeField] private StanceVignette stanceVignette;
+
+    [SerializeField] private List<GunController> guns;
     
+    private GunController _currentGun;
+
     private PlayerInputActions _inputActions;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,6 +39,8 @@ public class Player : MonoBehaviour
         cameraLean.Initialize();
         
         stanceVignette.Initialize(volume.profile);
+
+        _currentGun = guns[0];
     }
 
     private void OnDestroy()
@@ -64,7 +71,12 @@ public class Player : MonoBehaviour
         };
         playerCharacter.UpdateInput(characterInput);
         playerCharacter.UpdateBody(deltaTime);
-        
+    
+        if(input.Attack.IsPressed())
+        {
+            Debug.Log("Firing!");
+            _currentGun.Fire();
+        }
         #if UNITY_EDITOR
         if (Keyboard.current.tKey.wasPressedThisFrame)
         {
