@@ -285,7 +285,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedf51ac03de58f46b58ff84ed1b19a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  _itemAttachPoint: {fileID: 0}
+  itemAttachPoint: {fileID: 1020710229}
+  cameraTransform: {fileID: 316061314}
 --- !u!1 &1104855795
 GameObject:
   m_ObjectHideFlags: 0
@@ -429,7 +430,7 @@ GameObject:
   - component: {fileID: 1662956974}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -447,6 +448,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   isBeingHeld: 0
+  throwForce: 20
 --- !u!54 &1662956975
 Rigidbody:
   m_ObjectHideFlags: 0
