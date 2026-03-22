@@ -8,6 +8,9 @@ public class Item : MonoBehaviour
 
     public bool isBeingHeld = false;
 
+    [SerializeField]
+    private float throwForce = 600.0f;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -32,6 +35,11 @@ public class Item : MonoBehaviour
                 Drop();
             }
         }
+        if(isBeingHeld && _inputActions.Player.Attack.WasPressedThisFrame())
+        {
+            var dir = GameObject.Find("MainCamera").transform.forward;
+            Throw(dir);
+        }
     }
 
     void PickUp(Transform parent)
@@ -49,5 +57,11 @@ public class Item : MonoBehaviour
         _rigidbody.isKinematic = false;
         _rigidbody.detectCollisions = true;
         isBeingHeld = false;
+    }
+
+    void Throw(Vector3 direction)
+    {
+        Drop();
+        _rigidbody.AddForce(direction * throwForce, ForceMode.Impulse);
     }
 }
