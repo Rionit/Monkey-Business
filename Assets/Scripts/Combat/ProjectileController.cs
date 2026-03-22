@@ -1,6 +1,7 @@
 
 using Unity;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Assertions;
 
 class ProjectileController : MonoBehaviour
@@ -23,8 +24,9 @@ class ProjectileController : MonoBehaviour
     /// Knockback force applied to the enemy upon hit.
     /// </summary>
     [SerializeField]
-    [Tooltip("Knockback force applied to the enemy upon hit")]
-    float knockbackForce = 5f;
+    [Tooltip("Slowdown applied to the enemy upon hit, in %")]
+    [Range(0f, 100f)]
+    float hitSlowdown = 5f;
 
     /// <summary>
     /// Maximum distance the projectile can travel before being destroyed.
@@ -33,9 +35,14 @@ class ProjectileController : MonoBehaviour
     [Tooltip("Maximum distance the projectile can travel before being destroyed")]
     float maxDistance = 100f;
 
+    [SerializeField]
+    [Tooltip("0 = no post-hit slowdown, >0 = slowdown duration in seconds after hitting an enemy")]
+    float postHitSlowdownDuration = 0.0f;
+
     float distance = 0f;
 
     string _enemyTag;
+
 
     public void Initialize(string enemyTag)
     {
@@ -51,24 +58,52 @@ class ProjectileController : MonoBehaviour
 
         if(distance >= maxDistance)
         {
-            Debug.Log("Projectile reached max distance, destroying.");
+            //Debug.Log("Projectile reached max distance, destroying.");
             Destroy(gameObject);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Colliding");
+        //Debug.Log("Colliding .. other tag = " + other.tag + " ... object name = " + other.gameObject.name);
         if(other.tag == _enemyTag)
         {
             var enemyHealth = other.GetComponentInChildren<HealthController>();
+            if(enemyHealth == null)
+            {
+                enemyHealth = other.GetComponentInParent<HealthController>();
+            }
+            if(enemyHealth == null)
+            {
+                Debug.LogError("No health controller found on enemy, cannot apply damage.");
+                return;
+            }
+
+            Debug.Log("Damaging" + other.gameObject.name);
             enemyHealth.TakeDamage(damage);
-            other.attachedRigidbody.AddExplosionForce(knockbackForce , transform.position, 1f, 0f, ForceMode.Impulse);
+            if(_enemyTag == "Enemy")
+            {
+                var speedFactor = 1f - (hitSlowdown / 100f);
+                other.GetComponentInChildren<NavMeshAgent>().velocity *= speedFactor;
+                if(postHitSlowdownDuration > 0f)
+                {
+                    object enemyController = other.GetComponentInChildren<MeleeEnemyController>();
+                    if(enemyController != null)
+                    {
+                        ((MonoBehaviour)enemyController).StartCoroutine(((MeleeEnemyController)enemyController).Slowdown(postHitSlowdownDuration, speedFactor));
+                    }
+                    else
+                    {
+                        enemyController = other.GetComponentInChildren<RangedEnemyController>();
+                        ((MonoBehaviour)enemyController).StartCoroutine(((RangedEnemyController)enemyController).Slowdown(postHitSlowdownDuration, speedFactor));
+                    }
+                }
+            }
         }
 
-        Debug.Log("Destroying projectile");
+        //Debug.Log("Destroying projectile");
         // For now, just destroy the projectile on collision with anything
-        Destroy(gameObject);
+        if(other.tag != (_enemyTag == "Enemy" ? "Player" : "Enemy"))Destroy(gameObject);
 
     }
 }

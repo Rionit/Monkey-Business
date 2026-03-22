@@ -13,6 +13,7 @@ public class BillboardController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        _billboardTransform.LookAt(Camera.main.transform);
+        _billboardTransform.rotation = Quaternion.LookRotation(_billboardTransform.position - Camera.main.transform.position);
+        //_billboardTransform.LookAt(Camera.main.transform);
     }
 }

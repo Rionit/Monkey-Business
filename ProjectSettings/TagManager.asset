@@ -13,7 +13,7 @@ TagManager:
   - Water
   - UI
   - Characters
-  - 
+  - Projectile
   - 
   - 
   - 
@@ -41,6 +41,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: UI
+    uniqueID: 3629922733
     locked: 0
   m_RenderingLayers:
   - Default

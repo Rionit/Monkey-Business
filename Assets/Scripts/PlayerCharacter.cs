@@ -5,6 +5,7 @@ using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using UnityEngine.UI;
 
 public enum CrouchInput
 {
@@ -66,6 +67,13 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
     [SerializeField] private float cameraStandHeight = .9f;
     [Range(0f, 1f)]
     [SerializeField] private float cameraCrouchHeight = .7f;
+
+
+    [SerializeField]
+    Toggle highSpeedToggle;
+    
+    [SerializeField]
+    Toggle lowSpeedToggle;
     
     private CharacterState _state;    
     private CharacterState _lastState;    
@@ -84,6 +92,78 @@ public class PlayerCharacter : MonoBehaviour, ICharacterController
 
     private Collider[] _uncrouchOverlapResults;
     
+    private float _defaultWalkSpeed;
+    private float _defaultJumpSpeed;
+
+    private float _defaultAirSpeed;
+    private float _defaultAcceleration;
+
+    bool _highSpeedSet = false;
+    bool _lowSpeedSet = false;
+
+
+    const float HIGH_SPEED = 1.3f;
+    const float LOW_SPEED = 0.7f;
+
+
+
+    /*void Start()
+    {
+        _defaultWalkSpeed = walkSpeed;
+        _defaultJumpSpeed = jumpSpeed;
+        _defaultAirSpeed = airSpeed;
+        _defaultAcceleration = walkResponse;
+
+        highSpeedToggle.onValueChanged.AddListener(SetHighSpeed);
+        lowSpeedToggle.onValueChanged.AddListener(SetLowSpeed);
+    }*/
+
+    public void SetHighSpeed(bool on )
+    {
+        if(on)
+        {
+            _highSpeedSet = true;
+            walkSpeed = _defaultWalkSpeed * HIGH_SPEED;
+            jumpSpeed = _defaultJumpSpeed * HIGH_SPEED;
+            airSpeed = _defaultAirSpeed * HIGH_SPEED;
+            walkResponse = _defaultAcceleration * HIGH_SPEED;
+        }
+        else
+        {
+            _highSpeedSet = false;
+            if(!_lowSpeedSet)
+            {
+                walkSpeed = _defaultWalkSpeed;
+                jumpSpeed = _defaultJumpSpeed;
+                airSpeed = _defaultAirSpeed;
+                walkResponse = _defaultAcceleration;
+            }
+        }
+    }
+
+    public void SetLowSpeed(bool on)
+    {
+        if(on)
+        {
+            _lowSpeedSet = true;
+            walkSpeed = _defaultWalkSpeed * LOW_SPEED;
+            jumpSpeed = _defaultJumpSpeed * LOW_SPEED;
+            airSpeed = _defaultAirSpeed * LOW_SPEED;
+            walkResponse = _defaultAcceleration * LOW_SPEED;
+        }
+        else 
+        {
+            _lowSpeedSet = false;
+            if(!_highSpeedSet)
+            {
+                walkSpeed = _defaultWalkSpeed;
+                jumpSpeed = _defaultJumpSpeed;
+                airSpeed = _defaultAirSpeed;
+                walkResponse = _defaultAcceleration;
+            }
+        }
+    }
+
     public void Initialize()
     {
         _state.Stance = Stance.Stand;

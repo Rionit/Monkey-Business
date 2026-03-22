@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 530205852698608789}
   - component: {fileID: 3022999071474915517}
   - component: {fileID: 547849199194246892}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Projectile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -69,7 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 595bdc603599f7d678202c876bd53412, type: 2}
+  - {fileID: 2100000, guid: c8c23174f2bd2074097988dfa9691e7a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -105,10 +105,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9196a51fdb8346987a8c28cceb89bcf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileController
-  projectileSpeed: 30
+  projectileSpeed: 50
   damage: 10
-  knockbackForce: 5
-  maxDistance: 100
+  hitSlowdown: 30
+  maxDistance: 300
+  postHitSlowdownDuration: 0.5
 --- !u!54 &547849199194246892
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -146,7 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 68958215972680756}
   - component: {fileID: 5755731224375476963}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -187,5 +188,5 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 0.75
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}

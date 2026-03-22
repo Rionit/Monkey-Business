@@ -4,9 +4,12 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Controls;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.TextCore.Text;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -20,8 +23,22 @@ public class Player : MonoBehaviour
     [SerializeField] private StanceVignette stanceVignette;
 
     [SerializeField] private List<GunController> guns;
+
+    [SerializeField] Toggle highGunRateToggle;
+    [SerializeField] Toggle lowGunRateToggle;
     
+    [SerializeField] List<TMP_Text> gunAmmoTexts;
+
+
+    /// <summary>
+    /// Currently chosen gun.
+    /// </summary>
     private GunController _currentGun;
+
+    /// <summary>
+    /// Index of the currently chosen gun in the guns list.
+    /// </summary>
+    private int _currentGunIndex = 0;
 
     private PlayerInputActions _inputActions;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -40,9 +57,36 @@ public class Player : MonoBehaviour
         
         stanceVignette.Initialize(volume.profile);
 
-        _currentGun = guns[0];
+        _currentGun = guns[_currentGunIndex];
+        _currentGun.gameObject.SetActive(true);
+
+        for(int i = 0; i < guns.Count; i++)
+        {
+            var index = i;
+            var gunAmmoText = gunAmmoTexts[i];
+            gunAmmoText.text = $"{guns[index].MaxAmmo} / {guns[index].MaxAmmo}";
+
+            guns[index].OnShot.AddListener((currentAmmo) => ChangeText(index));
+        }
+    }
+    
+    void ChangeText(int i)
+    {
+        var gunAmmoText = gunAmmoTexts[i];
+        gunAmmoText.text = $"{guns[i].CurrentAmmo} / {guns[i].MaxAmmo}";
     }
 
+    public void ReloadWeapons(float percent)
+    {
+        foreach(var gun in guns)
+        {
+            int ammoToReload = Mathf.RoundToInt(gun.MaxAmmo * (percent / 100f));
+            gun.Reload(ammoToReload);
+        }
+    }
+
+
+    
     private void OnDestroy()
     {
         _inputActions.Dispose();
@@ -74,7 +118,6 @@ public class Player : MonoBehaviour
     
         if(input.Attack.IsPressed())
         {
-            Debug.Log("Firing!");
             _currentGun.Fire();
         }
         #if UNITY_EDITOR
@@ -87,6 +130,33 @@ public class Player : MonoBehaviour
             }
         }
         #endif
+        if(input.SwitchWeapon.WasPressedThisFrame())
+        {
+            _currentGun.gameObject.SetActive(false);
+            _currentGunIndex = (_currentGunIndex + 1 + guns.Count) % guns.Count;
+            _currentGun = guns[_currentGunIndex];
+            _currentGun.gameObject.SetActive(true);
+        }
+
+        if(input.ResetLevel.WasPressedThisFrame())
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        }
+
+        var wepPick = input.PickWeapon.ReadValue<float>();
+        if(wepPick > 0f)
+        {
+            int index = (int)wepPick - 1;
+
+            var newGun = guns[index];
+            if(newGun != _currentGun)
+            {
+                _currentGun.gameObject.SetActive(false);
+                _currentGun = newGun;
+                _currentGun.gameObject.SetActive(true);
+            } 
+        }
+
     }
 
     void LateUpdate()
