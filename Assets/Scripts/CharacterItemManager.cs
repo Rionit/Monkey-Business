@@ -18,6 +18,9 @@ public class CharacterItemManager : MonoBehaviour
     [SerializeField]
     private float maxPickupDistance = 1.5f;
 
+    [SerializeField]
+    private float throwPush = 0.5f; // Push the item slightly forward before throwing
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -85,7 +88,7 @@ public class CharacterItemManager : MonoBehaviour
     {
         if (heldItem)
         {
-            heldItem.Throw(cameraTransform.forward);
+            heldItem.Throw(cameraTransform.position + (throwPush * cameraTransform.forward), cameraTransform.forward);
             heldItem = null;
         }
     }
