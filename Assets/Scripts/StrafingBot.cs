@@ -23,6 +23,7 @@ public class StrafingBot : MonoBehaviour
 
         if(Vector3.Distance(transform.position, startPos) > maxDistance)
         {
+            transform.position = startPos + maxDistance * moveDirection;
             moveDirection *= -1.0f;
         }
     }
