@@ -65,7 +65,7 @@ public class Item : MonoBehaviour
         // Apply gravity manually
         if (!isBeingHeld)
         {
-            _rigidbody.AddForce(Physics.gravity, ForceMode.Force);
+            _rigidbody.AddForce(Physics.gravity * _rigidbody.mass * _rigidbody.mass, ForceMode.Force);
         }
     }
     void OnCollisionEnter(Collision collision)

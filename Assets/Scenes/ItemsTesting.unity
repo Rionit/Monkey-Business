@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   isBeingHeld: 0
-  throwForce: 60
+  throwForce: 120
   durability: 10000
   ignoreCollision: {fileID: 0}
 --- !u!54 &166251329
@@ -328,7 +328,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 166251323}
   serializedVersion: 5
-  m_Mass: 1.5
+  m_Mass: 2
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -652,7 +652,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   isBeingHeld: 0
-  throwForce: 60
+  throwForce: 90
   durability: 100
   ignoreCollision: {fileID: 0}
 --- !u!54 &762506356
@@ -1816,7 +1816,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378983709}
   serializedVersion: 5
-  m_Mass: 5
+  m_Mass: 3
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -1848,7 +1848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Item
   isBeingHeld: 0
-  throwForce: 300
+  throwForce: 180
   durability: 100
   ignoreCollision: {fileID: 0}
 --- !u!1 &1406396203
