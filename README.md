@@ -37,6 +37,8 @@ Toto je prototyp pro doom-like combat v naší hře.
     - Využití environmentu
         - Heal přes banány -> slupka na zemi atd.
     - Parkour
+    - Přesnější kolize
+        - Teď střely provizorně prochází zdmi. 
     - Pokročilejší AI chování
     - Tweening, polish, "juice"
     - Originálnější typy zbraní (počet se pravděpodobně příliš nezmění)
