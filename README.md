@@ -79,7 +79,15 @@ MMB Scroll - Změna zbraní
 
 Enter - Resetuje aktuální level
 
-## Scény
+## Jak spustit ? 
+### Windows buildy
+[*Prototype-Doom-Arena.zip*](./Prototype-Doom-Arena.zip) - Build s arénou
+
+[*Prototype-Doom-AtoB.zip*](./Prototype-Doom-AtoB.zip) - Build s A-to-B průchodem
+1. Rozbalte ZIP
+2. Spusťte přes **Monkey Business.exe**
+
+### Unity projekt
 *Arena* - scéna pro arénu
 
 *StartToFinish* - scéna pro A-to-B průchod
