@@ -1,0 +1,49 @@
+OVDF v1.1
+PerkSO, Assembly-CSharp
+MetaGuid:eb05e5b9e313e694ba5d48dd5d45814f
+
+# $968UiGaz7ScTEhXdvMQFsP
+Position: $root:0
++ [Sirenix.OdinInspector.BoxGroupAttribute]
+	GroupName = "Card UI"
+	ShowLabel = True
+	CenterLabel = True
+
+# "Public Info (Shown Before Pick)"
+Position: $968UiGaz7ScTEhXdvMQFsP:0
+
+# "Hidden Outcome (Revealed After Pick)"
+Position: $968UiGaz7ScTEhXdvMQFsP:1
+
+# $8qo1BZFDFMDQ42iVfyd3QL
+Position: "Public Info (Shown Before Pick)":1
++ [Sirenix.OdinInspector.ColumnGroupAttribute]
+
+# $Ntd7P35FqyTxmNNUmkEq2i
+Position: $8qo1BZFDFMDQ42iVfyd3QL:0
++ [Sirenix.OdinInspector.ColumnGroupAttribute+ColumnSubGroupAttribute]
+	Size = 35 %
+
+# $MaNT68h8kGi2ipyTb9Q6z3
+Position: $8qo1BZFDFMDQ42iVfyd3QL:1
++ [Sirenix.OdinInspector.ColumnGroupAttribute+ColumnSubGroupAttribute]
+	Size = Auto
+
+# effect
+Position: "Values":0
++ [Sirenix.OdinInspector.EnumToggleButtonsAttribute]
+
+# nftImage
+Position: "Public Info (Shown Before Pick)":0
+* [Sirenix.OdinInspector.PreviewFieldAttribute]
+	alignment = Left
+	alignmentHasValue = True
+
+# customEffectName
+Position: $MaNT68h8kGi2ipyTb9Q6z3:0
+
+# useCustomEffectName
+Position: $Ntd7P35FqyTxmNNUmkEq2i:0
+* [Sirenix.OdinInspector.LabelTextAttribute]
+	NicifyText = False
++ [Sirenix.OdinInspector.ToggleLeftAttribute]
