@@ -78,13 +78,13 @@ namespace MonkeyBusiness.Combat
         {
             killed = true; // Prevents this method to be called multiple times
             OnDeath.Invoke(gameObject);
-            /*
+
             if(CompareTag("Player"))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             Debug.Log(gameObject.name + " has died.");
-            Destroy(gameObject);*/
+            Destroy(gameObject);
         }
 
     }
