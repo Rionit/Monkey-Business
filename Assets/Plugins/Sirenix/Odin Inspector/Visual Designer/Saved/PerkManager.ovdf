@@ -1,0 +1,12 @@
+OVDF v1.1
+PerkManager, Assembly-CSharp
+MetaGuid:ddd9c2daa884e7940a4a7ea61f7ba215
+
+# RandomizeNewPerks()
+* [Sirenix.OdinInspector.ButtonAttribute]
+	buttonHeight = 31
+	HasDefinedButtonHeight = True
+	stretch = False
+	HasDefinedStretch = True
+	Expanded = False
+	Style = Box
