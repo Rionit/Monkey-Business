@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System.Runtime.CompilerServices;
 using System.Reflection;
 using UnityEngine.UIElements;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.Combat
 {
@@ -30,19 +31,24 @@ namespace MonkeyBusiness.Combat
         [Required]
         SphereCollider _attackRangeCollider;
 
+        [SerializeField]
+        [HideInInspector]
+        float _attackRange = 3f; // Fallback range if collider is not assigned yet
+
         [ShowInInspector]
+        [Range(0.1f, 30f)]
         [Tooltip("Radius of the attack range")]
         public float AttackRange
         {
             get
             {
-                if(_attackRangeCollider != null) return _attackRangeCollider.radius;
-                else return float.NaN;
+                return _attackRangeCollider != null ? _attackRangeCollider.radius : _attackRange;
             }
             set
             {
                 if(_attackRangeCollider != null)
                     _attackRangeCollider.radius = value;
+                _attackRange = value;
             } 
         }
 
@@ -87,7 +93,7 @@ namespace MonkeyBusiness.Combat
                 PlayerInRange = true;
                 if(!OnCooldown)
                 {
-                    StartCoroutine(InvokeAttackCoroutine(other.gameObject));
+                    StartCoroutine(InvokeAttackCoroutine(other.GetComponent<ITargetable>().Target));
                 }
             }
         }
@@ -104,8 +110,9 @@ namespace MonkeyBusiness.Combat
         {
             if(_attackRangeCollider == null)
             {
-                _attackRangeCollider = GetComponent<SphereCollider>();
+                _attackRangeCollider = GetComponent<SphereCollider>(); 
             }
+            _attackRangeCollider.radius = AttackRange;
         }
 
         /// <summary>

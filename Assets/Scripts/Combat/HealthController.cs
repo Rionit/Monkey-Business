@@ -23,9 +23,8 @@ namespace MonkeyBusiness.Combat
         /// Current health of the entity. 
         /// </summary>
         [ShowInInspector]
-        [ReadOnly]
         [Tooltip("Current health of the entity.")]
-        public float CurrentHealth { get; private set; }
+        public float CurrentHealth { get; private set; } // BUG: Health value not updated in the inspector
 
         /// <summary>
         /// Event invoked when health changes, with the new health value as a parameter.
@@ -72,6 +71,8 @@ namespace MonkeyBusiness.Combat
                 Die();
             }
             else OnHealthChanged.Invoke(CurrentHealth);
+
+            Debug.Log("Current health " + CurrentHealth);
         }
 
         private void Die()

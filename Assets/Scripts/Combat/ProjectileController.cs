@@ -12,7 +12,8 @@ namespace MonkeyBusiness.Combat
         /// <summary>
         /// Damage dealt by the projectile on hit.
         /// </summary>
-        [field:SerializeField]
+        [field: SerializeField]
+        [field: BoxGroup("Stats")]
         [Tooltip("Damage dealt by the projectile on hit.")]
         public float Damage { get; private set; } = 10f;
 
@@ -20,9 +21,17 @@ namespace MonkeyBusiness.Combat
         /// Speed of the projectile. [Units/s]
         /// </summary>
         [field: SerializeField]
+        [field: BoxGroup("Stats")]
         [Tooltip("Speed of the projectile. [Units/s]")]
         public float Speed { get; private set; } = 10f;
 
+
+        
+        float _hitboxRadius = 0.5f; // Fallback radius if collider is not assigned yet
+
+        [ShowInInspector]
+        [BoxGroup("Stats")]
+        [Range(0.1f, 10f)]
         /// <summary>
         /// Radious of the projectile hitbox.
         /// </summary>
@@ -31,52 +40,80 @@ namespace MonkeyBusiness.Combat
         {
             get
             {
-                return _collider != null ? _collider.radius : float.NaN;
+                return _collider != null ? _collider.radius : _hitboxRadius;
             }
-            set
+            private set
             {
                 if(_collider != null) _collider.radius = value;
+                _hitboxRadius = value;
             }
         }
+
+        [field:SerializeField]
+        [field: BoxGroup("Stats")]
+        [Tooltip("Maximum distance the projectile can fly before being destroyed.")]
+        public float MaxFlyDistance { get; private set; } = 100f;
 
         [ShowInInspector]
         [Tooltip("Assign the target collider <color=green>manually</color> (<color=green>true</color>) " +
         "or <color=yellow>automatically</color> from current game object (<color=yellow>false</color>)")]
         bool _manuallyAssignCollider = false;
 
+        [SerializeField]
         [ShowIf(nameof(_manuallyAssignCollider))]
         [Tooltip("Collider of the projectile")]
         SphereCollider _collider;
 
+        /// <summary>
+        /// Tag of the target the projectile should hit.
+        /// </summary>
         [ShowInInspector]
         [ReadOnly]
         [BoxGroup("Debug")]
-        string _targetTag;
+        [Tooltip("Tag of the target the projectile should hit.")]
+        public string TargetTag {get; private set; }
 
+        /// <summary>
+        /// Current direction the projectile is flying towards.
+        /// </summary>
+        /// <remarks><i>Normalized.</i></remarks>
         [ShowInInspector]
         [ReadOnly]
         [BoxGroup("Debug")]
-        Vector3 _direction;
+        [Tooltip("Current direction the projectile is flying towards. <br/> <br/> <i>Normalized.</i>")]
+        public Vector3 Direction {get; private set; }
+
+        float _travelledDistance = 0f;
 
         /// <summary>
         /// Initializes the projectile with the given parameters.
         /// </summary>
         public void Initialize(string enemyTag, Vector3 direction)
         {
-            _targetTag = enemyTag;
-            this._direction = direction;
-            transform.forward = direction.normalized;
+            TargetTag = enemyTag;
+            Direction = direction.normalized;
+
+            // BUG: LookRotation + forward axis movement doesn't work for some reason (forward axis is not rotated properly)
+            //transform.rotation = Quaternion.LookRotation(Direction, Vector3.up);
         }
 
         void FixedUpdate()
         {
-            transform.Translate(transform.forward * Speed * Time.fixedDeltaTime);
+            transform.Translate(Speed * Time.fixedDeltaTime * /*transform.forward*/ Direction);
+            _travelledDistance += Speed * Time.fixedDeltaTime;
+            if(_travelledDistance >= MaxFlyDistance)
+            {
+                Destroy(gameObject);
+            }
         }
 
         void Awake()
         {
             if(!_manuallyAssignCollider)
+            {
                 _collider = GetComponent<SphereCollider>();
+                _collider.radius = _hitboxRadius;
+            }
             if(_collider == null)
             {
                 Debug.LogError("Projectile requires a SphereCollider component!");
@@ -85,7 +122,7 @@ namespace MonkeyBusiness.Combat
 
         void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag(_targetTag)) 
+            if(other.CompareTag(TargetTag)) 
             {
                 var targetHealth = other.GetComponentInParent<HealthController>();
                 if(targetHealth == null)
@@ -95,6 +132,7 @@ namespace MonkeyBusiness.Combat
                 }
                 targetHealth.TakeDamage(Damage);
             }
+            Debug.Log("Destroying projectile");
             Destroy(gameObject); // Destroys the projectile
         }
     }
