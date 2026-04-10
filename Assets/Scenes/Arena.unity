@@ -268,6 +268,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
   sensitivity: 0.1
+  _pitchLimits: {x: -69.010605, y: 69.0106}
 --- !u!1 &483286114 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4310657659862904874, guid: 82d630bfc55540843add85ea1772faf8, type: 3}
