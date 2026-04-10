@@ -8,6 +8,8 @@ using UnityEngine.UIElements;
 
 namespace MonkeyBusiness.Combat
 {
+
+    // TODO: Better range checking for ranged enemies (raycasting, pre-fire)
     /// <summary>
     /// Controls the attack range and cooldown. Invokes attack when 
     /// </summary>
@@ -15,7 +17,8 @@ namespace MonkeyBusiness.Combat
     public class AttackInvoker : MonoBehaviour
     {
         [ShowInInspector]
-        [Tooltip("Assign the collider manually (true) or automatically from current game object (false)")]
+        [Tooltip("Assign the collider <color=green>manually</color> (<color=green>true</color>) " 
+        + "or <color=yellow>automatically</color> from current game object (<color=yellow>false</color>)")]
         bool _manuallyAssignCollider = false;
 
         /// <summary>
@@ -43,12 +46,20 @@ namespace MonkeyBusiness.Combat
             } 
         }
 
+        float _cooldownTime = 5f;
+
         /// <summary>
-        /// Cooldown time between attacks, in seconds.
-        /// </summary>
-        [field: SerializeField]
+        [ShowInInspector]
         [Tooltip("Cooldown time between attacks, in seconds")]
-        public float CooldownTime {get; private set;} = 5f; 
+        public float CooldownTime 
+        {
+            get => _cooldownTime;
+            set => _cooldownTime = value;
+        }
+
+        [ShowInInspector]
+        [Tooltip("Attack speed of the entity, in attacks per second. \n\n <color=green><i> = 1/CooldownTime</i></color>")]
+        public float AttackSpeed {get; set; } = 0.2f;
 
         /// <summary>
         /// Whether the player is in the attack range or not.
