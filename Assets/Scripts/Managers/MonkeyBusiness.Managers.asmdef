@@ -1,10 +1,7 @@
 {
-    "name": "MonkeyBusiness.Combat",
-    "rootNamespace": "MonkeyBusiness.Combat",
-    "references": [
-        "GUID:63715533141da98f1a4a198975074850",
-        "GUID:c282b84647f3201a6a87d3ea979d6e2b"
-    ],
+    "name": "MonkeyBusiness.Managers",
+    "rootNamespace": "MonkeyBusiness.Managers",
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
