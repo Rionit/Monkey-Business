@@ -105,7 +105,7 @@ InitTestScene*.unity*
 
 # Omits test scenes from version control
 /[Aa]ssets/[Ss]cenes/[Tt]est*.unity*
-/[Aa]ssets/[Ss]cenes/[Tt]est*/*
+/[Aa]ssets/[Ss]cenes/[Tt]est*
 
 # Ignore the auto-generated AOT compatibility dll.
 /Assets/Plugins/Sirenix/Assemblies/AOT/*
