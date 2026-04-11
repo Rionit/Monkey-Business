@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.TextCore.Text;
+using Sirenix.OdinValidator;
+using Sirenix.OdinInspector;
 using MonkeyBusiness.Camera;
 
 namespace MonkeyBusiness.Player
@@ -20,11 +22,12 @@ namespace MonkeyBusiness.Player
         [Space]
         [SerializeField] private Volume volume;
         [SerializeField] private StanceVignette stanceVignette;
-        
+
         private PlayerInputActions _inputActions;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
+            //if(Target == null) Target = gameObject;
             Cursor.lockState = CursorLockMode.Locked;
             
             _inputActions = new PlayerInputActions();

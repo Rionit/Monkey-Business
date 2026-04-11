@@ -1,10 +1,12 @@
 using System;
 using System.Numerics;
 using KinematicCharacterController;
+using MonkeyBusiness.Misc;
 using UnityEngine;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
+using Sirenix.OdinInspector;
 
 namespace MonkeyBusiness.Player
 {
@@ -35,7 +37,7 @@ namespace MonkeyBusiness.Player
         public CrouchInput Crouch;
     }
 
-    public class PlayerCharacter : MonoBehaviour, ICharacterController
+    public class PlayerCharacter : MonoBehaviour, ICharacterController, ITargetable
     {
         [SerializeField] private KinematicCharacterMotor motor;
         [SerializeField] private Transform root;
@@ -68,6 +70,11 @@ namespace MonkeyBusiness.Player
         [SerializeField] private float cameraStandHeight = .9f;
         [Range(0f, 1f)]
         [SerializeField] private float cameraCrouchHeight = .7f;
+
+        [field: SerializeField]
+        [field: Tooltip("Object that should be targeted by attacks.")]
+        [field: Required]
+        public GameObject Target { get; private set; }
         
         private CharacterState _state;    
         private CharacterState _lastState;    
