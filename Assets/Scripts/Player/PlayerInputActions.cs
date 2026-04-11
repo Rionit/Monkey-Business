@@ -143,7 +143,7 @@ namespace MonkeyBusiness.Player
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -152,7 +152,7 @@ namespace MonkeyBusiness.Player
                     ""name"": ""Previous"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -161,8 +161,17 @@ namespace MonkeyBusiness.Player
                     ""name"": ""Next"",
                     ""type"": ""Button"",
                     ""id"": ""b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollWheel"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""5641296d-fe63-4ad6-941d-32450a242174"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -508,6 +517,17 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
                     ""action"": ""Next"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c1e07aa4-0c19-4eb9-a37c-fa35a8768efa"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ScrollWheel"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -1334,6 +1354,7 @@ namespace MonkeyBusiness.Player
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
             m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
+            m_Player_ScrollWheel = m_Player.FindAction("ScrollWheel", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_Item1 = m_Player.FindAction("Item1", throwIfNotFound: true);
             m_Player_Item2 = m_Player.FindAction("Item2", throwIfNotFound: true);
@@ -1445,6 +1466,7 @@ namespace MonkeyBusiness.Player
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Previous;
         private readonly InputAction m_Player_Next;
+        private readonly InputAction m_Player_ScrollWheel;
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_Item1;
         private readonly InputAction m_Player_Item2;
@@ -1498,6 +1520,10 @@ namespace MonkeyBusiness.Player
             /// Provides access to the underlying input action "Player/Next".
             /// </summary>
             public InputAction @Next => m_Wrapper.m_Player_Next;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/ScrollWheel".
+            /// </summary>
+            public InputAction @ScrollWheel => m_Wrapper.m_Player_ScrollWheel;
             /// <summary>
             /// Provides access to the underlying input action "Player/Sprint".
             /// </summary>
@@ -1588,6 +1614,9 @@ namespace MonkeyBusiness.Player
                 @Next.started += instance.OnNext;
                 @Next.performed += instance.OnNext;
                 @Next.canceled += instance.OnNext;
+                @ScrollWheel.started += instance.OnScrollWheel;
+                @ScrollWheel.performed += instance.OnScrollWheel;
+                @ScrollWheel.canceled += instance.OnScrollWheel;
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
@@ -1653,6 +1682,9 @@ namespace MonkeyBusiness.Player
                 @Next.started -= instance.OnNext;
                 @Next.performed -= instance.OnNext;
                 @Next.canceled -= instance.OnNext;
+                @ScrollWheel.started -= instance.OnScrollWheel;
+                @ScrollWheel.performed -= instance.OnScrollWheel;
+                @ScrollWheel.canceled -= instance.OnScrollWheel;
                 @Sprint.started -= instance.OnSprint;
                 @Sprint.performed -= instance.OnSprint;
                 @Sprint.canceled -= instance.OnSprint;
@@ -2039,6 +2071,13 @@ namespace MonkeyBusiness.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnNext(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "ScrollWheel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScrollWheel(InputAction.CallbackContext context);
             /// <summary>
             /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
