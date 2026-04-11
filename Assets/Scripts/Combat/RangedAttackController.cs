@@ -29,30 +29,33 @@ namespace MonkeyBusiness.Combat
             _firePoint = firePoint;
         }
 
+        [BoxGroup("Invoker")]
         [SerializeField]
         [Tooltip("Assign the attack invoker <color=green>manually</color> (<color=green>true</color>) " +
         "or <color=yellow>automatically</color> from current game object (<color=yellow>false</color>)")]
         bool _manuallyAssignInvoker = false;
 
+        [BoxGroup("Invoker")]
         [SerializeField]
         [ShowIf(nameof(_manuallyAssignInvoker))]
         AttackInvoker _attackInvoker;
 
+        [BoxGroup("Projectile")]
+        [Required]
         [SerializeField]
         [Tooltip("Prefab of the projectile to be fired.")]
         GameObject _projectilePrefab;
 
+        [BoxGroup("Projectile")]
         [SerializeField]
+        [Required]
         [Tooltip("Where to spawn projectiles")]
         Transform _firePoint;
 
         public void ExecuteAttack(GameObject target)
         {
-            lastPlayerPos = target.transform.position;
             StartCoroutine(RangedAttackCoroutine(target));
         }
-
-        Vector3 lastPlayerPos;
 
         IEnumerator RangedAttackCoroutine(GameObject target)
         {
@@ -77,12 +80,6 @@ namespace MonkeyBusiness.Combat
             }
 
             _attackInvoker.OnAttackInvoked.AddListener((target) => ExecuteAttack(target));
-        }
-
-        void OnDrawGizmos()
-        {
-            Gizmos.color = Color.blue;
-            Gizmos.DrawRay(_firePoint.position, lastPlayerPos - _firePoint.position);
         }
     }
 }

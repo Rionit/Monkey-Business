@@ -8,22 +8,31 @@ namespace MonkeyBusiness.Combat
     [RequireComponent(typeof(AttackInvoker))]
     public class MeleeAttackController : MonoBehaviour, IAttack
     {
+        [BoxGroup("Invoker")]
+        [SerializeField]
+        [ShowInInspector]
         [Tooltip("Assign the attack invoker <color=green> manually </color> (<color=green>true</color>) " 
         + " or <color=yellow>automatically</color> from current game object (<color=yellow>false</color>)")]
         bool _manuallyAssignInvoker = false;
 
-        [Required]
-        [ShowIf(nameof(_manuallyAssignInvoker))]
-        AttackInvoker _attackInvoker;
 
+        [BoxGroup("Invoker")]
+        [ShowIf(nameof(_manuallyAssignInvoker))]
+        [SerializeField]
+        AttackInvoker _attackInvoker;
+        
+        [field: BoxGroup("Stats")]
         [field: SerializeField]
-        [ShowInInspector]
         public float Damage { get; private set; } = 20f;
 
+        [field: BoxGroup("Stats")]
         [field: SerializeField]
-        [ShowInInspector]
         public float ChargeTime { get; private set; } = 0.5f;
 
+        [BoxGroup("Debug")]
+        [ShowInInspector]
+        [ReadOnly]
+        [Tooltip("If the attack is currently charging")]
         bool _aboutToAttack = false;
 
         public void ExecuteAttack(GameObject target)

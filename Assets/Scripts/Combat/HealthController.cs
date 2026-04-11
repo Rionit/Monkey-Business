@@ -39,7 +39,7 @@ namespace MonkeyBusiness.Combat
         /// <summary>
         /// DEBUG: Allows the entity to not die when health reaches zero.
         /// </summary>
-        [ShowInInspector]
+        [field: SerializeField]
         [Tooltip("DEBUG: Allows the entity to not die when health reaches zero.")]
         public bool GodMode { get; private set; } = false;
 

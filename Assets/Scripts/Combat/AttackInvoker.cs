@@ -17,6 +17,8 @@ namespace MonkeyBusiness.Combat
     [RequireComponent(typeof(SphereCollider))]
     public class AttackInvoker : MonoBehaviour
     {
+        [BoxGroup("Collider")]
+        [SerializeField]
         [ShowInInspector]
         [Tooltip("Assign the collider <color=green>manually</color> (<color=green>true</color>) " 
         + "or <color=yellow>automatically</color> from current game object (<color=yellow>false</color>)")]
@@ -25,16 +27,17 @@ namespace MonkeyBusiness.Combat
         /// <summary>
         /// Collider representing the attack range.
         /// </summary>
+        [BoxGroup("Collider")]
         [SerializeField]
         [ShowIf(nameof(_manuallyAssignCollider))]
         [Tooltip("Collider representing the attack range")]
-        [Required]
         SphereCollider _attackRangeCollider;
 
         [SerializeField]
         [HideInInspector]
         float _attackRange = 3f; // Fallback range if collider is not assigned yet
 
+        [BoxGroup("Stats")]
         [ShowInInspector]
         [Range(0.1f, 30f)]
         [Tooltip("Radius of the attack range")]
@@ -55,6 +58,7 @@ namespace MonkeyBusiness.Combat
         float _cooldownTime = 5f;
 
         /// <summary>
+        [BoxGroup("Stats")]
         [ShowInInspector]
         [Tooltip("Cooldown time between attacks, in seconds")]
         public float CooldownTime 
@@ -72,6 +76,8 @@ namespace MonkeyBusiness.Combat
         /// </summary>
         [ShowInInspector]
         [Tooltip("Whether the player is in the attack range or not")]
+        [ReadOnly]
+        [BoxGroup("Debug")]
         public bool PlayerInRange {get; private set;} = false;      
 
         /// <summary>
@@ -79,6 +85,8 @@ namespace MonkeyBusiness.Combat
         /// </summary>
         [ShowInInspector]
         [Tooltip("Whether the attack is currently on cooldown or not")]
+        [ReadOnly]
+        [BoxGroup("Debug")]
         public bool OnCooldown { get; private set;} = false;
 
         /// <summary>

@@ -54,12 +54,14 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Maximum distance the projectile can fly before being destroyed.")]
         public float MaxFlyDistance { get; private set; } = 100f;
 
+        [BoxGroup("Collider")]
         [ShowInInspector]
         [Tooltip("Assign the target collider <color=green>manually</color> (<color=green>true</color>) " +
         "or <color=yellow>automatically</color> from current game object (<color=yellow>false</color>)")]
         bool _manuallyAssignCollider = false;
 
         [SerializeField]
+        [BoxGroup("Collider")]
         [ShowIf(nameof(_manuallyAssignCollider))]
         [Tooltip("Collider of the projectile")]
         SphereCollider _collider;
@@ -83,6 +85,10 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Current direction the projectile is flying towards. <br/> <br/> <i>Normalized.</i>")]
         public Vector3 Direction {get; private set; }
 
+        [ShowInInspector]
+        [BoxGroup("Debug")]
+        [ReadOnly]
+        [Tooltip("Distance travelled by the projectile since it was fired.")]
         float _travelledDistance = 0f;
 
         /// <summary>
