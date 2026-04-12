@@ -25,8 +25,6 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Speed of the projectile. [Units/s]")]
         public float Speed { get; private set; } = 10f;
 
-
-        
         float _hitboxRadius = 0.5f; // Fallback radius if collider is not assigned yet
 
         [ShowInInspector]

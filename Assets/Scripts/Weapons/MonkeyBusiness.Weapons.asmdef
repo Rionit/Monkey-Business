@@ -1,3 +1,16 @@
 {
-	"name": "MonkeyBusiness.Weapons"
+    "name": "MonkeyBusiness.Weapons",
+    "rootNamespace": "MonkeyBusiness.Weapons",
+    "references": [
+        "GUID:63715533141da98f1a4a198975074850"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
 }
