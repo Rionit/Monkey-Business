@@ -1,9 +1,10 @@
-using Unity.Mathematics;
-using Unity.VisualScripting;
+using MonkeyBusiness.Items;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class CharacterItemManager : MonoBehaviour
+namespace MonkeyBusiness.Managers
+{
+    public class CharacterItemManager : MonoBehaviour
 {
     [SerializeField]
     private Transform itemAttachPoint;
@@ -93,3 +94,5 @@ public class CharacterItemManager : MonoBehaviour
         }
     }
 }
+}
+

@@ -1,5 +1,5 @@
-using System;
 using System.Collections.Generic;
+using MonkeyBusiness.Weapons;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -60,8 +60,7 @@ namespace MonkeyBusiness
 
             foreach(GameObject item in _startingItems)
             {
-                IEquippable equippable = item.GetComponent<IEquippable>();
-                if(equippable != null)
+                if(item.TryGetComponent<IEquippable>(out var equippable))
                 {
                     _items.Add(equippable);
                     equippable.Unequip();

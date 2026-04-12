@@ -1,11 +1,11 @@
 using UnityEngine;
 
-namespace MonkeyBusiness
+namespace MonkeyBusiness.Weapons
 {
 
     public class Weapon : MonoBehaviour, IEquippable
     {    
-        private Transform[] _transforms;
+        private Transform[] _transforms = {};
 
         public void Equip()
         {
@@ -27,6 +27,10 @@ namespace MonkeyBusiness
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
+        {
+        }
+
+        void Awake()
         {
             _transforms = GetComponentsInChildren<Transform>();
         }
