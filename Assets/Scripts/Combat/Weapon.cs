@@ -57,6 +57,8 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Current aim point of the weapon.")]
         Vector3 _currentAimPoint;
 
+        const float MIN_HIT_DISTANCE = 5f;
+
         public void Equip()
         {
             Debug.Log($"Equipped item {gameObject.name}");
@@ -122,7 +124,10 @@ namespace MonkeyBusiness.Combat
             var aimPoint = cameraTf.TransformPoint(Vector3.forward * farPlane);
 
             Ray r = new Ray(cameraTf.position, cameraTf.forward);
-            if (Physics.Raycast(r, out RaycastHit hit, farPlane, LayerMask.GetMask("Default", "Enemy"), QueryTriggerInteraction.Ignore))
+            if (
+                Physics.Raycast(r, out RaycastHit hit, farPlane,
+                 LayerMask.GetMask("Default", "Enemy"), QueryTriggerInteraction.Ignore)
+                && hit.distance > MIN_HIT_DISTANCE) // Prevents aiming at very close objects, which can cause issues with the projectile's collider
             {
                 aimPoint = hit.point;
             }
