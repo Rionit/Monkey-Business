@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using MonkeyBusiness.Items;
 using MonkeyBusiness.Weapons;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -6,27 +7,54 @@ using UnityEngine.InputSystem;
 
 namespace MonkeyBusiness
 {
+    /// <summary>
+    /// Manages the player's inventory, switching weapons, picking up items off the ground, and shooting.
+    /// </summary>
     public class EquipmentManager : MonoBehaviour
     {
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-
         InputAction _scrollWheel;
-        InputAction _inputItem1;
-        InputAction _inputItem2;
-        InputAction _inputItem3;
-        InputAction _inputItem4;
-        InputAction _inputItem5;
-        InputAction _inputItem6;
-        InputAction _inputItem7;
-        InputAction _inputItem8;
-        InputAction _inputItem9;
 
+        private InputAction[] _itemInputActions = new InputAction[9];
+
+        private InputAction _interactAction;
+        private InputAction _attackAction;
+
+        /// <summary>
+        /// Currently held item
+        /// </summary>
+        private Item _heldItem;
+
+        /// <summary>
+        /// The transform where a picked up item will be held.
+        /// </summary>
+        [SerializeField]
+        private Transform itemAttachPoint;
+
+        /// <summary>
+        /// Drag the 1st person camera component here
+        /// </summary>
+        [SerializeField]
+        private Transform _cameraTransform;
+
+        /// <summary>
+        /// Maximum distance at which the player can interact with the environment
+        /// </summary>
+        [SerializeField]
+        private float _maxPickupDistance = 1.5f;
+
+        /// <summary>
+        /// Items are pushed forward slightly when thrown to prevent self-collision
+        /// </summary>
+        [SerializeField]
+        private float _throwPush = 0.5f; // 
+
+        // We can hold 9 items 
         private const int ITEM_CAPACITY = 9;
 
-        [SerializeField]
-        private List<GameObject> _startingItems = new(ITEM_CAPACITY);
-
-        private List<Weapon> _items = new(ITEM_CAPACITY);
+        /// <summary>
+        /// List of items in inventory
+        /// </summary>
+        private List<IEquippable> _items = new(ITEM_CAPACITY);
 
 
         [ShowInInspector]
@@ -37,40 +65,29 @@ namespace MonkeyBusiness
         void Start()
         {
             _scrollWheel = InputSystem.actions.FindAction("ScrollWheel");
-            _inputItem1 = InputSystem.actions.FindAction("Item1");
-            _inputItem2 = InputSystem.actions.FindAction("Item2");
-            _inputItem3 = InputSystem.actions.FindAction("Item3");
-            _inputItem4 = InputSystem.actions.FindAction("Item4");
-            _inputItem5 = InputSystem.actions.FindAction("Item5");
-            _inputItem6 = InputSystem.actions.FindAction("Item6");
-            _inputItem7 = InputSystem.actions.FindAction("Item7");
-            _inputItem8 = InputSystem.actions.FindAction("Item8");
-            _inputItem9 = InputSystem.actions.FindAction("Item9");
 
-            _inputItem1.performed += context => {OnItem(0);};
-            _inputItem2.performed += context => {OnItem(1);};
-            _inputItem3.performed += context => {OnItem(2);};
-            _inputItem4.performed += context => {OnItem(3);};
-            _inputItem5.performed += context => {OnItem(4);};
-            _inputItem6.performed += context => {OnItem(5);};
-            _inputItem7.performed += context => {OnItem(6);};
-            _inputItem8.performed += context => {OnItem(7);};
-            _inputItem9.performed += context => {OnItem(8);};
+
+            for(int i = 0; i < ITEM_CAPACITY; i++)
+            {
+                _itemInputActions[i] = InputSystem.actions.FindAction($"Item{i + 1}");
+                int copyOfI = i; // we need to assign this to avoid shenanigans on the next line
+                _itemInputActions[i].performed += context => {OnItem(copyOfI);};
+
+                Debug.Log(_itemInputActions[i].ToString());
+            }
+
+            _interactAction = InputSystem.actions.FindAction("Interact", true);
+            _attackAction = InputSystem.actions.FindAction("Attack");
+
+            _interactAction.performed += OnInteract;
+            _attackAction.performed += OnAttack;
 
             _scrollWheel.performed += OnScroll;
 
-            foreach(GameObject item in _startingItems)
+            foreach(IEquippable equippable in GetComponentsInChildren<IEquippable>())
             {
-                if(item.TryGetComponent<Weapon>(out var equippable))
-                {
-                    _items.Add(equippable);
-                    equippable.Unequip();
-                    //equippable.gameObject.SetActive(false);
-                }
-                else
-                {
-                    Debug.LogError($"Skipped equipping the player with GameObject {item.name}, as it doesn't have a Weapon component");
-                }
+                _items.Add(equippable);
+                equippable.Unequip();
             }
 
             if(_items.Count > 0)
@@ -79,6 +96,10 @@ namespace MonkeyBusiness
             }
         }
 
+        /// <summary>
+        /// Handle InputSystem scroll wheel event
+        /// </summary>
+        /// <param name="context"></param>
         private void OnScroll(InputAction.CallbackContext context)
         {
             float scroll = context.ReadValue<Vector2>().y;
@@ -90,6 +111,11 @@ namespace MonkeyBusiness
 
         }
 
+        /// <summary>
+        /// Handle event fired by pressing buttons 1-9.
+        /// Checks if we have enough items in inventory and then calls EquipSlot()
+        /// </summary>
+        /// <param name="itemSlot"> Number pressed </param>
         void OnItem(int itemSlot)
         {
             Debug.Log($"Trying to equip item {itemSlot}");
@@ -101,7 +127,11 @@ namespace MonkeyBusiness
             
             EquipSlot(itemSlot);
         }
-
+        
+        /// <summary>
+        /// Equips the item in the provided slot. If we're holding an item already, unequip/drop it
+        /// </summary>
+        /// <param name="itemSlot">Position of item in _items</param>
         void EquipSlot(int itemSlot)
         {
             if(itemSlot == _currentItemSlot)
@@ -117,15 +147,20 @@ namespace MonkeyBusiness
                 return;
             }
 
+            // if we're holding an item, drop it
+            DropHeldItem();
+
             // uneqip previous item
             UnequipCurrentItem();
             
             item.Equip();
-            //item.gameObject.SetActive(true);
 
             _currentItemSlot = itemSlot;
         }
 
+        /// <summary>
+        /// Unequips the currently held item
+        /// </summary>
         void UnequipCurrentItem()
         {
             // Unequip previous item
@@ -134,11 +169,14 @@ namespace MonkeyBusiness
                return;
             } 
             _items[_currentItemSlot].Unequip();
-            //_items[_currentItemSlot].gameObject.SetActive(false);
             _previousItemSlot = _currentItemSlot;
             _currentItemSlot = -1;
         }
 
+        /// <summary>
+        /// Equips the next item in inventory
+        /// </summary>
+        /// <param name="previous">instead equip previous item if true</param>
         void EquipNext(bool previous)
         {
             int currentItemCount = _items.Count;
@@ -166,5 +204,95 @@ namespace MonkeyBusiness
             EquipSlot(newItemSlot);
         }
 
+        /// <summary>
+        /// Handle interaction button press
+        /// </summary>
+        /// <param name="context"></param>
+        void OnInteract(InputAction.CallbackContext context)
+        {
+            Debug.Log("OnInteract");
+            if (_heldItem)
+            {
+                DropHeldItem();
+            }
+            else
+            {
+                // Raycast in front of the player
+                if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _maxPickupDistance))
+                {
+                    GameObject gameObject = hit.transform.gameObject;
+                    Debug.Log(gameObject.name);
+                    // Check if we hit an item
+                    if (gameObject.CompareTag("Item"))
+                    {
+                        Item item = gameObject.GetComponent<Item>();
+                        // Pick the item up
+                        item.PickUp(itemAttachPoint);
+                        _heldItem = item;
+
+                        //unequip current weapon
+                        UnequipCurrentItem();
+                    }
+                }
+            }
+        }
+
+        ///<summary>
+        /// Handle left click pressed 
+        ///</summary>        
+        void OnAttack(InputAction.CallbackContext context)
+        {
+            if (_heldItem)
+            {
+                ThrowHeldItem();
+            }
+            else
+            {
+                _items[_currentItemSlot].Use();
+            }
+        }
+
+        /// <summary>
+        /// Throws the current item if one is being held
+        /// </summary>
+        public void ThrowHeldItem()
+        {
+            if(_heldItem == null)
+            {
+                return;
+            }
+
+            _heldItem.Throw(_cameraTransform.position + (_throwPush * _cameraTransform.forward), _cameraTransform.forward);
+            _heldItem = null;
+
+            //re-equip previous item
+            EquipSlot(_previousItemSlot);
+        }
+
+        /// <summary>
+        /// Drops the current item if one is being held
+        /// </summary>
+        public void DropHeldItem()
+        {
+            if(_heldItem == null)
+            {
+                return;
+            }
+
+            _heldItem.Drop();
+            _heldItem = null;
+            
+            //re-equip last item
+            EquipSlot(_previousItemSlot);
+        }
+
+        /// <summary>
+        /// Returns current equipped item, or null if none is being held
+        /// </summary>
+        /// <returns> Current equipped item or null </returns>
+        public IEquippable GetEquippedWeapon()
+        {
+            return _currentItemSlot == -1 ? null : _items[_currentItemSlot];
+        }
     }
 }
