@@ -1,18 +1,79 @@
-(TODO: make me better later)
+# Health & Attack systems
+This branch contains the health system and simple attack systems for melee and ranged attack.
 
-# Monkey Business
+## Added files
 
-Student project for Game Development class at Charles University MFF, Prague.
+```
+├── Scenes/Showcase
+│   └── MV
+│       └── HealthAttackShowcase.tscn
+└── Scripts
+    ├── Combat
+    │   ├── AttackInvoker.cs
+    │   ├── HealthController.cs
+    │   ├── IAttack.cs
+    │   ├── MeleeAttackController
+    │   ├── ProjectileController
+    │   └── RangedAttackController
+    ├── Managers
+    │   └── GameManager.cs (incomplete, only combat-related functionality)
+    ├── Misc
+    │   └── ITargetable.cs
+    └── Tests
+        ├── AttakInvokerTests.cs
+        ├── HealthTests.cs
+        ├── MeleeAttackTests.cs
+        ├── ProjectileTests.cs
+        └── RangedAttackTests.cs
 
-## Quick links
+```
 
-[Miro board](https://miro.com/app/board/uXjVGsrDGbA=/)
-[Notion](https://www.notion.so/2026-GameDev-Monkey-Business-32759271766d808fbb82ccd84e95a6fa)
+## Health System
 
-## Instructions for devs
+Health system is implemented via the [```HealthController```](/Assets/Scripts/Combat/HealthController.cs) component.
 
-1. Do not change main scene in `your-own-branch`, do that only in `main` while NOBODY else is working on it.
-2. Make `your-own-branch` by using command `git checkout -b your-own-branch-name` and then don't forget to push it
-3. When you are done with your feature branch, make a pull request where you describe everything you did and how the feature works.
-4. Merge only after someone reviews your PR and all conflicts are fixed.
-5. Use your own `TestScenes.unity` in Unity for testing. Name of the scene should start as `Test` or `test`. In this scene you work on your feature. When you are done with the feature, kindly make a new scene inside the `Showcase` folder under your name, e.g.: `Showcase/FD/MyCoolFeatureShowcase.unity`. It should not contain your WIP feature, but a fully working prototype or final version of it with interactable buttons to reset, modify etc.
+![](Images/HealthImage.png)
+
+Its main content is **current** and **maximum** health and methods for **damaging/healing** the entity (```TakeDamage(damage)/Heal(amount)```) and **death** of the entity (```Die()```), including appropriate events that fire when the respective situation happens (```OnHealthChanged/OnDeath```).
+
+```Die()``` method is called automatically in ```TakeDamage()``` after the entity's health reaches zero. To prevent the entity from dying for debugging, you can use the **God mode** toggle in the editor.
+
+## Attack system
+
+The attack system for enemy types is divided into two main parts - the [```AttackInvoker```](Assets/Scripts/Combat/AttackInvoker.cs) and ```AttackController``` (either [```Melee```](Assets/Scripts/Combat/MeleeAttackController.cs) or [```Ranged```](Assets/Scripts/Combat/RangedAttackController.cs)).
+
+### Attack Invoker
+
+![](Images/AttackInvoker.png)
+
+The attack invoker takes care of firing the attack when possible, specifically:
+- When the player is in range
+- When the attack is *not* on cooldown.
+
+This version uses a collider for the attack range, eventually it is intended to use raycasting for more precise checks. The collider can either be assigned manually or automatically.
+
+You can either set the attack cooldown in editor via ```Cooldown Time``` or ```Attack Speed``` fields, whichever you feel more comfortable with.
+
+When the player enters the range, the component checks whether the attack is on cooldown or not. If not, it invokes the attack by triggering the event ```OnAttackInvoked```. It passes the desired targetable object (obtained from the target's ```ITargetable``` interface implementation) as an argument to be used by other systems.
+
+The ```Attack Range``` is also visible in the editor:
+![](Images/AttackRange.png)
+
+### Melee attack
+
+![](Images/MeleeAttack.png)
+
+This component is responsible for melee attacking the player. When the attack is fired, the controller first waits for the ```Charge Time``` before actually attacking. For debugging, the attack range is turned
+red in the editor while the attack is being charged:
+
+![](Images/ChargeHighlight.png) 
+
+### Ranged attack
+
+![](Images/RangedAttack.png)
+
+This component handles ranged attacking. After the attack is fired, it spawns a projectile from the provided prefab at ```Fire Point``` and sets its enemy tag and direction towards the player. Then, the rest of the projectile's behavior is controlled by [```ProjectileController```](Assets/Scripts/Combat/ProjectileController.cs)
+
+![](Images/Projectile.png)
+
+The projectile gradually moves itself in the given direction (provided via the ```Initialize()``` method). If destroys itself after either colliding with an object or after it travels beyond ```Max Fly Distance```. If it hits a collider with tag equal to ```Target Tag```, it deals damage to the object.
