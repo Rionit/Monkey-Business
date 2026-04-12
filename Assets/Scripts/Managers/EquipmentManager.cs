@@ -26,12 +26,13 @@ namespace MonkeyBusiness
         [SerializeField]
         private List<GameObject> _startingItems = new(ITEM_CAPACITY);
 
-        private List<IEquippable> _items = new(ITEM_CAPACITY);
+        private List<Weapon> _items = new(ITEM_CAPACITY);
 
 
         [ShowInInspector]
         [ReadOnly]
-        private int _curentItemSlot = -1;
+        private int _currentItemSlot = -1;
+        private int _previousItemSlot = -1;
 
         void Start()
         {
@@ -60,14 +61,15 @@ namespace MonkeyBusiness
 
             foreach(GameObject item in _startingItems)
             {
-                if(item.TryGetComponent<IEquippable>(out var equippable))
+                if(item.TryGetComponent<Weapon>(out var equippable))
                 {
                     _items.Add(equippable);
                     equippable.Unequip();
+                    //equippable.gameObject.SetActive(false);
                 }
                 else
                 {
-                    Debug.LogError($"Skipped equipping the player with GameObject {item.name}, as it doesn't have an IEquippable component");
+                    Debug.LogError($"Skipped equipping the player with GameObject {item.name}, as it doesn't have a Weapon component");
                 }
             }
 
@@ -102,7 +104,7 @@ namespace MonkeyBusiness
 
         void EquipSlot(int itemSlot)
         {
-            if(itemSlot == _curentItemSlot)
+            if(itemSlot == _currentItemSlot)
             {
                 return;
             }
@@ -115,15 +117,26 @@ namespace MonkeyBusiness
                 return;
             }
 
-            
-            // Unequip previous item
-            if(_curentItemSlot != -1)
-            {
-                _items[_curentItemSlot].Unequip();
-            }
+            // uneqip previous item
+            UnequipCurrentItem();
             
             item.Equip();
-            _curentItemSlot = itemSlot;
+            //item.gameObject.SetActive(true);
+
+            _currentItemSlot = itemSlot;
+        }
+
+        void UnequipCurrentItem()
+        {
+            // Unequip previous item
+            if(_currentItemSlot == -1)
+            {
+               return;
+            } 
+            _items[_currentItemSlot].Unequip();
+            //_items[_currentItemSlot].gameObject.SetActive(false);
+            _previousItemSlot = _currentItemSlot;
+            _currentItemSlot = -1;
         }
 
         void EquipNext(bool previous)
@@ -136,7 +149,7 @@ namespace MonkeyBusiness
                 return;
             }
 
-            int newItemSlot = _curentItemSlot;
+            int newItemSlot = _currentItemSlot;
 
             if (previous)
             {

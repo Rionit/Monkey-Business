@@ -5,19 +5,22 @@ namespace MonkeyBusiness.Weapons
 
     public class Weapon : MonoBehaviour, IEquippable
     {    
-        private Transform[] _transforms = {};
+        //private Transform[] _transforms = {};
 
         public void Equip()
         {
             Debug.Log($"Equipped item {gameObject.name}");
+            gameObject.SetActive(true);
+
             // Setting to default now, change later if needed
-            SetChildLayers(0);
+            //SetChildLayers(0);
         }
 
         public void Unequip()
         {
             Debug.Log($"Unequipped item {gameObject.name}");
-            SetChildLayers(LayerMask.NameToLayer("UnequippedItem"));
+            //SetChildLayers(LayerMask.NameToLayer("UnequippedItem"));
+            gameObject.SetActive(false);
         }
 
         public void Use()
@@ -32,7 +35,7 @@ namespace MonkeyBusiness.Weapons
 
         void Awake()
         {
-            _transforms = GetComponentsInChildren<Transform>();
+            //_transforms = GetComponentsInChildren<Transform>();
         }
 
         // Update is called once per frame
@@ -41,6 +44,8 @@ namespace MonkeyBusiness.Weapons
         
         }
 
+
+        /*
         private void SetChildLayers(int layer)
         {
             foreach(Transform t in _transforms)
@@ -48,5 +53,6 @@ namespace MonkeyBusiness.Weapons
                 t.gameObject.layer = layer;
             }
         }
+        */
     }
 }

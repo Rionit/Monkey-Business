@@ -70,6 +70,9 @@ namespace MonkeyBusiness.Items
                 _rigidbody.AddForce(Physics.gravity * _rigidbody.mass * _rigidbody.mass, ForceMode.Force);
             }
         }
+
+        // CARRYOVER METHOD FROM LAST ITEM ITERATION
+        // TODO replace with proper projectile behavior
         void OnCollisionEnter(Collision collision)
         {
             if (!isBeingThrown)
