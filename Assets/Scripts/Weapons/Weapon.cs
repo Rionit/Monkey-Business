@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MonkeyBusiness.Weapons
 {
-
+    
     public class Weapon : MonoBehaviour, IEquippable
     {    
         //private Transform[] _transforms = {};
@@ -25,7 +25,7 @@ namespace MonkeyBusiness.Weapons
 
         public void Use()
         {
-            throw new System.NotImplementedException();
+            Debug.Log($"{gameObject.name} says \"Bang!\"");
         }
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
