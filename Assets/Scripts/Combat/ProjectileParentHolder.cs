@@ -18,7 +18,6 @@ namespace MonkeyBusiness.Combat
             if(Instance != null && Instance != this)
             {
                 Debug.LogWarning("Multiple instances of ProjectileParentHolder detected! Replacing the old one.");
-
             }
             Instance = this;
             if(Object == null)
