@@ -76,7 +76,7 @@ namespace MonkeyBusiness.Tests
 
             // Assert
             float distance = Vector3.Distance(distanceObject.transform.position,
-            _agents[0].GetComponent<EnemyMoveController>().ChaseTarget.transform.position);
+            _agents[0].GetComponent<EnemyFollowController>().ChaseTarget.transform.position);
             Assert.LessOrEqual(distance, 0.5f, $"Agent did not reach the target. Distance: {distance}");
         }
 
@@ -89,14 +89,14 @@ namespace MonkeyBusiness.Tests
                 _agents[i].SetActive(false);
             }
 
-            _agents[0].GetComponent<EnemyMoveController>().TestSetup(5f);
+            _agents[0].GetComponent<EnemyFollowController>().TestSetup(5f);
 
             // Act
             yield return new WaitForSeconds(10f); // Wait for the agent to start moving
 
             // Assert
             float distance = Vector3.Distance(_agents[0].transform.position,
-            _agents[0].GetComponent<EnemyMoveController>().ChaseTarget.transform.position);
+            _agents[0].GetComponent<EnemyFollowController>().ChaseTarget.transform.position);
 
             float distanceFromDesired = Mathf.Abs(distance - 5f);
             Assert.LessOrEqual(distanceFromDesired, 0.5f, 

@@ -6,7 +6,7 @@ using UnityEngine.AI;
 [assembly: InternalsVisibleTo("MonkeyBusiness.Tests")]
 namespace MonkeyBusiness.Enemies
 {
-    public class EnemyMoveController : MonoBehaviour
+    public class EnemyFollowController : MonoBehaviour
     {
         [Required]
         [SerializeField]
@@ -15,9 +15,7 @@ namespace MonkeyBusiness.Enemies
 
         [field: SerializeField]
         [field: Tooltip("Target to chase")]
-        public GameObject ChaseTarget { get; private set; } 
-
-
+        public GameObject ChaseTarget { get; set; } 
 
         [SerializeField]
         [ReadOnly]
@@ -26,14 +24,13 @@ namespace MonkeyBusiness.Enemies
         float _defaultMaxSpeed;
 
         [ShowInInspector]
-        [ReadOnly]
         [Tooltip("Current speed of the NavMeshAgent.")]
-        [BoxGroup("Debug/Speed")]
+        [BoxGroup("Stats")]
         public float CurrentMaxSpeed
         {
             // Null check is only to avoid error in the Editor (at first, no NavMeshAgent is assigned). 
             get => _navMeshAgent == null ? float.NaN : _navMeshAgent.speed;
-            private set
+            set
             {
                 if (_navMeshAgent == null) return;
                 _navMeshAgent.speed = value;
@@ -47,13 +44,12 @@ namespace MonkeyBusiness.Enemies
         float _defaultMaxAngularSpeed;
 
         [ShowInInspector]
-        [ReadOnly]
         [Tooltip("Current angular speed of the NavMeshAgent.")]
-        [BoxGroup("Debug/Speed")]
+        [BoxGroup("Stats")]
         public float CurrentAngularSpeed
         {
             get => _navMeshAgent == null ? float.NaN : _navMeshAgent.angularSpeed;
-            private set
+            set
             {
                 if (_navMeshAgent == null) return;
                 _navMeshAgent.angularSpeed = value;
@@ -67,13 +63,12 @@ namespace MonkeyBusiness.Enemies
         float _defaultAcceleration;
 
         [ShowInInspector]
-        [ReadOnly]
         [Tooltip("Current acceleration of the NavMeshAgent.")]
-        [BoxGroup("Debug/Acceleration")]
+        [BoxGroup("Stats")]
         public float CurrentAcceleration
         {
             get => _navMeshAgent == null ? float.NaN : _navMeshAgent.acceleration;
-            private set
+            set
             {
                 if (_navMeshAgent == null) return;
                 _navMeshAgent.acceleration = value;
@@ -87,13 +82,12 @@ namespace MonkeyBusiness.Enemies
         float _defaultStoppingDistance;
 
         [ShowInInspector]
-        [ReadOnly]
         [Tooltip("Current stopping distance of the NavMeshAgent.")]
-        [BoxGroup("Debug")]
+        [BoxGroup("Stats")]
         public float CurrentStoppingDistance
         {
             get => _navMeshAgent == null ? float.NaN : _navMeshAgent.stoppingDistance;
-            private set
+            set
             {
                 if (_navMeshAgent == null) return;
                 _navMeshAgent.stoppingDistance = value;
@@ -117,6 +111,12 @@ namespace MonkeyBusiness.Enemies
         [Range(0f, 30f)]
         [Tooltip("Distance the enemy will try to keep from the player")]
         float _chaseDistance = 0f;
+
+        [SerializeField]
+        [Range(0f, 2f)]
+        [Tooltip("Offset from the chase distance in which the enemy will switch between running towards and away from the target." +
+        "\n\n<i>Prevents jittery movement when close to the chase distance.</i>")]
+        float _chaseDistanceOffset = 0.1f;
 
         Vector3 _currentTargetPos;
 
