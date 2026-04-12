@@ -1,6 +1,8 @@
 using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
+using System.Collections.Generic;
 
 namespace MonkeyBusiness.Combat
 {
@@ -90,6 +92,19 @@ namespace MonkeyBusiness.Combat
         float _travelledDistance = 0f;
 
         /// <summary>
+        /// Event invoked when the projectile hits its target, passing the hit GameObject as an argument.
+        /// </summary>
+        [SerializeField]
+        [Tooltip("Event invoked when the projectile hits its target, passing the hit GameObject as an argument.")]
+        public UnityEvent<GameObject> OnTargetHit = new();
+
+        [SerializeField]
+        [Tooltip("Mask of layers that can destroy the projectile on contact (e.g. walls, obstacles).")]
+        LayerMask _destroyedBy;
+        
+        List<GameObject> _objectsHit = new List<GameObject>(); // List to keep track of objects already hit by the projectile (for piercing projectiles in the future)
+
+        /// <summary>
         /// Initializes the projectile with the given parameters.
         /// </summary>
         public void Initialize(string enemyTag, Vector3 direction)
@@ -122,12 +137,20 @@ namespace MonkeyBusiness.Combat
             {
                 Debug.LogError("Projectile requires a SphereCollider component!");
             }
+            if(_destroyedBy == 0)
+            {
+                Debug.Log("Projectile destruction mask is empty, projectile will not be destroyed by any objects!");
+            }
         }
 
         void OnTriggerEnter(Collider other)
         {
+            if(_objectsHit.Contains(other.gameObject)) return; // Skip if this collider was already hit (for piercing projectiles in the future)
+            _objectsHit.Add(other.gameObject);
+            
             if(other.CompareTag(TargetTag)) 
             {
+                OnTargetHit?.Invoke(other.gameObject);
                 var targetHealth = other.GetComponentInParent<HealthController>();
                 if(targetHealth == null)
                 {
@@ -136,8 +159,12 @@ namespace MonkeyBusiness.Combat
                 }
                 targetHealth.TakeDamage(Damage);
             }
-            Debug.Log("Destroying projectile");
-            Destroy(gameObject); // Destroys the projectile
+
+            if((_destroyedBy.value & other.gameObject.layer) != 0)
+            {
+                Debug.Log("Destroying projectile");
+                Destroy(gameObject); // Destroys the projectile if it hits an object that destroys it.
+            }
         }
     }
 }

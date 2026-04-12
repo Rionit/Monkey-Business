@@ -21,6 +21,10 @@ namespace MonkeyBusiness.Combat
 
             }
             Instance = this;
+            if(Object == null)
+            {
+                Object = gameObject; // Default to self if not assigned 
+            }
         }
     }
 }

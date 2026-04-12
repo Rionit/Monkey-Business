@@ -19,7 +19,7 @@ namespace MonkeyBusiness.Combat
 
         [SerializeField]
         [Tooltip("Transform from which the weapon will fire projectiles.")]
-        Transform _firePoint;
+        Transform _bulletSpawnPoint;
 
         [field:ShowInInspector]
         [field: BoxGroup("Stats")]
@@ -43,9 +43,19 @@ namespace MonkeyBusiness.Combat
         /// <summary>
         /// Event invoked when the ammo count changes, passing the new ammo count as an argument.
         /// </summary>
-        public UnityEvent<int> OnAmmoChanged;
+        public UnityEvent<int> OnAmmoChanged = new();
 
         bool _isLoading = false;
+
+        [ShowInInspector]
+        [ReadOnly]
+        [Tooltip("Time between shots, in seconds. Set from weapon data at Awake.")]
+        float _shootingInterval; 
+
+        [ShowInInspector]
+        [ReadOnly]
+        [Tooltip("Current aim point of the weapon.")]
+        Vector3 _currentAimPoint;
 
         public void Equip()
         {
@@ -69,37 +79,67 @@ namespace MonkeyBusiness.Combat
         /// <exception cref="System.NotImplementedException"></exception>
         public void Use()
         {
-            throw new System.NotImplementedException();
+            if(!_isLoading)
+            {
+                StartCoroutine(FireCoroutine());
+            }
         }
 
         IEnumerator FireCoroutine()
         {
-            var projectile = Instantiate(_data.ProjectilePrefab, _firePoint.position, Quaternion.identity, GameManager.Instance.ProjectileParent.transform);
+            var projectile = Instantiate(_data.ProjectilePrefab, _bulletSpawnPoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
             var projectileController = projectile.GetComponent<ProjectileController>();
             if (projectileController != null)
             {
                 Debug.Log("Has projectile controller");
-                projectileController.Initialize("Player", (target.transform.position - _firePoint.position));
+                projectileController.Initialize("Enemy", GetAimDirection());
             }
-        }
 
-        // Start is called once before the first execution of Update after the MonoBehaviour is created
-        void Start()
-        {
+            _isLoading = true;
+
+            CurrentAmmo--;
+            OnAmmoChanged.Invoke(CurrentAmmo);
+            yield return new WaitForSeconds(_shootingInterval);
+            _isLoading = false;
         }
 
         void Awake()
         {
             //_transforms = GetComponentsInChildren<Transform>();
+            _shootingInterval = 1f / _data.RateOfFire;
         }
 
-        // Update is called once per frame
-        void Update()
+
+        /// <summary>
+        /// Calculates the aim direction based on the camera's forward direction and what it hits.
+        /// </summary>
+        /// <returns>A normalized direction vector from the weapon to the aim point.</returns>
+        /// <remarks> Inspired by <a href="https://youtu.be/g3zaVxFWiKk?t=123">this video</a> </remarks>
+        Vector3 GetAimDirection()
         {
-        
+            var cameraTf = Camera.main.transform;
+            var farPlane = Camera.main.farClipPlane;
+            var aimPoint = cameraTf.TransformPoint(Vector3.forward * farPlane);
+
+            Ray r = new Ray(cameraTf.position, cameraTf.forward);
+            if (Physics.Raycast(r, out RaycastHit hit, farPlane, LayerMask.GetMask("Default", "Enemy"), QueryTriggerInteraction.Ignore))
+            {
+                aimPoint = hit.point;
+            }
+
+            _currentAimPoint = aimPoint;
+
+            return (aimPoint - _bulletSpawnPoint.position).normalized;
         }
-
-
+        
+        void OnDrawGizmos()
+        {
+            if(_bulletSpawnPoint != null)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawLine(_bulletSpawnPoint.position, _currentAimPoint);
+            }
+        }
 
         /*
         private void SetChildLayers(int layer)

@@ -5,6 +5,7 @@ namespace MonkeyBusiness.Combat
     /// <summary>
     /// Contains stats and used ammo for a weapon.
     /// </summary>
+    [CreateAssetMenu(fileName = "New Weapon Data", menuName = "Monkey Business/Weapon Data")]
     public class WeaponData : ScriptableObject
     {
         /// <summary>
