@@ -125,9 +125,9 @@ namespace MonkeyBusiness.Player
                     ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""852140f2-7766-474d-8707-702459ba45f3"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
-                    ""interactions"": ""Hold"",
+                    ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
@@ -143,7 +143,7 @@ namespace MonkeyBusiness.Player
                     ""name"": ""Jump"",
                     ""type"": ""Button"",
                     ""id"": ""f1ba0d36-48eb-4cd5-b651-1c94a6531f70"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -152,7 +152,7 @@ namespace MonkeyBusiness.Player
                     ""name"": ""Previous"",
                     ""type"": ""Button"",
                     ""id"": ""2776c80d-3c14-4091-8c56-d04ced07a2b0"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -161,8 +161,17 @@ namespace MonkeyBusiness.Player
                     ""name"": ""Next"",
                     ""type"": ""Button"",
                     ""id"": ""b7230bb6-fc9b-4f52-8b25-f5e19cb2c2ba"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ScrollWheel"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""5641296d-fe63-4ad6-941d-32450a242174"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": ""NormalizeVector2"",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
@@ -170,7 +179,88 @@ namespace MonkeyBusiness.Player
                     ""name"": ""Sprint"",
                     ""type"": ""Button"",
                     ""id"": ""641cd816-40e6-41b4-8c3d-04687c349290"",
-                    ""expectedControlType"": ""Button"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item1"",
+                    ""type"": ""Button"",
+                    ""id"": ""b062e66d-1747-4abb-ad7b-4365673c7b9c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item2"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad0b47f9-9ecb-4ac4-9f1a-211c5169a504"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item3"",
+                    ""type"": ""Button"",
+                    ""id"": ""6b366a1c-2cde-4fa7-82a6-e262b6c61c00"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item4"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a81fd52-7103-4a5d-b1d2-5b687102a658"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item5"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc4b0444-dc36-40cc-ade3-76b21f43a0c6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item6"",
+                    ""type"": ""Button"",
+                    ""id"": ""9a6fa70a-64a3-433e-bf25-ffb9b3b177c3"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item7"",
+                    ""type"": ""Button"",
+                    ""id"": ""24e5deaa-dbab-4060-afc5-e69b2b251a04"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item8"",
+                    ""type"": ""Button"",
+                    ""id"": ""bf6c1fe8-3e13-4ee6-b841-e112d3578446"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Item9"",
+                    ""type"": ""Button"",
+                    ""id"": ""6aeb0324-cbbe-4f8b-90ef-9d2f2fc3f681"",
+                    ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
@@ -432,6 +522,17 @@ namespace MonkeyBusiness.Player
                 },
                 {
                     ""name"": """",
+                    ""id"": ""c1e07aa4-0c19-4eb9-a37c-fa35a8768efa"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ScrollWheel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""f2e9ba44-c423-42a7-ad56-f20975884794"",
                     ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
@@ -559,6 +660,105 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85eda58b-a68b-4152-9556-48aa4358e3b9"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Item1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""196df9dd-6a21-49e0-ab8e-df981ee3a4b1"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Item2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ecb86658-5e4e-479c-a599-dcb35f3a12b9"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Item3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ad22c145-f3fe-4bf0-b864-85ad39608624"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Item4"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""17a66d1f-6557-4697-9584-f97167faf3c4"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Item5"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""951ee96b-c5ec-437e-ba59-6effdfeb75f0"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Item6"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b432baec-2fe3-4a54-9385-3705b9ef6852"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Item7"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""682af219-a935-487e-8c8f-cf9e1ce22a82"",
+                    ""path"": ""<Keyboard>/8"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Item8"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f25b3c7b-f825-4c5a-b1e6-1c101fb6db31"",
+                    ""path"": ""<Keyboard>/9"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Item9"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1154,7 +1354,17 @@ namespace MonkeyBusiness.Player
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Previous = m_Player.FindAction("Previous", throwIfNotFound: true);
             m_Player_Next = m_Player.FindAction("Next", throwIfNotFound: true);
+            m_Player_ScrollWheel = m_Player.FindAction("ScrollWheel", throwIfNotFound: true);
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
+            m_Player_Item1 = m_Player.FindAction("Item1", throwIfNotFound: true);
+            m_Player_Item2 = m_Player.FindAction("Item2", throwIfNotFound: true);
+            m_Player_Item3 = m_Player.FindAction("Item3", throwIfNotFound: true);
+            m_Player_Item4 = m_Player.FindAction("Item4", throwIfNotFound: true);
+            m_Player_Item5 = m_Player.FindAction("Item5", throwIfNotFound: true);
+            m_Player_Item6 = m_Player.FindAction("Item6", throwIfNotFound: true);
+            m_Player_Item7 = m_Player.FindAction("Item7", throwIfNotFound: true);
+            m_Player_Item8 = m_Player.FindAction("Item8", throwIfNotFound: true);
+            m_Player_Item9 = m_Player.FindAction("Item9", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1256,7 +1466,17 @@ namespace MonkeyBusiness.Player
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Previous;
         private readonly InputAction m_Player_Next;
+        private readonly InputAction m_Player_ScrollWheel;
         private readonly InputAction m_Player_Sprint;
+        private readonly InputAction m_Player_Item1;
+        private readonly InputAction m_Player_Item2;
+        private readonly InputAction m_Player_Item3;
+        private readonly InputAction m_Player_Item4;
+        private readonly InputAction m_Player_Item5;
+        private readonly InputAction m_Player_Item6;
+        private readonly InputAction m_Player_Item7;
+        private readonly InputAction m_Player_Item8;
+        private readonly InputAction m_Player_Item9;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1301,9 +1521,49 @@ namespace MonkeyBusiness.Player
             /// </summary>
             public InputAction @Next => m_Wrapper.m_Player_Next;
             /// <summary>
+            /// Provides access to the underlying input action "Player/ScrollWheel".
+            /// </summary>
+            public InputAction @ScrollWheel => m_Wrapper.m_Player_ScrollWheel;
+            /// <summary>
             /// Provides access to the underlying input action "Player/Sprint".
             /// </summary>
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item1".
+            /// </summary>
+            public InputAction @Item1 => m_Wrapper.m_Player_Item1;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item2".
+            /// </summary>
+            public InputAction @Item2 => m_Wrapper.m_Player_Item2;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item3".
+            /// </summary>
+            public InputAction @Item3 => m_Wrapper.m_Player_Item3;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item4".
+            /// </summary>
+            public InputAction @Item4 => m_Wrapper.m_Player_Item4;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item5".
+            /// </summary>
+            public InputAction @Item5 => m_Wrapper.m_Player_Item5;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item6".
+            /// </summary>
+            public InputAction @Item6 => m_Wrapper.m_Player_Item6;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item7".
+            /// </summary>
+            public InputAction @Item7 => m_Wrapper.m_Player_Item7;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item8".
+            /// </summary>
+            public InputAction @Item8 => m_Wrapper.m_Player_Item8;
+            /// <summary>
+            /// Provides access to the underlying input action "Player/Item9".
+            /// </summary>
+            public InputAction @Item9 => m_Wrapper.m_Player_Item9;
             /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
@@ -1354,9 +1614,39 @@ namespace MonkeyBusiness.Player
                 @Next.started += instance.OnNext;
                 @Next.performed += instance.OnNext;
                 @Next.canceled += instance.OnNext;
+                @ScrollWheel.started += instance.OnScrollWheel;
+                @ScrollWheel.performed += instance.OnScrollWheel;
+                @ScrollWheel.canceled += instance.OnScrollWheel;
                 @Sprint.started += instance.OnSprint;
                 @Sprint.performed += instance.OnSprint;
                 @Sprint.canceled += instance.OnSprint;
+                @Item1.started += instance.OnItem1;
+                @Item1.performed += instance.OnItem1;
+                @Item1.canceled += instance.OnItem1;
+                @Item2.started += instance.OnItem2;
+                @Item2.performed += instance.OnItem2;
+                @Item2.canceled += instance.OnItem2;
+                @Item3.started += instance.OnItem3;
+                @Item3.performed += instance.OnItem3;
+                @Item3.canceled += instance.OnItem3;
+                @Item4.started += instance.OnItem4;
+                @Item4.performed += instance.OnItem4;
+                @Item4.canceled += instance.OnItem4;
+                @Item5.started += instance.OnItem5;
+                @Item5.performed += instance.OnItem5;
+                @Item5.canceled += instance.OnItem5;
+                @Item6.started += instance.OnItem6;
+                @Item6.performed += instance.OnItem6;
+                @Item6.canceled += instance.OnItem6;
+                @Item7.started += instance.OnItem7;
+                @Item7.performed += instance.OnItem7;
+                @Item7.canceled += instance.OnItem7;
+                @Item8.started += instance.OnItem8;
+                @Item8.performed += instance.OnItem8;
+                @Item8.canceled += instance.OnItem8;
+                @Item9.started += instance.OnItem9;
+                @Item9.performed += instance.OnItem9;
+                @Item9.canceled += instance.OnItem9;
             }
 
             /// <summary>
@@ -1392,9 +1682,39 @@ namespace MonkeyBusiness.Player
                 @Next.started -= instance.OnNext;
                 @Next.performed -= instance.OnNext;
                 @Next.canceled -= instance.OnNext;
+                @ScrollWheel.started -= instance.OnScrollWheel;
+                @ScrollWheel.performed -= instance.OnScrollWheel;
+                @ScrollWheel.canceled -= instance.OnScrollWheel;
                 @Sprint.started -= instance.OnSprint;
                 @Sprint.performed -= instance.OnSprint;
                 @Sprint.canceled -= instance.OnSprint;
+                @Item1.started -= instance.OnItem1;
+                @Item1.performed -= instance.OnItem1;
+                @Item1.canceled -= instance.OnItem1;
+                @Item2.started -= instance.OnItem2;
+                @Item2.performed -= instance.OnItem2;
+                @Item2.canceled -= instance.OnItem2;
+                @Item3.started -= instance.OnItem3;
+                @Item3.performed -= instance.OnItem3;
+                @Item3.canceled -= instance.OnItem3;
+                @Item4.started -= instance.OnItem4;
+                @Item4.performed -= instance.OnItem4;
+                @Item4.canceled -= instance.OnItem4;
+                @Item5.started -= instance.OnItem5;
+                @Item5.performed -= instance.OnItem5;
+                @Item5.canceled -= instance.OnItem5;
+                @Item6.started -= instance.OnItem6;
+                @Item6.performed -= instance.OnItem6;
+                @Item6.canceled -= instance.OnItem6;
+                @Item7.started -= instance.OnItem7;
+                @Item7.performed -= instance.OnItem7;
+                @Item7.canceled -= instance.OnItem7;
+                @Item8.started -= instance.OnItem8;
+                @Item8.performed -= instance.OnItem8;
+                @Item8.canceled -= instance.OnItem8;
+                @Item9.started -= instance.OnItem9;
+                @Item9.performed -= instance.OnItem9;
+                @Item9.canceled -= instance.OnItem9;
             }
 
             /// <summary>
@@ -1752,12 +2072,82 @@ namespace MonkeyBusiness.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnNext(InputAction.CallbackContext context);
             /// <summary>
+            /// Method invoked when associated input action "ScrollWheel" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScrollWheel(InputAction.CallbackContext context);
+            /// <summary>
             /// Method invoked when associated input action "Sprint" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
             /// </summary>
             /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnSprint(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem1(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item2" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem2(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item3" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem3(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item4" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem4(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item5" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem5(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item6" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem6(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item7" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem7(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item8" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem8(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Item9" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnItem9(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
