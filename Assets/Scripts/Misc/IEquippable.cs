@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MonkeyBusiness.Weapons
+namespace MonkeyBusiness.Misc
 {
     public interface IEquippable
     {
