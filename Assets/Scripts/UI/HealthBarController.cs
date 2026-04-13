@@ -7,89 +7,143 @@ using DG.Tweening;
 
 namespace MonkeyBusiness.UI
 {
+    /// <summary>
+    /// Controls a UI health bar with animated front/back fill, color transitions,
+    /// sprite swapping based on thresholds, and shake feedback on state change.
+    /// </summary>
     public class HealthBarController : MonoBehaviour
     {
+        /// <summary>
+        /// Represents discrete health states used for visuals (color/sprite).
+        /// </summary>
         private enum HealthState { LOW, MEDIUM, HIGH }
         
         [BoxGroup("Health Bar Settings")]
-        [ReadOnly, SerializeField] private HealthState currentState = HealthState.HIGH;
+        [ReadOnly, SerializeField, Tooltip("Current evaluated health state based on value.")]
+        private HealthState currentState = HealthState.HIGH;
+
         [BoxGroup("Health Bar Settings")]
-        [ReadOnly, SerializeField] private HealthState previousState = HealthState.HIGH;
+        [ReadOnly, SerializeField, Tooltip("Previous health state used to detect transitions.")]
+        private HealthState previousState = HealthState.HIGH;
         
-        [BoxGroup("Health Bar Settings"), Required]
+        [BoxGroup("Health Bar Settings"), Required, Tooltip("Outline image of the health bar.")]
         [SerializeField] private Image outline;
-        [BoxGroup("Health Bar Settings"), Required]
+
+        [BoxGroup("Health Bar Settings"), Required, Tooltip("Foreground fill image (fast tween).")]
         [SerializeField] private Image fill;
-        [BoxGroup("Health Bar Settings"), Required]
+
+        [BoxGroup("Health Bar Settings"), Required, Tooltip("Background fill image (delayed tween for damage effect).")]
         [SerializeField] private Image backFill;
-        [BoxGroup("Health Bar Settings"), Required]
+
+        [BoxGroup("Health Bar Settings"), Required, Tooltip("Mask image used for stylized clipping.")]
         [SerializeField] private Image mask;
 
         [PropertyRange(0f, "@endOffset"), BoxGroup("Health Bar Settings")]
-        [SerializeField] private float startOffset = 100f;
+        [SerializeField, Tooltip("Minimum width position of the fill (value = 0).")]
+        private float startOffset = 100f;
 
         [PropertyRange("@startOffset", "@GetImageWidth()"), BoxGroup("Health Bar Settings")]
-        [SerializeField] private float endOffset = 100f;
+        [SerializeField, Tooltip("Maximum width position of the fill (value = 1).")]
+        private float endOffset = 100f;
         
         [Range(0f, 1f), BoxGroup("Health Bar Settings")]
-        [SerializeField] private float value = 0.5f;
+        [SerializeField, Tooltip("Current normalized health value (0–1).")]
+        private float value = 1.0f;
 
         [BoxGroup("Health Bar Settings")]
         [HorizontalGroup("Health Bar Settings/CutOffs", Title = "CutOffs", Gap = 10), HideLabel, LabelText("Mid"), PropertyRange(0f, "@highCutOff")]
-        [SerializeField] private float mediumCutOff = 0.25f;
+        [SerializeField, Tooltip("Threshold at which health becomes MEDIUM.")]
+        private float mediumCutOff = 0.25f;
+
         [HorizontalGroup("Health Bar Settings/CutOffs"), HideLabel, LabelText("High"), PropertyRange("@mediumCutOff", 1f)]
-        [SerializeField] private float highCutOff = 0.75f;
+        [SerializeField, Tooltip("Threshold at which health becomes HIGH.")]
+        private float highCutOff = 0.75f;
         
         [HorizontalGroup("Health Bar Settings/Colors", Title = "Colors", Gap = 10), HideLabel, LabelText("Low")]
-        [SerializeField] private Color lowHealthColor = Color.red;
+        [SerializeField, Tooltip("Fill color when health is LOW.")]
+        private Color lowHealthColor = Color.red;
+
         [HorizontalGroup("Health Bar Settings/Colors"), HideLabel, LabelText("Mid")]
-        [SerializeField] private Color mediumHealthColor = Color.darkOrange;
+        [SerializeField, Tooltip("Fill color when health is MEDIUM.")]
+        private Color mediumHealthColor = Color.darkOrange;
+
         [HorizontalGroup("Health Bar Settings/Colors"), HideLabel, LabelText("High")]
-        [SerializeField] private Color highHealthColor = Color.green;
+        [SerializeField, Tooltip("Fill color when health is HIGH.")]
+        private Color highHealthColor = Color.green;
         
         [HorizontalGroup("Health Bar Settings/Sprites", Title = "Sprites", Gap = 10), HideLabel, LabelText("Low"), Required]
-        [SerializeField] private Sprite lowHealthSprite;
+        [SerializeField, Tooltip("Outline sprite for LOW health.")]
+        private Sprite lowHealthSprite;
+
         [HorizontalGroup("Health Bar Settings/Sprites"), HideLabel, LabelText("Mid"), Required]
-        [SerializeField] private Sprite mediumHealthSprite;
+        [SerializeField, Tooltip("Outline sprite for MEDIUM health.")]
+        private Sprite mediumHealthSprite;
+
         [HorizontalGroup("Health Bar Settings/Sprites"), HideLabel, LabelText("High"), Required]
-        [SerializeField] private Sprite highHealthSprite;
+        [SerializeField, Tooltip("Outline sprite for HIGH health.")]
+        private Sprite highHealthSprite;
         
         [HorizontalGroup("Health Bar Settings/Masks", Title = "Masks", Gap = 10), HideLabel, LabelText("Low"), Required]
-        [SerializeField] private Sprite lowHealthMaskSprite;
+        [SerializeField, Tooltip("Mask sprite for LOW health.")]
+        private Sprite lowHealthMaskSprite;
+
         [HorizontalGroup("Health Bar Settings/Masks"), HideLabel, LabelText("Mid"), Required]
-        [SerializeField] private Sprite mediumHealthMaskSprite;
+        [SerializeField, Tooltip("Mask sprite for MEDIUM health.")]
+        private Sprite mediumHealthMaskSprite;
+
         [HorizontalGroup("Health Bar Settings/Masks"), HideLabel, LabelText("High"), Required]
-        [SerializeField] private Sprite highHealthMaskSprite;
+        [SerializeField, Tooltip("Mask sprite for HIGH health.")]
+        private Sprite highHealthMaskSprite;
         
-        [SerializeField] private float valueTweenDuration = 0.25f;
-        [SerializeField] private float shakeDuration = 0.2f;
-        [SerializeField] private float shakeStrength = 10f;
-        [SerializeField] private int shakeVibrato = 10;
-        [SerializeField] private float backFillDelay = 0.1f;
-        [SerializeField] private float backFillTweenDuration = 0.4f;
+        [SerializeField, Tooltip("Duration of the front fill tween.")]
+        private float valueTweenDuration = 0.25f;
+
+        [SerializeField, Tooltip("Duration of the shake effect when state changes.")]
+        private float shakeDuration = 0.2f;
+
+        [SerializeField, Tooltip("Strength of the shake effect.")]
+        private float shakeStrength = 10f;
+
+        [SerializeField, Tooltip("Vibrato (frequency) of the shake effect.")]
+        private int shakeVibrato = 10;
+
+        [SerializeField, Tooltip("Delay before the back fill starts animating.")]
+        private float backFillDelay = 0.4f;
+
+        [SerializeField, Tooltip("Duration of the back fill tween.")]
+        private float backFillTweenDuration = 0.4f;
         
         private RectTransform rectTransform;
-        private Tween valueTween;
-        private Tween backFillTween;
+        private Tween valueTween; // Tween for the front fill animation.
+        private Tween backFillTween; // Tween for the delayed back fill animation.
 
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
         }
 
+        /// <summary>
+        /// Editor-time validation to preview changes instantly in Inspector.
+        /// </summary>
         private void OnValidate()
         {
             if (fill != null)
             {
                 previousState = currentState;
                 currentState = GetState(value);
+
                 fill.rectTransform.sizeDelta = new Vector2(GetFillSize(value), fill.rectTransform.sizeDelta.y);
                 backFill.rectTransform.sizeDelta = fill.rectTransform.sizeDelta;
+
                 fill.color = GetFillColor();
                 SwitchSprites();
             }
         }
 
+        /// <summary>
+        /// Sets the health value with tween animation.
+        /// </summary>
+        /// <param name="newValue">Normalized value between 0 and 1.</param>
         [Button]
         public void SetValue(float newValue)
         {
@@ -104,7 +158,6 @@ namespace MonkeyBusiness.UI
             valueTween?.Kill();
             backFillTween?.Kill();
 
-            // store start value
             float startValue = value;
 
             // FRONT fill (fast)
@@ -134,11 +187,17 @@ namespace MonkeyBusiness.UI
             }
         }
 
+        /// <summary>
+        /// Determines the health state based on current value and cutoffs.
+        /// </summary>
         private HealthState GetState(float value) =>
             value >= highCutOff ? HealthState.HIGH :
             value >= mediumCutOff ? HealthState.MEDIUM :
             HealthState.LOW;
 
+        /// <summary>
+        /// Updates visual elements of the health bar (fill, color, sprites).
+        /// </summary>
         private void UpdateBar()
         {
             fill.rectTransform.sizeDelta = new Vector2(GetFillSize(value), fill.rectTransform.sizeDelta.y);
@@ -146,6 +205,9 @@ namespace MonkeyBusiness.UI
             SwitchSprites();
         }
 
+        /// <summary>
+        /// Switches outline and mask sprites based on current health state.
+        /// </summary>
         private void SwitchSprites()
         {
             if (outline == null || mask == null) return;
@@ -170,6 +232,9 @@ namespace MonkeyBusiness.UI
             }
         }
 
+        /// <summary>
+        /// Returns the appropriate fill color for the current state.
+        /// </summary>
         private Color GetFillColor()
         {
             return currentState switch
@@ -181,12 +246,18 @@ namespace MonkeyBusiness.UI
             };
         }
 
+        /// <summary>
+        /// Calculates the fill width based on value and offsets.
+        /// </summary>
         private float GetFillSize(float value)
         {
             if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
             return Mathf.Lerp(startOffset, endOffset, value);
         }
         
+        /// <summary>
+        /// Returns the width of the RectTransform (used for editor constraints).
+        /// </summary>
         private float GetImageWidth()
         {
             if (rectTransform == null) rectTransform = GetComponent<RectTransform>();
