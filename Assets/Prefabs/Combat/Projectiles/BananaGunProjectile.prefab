@@ -67,5 +67,40 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5856281644080234995, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6423815585539943808}
   m_SourcePrefab: {fileID: 100100000, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+--- !u!1 &6742155759220148124 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5856281644080234995, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+  m_PrefabInstance: {fileID: 924719865915295343}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6423815585539943808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742155759220148124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074a17acdf627ef4c975bdfdb427f8ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Effects::MonkeyBusiness.Effects.BananaGunEffect
+  _projectileController: {fileID: 7852434640815161540}
+  <BananaPoisonDuration>k__BackingField: 3
+  <PoisonTickDamage>k__BackingField: 1
+  <NumberOfTicks>k__BackingField: 10
+--- !u!114 &7852434640815161540 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+  m_PrefabInstance: {fileID: 924719865915295343}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6742155759220148124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a7c862ebe1a8c7b0aa99af6fb7a9832, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.ProjectileController

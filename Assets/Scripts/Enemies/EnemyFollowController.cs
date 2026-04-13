@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Runtime.CompilerServices;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -103,6 +104,11 @@ namespace MonkeyBusiness.Enemies
         [Tooltip("Avoidance priority range for the NavMeshAgent.\n\n<i>The actual avoidance priority will be a random value within this range. </i>")]
         Vector2Int _avoidancePriorityRange = new Vector2Int(20, 50);
 
+
+        [SerializeField]
+        [Tooltip("Minimum movement multiplier for a slowdown effect, relative to default values.")]
+        private float _minimumMovementMultiplier = 0.4f;
+
         [SerializeField]
         [Tooltip("Interval in seconds at which the enemy updates its path to the target.")]
         float _updatePathInterval = 1f;
@@ -127,6 +133,8 @@ namespace MonkeyBusiness.Enemies
 
         float _timeTillPathUpdate = 0f;
 
+        Coroutine _slowdownCoroutine;
+
         void Awake()
         {
             _navMeshAgent.avoidancePriority = Random.Range(_avoidancePriorityRange.x, _avoidancePriorityRange.y);
@@ -140,6 +148,31 @@ namespace MonkeyBusiness.Enemies
             _defaultMaxAngularSpeed = _navMeshAgent.angularSpeed;
             _defaultAcceleration = _navMeshAgent.acceleration;
             _defaultStoppingDistance = _navMeshAgent.stoppingDistance;
+        }
+
+        /// <summary>
+        /// Slows the enemy's movement for a certain duration by multiplying its speed, angular speed and acceleration by the given multiplier. Values will not go below the defaults multiplied by <see cref="_minimumMovementMultiplier"/>.
+        /// </summary>
+        public void Slowdown(float duration, float speedMultiplier)
+        {
+            if (_slowdownCoroutine != null)
+            {
+                StopCoroutine(_slowdownCoroutine);
+            }
+            _slowdownCoroutine = StartCoroutine(SlowdownCoroutine(duration, speedMultiplier));
+        }
+
+        IEnumerator SlowdownCoroutine(float duration, float speedMultiplier)
+        {
+            CurrentMaxSpeed = Mathf.Max(CurrentMaxSpeed * speedMultiplier, _defaultMaxSpeed * _minimumMovementMultiplier);
+            CurrentAngularSpeed = Mathf.Max(CurrentAngularSpeed * speedMultiplier, _defaultMaxAngularSpeed * _minimumMovementMultiplier);
+            CurrentAcceleration = Mathf.Max(CurrentAcceleration * speedMultiplier, _defaultAcceleration * _minimumMovementMultiplier);
+            Debug.Log($"Applying slowdown effect with multiplier {speedMultiplier} for duration {duration} seconds.");
+
+            yield return new WaitForSeconds(duration);
+
+            Debug.Log("Slowdown effect ended, resetting values.");
+            SetDefaultValues();
         }
 
         internal void TestSetup(float chaseDistance)
