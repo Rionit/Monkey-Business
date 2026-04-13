@@ -57,6 +57,11 @@ namespace MonkeyBusiness
         /// </summary>
         private List<IEquippable> _items = new(ITEM_CAPACITY);
 
+        /// <summary>
+        /// Is the player holding down the shoot button
+        /// </summary>
+        private bool _isShooting;
+
 
         [ShowInInspector]
         [ReadOnly]
@@ -82,6 +87,7 @@ namespace MonkeyBusiness
 
             _interactAction.performed += OnInteract;
             _attackAction.performed += OnAttack;
+            _attackAction.canceled += OnAttackRelease;
 
             _scrollWheel.performed += OnScroll;
 
@@ -95,6 +101,15 @@ namespace MonkeyBusiness
             {
                 EquipSlot(0);
             }
+        }
+
+        void Update()
+        {
+            if (_isShooting)
+            {
+                _items[_currentItemSlot].Use();
+            }
+
         }
 
         /// <summary>
@@ -249,8 +264,17 @@ namespace MonkeyBusiness
             }
             else
             {
-                _items[_currentItemSlot].Use();
+                _isShooting = true;
             }
+        }
+
+        /// <summary>
+        /// Callback for when the shooting button is released
+        /// </summary>
+        /// <param name="context"></param>
+        void OnAttackRelease(InputAction.CallbackContext context)
+        {
+            _isShooting = false;
         }
 
         /// <summary>
