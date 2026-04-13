@@ -167,9 +167,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8213279001723872943, guid: 82d630bfc55540843add85ea1772faf8, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4310657659862904874, guid: 82d630bfc55540843add85ea1772faf8, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 82d630bfc55540843add85ea1772faf8, type: 3}
       propertyPath: m_Name
       value: arena blockout
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 82d630bfc55540843add85ea1772faf8, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -294,9 +306,7 @@ MonoBehaviour:
   _avoidancePriorityRange: {x: 20, y: 50}
   _updatePathInterval: 0.5
   _chaseDistance: 1
-  _currentTargetPos: {x: 0, y: 0, z: 0}
-  _runningAway: 0
-  _timeTillPathUpdate: 0
+  _chaseDistanceOffset: 0.1
 --- !u!195 &63544193
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -423,9 +433,7 @@ MonoBehaviour:
   _avoidancePriorityRange: {x: 20, y: 50}
   _updatePathInterval: 0.5
   _chaseDistance: 10
-  _currentTargetPos: {x: 0, y: 0, z: 0}
-  _runningAway: 0
-  _timeTillPathUpdate: 0
+  _chaseDistanceOffset: 0.1
 --- !u!195 &859463907
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -732,7 +740,7 @@ MonoBehaviour:
   m_Center: {x: 0, y: 2, z: 0}
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 128
   m_UseGeometry: 0
   m_DefaultArea: 0
   m_GenerateLinks: 0

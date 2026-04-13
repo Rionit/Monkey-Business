@@ -1,10 +1,8 @@
 {
-    "name": "MonkeyBusiness.Managers",
-    "rootNamespace": "MonkeyBusiness.Managers",
+    "name": "MonkeyBusiness.Enemies",
+    "rootNamespace": "MonkeyBusiness.Enemies",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:38d962ed865d92a45a2d410eb4f73e4f",
-        "GUID:04d7f8bb2e9829146995fe206947c8b3"
+        "GUID:8c4dd21966739024fbd72155091d199e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
