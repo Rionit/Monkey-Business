@@ -6,7 +6,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.TextCore.Text;
-using Sirenix.OdinValidator;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Camera;
 

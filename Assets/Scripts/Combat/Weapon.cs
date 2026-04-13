@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,6 +34,8 @@ namespace MonkeyBusiness.Combat
         /// <summary>
         /// Current ammo of the weapon.
         /// </summary>
+        ///
+        [ShowInInspector, ReadOnly, BoxGroup("Stats")]
         public int CurrentAmmo { get; private set; }
 
         /// <summary>
@@ -57,7 +60,13 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Current aim point of the weapon.")]
         Vector3 _currentAimPoint;
 
-        const float MIN_HIT_DISTANCE = 5f;
+        const float MIN_HIT_DISTANCE = 1f;
+
+        private void Start()
+        {
+            MaxAmmo = _data.MaxAmmo;
+            CurrentAmmo = MaxAmmo;
+        }
 
         public void Equip()
         {
@@ -111,7 +120,7 @@ namespace MonkeyBusiness.Combat
             var projectileController = projectile.GetComponent<ProjectileController>();
             if (projectileController != null)
             {
-                Debug.Log("Has projectile controller");
+                //Debug.Log("Has projectile controller");
                 projectileController.Initialize("Enemy", GetAimDirection());
             }
 

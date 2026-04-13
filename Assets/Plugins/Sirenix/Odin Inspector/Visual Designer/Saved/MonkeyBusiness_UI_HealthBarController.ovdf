@@ -1,0 +1,13 @@
+OVDF v1.1
+MonkeyBusiness.UI.HealthBarController, MonkeyBusiness.UI
+MetaGuid:d9c5a380fd3e70542a658d9691dab0c9
+
+# "Health Bar Stuff"
+* [Sirenix.OdinInspector.BoxGroupAttribute]
+	CenterLabel = True
+
+# "Health Bar Stuff/Colors"
+* [Sirenix.OdinInspector.HorizontalGroupAttribute]
+	Gap = 5
+	DisableAutomaticLabelWidth = False
+	LabelWidth = 30

@@ -105,7 +105,7 @@ namespace MonkeyBusiness.Combat
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
-            Debug.Log(gameObject.name + " has died.");
+            //Debug.Log(gameObject.name + " has died.");
             Destroy(gameObject);
         }
 

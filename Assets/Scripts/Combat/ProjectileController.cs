@@ -160,9 +160,9 @@ namespace MonkeyBusiness.Combat
                 targetHealth.TakeDamage(Damage);
             }
 
-            if((_destroyedBy.value & other.gameObject.layer) != 0)
+            if((_destroyedBy.value & (1 << other.gameObject.layer)) != 0)
             {
-                Debug.Log("Destroying projectile");
+                //Debug.Log("Destroying projectile");
                 Destroy(gameObject); // Destroys the projectile if it hits an object that destroys it.
             }
         }

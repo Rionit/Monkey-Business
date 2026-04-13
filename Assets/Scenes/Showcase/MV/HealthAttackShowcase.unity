@@ -984,6 +984,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1630311569}
   - component: {fileID: 1630311570}
+  - component: {fileID: 1630311571}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -1018,6 +1019,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3654aa69fa9bc03aa9260abc6a60912d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Managers::MonkeyBusiness.Managers.GameManager
+--- !u!114 &1630311571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1630311568}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ee733b1272e845797f3f1f9fd63c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.ProjectileParentHolder
+  <Object>k__BackingField: {fileID: 1630311568}
 --- !u!1 &1662172264
 GameObject:
   m_ObjectHideFlags: 0
