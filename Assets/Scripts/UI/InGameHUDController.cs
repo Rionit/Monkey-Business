@@ -33,9 +33,7 @@ namespace MonkeyBusiness
             if (crosshair != null)
             {
                 crosshair.rectTransform.sizeDelta = new Vector2(crosshairSize, crosshairSize);
-                crosshair.sprite = crosshairSprite != null ? crosshairSprite 
-                    // Default to a built-in knob
-                    : AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
+                crosshair.sprite = crosshairSprite;
             }
         }
 
