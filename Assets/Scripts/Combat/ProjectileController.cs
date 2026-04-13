@@ -17,7 +17,7 @@ namespace MonkeyBusiness.Combat
         [field: SerializeField]
         [field: BoxGroup("Stats")]
         [Tooltip("Damage dealt by the projectile on hit.")]
-        public float Damage { get; private set; } = 10f;
+        public float Damage { get; set; } = 10f;
 
         /// <summary>
         /// Speed of the projectile. [Units/s]
