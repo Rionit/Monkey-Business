@@ -8,6 +8,7 @@ using Random = UnityEngine.Random;
 public class Perk : MonoBehaviour
 {
     public event Action<Perk> onPerkSelected;
+    public event Action onClickConfirmed;
 
     [BoxGroup("UI"), Required, Tooltip("Image representing the perk.")]
     [SerializeField] private Image perkImage;
@@ -47,7 +48,10 @@ public class Perk : MonoBehaviour
     public void RollResult()
     {
         if (isSelected)
+        {
+            onClickConfirmed?.Invoke();
             return;
+        }
 
         isSelected = true;
         isBuff = Random.value > 0.5f;

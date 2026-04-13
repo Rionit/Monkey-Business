@@ -2,10 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class PerkManager : MonoBehaviour
 {
+    public UnityEvent OnPerkSelected = new();
+    
     [BoxGroup("Perk Manager Setup"), Required, Tooltip("UI prefab representing a single perk option.")]
     [SerializeField] private GameObject perkPrefab;
 
@@ -20,11 +23,7 @@ public class PerkManager : MonoBehaviour
 
     private readonly List<GameObject> activePerks = new List<GameObject>();
     private Perk selectedPerk;
-
-    private void Start()
-    {
-        RandomizeNewPerks();
-    }
+    private bool perkConfirmed;
 
     /// <summary>
     /// Clears current perks and generates three new random ones.
@@ -57,7 +56,8 @@ public class PerkManager : MonoBehaviour
         }
 
         perk.Setup(perkSO);
-        perk.onPerkSelected += OnPerkSelected;
+        perk.onPerkSelected += SelectPerk;
+        perk.onClickConfirmed += ConfirmPerk;
 
         return instance;
     }
@@ -65,13 +65,19 @@ public class PerkManager : MonoBehaviour
     /// <summary>
     /// Called when player selects a perk.
     /// </summary>
-    private void OnPerkSelected(Perk perk)
+    private void SelectPerk(Perk perk)
     {
+        Debug.Log("hii");    
         selectedPerk = perk;
         Debug.Log($"Player selected perk: {perk}");
 
         HideUnselectedPerks();
         StartCoroutine(WaitAndHideSelected());
+    }
+
+    private void ConfirmPerk()
+    {
+        perkConfirmed = true;
     }
 
     /// <summary>
@@ -94,12 +100,15 @@ public class PerkManager : MonoBehaviour
     /// </summary>
     private IEnumerator WaitAndHideSelected()
     {
-        yield return new WaitForSeconds(hideDelay);
-
+        yield return new WaitUntil(() => perkConfirmed);
+        perkConfirmed = false;
+        
         if (selectedPerk != null)
         {
             selectedPerk.gameObject.SetActive(false);
         }
+        
+        OnPerkSelected.Invoke();
     }
 
     /// <summary>
