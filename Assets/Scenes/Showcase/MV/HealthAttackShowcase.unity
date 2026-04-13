@@ -360,7 +360,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 6
+  m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &634180068
 MonoBehaviour:
@@ -374,8 +374,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc1d7ad92c63ec7588c93af94cd0925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.AttackInvoker
+  _manuallyAssignCollider: 0
   _attackRangeCollider: {fileID: 634180067}
-  _attackRange: 6
+  _attackRange: 10
   OnAttackInvoked:
     m_PersistentCalls:
       m_Calls: []
@@ -815,6 +816,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7fc1d7ad92c63ec7588c93af94cd0925, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.AttackInvoker
+  _manuallyAssignCollider: 0
   _attackRangeCollider: {fileID: 1426580997}
   _attackRange: 3
   OnAttackInvoked:
@@ -847,6 +849,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 633fec6f815e55079bcf99fe84b01155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.MeleeAttack
+  _manuallyAssignInvoker: 0
+  _attackInvoker: {fileID: 0}
   <Damage>k__BackingField: 20
   <ChargeTime>k__BackingField: 0.5
 --- !u!1 &1514576426
@@ -969,6 +973,7 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  <GodMode>k__BackingField: 0
 --- !u!1 &1630311568
 GameObject:
   m_ObjectHideFlags: 0

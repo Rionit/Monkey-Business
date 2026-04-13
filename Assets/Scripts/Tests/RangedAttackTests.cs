@@ -4,6 +4,7 @@ using UnityEditor;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine.TestTools.Utils;
+using MonkeyBusiness.Combat;
 
 namespace MonkeyBusiness.Tests
 {
@@ -57,7 +58,7 @@ namespace MonkeyBusiness.Tests
             // Assert
 
             // Checks if the projectile was spawned 
-            var projectile = gameManager.ProjectileParent.GetComponentInChildren<Combat.ProjectileController>();
+            var projectile = ProjectileParentHolder.Instance.Object.GetComponentInChildren<Combat.ProjectileController>();
             Assert.IsNotNull(projectile, "Projectile was not spawned.");
         }
 
@@ -92,7 +93,7 @@ namespace MonkeyBusiness.Tests
 
             rangedAttack.TestSetup(_projectilePrefab, firePos.transform);
 
-            var gameManager = new GameObject("GameManager").AddComponent<Managers.GameManager>();
+            var gameManager = new GameObject("GameManager").AddComponent<ProjectileParentHolder>();
 
             bool hasFired = false;
             attackInvoker.OnAttackInvoked.AddListener((_) => hasFired = true);
@@ -107,7 +108,7 @@ namespace MonkeyBusiness.Tests
             // Assert
 
             // Checks if the projectile was spawned 
-            var projectile = gameManager.ProjectileParent.GetComponentInChildren<Combat.ProjectileController>();
+            var projectile = ProjectileParentHolder.Instance.Object.GetComponentInChildren<Combat.ProjectileController>();
             Assert.AreEqual("Player", projectile.TargetTag, "Projectile target tag was not set properly.");
             
             var dirEqual = Vector3ComparerWithEqualsOperator.Instance.Equals(dirToPlayer, projectile.Direction);

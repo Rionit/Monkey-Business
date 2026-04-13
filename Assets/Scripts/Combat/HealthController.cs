@@ -1,4 +1,5 @@
 
+using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -43,7 +44,9 @@ namespace MonkeyBusiness.Combat
         [Tooltip("DEBUG: Allows the entity to not die when health reaches zero.")]
         public bool GodMode { get; private set; } = false;
 
-        bool killed = false;
+        bool _killed = false;
+
+        Coroutine _poisonCoroutine;
 
         public void Start()
         {
@@ -66,7 +69,7 @@ namespace MonkeyBusiness.Combat
         public void TakeDamage(float damage)
         {
             CurrentHealth -= damage;
-            if (CurrentHealth <= 0f && !killed && !GodMode)
+            if (CurrentHealth <= 0f && !_killed && !GodMode)
             {
                 Die();
             }
@@ -75,9 +78,27 @@ namespace MonkeyBusiness.Combat
             Debug.Log("Current health " + CurrentHealth);
         }
 
+        public void ApplyPoison(float damagePerTick, float tickInterval, int numTicks)
+        {
+            if(_poisonCoroutine != null) StopCoroutine(_poisonCoroutine);
+            _poisonCoroutine = StartCoroutine(PoisonCoroutine(damagePerTick, tickInterval, numTicks));
+        }
+
+        IEnumerator PoisonCoroutine(float damagePerTick, float tickInterval, int numTicks)
+        {
+            Debug.Log("Starting the poison coroutine - Number of health " + CurrentHealth);
+            for(int i = 0; i < numTicks; i++)
+            {
+                TakeDamage(damagePerTick);
+                yield return new WaitForSeconds(tickInterval);
+            }
+
+            Debug.Log("Finished the poison coroutine - Number of health " + CurrentHealth);
+        }
+
         private void Die()
         {
-            killed = true; // Prevents this method to be called multiple times
+            _killed = true; // Prevents this method to be called multiple times
             OnDeath.Invoke(gameObject);
 
             if(CompareTag("Player"))

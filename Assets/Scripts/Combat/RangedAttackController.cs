@@ -1,7 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEditor.Build.Content;
 using UnityEngine;
-using MonkeyBusiness.Managers;
 using System.Runtime.CompilerServices;
 using System.Collections;
 
@@ -60,11 +59,10 @@ namespace MonkeyBusiness.Combat
         IEnumerator RangedAttackCoroutine(GameObject target)
         {
             yield return new WaitForSeconds(ChargeTime); // Waits for the charge
-            var projectile = Instantiate(_projectilePrefab, _firePoint.position, Quaternion.identity, GameManager.Instance.ProjectileParent.transform);
+            var projectile = Instantiate(_projectilePrefab, _firePoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
             var projectileController = projectile.GetComponent<ProjectileController>();
             if (projectileController != null)
             {
-                Debug.Log("Has projectile controller");
                 projectileController.Initialize("Player", (target.transform.position - _firePoint.position));
             }
         }
