@@ -102,7 +102,7 @@ namespace MonkeyBusiness.Combat
             var projectileController = projectile.GetComponent<ProjectileController>();
             if (projectileController != null)
             {
-                Debug.Log("Has projectile controller");
+                //Debug.Log("Has projectile controller");
                 projectileController.Initialize("Enemy", GetAimDirection());
             }
 
