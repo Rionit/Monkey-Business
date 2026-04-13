@@ -25,6 +25,9 @@ namespace MonkeyBusiness
         [BoxGroup("Health Bar", centerLabel: true), Required]
         [SerializeField] private HealthBarController healthBar;
         
+        [BoxGroup("Ammo", centerLabel: true), Required]
+        [SerializeField] private TextMeshProUGUI ammoText;
+
         void OnValidate()
         {
             if (crosshair != null)
@@ -48,5 +51,15 @@ namespace MonkeyBusiness
             healthBar.SetValue(value);
         }
 
+        [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Ammo")]
+        public void SetAmmo(int value)
+        {
+            if (value < 0)
+            {
+                Debug.LogError($"{value} is not a valid ammo!");
+                return;
+            }
+            ammoText.text = $"{value}";
+        }
     }
 }

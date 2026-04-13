@@ -18,7 +18,7 @@ namespace MonkeyBusiness.UI
         /// </summary>
         private enum HealthState { LOW, MEDIUM, HIGH }
         
-        [BoxGroup("Health Bar Settings")]
+        [BoxGroup("Health Bar Settings", centerLabel: true)]
         [ReadOnly, SerializeField, Tooltip("Current evaluated health state based on value.")]
         private HealthState currentState = HealthState.HIGH;
 
@@ -95,22 +95,22 @@ namespace MonkeyBusiness.UI
         [SerializeField, Tooltip("Mask sprite for HIGH health.")]
         private Sprite highHealthMaskSprite;
         
-        [SerializeField, Tooltip("Duration of the front fill tween.")]
+        [SerializeField, Tooltip("Duration of the front fill tween."), BoxGroup("Health Bar Settings/Tween Settings", centerLabel: true)]
         private float valueTweenDuration = 0.25f;
 
-        [SerializeField, Tooltip("Duration of the shake effect when state changes.")]
+        [SerializeField, Tooltip("Duration of the shake effect when state changes."), BoxGroup("Health Bar Settings/Tween Settings")]
         private float shakeDuration = 0.2f;
 
-        [SerializeField, Tooltip("Strength of the shake effect.")]
+        [SerializeField, Tooltip("Strength of the shake effect."), BoxGroup("Health Bar Settings/Tween Settings")]
         private float shakeStrength = 10f;
 
-        [SerializeField, Tooltip("Vibrato (frequency) of the shake effect.")]
+        [SerializeField, Tooltip("Vibrato (frequency) of the shake effect."), BoxGroup("Health Bar Settings/Tween Settings")]
         private int shakeVibrato = 10;
 
-        [SerializeField, Tooltip("Delay before the back fill starts animating.")]
+        [SerializeField, Tooltip("Delay before the back fill starts animating."), BoxGroup("Health Bar Settings/Tween Settings")]
         private float backFillDelay = 0.4f;
 
-        [SerializeField, Tooltip("Duration of the back fill tween.")]
+        [SerializeField, Tooltip("Duration of the back fill tween."), BoxGroup("Health Bar Settings/Tween Settings")]
         private float backFillTweenDuration = 0.4f;
         
         private RectTransform rectTransform;
@@ -144,7 +144,7 @@ namespace MonkeyBusiness.UI
         /// Sets the health value with tween animation.
         /// </summary>
         /// <param name="newValue">Normalized value between 0 and 1.</param>
-        [Button]
+        [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Health Bar Settings")]
         public void SetValue(float newValue)
         {
             if(newValue > 1f || newValue < 0f)
