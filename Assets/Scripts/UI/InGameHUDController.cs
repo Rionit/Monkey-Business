@@ -48,7 +48,12 @@ namespace MonkeyBusiness
         [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Health Bar")]
         public void SetHealth(float value)
         {
-            healthBar.SetValue(value);
+            if (value < 0f || value > 100f)
+            {
+                Debug.LogWarning("Health value is out of range 0-100!");
+            }
+            Mathf.Clamp(value, 0f, 100f);
+            healthBar.SetValue(value/100f);
         }
 
         [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Ammo")]
