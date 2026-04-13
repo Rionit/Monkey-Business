@@ -15,35 +15,66 @@ namespace MonkeyBusiness.Managers
         COMBAT
     }
 
+    /// <summary>
+    /// Manages the game and the game phases
+    /// </summary>
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
         
         //private GameState _currentGameState;
 
+        /// <summary>
+        /// How many enemies in total are spawned per wave
+        /// </summary>
         [SerializeField]
         private int _enemiesPerWave = 10;
 
+        /// <summary>
+        /// How many enemies remain until the wave ends
+        /// </summary>
         private int _enemiesRemaining;
 
+        /// <summary>
+        /// How many enemies are spawned at once
+        /// </summary>
         [SerializeField]
         private int _enemiesSpawnedAtOnce = 2;
 
+        /// <summary>
+        /// How long the preparation phase lasts in seconds
+        /// </summary>
         [SerializeField]
         private float _preparationPhaseDuration = 20;
 
+        /// <summary>
+        /// Delay between individual enemy spawns in seconds
+        /// </summary>
         [SerializeField]
         private float _enemySpawnDelay = 5;
 
+        /// <summary>
+        /// Prefab of the enemy to spawn
+        /// TODO: Multiple prefabs for multiple enemies
+        /// </summary>
         [SerializeField]
         private GameObject _enemyPrefab;
 
+        /// <summary>
+        /// List of all enemy spawn points
+        /// </summary>
         [SerializeField]
         private List<Transform> _enemySpawnPoints = new();
 
+        /// <summary>
+        /// The player's character object, used for enemy targeting
+        /// </summary>
         [SerializeField]
         private GameObject _playerCharacter;
 
+        /// <summary>
+        /// Currently alive enemies
+        /// </summary>
         private List<GameObject> _enemies = new();
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -71,6 +102,11 @@ namespace MonkeyBusiness.Managers
             Debug.Log("Spawning enemy");
         }
 
+
+        /// <summary>
+        /// Spawns the testing enemy
+        /// </summary>
+        /// <param name="spawnPointIndex">Index of the spawn point</param>
         void SpawnDummyEnemy(int spawnPointIndex = 0)
         {
             GameObject enemyObject = Instantiate(_enemyPrefab, _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
@@ -94,6 +130,10 @@ namespace MonkeyBusiness.Managers
             _enemies.Add(enemyObject);
         }
 
+        /// <summary>
+        /// Callback when an enemy is defeated
+        /// </summary>
+        /// <param name="gameObject">the defeated enemy</param>
         void OnEnemyDestroyed(GameObject gameObject)
         {
             Debug.Log($"Enemy {gameObject.name} died :D");
@@ -110,7 +150,11 @@ namespace MonkeyBusiness.Managers
 
             Debug.Log($"{_enemiesRemaining} enemies remaining");
         }
-
+        
+        /// <summary>
+        /// Preparation phase coroutine
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator PreparationPhase()
         {
             Debug.Log("Preparation phase started");
@@ -119,6 +163,10 @@ namespace MonkeyBusiness.Managers
             yield return StartCoroutine(CombatPhase());
         }
 
+        /// <summary>
+        /// Combat phase coroutine
+        /// </summary>
+        /// <returns></returns>
         private IEnumerator CombatPhase()
         {
             _enemiesRemaining = _enemiesPerWave;
