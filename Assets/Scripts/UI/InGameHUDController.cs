@@ -1,19 +1,30 @@
+using MonkeyBusiness.UI;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI; // Do NOT use UIElements, that is UI Toolkit
+// Do NOT use UIElements, that is UI Toolkit
+using TMPro;
+using UnityEngine.UIElements;
+using Image = UnityEngine.UI.Image;
+
 namespace MonkeyBusiness
 {
     public class InGameHUD : MonoBehaviour
     {
-        [Required, BoxGroup("Crosshair Settings")]
+        [Required, BoxGroup("Crosshair", centerLabel: true)]
         [SerializeField] private Image crosshair;
-        [BoxGroup("Crosshair Settings"), PreviewField(50, ObjectFieldAlignment.Left), Optional, 
+        [BoxGroup("Crosshair"), PreviewField(50, ObjectFieldAlignment.Left), Optional, 
          InfoBox("Will default to a built-in knob if null")]
         [SerializeField] private Sprite crosshairSprite;
-        [Range(1f, 20f), BoxGroup("Crosshair Settings")]
+        [Range(1f, 20f), BoxGroup("Crosshair")]
         [SerializeField] private float crosshairSize = 10f;
 
+        [BoxGroup("Enemy Count", centerLabel: true), Required] 
+        [SerializeField] private TextMeshProUGUI enemyCountText;
+        
+        [BoxGroup("Health Bar", centerLabel: true), Required]
+        [SerializeField] private HealthBarController healthBar;
+        
         void OnValidate()
         {
             if (crosshair != null)
@@ -23,6 +34,18 @@ namespace MonkeyBusiness
                     // Default to a built-in knob
                     : AssetDatabase.GetBuiltinExtraResource<Sprite>("UI/Skin/Knob.psd");
             }
+        }
+
+        [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Enemy Count")]
+        public void SetEnemyCount(int value)
+        {
+            enemyCountText.text = value == 1 ? $"{value} Enemy Left!" : $"{value} Enemies Left!";
+        }
+
+        [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Health Bar")]
+        public void SetHealth(float value)
+        {
+            healthBar.SetValue(value);
         }
 
     }
