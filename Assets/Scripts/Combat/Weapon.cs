@@ -60,7 +60,7 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Current aim point of the weapon.")]
         Vector3 _currentAimPoint;
 
-        const float MIN_HIT_DISTANCE = 5f;
+        const float MIN_HIT_DISTANCE = 1f;
 
         private void Start()
         {
