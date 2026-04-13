@@ -87,6 +87,24 @@ namespace MonkeyBusiness.Combat
             }
         }
 
+        /// <summary>
+        /// Reloads the weapon by a percentage of its max ammo.
+        /// </summary>
+        public void ReloadPercent(float percentage)
+        {
+            int ammoToAdd = Mathf.RoundToInt(MaxAmmo * (percentage / 100f));
+            Reload(ammoToAdd);
+        }
+
+        /// <summary>
+        /// Reloads the weapon by a specific amount of ammo.
+        /// </summary>
+        public void Reload(int ammo)
+        {
+            CurrentAmmo = Mathf.Clamp(CurrentAmmo + ammo, 0, MaxAmmo);
+            OnAmmoChanged.Invoke(CurrentAmmo);
+        }
+
         IEnumerator FireCoroutine()
         {
             var projectile = Instantiate(_data.ProjectilePrefab, _bulletSpawnPoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
@@ -108,6 +126,9 @@ namespace MonkeyBusiness.Combat
         void Awake()
         {
             //_transforms = GetComponentsInChildren<Transform>();
+            MaxAmmo = _data.MaxAmmo;
+            CurrentAmmo = MaxAmmo;
+            
             _shootingInterval = 1f / _data.RateOfFire;
         }
 
