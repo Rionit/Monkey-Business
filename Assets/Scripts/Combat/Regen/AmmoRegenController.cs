@@ -3,6 +3,7 @@ using System.Collections;
 using MonkeyBusiness.Managers;
 using MonkeyBusiness.Misc;
 using Sirenix.OdinInspector;
+using MonkeyBusiness.Combat.Weapons;
 
 namespace MonkeyBusiness.Combat
 {

@@ -1,6 +1,6 @@
 using UnityEngine;
 using NUnit.Framework;
-using MonkeyBusiness.Combat;
+using MonkeyBusiness.Combat.Health;
 using UnityEngine.TestTools;
 using System.Collections;
 

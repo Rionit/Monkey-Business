@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using System.Collections;
+using MonkeyBusiness.Combat.Health;
 
 namespace MonkeyBusiness.Combat
 {

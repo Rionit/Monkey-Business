@@ -1,9 +1,9 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Enemies;
-using MonkeyBusiness.Combat;
 using System.Collections;
 using System.Collections.Generic;
+using MonkeyBusiness.Combat.Health;
 using System;
 using System.Linq;
 

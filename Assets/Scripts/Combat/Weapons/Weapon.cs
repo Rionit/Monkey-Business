@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using System.Collections;
 using MonkeyBusiness.Misc;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Weapons
 {
     /// <summary>
     /// Controller of the player's weapon.
@@ -22,9 +22,9 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Transform from which the weapon will fire projectiles.")]
         Transform _bulletSpawnPoint;
 
-        [field:ShowInInspector]
-        [field: BoxGroup("Stats")]
-        [field: ReadOnly]
+        [ShowInInspector]
+        [BoxGroup("Stats")]
+        [ReadOnly]
         /// <summary>
         /// Maximum ammo of the weapon.
         /// </summary>
@@ -34,7 +34,6 @@ namespace MonkeyBusiness.Combat
         /// <summary>
         /// Current ammo of the weapon.
         /// </summary>
-        ///
         [ShowInInspector, ReadOnly, BoxGroup("Stats")]
         public int CurrentAmmo { get; private set; }
 
@@ -61,12 +60,6 @@ namespace MonkeyBusiness.Combat
         Vector3 _currentAimPoint;
 
         const float MIN_HIT_DISTANCE = 1f;
-
-        private void Start()
-        {
-            MaxAmmo = _data.MaxAmmo;
-            CurrentAmmo = MaxAmmo;
-        }
 
         public void Equip()
         {
@@ -140,7 +133,6 @@ namespace MonkeyBusiness.Combat
             
             _shootingInterval = 1f / _data.RateOfFire;
         }
-
 
         /// <summary>
         /// Calculates the aim direction based on the camera's forward direction and what it hits.

@@ -2,6 +2,8 @@ using UnityEngine;
 using UnityEngine.TestTools;
 using System.Collections;
 using NUnit.Framework;
+using MonkeyBusiness.Combat.Attack;
+using MonkeyBusiness.Combat.Health;
 
 namespace MonkeyBusiness.Tests
 {
@@ -22,7 +24,7 @@ namespace MonkeyBusiness.Tests
             rb.useGravity = false;
 
             var collider = playerObject.AddComponent<CapsuleCollider>();
-            var playerHealth = playerObject.AddComponent<Combat.HealthController>();
+            var playerHealth = playerObject.AddComponent<HealthController>();
 
             // Attacker object
             var attackerObject = new GameObject("Attacker");
@@ -30,8 +32,8 @@ namespace MonkeyBusiness.Tests
             var attackRangeCollider = attackerObject.AddComponent<SphereCollider>();
             attackRangeCollider.radius = 10f;
             attackRangeCollider.isTrigger = true;
-            var attackInvoker = attackerObject.AddComponent<Combat.AttackInvoker>();
-            var meleeAttack = attackerObject.AddComponent<Combat.MeleeAttackController>();
+            var attackInvoker = attackerObject.AddComponent<AttackInvoker>();
+            var meleeAttack = attackerObject.AddComponent<MeleeAttackController>();
 
             // Act
             yield return new WaitForSeconds(meleeAttack.ChargeTime + 0.1f);
@@ -54,7 +56,7 @@ namespace MonkeyBusiness.Tests
             rb.useGravity = false;
 
             var collider = playerObject.AddComponent<CapsuleCollider>();
-            var playerHealth = playerObject.AddComponent<Combat.HealthController>();
+            var playerHealth = playerObject.AddComponent<HealthController>();
 
             // Attacker object
             var attackerObject = new GameObject("Attacker");
@@ -62,8 +64,8 @@ namespace MonkeyBusiness.Tests
             var attackRangeCollider = attackerObject.AddComponent<SphereCollider>();
             attackRangeCollider.radius = 10f;
             attackRangeCollider.isTrigger = true;
-            var attackInvoker = attackerObject.AddComponent<Combat.AttackInvoker>();
-            var meleeAttack = attackerObject.AddComponent<Combat.MeleeAttackController>();
+            var attackInvoker = attackerObject.AddComponent<AttackInvoker>();
+            var meleeAttack = attackerObject.AddComponent<MeleeAttackController>();
 
             bool attacking = false;
             attackInvoker.OnAttackInvoked.AddListener((_) => attacking = true);
