@@ -1,0 +1,18 @@
+{
+    "name": "KinematicCharacterController.Editor",
+    "rootNamespace": "KinematicCharacterController",
+    "references": [
+        "GUID:8ca1fef4823304d61af771e3807bd3c4"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
