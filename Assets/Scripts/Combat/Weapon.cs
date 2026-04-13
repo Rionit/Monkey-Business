@@ -1,3 +1,4 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -33,6 +34,8 @@ namespace MonkeyBusiness.Combat
         /// <summary>
         /// Current ammo of the weapon.
         /// </summary>
+        ///
+        [ShowInInspector, ReadOnly, BoxGroup("Stats")]
         public int CurrentAmmo { get; private set; }
 
         /// <summary>
@@ -58,6 +61,12 @@ namespace MonkeyBusiness.Combat
         Vector3 _currentAimPoint;
 
         const float MIN_HIT_DISTANCE = 5f;
+
+        private void Start()
+        {
+            MaxAmmo = _data.MaxAmmo;
+            CurrentAmmo = MaxAmmo;
+        }
 
         public void Equip()
         {
