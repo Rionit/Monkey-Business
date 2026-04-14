@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using System.Collections;
 using MonkeyBusiness.Misc;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Weapons
 {
     /// <summary>
     /// Controller of the player's weapon.
@@ -22,9 +22,9 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Transform from which the weapon will fire projectiles.")]
         Transform _bulletSpawnPoint;
 
-        [field:ShowInInspector]
-        [field: BoxGroup("Stats")]
-        [field: ReadOnly]
+        [ShowInInspector]
+        [BoxGroup("Stats")]
+        [ReadOnly]
         /// <summary>
         /// Maximum ammo of the weapon.
         /// </summary>
@@ -34,7 +34,6 @@ namespace MonkeyBusiness.Combat
         /// <summary>
         /// Current ammo of the weapon.
         /// </summary>
-        ///
         [ShowInInspector, ReadOnly, BoxGroup("Stats")]
         public int CurrentAmmo { get; private set; }
 
@@ -44,9 +43,14 @@ namespace MonkeyBusiness.Combat
         public bool HasAmmo => CurrentAmmo > 0;
 
         /// <summary>
+        /// Whether the weapon is equipped
+        /// </summary>
+        public bool IsEquipped { get; private set; } = false;
+
+        /// <summary>
         /// Event invoked when the ammo count changes, passing the new ammo count as an argument.
         /// </summary>
-        public UnityEvent<int> OnAmmoChanged = new();
+        public UnityEvent<Weapon> OnAmmoChanged = new();
 
         bool _isLoading = false;
 
@@ -62,26 +66,18 @@ namespace MonkeyBusiness.Combat
 
         const float MIN_HIT_DISTANCE = 1f;
 
-        private void Start()
-        {
-            MaxAmmo = _data.MaxAmmo;
-            CurrentAmmo = MaxAmmo;
-        }
-
         public void Equip()
         {
             Debug.Log($"Equipped item {gameObject.name}");
             gameObject.SetActive(true);
-
-            // Setting to default now, change later if needed
-            //SetChildLayers(0);
+            IsEquipped = true;
         }
 
         public void Unequip()
         {
             Debug.Log($"Unequipped item {gameObject.name}");
-            //SetChildLayers(LayerMask.NameToLayer("UnequippedItem"));
             gameObject.SetActive(false);
+            IsEquipped = false;
         }
 
         /// <summary>
@@ -94,6 +90,24 @@ namespace MonkeyBusiness.Combat
             {
                 StartCoroutine(FireCoroutine());
             }
+        }
+
+        /// <summary>
+        /// Reloads the weapon by a percentage of its max ammo.
+        /// </summary>
+        public void ReloadPercent(float percentage)
+        {
+            int ammoToAdd = Mathf.RoundToInt(MaxAmmo * (percentage / 100f));
+            Reload(ammoToAdd);
+        }
+
+        /// <summary>
+        /// Reloads the weapon by a specific amount of ammo.
+        /// </summary>
+        public void Reload(int ammo)
+        {
+            CurrentAmmo = Mathf.Clamp(CurrentAmmo + ammo, 0, MaxAmmo);
+            OnAmmoChanged.Invoke(this);
         }
 
         IEnumerator FireCoroutine()
@@ -109,7 +123,7 @@ namespace MonkeyBusiness.Combat
             _isLoading = true;
 
             CurrentAmmo--;
-            OnAmmoChanged.Invoke(CurrentAmmo);
+            OnAmmoChanged.Invoke(this);
             yield return new WaitForSeconds(_shootingInterval);
             _isLoading = false;
         }
@@ -117,9 +131,11 @@ namespace MonkeyBusiness.Combat
         void Awake()
         {
             //_transforms = GetComponentsInChildren<Transform>();
+            MaxAmmo = _data.MaxAmmo;
+            CurrentAmmo = MaxAmmo;
+            
             _shootingInterval = 1f / _data.RateOfFire;
         }
-
 
         /// <summary>
         /// Calculates the aim direction based on the camera's forward direction and what it hits.

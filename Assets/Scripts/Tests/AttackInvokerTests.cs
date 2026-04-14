@@ -2,6 +2,7 @@ using UnityEngine;
 using NUnit.Framework;
 using UnityEngine.TestTools;
 using System.Collections;
+using MonkeyBusiness.Combat.Attack;
 
 namespace MonkeyBusiness.Tests
 {
@@ -27,7 +28,7 @@ namespace MonkeyBusiness.Tests
             invokerObject.transform.position = Vector3.zero;
             var attackRangeCollider = invokerObject.AddComponent<SphereCollider>();
             attackRangeCollider.radius = 10f;
-            var attackInvoker = invokerObject.AddComponent<Combat.AttackInvoker>();
+            var attackInvoker = invokerObject.AddComponent<AttackInvoker>();
 
             attackRangeCollider.isTrigger = true;
 
@@ -50,7 +51,7 @@ namespace MonkeyBusiness.Tests
 
             var invokerObject = new GameObject("AttackInvoker");
             var attackRangeCollider = invokerObject.AddComponent<SphereCollider>();
-            var attackInvoker = invokerObject.AddComponent<Combat.AttackInvoker>();
+            var attackInvoker = invokerObject.AddComponent<AttackInvoker>();
 
             attackRangeCollider.isTrigger = true;
             attackInvoker.AttackRange = 10f;
@@ -74,7 +75,7 @@ namespace MonkeyBusiness.Tests
 
             var invokerObject = new GameObject("AttackInvoker");
             var attackRangeCollider = invokerObject.AddComponent<SphereCollider>();
-            var attackInvoker = invokerObject.AddComponent<Combat.AttackInvoker>();
+            var attackInvoker = invokerObject.AddComponent<AttackInvoker>();
 
             float cooldown = attackInvoker.CooldownTime;
 

@@ -1,6 +1,7 @@
 using UnityEngine;
 using MonkeyBusiness.Enemies;
-using MonkeyBusiness.Combat;
+using MonkeyBusiness.Combat.Weapons;
+using MonkeyBusiness.Combat.Health;
 using System.Collections;
 
 namespace MonkeyBusiness.Effects
@@ -9,7 +10,6 @@ namespace MonkeyBusiness.Effects
     {
         [SerializeField]
         private ProjectileController _projectileController;
-
 
         [field:SerializeField]
         [Tooltip("Duration of the banana poison effect in seconds.")]

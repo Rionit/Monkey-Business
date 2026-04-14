@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Attack
 {
     /// <summary>
     /// Interface for attack types including the basic features.

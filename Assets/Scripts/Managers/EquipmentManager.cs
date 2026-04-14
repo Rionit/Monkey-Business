@@ -1,12 +1,11 @@
 using System.Collections.Generic;
 using MonkeyBusiness.Items;
-using MonkeyBusiness.Combat;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using MonkeyBusiness.Misc;
 
-namespace MonkeyBusiness
+namespace MonkeyBusiness.Managers
 {
     /// <summary>
     /// Manages the player's inventory, switching weapons, picking up items off the ground, and shooting.
@@ -55,7 +54,7 @@ namespace MonkeyBusiness
         /// <summary>
         /// List of items in inventory
         /// </summary>
-        private List<IEquippable> _items = new(ITEM_CAPACITY);
+        public List<IEquippable> Items { get; private set; } = new(ITEM_CAPACITY);
 
         /// <summary>
         /// Is the player holding down the shoot button
@@ -93,11 +92,11 @@ namespace MonkeyBusiness
 
             foreach(IEquippable equippable in GetComponentsInChildren<IEquippable>())
             {
-                _items.Add(equippable);
+                Items.Add(equippable);
                 equippable.Unequip();
             }
 
-            if(_items.Count > 0)
+            if(Items.Count > 0)
             {
                 EquipSlot(0);
             }
@@ -107,7 +106,7 @@ namespace MonkeyBusiness
         {
             if (_isShooting)
             {
-                _items[_currentItemSlot].Use();
+                Items[_currentItemSlot].Use();
             }
 
         }
@@ -135,9 +134,9 @@ namespace MonkeyBusiness
         void OnItem(int itemSlot)
         {
             Debug.Log($"Trying to equip item {itemSlot}");
-            if (itemSlot >= _items.Count)
+            if (itemSlot >= Items.Count)
             {
-                Debug.Log($"Tried to equip item in slot {itemSlot}, but I only have {_items.Count} items.");
+                Debug.Log($"Tried to equip item in slot {itemSlot}, but I only have {Items.Count} items.");
                 return;
             }
             
@@ -155,7 +154,7 @@ namespace MonkeyBusiness
                 return;
             }
 
-            var item = _items[itemSlot];
+            var item = Items[itemSlot];
 
             if(item == null)
             {
@@ -184,7 +183,7 @@ namespace MonkeyBusiness
             {
                return;
             } 
-            _items[_currentItemSlot].Unequip();
+            Items[_currentItemSlot].Unequip();
             _previousItemSlot = _currentItemSlot;
             _currentItemSlot = -1;
         }
@@ -195,7 +194,7 @@ namespace MonkeyBusiness
         /// <param name="previous">instead equip previous item if true</param>
         void EquipNext(bool previous)
         {
-            int currentItemCount = _items.Count;
+            int currentItemCount = Items.Count;
 
             if(currentItemCount == 0)
             {
@@ -317,7 +316,7 @@ namespace MonkeyBusiness
         /// <returns> Current equipped item or null </returns>
         public IEquippable GetEquippedWeapon()
         {
-            return _currentItemSlot == -1 ? null : _items[_currentItemSlot];
+            return _currentItemSlot == -1 ? null : Items[_currentItemSlot];
         }
     }
 }

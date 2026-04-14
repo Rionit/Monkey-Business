@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UnityEngine.TestTools;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Health
 {
     /// <summary>
     /// Manages the entitiy's health, damage taking and death.

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Weapons
 {
     /// <summary>
     /// A singleton component that holds a reference to the scene's projectile parent

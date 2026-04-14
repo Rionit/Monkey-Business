@@ -1,8 +1,9 @@
 using UnityEngine;
 using System.Collections;
 using Sirenix.OdinInspector;
+using MonkeyBusiness.Combat.Health;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Attack
 {
     [RequireComponent(typeof(AttackInvoker))]
     public class MeleeAttackController : MonoBehaviour, IAttack

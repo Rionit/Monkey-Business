@@ -3,8 +3,9 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
+using MonkeyBusiness.Combat.Health;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Weapons
 {
     /// <summary>
     /// Controls the behavior of projectiles.

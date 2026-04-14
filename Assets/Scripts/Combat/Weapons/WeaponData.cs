@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Weapons
 {
     /// <summary>
     /// Contains stats and used ammo for a weapon.
