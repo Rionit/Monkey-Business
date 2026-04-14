@@ -43,9 +43,14 @@ namespace MonkeyBusiness.Combat.Weapons
         public bool HasAmmo => CurrentAmmo > 0;
 
         /// <summary>
+        /// Whether the weapon is equipped
+        /// </summary>
+        public bool IsEquipped { get; private set; } = false;
+
+        /// <summary>
         /// Event invoked when the ammo count changes, passing the new ammo count as an argument.
         /// </summary>
-        public UnityEvent<int> OnAmmoChanged = new();
+        public UnityEvent<Weapon> OnAmmoChanged = new();
 
         bool _isLoading = false;
 
@@ -65,16 +70,14 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             Debug.Log($"Equipped item {gameObject.name}");
             gameObject.SetActive(true);
-
-            // Setting to default now, change later if needed
-            //SetChildLayers(0);
+            IsEquipped = true;
         }
 
         public void Unequip()
         {
             Debug.Log($"Unequipped item {gameObject.name}");
-            //SetChildLayers(LayerMask.NameToLayer("UnequippedItem"));
             gameObject.SetActive(false);
+            IsEquipped = true;
         }
 
         /// <summary>
@@ -104,7 +107,7 @@ namespace MonkeyBusiness.Combat.Weapons
         public void Reload(int ammo)
         {
             CurrentAmmo = Mathf.Clamp(CurrentAmmo + ammo, 0, MaxAmmo);
-            OnAmmoChanged.Invoke(CurrentAmmo);
+            OnAmmoChanged.Invoke(this);
         }
 
         IEnumerator FireCoroutine()
@@ -120,7 +123,7 @@ namespace MonkeyBusiness.Combat.Weapons
             _isLoading = true;
 
             CurrentAmmo--;
-            OnAmmoChanged.Invoke(CurrentAmmo);
+            OnAmmoChanged.Invoke(this);
             yield return new WaitForSeconds(_shootingInterval);
             _isLoading = false;
         }
