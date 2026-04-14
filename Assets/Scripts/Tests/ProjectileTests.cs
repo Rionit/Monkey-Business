@@ -1,10 +1,12 @@
-using MonkeyBusiness.Combat;
 using UnityEngine.TestTools;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.TestTools.Utils;
+
+using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Combat.Weapons;
 
 namespace MonkeyBusiness.Tests
 {

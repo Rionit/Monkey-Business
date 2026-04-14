@@ -2,14 +2,10 @@ using UnityEngine;
 using Sirenix.OdinInspector;
 using System.Collections;
 using UnityEngine.Events;
-using System.Runtime.CompilerServices;
-using System.Reflection;
-using UnityEngine.UIElements;
 using MonkeyBusiness.Misc;
 
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Attack
 {
-
     // TODO: Better range checking for ranged enemies (raycasting, pre-fire)
     /// <summary>
     /// Controls the attack range and cooldown. Invokes attack when 

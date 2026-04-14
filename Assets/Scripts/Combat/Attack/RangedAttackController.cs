@@ -2,9 +2,10 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using System.Runtime.CompilerServices;
 using System.Collections;
+using MonkeyBusiness.Combat.Weapons;
 
 [assembly: InternalsVisibleTo("MonkeyBusiness.Tests")]
-namespace MonkeyBusiness.Combat
+namespace MonkeyBusiness.Combat.Attack
 {
     /// <summary>
     /// Controls the behavior of ranged attacks.

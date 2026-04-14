@@ -1,6 +1,6 @@
 using UnityEngine;
 using MonkeyBusiness.Enemies;
-using MonkeyBusiness.Combat;
+using MonkeyBusiness.Combat.Weapons;
 
 namespace MonkeyBusiness.Effects
 {
