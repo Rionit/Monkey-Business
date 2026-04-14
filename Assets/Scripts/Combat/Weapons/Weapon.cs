@@ -77,7 +77,7 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             Debug.Log($"Unequipped item {gameObject.name}");
             gameObject.SetActive(false);
-            IsEquipped = true;
+            IsEquipped = false;
         }
 
         /// <summary>
