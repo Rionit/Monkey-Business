@@ -3344,6 +3344,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1157080364}
     m_Modifications:
     - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: perks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
       propertyPath: OnPerkSelected.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
@@ -4531,7 +4535,7 @@ MonoBehaviour:
   motor: {fileID: 1788955478}
   root: {fileID: 239335358}
   cameraTarget: {fileID: 46338352}
-  walkSpeed: 15
+  <WalkSpeed>k__BackingField: 20
   crouchSpeed: 5
   walkResponse: 25
   crouchResponse: 20

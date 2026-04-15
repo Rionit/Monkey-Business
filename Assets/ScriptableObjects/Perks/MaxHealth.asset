@@ -29,10 +29,10 @@ MonoBehaviour:
     - rid: 915476820060012649
       type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
       data:
-        type: 0
+        description: The player's maximum health is increased by <value>
         value: 20
     - rid: 915476820060012652
       type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
       data:
-        type: 0
+        description: The player's maximum health is decreased by <value>
         value: -20

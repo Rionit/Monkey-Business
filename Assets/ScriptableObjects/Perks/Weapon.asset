@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weapon
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   nftImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  effectType: 1
+  effectType: 2
   buffEffect:
     rid: 915476820060012655
   debuffEffect:
@@ -29,10 +29,10 @@ MonoBehaviour:
     - rid: 915476820060012655
       type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
       data:
-        type: 0
+        description: 
         value: 0
     - rid: 915476820060012656
       type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
       data:
-        type: 0
+        description: 
         value: 0

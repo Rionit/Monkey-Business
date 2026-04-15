@@ -42,8 +42,8 @@ namespace MonkeyBusiness.Player
         [SerializeField] private KinematicCharacterMotor motor;
         [SerializeField] private Transform root;
         [SerializeField] private Transform cameraTarget;
-        [Space]
-        [SerializeField] private float walkSpeed = 20f;
+
+        [field:SerializeField] public float WalkSpeed { get; set; } = 20f;
         [SerializeField] private float crouchSpeed = 7f;
         [SerializeField] private float walkResponse = 25f;
         [SerializeField] private float crouchResponse = 20f;
@@ -237,7 +237,7 @@ namespace MonkeyBusiness.Player
                 // Move
                 if (_state.Stance is Stance.Stand or Stance.Crouch){
                     
-                    var speed = _state.Stance is Stance.Stand ? walkSpeed : crouchSpeed;
+                    var speed = _state.Stance is Stance.Stand ? WalkSpeed : crouchSpeed;
                     var response = _state.Stance is Stance.Stand ? walkResponse : crouchResponse;
                     
                     // And move along the ground in that direction
@@ -497,5 +497,6 @@ namespace MonkeyBusiness.Player
             if(killVelocity)
                 motor.BaseVelocity = Vector3.zero;
         }
+
     }
 }

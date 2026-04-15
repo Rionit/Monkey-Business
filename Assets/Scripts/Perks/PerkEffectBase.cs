@@ -12,9 +12,6 @@ namespace MonkeyBusiness.Perks
         [TextArea, ShowInInspector, SerializeField]
         protected string description;
             
-        //[ShowInInspector, ReadOnly]
-        //private string Preview => GetDescription();
-
         public abstract void Apply();
         
         public abstract void Reset();

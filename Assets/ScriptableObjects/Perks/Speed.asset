@@ -15,9 +15,9 @@ MonoBehaviour:
   nftImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   effectType: 1
   buffEffect:
-    rid: 915476820060012653
+    rid: 915476820060012719
   debuffEffect:
-    rid: 915476820060012654
+    rid: 915476820060012718
   useCustomEffectName: 0
   customEffectName: 
   effectName: 
@@ -26,13 +26,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 915476820060012653
-      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+    - rid: 915476820060012718
+      type: {class: MaxPlayerSpeedEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
       data:
-        type: 0
-        value: 0
-    - rid: 915476820060012654
-      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+        description: Your movement speed is slower by <value>
+        value: -10
+    - rid: 915476820060012719
+      type: {class: MaxPlayerSpeedEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
       data:
-        type: 0
-        value: 0
+        description: Your movement speed is faster by <value>
+        value: 10
