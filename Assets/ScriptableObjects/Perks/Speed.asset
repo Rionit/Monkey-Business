@@ -13,13 +13,26 @@ MonoBehaviour:
   m_Name: Speed
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   nftImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  effect: 1
+  effectType: 1
+  buffEffect:
+    rid: 915476829971939328
+  debuffEffect:
+    rid: 915476829971939329
   useCustomEffectName: 0
   customEffectName: 
   effectName: 
   funnyDescription: oh yeah sonic & crazy frog nft collab lets go!!!
-  buffDescription: I AM S P E E D
-  debuffDescription: whyyy ammmm IIII sooooooooo slooooow
-  buffValue: 25
-  debuffValue: -10
   isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 915476829971939328
+      type: {class: MaxPlayerSpeedEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: Your speed is increased by <value>
+        value: 10
+    - rid: 915476829971939329
+      type: {class: MaxPlayerSpeedEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: Your speed is decreased by <value>
+        value: -10

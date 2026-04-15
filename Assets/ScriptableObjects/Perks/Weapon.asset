@@ -13,13 +13,38 @@ MonoBehaviour:
   m_Name: Weapon
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   nftImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  effect: 1
+  effectType: 2
+  buffEffect:
+    rid: 915476820060012735
+  debuffEffect:
+    rid: 915476820060012733
   useCustomEffectName: 0
   customEffectName: 
   effectName: 
   funnyDescription: oh yeah sonic & crazy frog nft collab lets go!!!
-  buffDescription: I AM S P E E D
-  debuffDescription: whyyy ammmm IIII sooooooooo slooooow
-  buffValue: 25
-  debuffValue: -10
   isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 915476820060012733
+      type: {class: WeaponDamageEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: 'Your weapons damage have decreased: <data>'
+        _projectiles:
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: cff26d247fb44ee8faf7034c92bf0f77, type: 3}
+          Multiplier: 0.5
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: 2c291b13c9de647cc8bddd978e3bc320, type: 3}
+          Multiplier: 0.5
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: 23f1f653473e9f245adf18e9f843097f, type: 3}
+          Multiplier: 0.1
+    - rid: 915476820060012735
+      type: {class: WeaponDamageEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: 'Your weapons damage have increased: <data>'
+        _projectiles:
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: cff26d247fb44ee8faf7034c92bf0f77, type: 3}
+          Multiplier: 2
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: 2c291b13c9de647cc8bddd978e3bc320, type: 3}
+          Multiplier: 2
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: 23f1f653473e9f245adf18e9f843097f, type: 3}
+          Multiplier: 2

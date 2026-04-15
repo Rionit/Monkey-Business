@@ -5,6 +5,7 @@ using UnityEngine.Events;
 using System.Collections;
 using MonkeyBusiness.Misc;
 using System.Diagnostics.CodeAnalysis;
+using MonkeyBusiness.Managers;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -144,6 +145,7 @@ namespace MonkeyBusiness.Combat.Weapons
             {
                 //Debug.Log("Has projectile controller");
                 projectileController.Initialize("Enemy", GetAimDirection());
+                projectileController.DamageMultiplier = StatsManager.Instance.GetDamageMultiplier(_data.ProjectilePrefab);
             }
 
             _isLoading = true;
@@ -205,15 +207,5 @@ namespace MonkeyBusiness.Combat.Weapons
                 Gizmos.DrawLine(_bulletSpawnPoint.position, _currentAimPoint);
             }
         }
-
-        /*
-        private void SetChildLayers(int layer)
-        {
-            foreach(Transform t in _transforms)
-            {
-                t.gameObject.layer = layer;
-            }
-        }
-        */
     }
 }
