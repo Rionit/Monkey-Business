@@ -52,6 +52,16 @@ namespace MonkeyBusiness.Combat.Weapons
         /// </summary>
         public UnityEvent<Weapon> OnAmmoChanged = new();
 
+        [SerializeField]
+        UnityEvent<IEquippable> _onEquipped = new();
+
+        [SerializeField]
+        UnityEvent<IEquippable> _onUnequipped = new();
+
+        public UnityEvent<IEquippable> OnEquipped => _onEquipped;
+        
+        public UnityEvent<IEquippable> OnUnequipped => _onUnequipped;
+
         bool _isLoading = false;
 
         [ShowInInspector]
@@ -70,14 +80,17 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             Debug.Log($"Equipped item {gameObject.name}");
             gameObject.SetActive(true);
-            IsEquipped = true;
+
+            OnEquipped.Invoke(this);
+            // Setting to default now, change later if needed
+            //SetChildLayers(0);
         }
 
         public void Unequip()
         {
             Debug.Log($"Unequipped item {gameObject.name}");
             gameObject.SetActive(false);
-            IsEquipped = false;
+            OnUnequipped.Invoke(this);
         }
 
         /// <summary>
