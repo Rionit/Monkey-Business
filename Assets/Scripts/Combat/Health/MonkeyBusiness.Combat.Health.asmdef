@@ -1,0 +1,14 @@
+{
+    "name": "MonkeyBusiness.Combat.Health",
+    "rootNamespace": "MonkeyBusiness.Combat.Health",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

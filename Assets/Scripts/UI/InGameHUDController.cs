@@ -1,4 +1,3 @@
-using MonkeyBusiness.UI;
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
@@ -6,8 +5,9 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
+using MonkeyBusiness.Combat.Weapons;
 
-namespace MonkeyBusiness
+namespace MonkeyBusiness.UI
 {
     public class InGameHUD : MonoBehaviour
     {
@@ -63,6 +63,12 @@ namespace MonkeyBusiness
                 return;
             }
             ammoText.text = $"{value}";
+        }
+
+        public void OnAmmoChanged(Weapon weapon){
+            if(weapon.IsEquipped) {
+                SetAmmo(weapon.CurrentAmmo);
+            }
         }
     }
 }

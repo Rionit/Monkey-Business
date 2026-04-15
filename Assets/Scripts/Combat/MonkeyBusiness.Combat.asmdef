@@ -2,7 +2,8 @@
     "name": "MonkeyBusiness.Combat",
     "rootNamespace": "MonkeyBusiness.Combat",
     "references": [
-        "GUID:c282b84647f3201a6a87d3ea979d6e2b"
+        "GUID:c282b84647f3201a6a87d3ea979d6e2b",
+        "GUID:63715533141da98f1a4a198975074850"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

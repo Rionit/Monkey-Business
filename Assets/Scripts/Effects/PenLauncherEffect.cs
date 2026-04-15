@@ -1,6 +1,8 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
-using MonkeyBusiness.Combat;
+using MonkeyBusiness.Combat.Weapons;
+
+
 namespace MonkeyBusiness.Effects
 {
     public class PenLauncherEffect : MonoBehaviour

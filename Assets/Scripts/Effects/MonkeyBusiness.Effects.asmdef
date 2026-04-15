@@ -3,7 +3,8 @@
     "rootNamespace": "MonkeyBusiness.Effects",
     "references": [
         "GUID:e849feaaa6ed6042a8d4cd90576f8280",
-        "GUID:dbabf1cf2ae027784a4c3bc046d862ab"
+        "GUID:a2ea2607490f0c5e296a47a52bb09121",
+        "GUID:5f116cbd8f00992e4bb5d8f7375343e5"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

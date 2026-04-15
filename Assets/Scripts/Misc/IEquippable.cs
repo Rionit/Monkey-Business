@@ -6,6 +6,7 @@ namespace MonkeyBusiness.Misc
 {
     public interface IEquippable
     {
+        public bool IsEquipped {get;}
         public void Equip();
 
         public UnityEvent<IEquippable> OnEquipped { get; }

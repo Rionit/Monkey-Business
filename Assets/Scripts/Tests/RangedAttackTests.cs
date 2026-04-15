@@ -4,7 +4,10 @@ using UnityEditor;
 using NUnit.Framework;
 using System.Collections;
 using UnityEngine.TestTools.Utils;
-using MonkeyBusiness.Combat;
+using MonkeyBusiness.Combat.Attack;
+using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Combat.Weapons;
+using MonkeyBusiness.Managers;
 
 namespace MonkeyBusiness.Tests
 {
@@ -27,7 +30,7 @@ namespace MonkeyBusiness.Tests
             rb.useGravity = false;
 
             var collider = playerObject.AddComponent<CapsuleCollider>();
-            var playerHealth = playerObject.AddComponent<Combat.HealthController>();
+            var playerHealth = playerObject.AddComponent<HealthController>();
 
             // Attacker object
             var attackerObject = new GameObject("Attacker");
@@ -35,8 +38,8 @@ namespace MonkeyBusiness.Tests
             var attackRangeCollider = attackerObject.AddComponent<SphereCollider>();
             attackRangeCollider.radius = 10f;
             attackRangeCollider.isTrigger = true;
-            var attackInvoker = attackerObject.AddComponent<Combat.AttackInvoker>();
-            var rangedAttack = attackerObject.AddComponent<Combat.RangedAttackController>();
+            var attackInvoker = attackerObject.AddComponent<AttackInvoker>();
+            var rangedAttack = attackerObject.AddComponent<RangedAttackController>();
             var firePos = new GameObject("FirePos");
             firePos.transform.parent = attackerObject.transform;
             firePos.transform.localPosition = Vector3.one * 0.5f;
@@ -44,7 +47,7 @@ namespace MonkeyBusiness.Tests
 
             rangedAttack.TestSetup(_projectilePrefab, firePos.transform);
 
-            var gameManager = new GameObject("GameManager").AddComponent<Managers.GameManager>();
+            var gameManager = new GameObject("GameManager").AddComponent<GameManager>();
 
             bool hasFired = false;
             attackInvoker.OnAttackInvoked.AddListener((_) => hasFired = true);
@@ -58,7 +61,7 @@ namespace MonkeyBusiness.Tests
             // Assert
 
             // Checks if the projectile was spawned 
-            var projectile = ProjectileParentHolder.Instance.Object.GetComponentInChildren<Combat.ProjectileController>();
+            var projectile = ProjectileParentHolder.Instance.Object.GetComponentInChildren<ProjectileController>();
             Assert.IsNotNull(projectile, "Projectile was not spawned.");
         }
 
@@ -77,7 +80,7 @@ namespace MonkeyBusiness.Tests
             rb.useGravity = false;
 
             var collider = playerObject.AddComponent<CapsuleCollider>();
-            var playerHealth = playerObject.AddComponent<Combat.HealthController>();
+            var playerHealth = playerObject.AddComponent<HealthController>();
 
             // Attacker object
             var attackerObject = new GameObject("Attacker");
@@ -85,8 +88,8 @@ namespace MonkeyBusiness.Tests
             var attackRangeCollider = attackerObject.AddComponent<SphereCollider>();
             attackRangeCollider.radius = 10f;
             attackRangeCollider.isTrigger = true;
-            var attackInvoker = attackerObject.AddComponent<Combat.AttackInvoker>();
-            var rangedAttack = attackerObject.AddComponent<Combat.RangedAttackController>();
+            var attackInvoker = attackerObject.AddComponent<AttackInvoker>();
+            var rangedAttack = attackerObject.AddComponent<RangedAttackController>();
             var firePos = new GameObject("FirePos");
             firePos.transform.parent = attackerObject.transform;
             firePos.transform.localPosition = Vector3.one * 0.5f;
@@ -108,7 +111,7 @@ namespace MonkeyBusiness.Tests
             // Assert
 
             // Checks if the projectile was spawned 
-            var projectile = ProjectileParentHolder.Instance.Object.GetComponentInChildren<Combat.ProjectileController>();
+            var projectile = ProjectileParentHolder.Instance.Object.GetComponentInChildren<ProjectileController>();
             Assert.AreEqual("Player", projectile.TargetTag, "Projectile target tag was not set properly.");
             
             var dirEqual = Vector3ComparerWithEqualsOperator.Instance.Equals(dirToPlayer, projectile.Direction);
