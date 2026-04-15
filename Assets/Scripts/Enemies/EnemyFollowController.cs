@@ -175,6 +175,27 @@ namespace MonkeyBusiness.Enemies
             SetDefaultValues();
         }
 
+        /// <summary>
+        /// Changes the default values by a multiplier, removing all debuffs.
+        /// </summary>
+        public void ChangeDefaultValues(float multiplier)
+        {
+            // Removes slowdown debuff if there is any
+            if(_slowdownCoroutine != null)
+            {
+                StopCoroutine(_slowdownCoroutine);
+            }
+
+            // Resets default values
+            _defaultMaxSpeed = _defaultMaxSpeed * multiplier;
+            _defaultMaxAngularSpeed = _defaultMaxAngularSpeed * multiplier;
+            _defaultAcceleration = _defaultAcceleration * multiplier;
+            _defaultStoppingDistance = _defaultStoppingDistance * multiplier;
+            
+            // Applies new default values
+            SetDefaultValues();
+        }
+
         internal void TestSetup(float chaseDistance)
         {
             _chaseDistance = chaseDistance;
