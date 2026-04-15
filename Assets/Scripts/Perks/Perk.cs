@@ -113,7 +113,8 @@ namespace MonkeyBusiness.Perks
         public override string ToString()
         {
             string perkName = perkSO != null ? perkSO.GetDisplayName() : base.ToString();
-            return isSelected ? $"{perkName} [isBuff = {isBuff}]" : perkName;
+            string description = isBuff ? perkSO.buffEffect.GetDescription() : perkSO.debuffEffect.GetDescription();
+            return isSelected ? $"{perkName} [isBuff = {isBuff}, description = {description}]" : perkName;
         }
     }
 }

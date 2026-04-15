@@ -1,5 +1,5 @@
 OVDF v1.1
-PerkSO, Assembly-CSharp
+MonkeyBusiness.Perks.PerkSO, MonkeyBusiness.Perks
 MetaGuid:eb05e5b9e313e694ba5d48dd5d45814f
 
 # $968UiGaz7ScTEhXdvMQFsP
@@ -16,7 +16,7 @@ Position: $968UiGaz7ScTEhXdvMQFsP:0
 Position: $968UiGaz7ScTEhXdvMQFsP:1
 
 # $8qo1BZFDFMDQ42iVfyd3QL
-Position: "Public Info (Shown Before Pick)":1
+Position: "Public Info (Shown Before Pick)":2
 + [Sirenix.OdinInspector.ColumnGroupAttribute]
 
 # $Ntd7P35FqyTxmNNUmkEq2i
@@ -29,12 +29,15 @@ Position: $8qo1BZFDFMDQ42iVfyd3QL:1
 + [Sirenix.OdinInspector.ColumnGroupAttribute+ColumnSubGroupAttribute]
 	Size = Auto
 
-# effect
-Position: "Values":0
+# "Rules"
+Position: $968UiGaz7ScTEhXdvMQFsP:2
+
+# effectType
+Position: "Public Info (Shown Before Pick)":0
 + [Sirenix.OdinInspector.EnumToggleButtonsAttribute]
 
 # nftImage
-Position: "Public Info (Shown Before Pick)":0
+Position: "Public Info (Shown Before Pick)":1
 * [Sirenix.OdinInspector.PreviewFieldAttribute]
 	alignment = Left
 	alignmentHasValue = True

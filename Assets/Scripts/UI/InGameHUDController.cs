@@ -7,6 +7,7 @@ using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 using MonkeyBusiness.Combat.Weapons;
 using MonkeyBusiness.Managers;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.UI
 {
@@ -66,11 +67,22 @@ namespace MonkeyBusiness.UI
             }
             ammoText.text = $"{value}";
         }
-
+        
         public void OnAmmoChanged(Weapon weapon){
-            if(weapon.IsEquipped) {
-                SetAmmo(weapon.CurrentAmmo);
-            }
+            SetAmmo(weapon.CurrentAmmo);
+        }
+
+        public void OnWeaponEquipped(IEquippable weaponEquippable)
+        {
+            var weapon = weaponEquippable as Weapon;
+            weapon.OnAmmoChanged.AddListener(OnAmmoChanged);
+            SetAmmo(weapon.CurrentAmmo);
+        }
+
+        public void OnWeaponUnequipped(IEquippable weaponEquippable)
+        {
+            var weapon = weaponEquippable as Weapon;
+            weapon.OnAmmoChanged.RemoveListener(OnAmmoChanged);
         }
     }
 }

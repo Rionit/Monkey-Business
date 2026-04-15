@@ -7,19 +7,23 @@ namespace MonkeyBusiness.Perks
     [CreateAssetMenu(fileName = "New Perk", menuName = "Monkey Business/Perk")]
     public class PerkSO : ScriptableObject
     {
+        [BoxGroup("Public Info (Shown Before Pick)", centerLabel: true)]
         [PreviewField(75)] [Tooltip("Visual representation of the perk as NFT image")]
         public Sprite nftImage;
 
+        [BoxGroup("Hidden Outcome (Revealed After Pick)", centerLabel: true)]
         [FormerlySerializedAs("effect")]
         [Tooltip("Type of effect this perk modifies (player only sees this before choosing)")]
         [LabelText("Effect Type")]
         public PerkEffectType effectType;
 
+        [BoxGroup("Hidden Outcome (Revealed After Pick)")]
         [Tooltip("The buff effect that will be applied after selection")]
         [LabelText("Buff Effect")]
         [SerializeReference, InlineProperty]
         public PerkEffectBase buffEffect;
         
+        [BoxGroup("Hidden Outcome (Revealed After Pick)")]
         [Tooltip("The debuff effect that will be applied after selection")]
         [LabelText("Debuff Effect")]
         [SerializeReference, InlineProperty]
@@ -47,7 +51,7 @@ namespace MonkeyBusiness.Perks
         [BoxGroup("Rules")]
         [LabelText("Is Unique")]
         [Tooltip("If true, this perk will not appear again after being picked")]
-        public bool isUnique;
+        public bool isUnique; // TODO: Implement this
 
         /// <summary>
         /// Returns the name shown to the player before picking.
@@ -57,15 +61,6 @@ namespace MonkeyBusiness.Perks
             return useCustomEffectName && !string.IsNullOrEmpty(customEffectName)
                 ? customEffectName
                 : effectType.ToString();
-        }
-        
-        private void OnValidate()
-        {
-            if (buffEffect != null && debuffEffect != null &&
-                buffEffect.type != debuffEffect.type)
-            {
-                Debug.LogWarning($"Buff and Debuff effects in {GetDisplayName()} are from different categories.");
-            }
         }
     }
 
