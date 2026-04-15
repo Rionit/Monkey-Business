@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using MonkeyBusiness.Misc;
+using System.Diagnostics.CodeAnalysis;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -74,6 +75,15 @@ namespace MonkeyBusiness.Combat.Weapons
         [Tooltip("Current aim point of the weapon.")]
         Vector3 _currentAimPoint;
 
+        /// <summary>
+        /// A reference to an object used to run coroutines for this weapon, since the weapon itself may get disabled when unequipped.
+        /// </summary>
+        [SerializeField]
+        [RequiredIn(PrefabKind.InstanceInScene)]
+        [Tooltip("Component responsible for running shooting coroutines."+
+        "\n <color=red><b>Should be some object inside the player object that doesn't get disabled during gameplay (except for death).</b></color>")]
+        MonoBehaviour _coroutineRunner;
+
         const float MIN_HIT_DISTANCE = 1f;
 
         public void Equip()
@@ -96,12 +106,11 @@ namespace MonkeyBusiness.Combat.Weapons
         /// <summary>
         /// Fires the weapon
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void Use()
         {
-            if(!_isLoading)
+            if(!_isLoading && HasAmmo)
             {
-                StartCoroutine(FireCoroutine());
+                _coroutineRunner.StartCoroutine(FireCoroutine());
             }
         }
 
@@ -123,6 +132,10 @@ namespace MonkeyBusiness.Combat.Weapons
             OnAmmoChanged.Invoke(this);
         }
 
+        /// <summary>
+        /// Fires upon target, then waits for the shooting interval before allowing to fire again.
+        /// </summary>
+        /// <remarks><i>Should be run on an object that doesn't get disabled during gameplay.</i></remarks>
         IEnumerator FireCoroutine()
         {
             var projectile = Instantiate(_data.ProjectilePrefab, _bulletSpawnPoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
@@ -148,6 +161,15 @@ namespace MonkeyBusiness.Combat.Weapons
             CurrentAmmo = MaxAmmo;
             
             _shootingInterval = 1f / _data.RateOfFire;
+
+            if(_coroutineRunner == null)
+            {
+                _coroutineRunner = GetComponentInParent<ITargetable>() as MonoBehaviour;
+                if(_coroutineRunner == null)
+                {
+                    Debug.LogError($"No valid coroutine runner found for weapon {gameObject.name}! Please assign one in the inspector.");
+                }
+            }
         }
 
         /// <summary>
