@@ -48,6 +48,12 @@ namespace MonkeyBusiness.Combat
         /// </summary>
         public UnityEvent<int> OnAmmoChanged = new();
 
+        [ShowInInspector]
+        public UnityEvent<IEquippable> OnEquipped { get; private set; } = new();
+        
+        [ShowInInspector]
+        public UnityEvent<IEquippable> OnUnequipped { get; private set; } = new();
+
         bool _isLoading = false;
 
         [ShowInInspector]
@@ -73,6 +79,7 @@ namespace MonkeyBusiness.Combat
             Debug.Log($"Equipped item {gameObject.name}");
             gameObject.SetActive(true);
 
+            OnEquipped.Invoke(this);
             // Setting to default now, change later if needed
             //SetChildLayers(0);
         }
@@ -82,6 +89,7 @@ namespace MonkeyBusiness.Combat
             Debug.Log($"Unequipped item {gameObject.name}");
             //SetChildLayers(LayerMask.NameToLayer("UnequippedItem"));
             gameObject.SetActive(false);
+            OnUnequipped.Invoke(this);
         }
 
         /// <summary>
