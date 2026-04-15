@@ -1,0 +1,17 @@
+{
+    "name": "MonkeyBusiness.Perks.PerkEffects",
+    "rootNamespace": "",
+    "references": [
+        "GUID:63715533141da98f1a4a198975074850",
+        "GUID:a2ea2607490f0c5e296a47a52bb09121"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

@@ -1,0 +1,38 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
+  m_Name: MaxHealth
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSO
+  nftImage: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
+  effectType: 0
+  buffEffect:
+    rid: 915476820060012761
+  debuffEffect:
+    rid: 915476820060012762
+  useCustomEffectName: 0
+  customEffectName: 
+  effectName: 
+  funnyDescription: sweet sweet juicy nft yumm
+  isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 915476820060012761
+      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: Your health is increased by <value>
+        value: 20
+    - rid: 915476820060012762
+      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: Your health is decreased by <value>
+        value: -20

@@ -21,6 +21,14 @@ namespace MonkeyBusiness.Combat.Weapons
         public float Damage { get; set; } = 10f;
 
         /// <summary>
+        /// Damage multiplier.
+        /// </summary>
+        [field: SerializeField]
+        [field: BoxGroup("Stats")]
+        [Tooltip("Multiplies the damage by this amount.")]
+        public float DamageMultiplier { get; set; } = 1f;
+        
+        /// <summary>
         /// Speed of the projectile. [Units/s]
         /// </summary>
         [field: SerializeField]
@@ -158,7 +166,7 @@ namespace MonkeyBusiness.Combat.Weapons
                     Debug.LogError("Target does not have a HealthController component!");
                     return;
                 }
-                targetHealth.TakeDamage(Damage);
+                targetHealth.TakeDamage(Damage * DamageMultiplier);
             }
 
             if((_destroyedBy.value & (1 << other.gameObject.layer)) != 0)

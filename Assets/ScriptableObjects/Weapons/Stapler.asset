@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b7fa2e171f17524e199d5e9751328650, type: 3}
   m_Name: Stapler
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.WeaponData
-  <MaxAmmo>k__BackingField: 50
+  <MaxAmmo>k__BackingField: 60
   <ProjectilePrefab>k__BackingField: {fileID: 6742155759220148124, guid: 23f1f653473e9f245adf18e9f843097f, type: 3}
-  <RateOfFire>k__BackingField: 3.5
+  <RateOfFire>k__BackingField: 10

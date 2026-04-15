@@ -23,11 +23,11 @@ namespace MonkeyBusiness.Combat.Attack
         
         [field: BoxGroup("Stats")]
         [field: SerializeField]
-        public float Damage { get; private set; } = 20f;
+        public float Damage { get; set; } = 20f;
 
         [field: BoxGroup("Stats")]
         [field: SerializeField]
-        public float ChargeTime { get; private set; } = 0.5f;
+        public float ChargeTime { get; set; } = 0.5f;
 
         [BoxGroup("Debug")]
         [ShowInInspector]

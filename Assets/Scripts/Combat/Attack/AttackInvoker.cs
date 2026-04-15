@@ -13,19 +13,12 @@ namespace MonkeyBusiness.Combat.Attack
     [RequireComponent(typeof(SphereCollider))]
     public class AttackInvoker : MonoBehaviour
     {
-        [BoxGroup("Collider")]
-        [SerializeField]
-        [ShowInInspector]
-        [Tooltip("Assign the collider <color=green>manually</color> (<color=green>true</color>) " 
-        + "or <color=yellow>automatically</color> from current game object (<color=yellow>false</color>)")]
-        bool _manuallyAssignCollider = false;
-
         /// <summary>
         /// Collider representing the attack range.
         /// </summary>
         [BoxGroup("Collider")]
         [SerializeField]
-        [ShowIf(nameof(_manuallyAssignCollider))]
+        [Required]
         [Tooltip("Collider representing the attack range")]
         SphereCollider _attackRangeCollider;
 
@@ -60,12 +53,27 @@ namespace MonkeyBusiness.Combat.Attack
         public float CooldownTime 
         {
             get => _cooldownTime;
-            set => _cooldownTime = value;
+            set 
+            {
+                _cooldownTime = value;
+                _attackSpeed = 1f / _cooldownTime;
+            }
         }
+
+        float _attackSpeed = 0.2f;
+
 
         [ShowInInspector]
         [Tooltip("Attack speed of the entity, in attacks per second. \n\n <color=green><i> = 1/CooldownTime</i></color>")]
-        public float AttackSpeed {get; set; } = 0.2f;
+        public float AttackSpeed 
+        {
+            get => _attackSpeed;
+            set
+            {
+                _attackSpeed = value;
+                _cooldownTime = 1f / _attackSpeed;   
+            }
+        }
 
         /// <summary>
         /// Whether the player is in the attack range or not.
@@ -84,6 +92,14 @@ namespace MonkeyBusiness.Combat.Attack
         [ReadOnly]
         [BoxGroup("Debug")]
         public bool OnCooldown { get; private set;} = false;
+
+        #if UNITY_EDITOR
+        [BoxGroup("Debug")]
+        [ShowInInspector]
+        [SerializeField]
+        [Tooltip("Color of the attack range gizmo in the editor")]
+        Color _debugGizmoColor = new Color(0.5f, 0.5f, 0.8f, 0.35f);
+        #endif
 
         /// <summary>
         /// Event invoked when the attack is triggered. The attacked target's object is passed as a parameter.
@@ -136,10 +152,12 @@ namespace MonkeyBusiness.Combat.Attack
             }
         }
 
+        #if UNITY_EDITOR
         void OnDrawGizmos()
         {
-            Gizmos.color = new Color(0.5f, 0.5f, 0.8f, 0.35f);
+            Gizmos.color = _debugGizmoColor;
             Gizmos.DrawSphere(transform.position, AttackRange);
         }
+        #endif
     }
 }
