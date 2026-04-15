@@ -53,6 +53,10 @@ PrefabInstance:
       value: ChimpProjectile
       objectReference: {fileID: 0}
     - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+      propertyPath: _destroyedBy.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
       propertyPath: <Speed>k__BackingField
       value: 15
       objectReference: {fileID: 0}
