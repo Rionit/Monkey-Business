@@ -10,16 +10,29 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
-  m_Name: Health
+  m_Name: MaxHealth
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   nftImage: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  effect: 0
+  effectType: 0
+  buffEffect:
+    rid: 915476820060012649
+  debuffEffect:
+    rid: 915476820060012652
   useCustomEffectName: 0
   customEffectName: 
   effectName: 
   funnyDescription: sweet sweet juicy nft yumm
-  buffDescription: oh shit more to life!!
-  debuffDescription: fuuuuuuuuuuuu
-  buffValue: 10
-  debuffValue: -10
   isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 915476820060012649
+      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+      data:
+        type: 0
+        value: 20
+    - rid: 915476820060012652
+      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+      data:
+        type: 0
+        value: -20

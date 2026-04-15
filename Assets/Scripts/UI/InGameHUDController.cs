@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 using MonkeyBusiness.Combat.Weapons;
+using MonkeyBusiness.Managers;
 
 namespace MonkeyBusiness.UI
 {
@@ -46,12 +47,13 @@ namespace MonkeyBusiness.UI
         [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Health Bar")]
         public void SetHealth(float value)
         {
-            if (value < 0f || value > 100f)
+            var max = StatsManager.Instance.PlayerMaxHealth;
+            if (value < 0f || value > max)
             {
-                Debug.LogWarning("Health value is out of range 0-100!");
+                Debug.LogWarning($"Health value is out of range 0-{max}!");
             }
-            Mathf.Clamp(value, 0f, 100f);
-            healthBar.SetValue(value/100f);
+            value = Mathf.Clamp(value, 0f, max);
+            healthBar.SetValue(value/max);
         }
 
         [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Ammo")]

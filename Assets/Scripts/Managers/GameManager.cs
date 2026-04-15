@@ -164,6 +164,11 @@ namespace MonkeyBusiness.Managers
         {
             _perkSelected = true;
         }
+
+        public GameObject GetPlayerCharacter()
+        {
+            return _playerCharacter;
+        }
         
         /// <summary>
         /// Preparation phase coroutine

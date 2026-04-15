@@ -108,6 +108,16 @@ namespace MonkeyBusiness.Combat.Health
             //Debug.Log(gameObject.name + " has died.");
             Destroy(gameObject);
         }
-
+        
+        /// <summary>
+        /// Changes the current MaxHealth value to a new <paramref name="amount"/>.
+        /// </summary>
+        public void SetMaxHealth(float amount)
+        {
+            // Prevent invalid values
+            MaxHealth = Mathf.Max(1f, amount);
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+            OnHealthChanged.Invoke(CurrentHealth);
+        }
     }
 }

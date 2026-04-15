@@ -13,13 +13,26 @@ MonoBehaviour:
   m_Name: Weapon
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   nftImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-  effect: 1
+  effectType: 1
+  buffEffect:
+    rid: 915476820060012655
+  debuffEffect:
+    rid: 915476820060012656
   useCustomEffectName: 0
   customEffectName: 
   effectName: 
   funnyDescription: oh yeah sonic & crazy frog nft collab lets go!!!
-  buffDescription: I AM S P E E D
-  debuffDescription: whyyy ammmm IIII sooooooooo slooooow
-  buffValue: 25
-  debuffValue: -10
   isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 915476820060012655
+      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+      data:
+        type: 0
+        value: 0
+    - rid: 915476820060012656
+      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+      data:
+        type: 0
+        value: 0
