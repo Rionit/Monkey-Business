@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Enemies;
 using System.Collections;
@@ -23,7 +24,14 @@ namespace MonkeyBusiness.Managers
         public static GameManager Instance { get; private set; }
         
         //private GameState _currentGameState;
+        
+        public UnityEvent OnWaveDefeated = new();
+        public UnityEvent<int> OnEnemyCountChanged = new();
 
+        [SerializeField] private GameObject _hud;
+
+        private bool _perkSelected = true;
+        
         /// <summary>
         /// How many enemies in total are spawned per wave
         /// </summary>
@@ -138,6 +146,7 @@ namespace MonkeyBusiness.Managers
         {
             Debug.Log($"Enemy {gameObject.name} died :D");
             _enemiesRemaining--;
+            OnEnemyCountChanged.Invoke(_enemiesRemaining);
 
             if (_enemies.Contains(gameObject))
             {
@@ -150,6 +159,16 @@ namespace MonkeyBusiness.Managers
 
             Debug.Log($"{_enemiesRemaining} enemies remaining");
         }
+
+        public void PerkSelected()
+        {
+            _perkSelected = true;
+        }
+
+        public GameObject GetPlayerCharacter()
+        {
+            return _playerCharacter;
+        }
         
         /// <summary>
         /// Preparation phase coroutine
@@ -157,9 +176,18 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator PreparationPhase()
         {
+            _hud.SetActive(false);
+            
+            Debug.Log("Perk selection started");
+            Cursor.lockState = CursorLockMode.Confined;
+            yield return new WaitUntil(() => _perkSelected);
+            Cursor.lockState = CursorLockMode.Locked;
+            _perkSelected = false;
+            
             Debug.Log("Preparation phase started");
             yield return new WaitForSeconds(_preparationPhaseDuration);
-
+            
+            _hud.SetActive(true);
             yield return StartCoroutine(CombatPhase());
         }
 
@@ -170,6 +198,7 @@ namespace MonkeyBusiness.Managers
         private IEnumerator CombatPhase()
         {
             _enemiesRemaining = _enemiesPerWave;
+            OnEnemyCountChanged.Invoke(_enemiesRemaining);
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)
             {   
@@ -183,6 +212,7 @@ namespace MonkeyBusiness.Managers
             yield return new WaitWhile(()=> _enemiesRemaining > 0);
 
             Debug.Log("All enemies defeated!");
+            OnWaveDefeated.Invoke();
             yield return StartCoroutine(PreparationPhase());
         }
     }

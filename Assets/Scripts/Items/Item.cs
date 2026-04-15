@@ -1,8 +1,9 @@
 using UnityEngine;
-using MonkeyBusiness.Combat.Health;
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Items
 {
+    [RequireComponent(typeof(Rigidbody))]
     /// <summary>
     /// An item that can be picked up from the environment, dropped, or thrown.
     /// </summary>
@@ -17,17 +18,9 @@ namespace MonkeyBusiness.Items
         /// </summary>
         [SerializeField]
         private float throwForce = 60.0f;
+        public bool IsBeingThrown = false;
 
-        /// <summary>
-        /// The item loses durability every time it collides with something after being thrown
-        /// </summary>
-        [SerializeField]
-        private int durability = 100;
-
-        [SerializeField]
-        private int impactDamage = 30;
-
-        private bool isBeingThrown = false;
+        public UnityEvent OnPickup;
 
         /// <summary>
         /// This collider will be ignored. Helper variable to prevent collision with player immediately after throwing
@@ -57,6 +50,8 @@ namespace MonkeyBusiness.Items
             _rigidbody.isKinematic = true;
             _rigidbody.detectCollisions = false;
             isBeingHeld = true;
+
+            OnPickup.Invoke();
         }
 
         /// <summary>
@@ -83,7 +78,7 @@ namespace MonkeyBusiness.Items
             transform.position = position;
             Drop();
             _rigidbody.AddForce(direction * throwForce, ForceMode.Impulse);
-            isBeingThrown = true;
+            IsBeingThrown = true;
 
             // TODO replace with logic that works for parents with multiple colliders
             ignoreCollision = thrower.GetComponentInChildren<Collider>();
@@ -97,40 +92,6 @@ namespace MonkeyBusiness.Items
             if (!isBeingHeld)
             {
                 _rigidbody.AddForce(Physics.gravity * _rigidbody.mass * _rigidbody.mass, ForceMode.Force);
-            }
-        }
-
-        // CARRYOVER METHOD FROM LAST ITEM ITERATION
-        // TODO replace with proper projectile behavior
-        void OnCollisionEnter(Collision collision)
-        {
-            if (!isBeingThrown)
-            {
-                return;            
-            }
-            
-            Debug.Log(collision.gameObject.name);
-
-            // TODO implement with new health system
-            if (collision.gameObject.CompareTag("Enemy"))
-            {
-                // TODO
-                HealthController enemyHealth = collision.gameObject.GetComponent<HealthController>();
-                enemyHealth.TakeDamage(50);
-            }
-            
-            // Prevent dealing damage multiple times per throw
-            isBeingThrown = false;
-
-            // Re-enable collision with whoever threw this item
-            Physics.IgnoreCollision(ignoreCollision, GetComponent<Collider>(), false);
-
-            // TODO durability reduction logic
-            durability -= 34;
-            if(durability <= 0)
-            {
-                Debug.Log($"Item {gameObject.name} has reached 0 durability and will be destroyed");
-                Destroy(gameObject);
             }
         }
     }
