@@ -2,9 +2,10 @@ using UnityEngine;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Combat.Attack;
 using Sirenix.OdinInspector;
+using MonkeyBusiness.Enemies.Navigation;
 
 
-namespace MonkeyBusiness.Enemies
+namespace MonkeyBusiness.Enemies.Behavior
 {
     /// <summary>
     /// Controls special behavior of the gorilla enemy

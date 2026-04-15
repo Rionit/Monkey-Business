@@ -1,11 +1,8 @@
 {
-    "name": "MonkeyBusiness.Effects",
-    "rootNamespace": "MonkeyBusiness.Effects",
+    "name": "MonkeyBusiness.Enemies.Navigation",
+    "rootNamespace": "MonkeyBusiness.Enemies.Navigation",
     "references": [
-        "GUID:a2ea2607490f0c5e296a47a52bb09121",
-        "GUID:5f116cbd8f00992e4bb5d8f7375343e5",
-        "GUID:07ceeb350e8493102a2c997621b42afb",
-        "GUID:f022d5f1baedfd5138323777e6f401c1"
+        "GUID:8c4dd21966739024fbd72155091d199e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

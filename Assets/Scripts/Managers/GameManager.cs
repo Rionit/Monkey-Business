@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.Events;
 using Sirenix.OdinInspector;
-using MonkeyBusiness.Enemies;
 using System.Collections;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Enemies.Navigation;
 using System;
 using System.Linq;
 

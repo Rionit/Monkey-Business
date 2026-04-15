@@ -1,12 +1,9 @@
 {
-    "name": "MonkeyBusiness.Managers",
-    "rootNamespace": "MonkeyBusiness.Managers",
+    "name": "MonkeyBusiness.Enemies.Behavior",
+    "rootNamespace": "MonkeyBusiness.Enemies.Behavior",
     "references": [
-        "GUID:75469ad4d38634e559750d17036d5f7c",
-        "GUID:38d962ed865d92a45a2d410eb4f73e4f",
-        "GUID:c282b84647f3201a6a87d3ea979d6e2b",
         "GUID:5f116cbd8f00992e4bb5d8f7375343e5",
-        "GUID:b2e4fc216e8f6ff7b84954a3d27ca3a6",
+        "GUID:ca705c0ec89f323fe8fa22823632a841",
         "GUID:f022d5f1baedfd5138323777e6f401c1"
     ],
     "includePlatforms": [],

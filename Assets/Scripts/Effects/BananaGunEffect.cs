@@ -1,5 +1,4 @@
 using UnityEngine;
-using MonkeyBusiness.Enemies;
 using MonkeyBusiness.Combat.Weapons;
 using MonkeyBusiness.Combat.Health;
 using System.Collections;
