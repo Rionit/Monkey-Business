@@ -1,4 +1,5 @@
 using UnityEngine;
+using MonkeyBusiness.Combat.Health;
 
 namespace MonkeyBusiness.Items
 {
@@ -22,6 +23,9 @@ namespace MonkeyBusiness.Items
         /// </summary>
         [SerializeField]
         private int durability = 100;
+
+        [SerializeField]
+        private int impactDamage = 30;
 
         private bool isBeingThrown = false;
 
@@ -108,12 +112,12 @@ namespace MonkeyBusiness.Items
             Debug.Log(collision.gameObject.name);
 
             // TODO implement with new health system
-            //if (collision.gameObject.CompareTag("Enemy"))
-            //{
+            if (collision.gameObject.CompareTag("Enemy"))
+            {
                 // TODO
-                //Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                //enemy.TakeDamage(50);
-            //}
+                HealthController enemyHealth = collision.gameObject.GetComponent<HealthController>();
+                enemyHealth.TakeDamage(50);
+            }
             
             // Prevent dealing damage multiple times per throw
             isBeingThrown = false;
