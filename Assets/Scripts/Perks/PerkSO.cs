@@ -1,6 +1,8 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
+using MonkeyBusiness.Perks.PerkEffects;
+using Sirenix.Serialization;
 
 namespace MonkeyBusiness.Perks
 {
@@ -20,13 +22,13 @@ namespace MonkeyBusiness.Perks
         [BoxGroup("Hidden Outcome (Revealed After Pick)")]
         [Tooltip("The buff effect that will be applied after selection")]
         [LabelText("Buff Effect")]
-        [SerializeReference, InlineProperty]
+        [SerializeReference, InlineProperty, OdinSerialize]
         public PerkEffectBase buffEffect;
         
         [BoxGroup("Hidden Outcome (Revealed After Pick)")]
         [Tooltip("The debuff effect that will be applied after selection")]
         [LabelText("Debuff Effect")]
-        [SerializeReference, InlineProperty]
+        [SerializeReference, InlineProperty, OdinSerialize]
         public PerkEffectBase debuffEffect;
         
         [BoxGroup("Public Info (Shown Before Pick)")]

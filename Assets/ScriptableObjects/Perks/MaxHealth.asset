@@ -15,9 +15,9 @@ MonoBehaviour:
   nftImage: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
   effectType: 0
   buffEffect:
-    rid: 915476820060012649
+    rid: 915476820060012761
   debuffEffect:
-    rid: 915476820060012652
+    rid: 915476820060012762
   useCustomEffectName: 0
   customEffectName: 
   effectName: 
@@ -26,13 +26,13 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 915476820060012649
-      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+    - rid: 915476820060012761
+      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: The player's maximum health is increased by <value>
+        description: Your health is increased by <value>
         value: 20
-    - rid: 915476820060012652
-      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+    - rid: 915476820060012762
+      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: The player's maximum health is decreased by <value>
+        description: Your health is decreased by <value>
         value: -20

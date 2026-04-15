@@ -1,9 +1,8 @@
 using System;
-using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Managers;
 using UnityEngine;
 
-namespace MonkeyBusiness.Perks
+namespace MonkeyBusiness.Perks.PerkEffects
 {
     [Serializable]
     public class MaxPlayerSpeedEffect : PerkEffectBase

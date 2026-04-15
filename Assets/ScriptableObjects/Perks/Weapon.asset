@@ -15,9 +15,9 @@ MonoBehaviour:
   nftImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   effectType: 2
   buffEffect:
-    rid: 915476820060012655
+    rid: 915476820060012735
   debuffEffect:
-    rid: 915476820060012656
+    rid: 915476820060012733
   useCustomEffectName: 0
   customEffectName: 
   effectName: 
@@ -26,13 +26,25 @@ MonoBehaviour:
   references:
     version: 2
     RefIds:
-    - rid: 915476820060012655
-      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+    - rid: 915476820060012733
+      type: {class: WeaponDamageEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: 
-        value: 0
-    - rid: 915476820060012656
-      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks, asm: MonkeyBusiness.Perks}
+        description: 'Your weapons damage have decreased: <data>'
+        _projectiles:
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: cff26d247fb44ee8faf7034c92bf0f77, type: 3}
+          Multiplier: 0.5
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: 2c291b13c9de647cc8bddd978e3bc320, type: 3}
+          Multiplier: 0.5
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: 23f1f653473e9f245adf18e9f843097f, type: 3}
+          Multiplier: 0.1
+    - rid: 915476820060012735
+      type: {class: WeaponDamageEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: 
-        value: 0
+        description: 'Your weapons damage have increased: <data>'
+        _projectiles:
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: cff26d247fb44ee8faf7034c92bf0f77, type: 3}
+          Multiplier: 2
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: 2c291b13c9de647cc8bddd978e3bc320, type: 3}
+          Multiplier: 2
+        - ProjectilePrefab: {fileID: 6742155759220148124, guid: 23f1f653473e9f245adf18e9f843097f, type: 3}
+          Multiplier: 2

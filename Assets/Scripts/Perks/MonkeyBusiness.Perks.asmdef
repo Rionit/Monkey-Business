@@ -3,8 +3,7 @@
     "rootNamespace": "MonkeyBusiness.Perks",
     "references": [
         "GUID:6055be8ebefd69e48b49212b09b47b2f",
-        "GUID:63715533141da98f1a4a198975074850",
-        "GUID:5f116cbd8f00992e4bb5d8f7375343e5"
+        "GUID:a2c737911dab2604daae8417c3c8ada1"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

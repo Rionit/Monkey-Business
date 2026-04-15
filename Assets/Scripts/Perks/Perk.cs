@@ -1,9 +1,6 @@
 using System;
-using MonkeyBusiness.Combat.Health;
-using MonkeyBusiness.Managers;
 using Sirenix.OdinInspector;
 using TMPro;
-using UnityEditor.Build.Content;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;

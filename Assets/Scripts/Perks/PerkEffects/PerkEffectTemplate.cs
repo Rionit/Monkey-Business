@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace MonkeyBusiness.Perks
+namespace MonkeyBusiness.Perks.PerkEffects
 {
     [Serializable]
     public class PerkEffectTemplate : PerkEffectBase

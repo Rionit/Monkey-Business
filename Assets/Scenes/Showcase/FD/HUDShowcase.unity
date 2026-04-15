@@ -3345,7 +3345,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
       propertyPath: perks.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
       propertyPath: OnPerkSelected.m_PersistentCalls.m_Calls.Array.size
