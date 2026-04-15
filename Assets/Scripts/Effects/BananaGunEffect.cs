@@ -15,7 +15,6 @@ namespace MonkeyBusiness.Effects
         [Tooltip("Duration of the banana poison effect in seconds.")]
         public float BananaPoisonDuration { get; set; } = 3f;
 
-
         [field:SerializeField]
         [Tooltip("Damage dealt per tick of the banana poison effect.")]
         public float PoisonTickDamage { get; set; } = 1;
@@ -34,7 +33,6 @@ namespace MonkeyBusiness.Effects
                 targetHealth.ApplyPoison(PoisonTickDamage, tickInterval, NumberOfTicks); 
             }
         }
-
 
         void Awake()
         {
@@ -56,6 +54,5 @@ namespace MonkeyBusiness.Effects
                 _projectileController.OnTargetHit.RemoveListener(InflictPoison);
             }
         }
-
     }
 }

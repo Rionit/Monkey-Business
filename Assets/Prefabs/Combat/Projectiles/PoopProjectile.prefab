@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &924719865915295343
+--- !u!1001 &5638671633552949149
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -8,18 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 697157145129289834, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 697157145129289834, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 697157145129289834, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.1
-      objectReference: {fileID: 0}
+    - target: {fileID: 241152784952802039, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 1ab72215307e2e677b264514845eb174, type: 2}
     - target: {fileID: 697157145129289834, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -60,17 +52,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5268648400583625555, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+      propertyPath: <Speed>k__BackingField
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5856281644080234995, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
       propertyPath: m_Name
-      value: StaplerProjectile
+      value: PoopProjectile
+      objectReference: {fileID: 0}
+    - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+      propertyPath: _collider
+      value: 
+      objectReference: {fileID: 3634212747434552708}
+    - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+      propertyPath: _destroyedBy.m_Bits
+      value: 128
       objectReference: {fileID: 0}
     - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
       propertyPath: <Speed>k__BackingField
-      value: 45
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
-      propertyPath: <MaxFlyDistance>k__BackingField
-      value: 200
+      propertyPath: <Damage>k__BackingField
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8948587334525702681, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+      propertyPath: m_Radius
+      value: 0.75
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -78,36 +86,40 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 5856281644080234995, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
       insertIndex: -1
-      addedObject: {fileID: -4347101232443114293}
+      addedObject: {fileID: 3467177348778766409}
   m_SourcePrefab: {fileID: 100100000, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
---- !u!1 &6742155759220148124 stripped
+--- !u!1 &2235233305944768110 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5856281644080234995, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
-  m_PrefabInstance: {fileID: 924719865915295343}
+  m_PrefabInstance: {fileID: 5638671633552949149}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &-4347101232443114293
+--- !u!114 &3467177348778766409
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6742155759220148124}
+  m_GameObject: {fileID: 2235233305944768110}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ade94de62c2aa75c5b5eea2ee2e868cd, type: 3}
+  m_Script: {fileID: 11500000, guid: ae7aec0df4c05c75ca4d3889da22210e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: MonkeyBusiness.Effects::MonkeyBusiness.Effects.StaplerEffect
-  _projectileController: {fileID: 7852434640815161540}
-  <StaplerEffectDuration>k__BackingField: 3
-  <SpeedMultiplier>k__BackingField: 0.8
---- !u!114 &7852434640815161540 stripped
+  m_EditorClassIdentifier: MonkeyBusiness.Effects::MonkeyBusiness.Effects.PoopEffect
+  _projectileController: {fileID: 3345230712488655158}
+  _poopSplashDuration: 4
+--- !u!114 &3345230712488655158 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
-  m_PrefabInstance: {fileID: 924719865915295343}
+  m_PrefabInstance: {fileID: 5638671633552949149}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6742155759220148124}
+  m_GameObject: {fileID: 2235233305944768110}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a7c862ebe1a8c7b0aa99af6fb7a9832, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.ProjectileController
+--- !u!135 &3634212747434552708 stripped
+SphereCollider:
+  m_CorrespondingSourceObject: {fileID: 8948587334525702681, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+  m_PrefabInstance: {fileID: 5638671633552949149}
+  m_PrefabAsset: {fileID: 0}
