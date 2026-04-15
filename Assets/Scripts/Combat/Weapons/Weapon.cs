@@ -95,7 +95,7 @@ namespace MonkeyBusiness.Combat.Weapons
         /// </summary>
         public void Use()
         {
-            if(!_isLoading)
+            if(!_isLoading && HasAmmo)
             {
                 _coroutineRunner.StartCoroutine(FireCoroutine());
             }
