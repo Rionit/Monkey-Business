@@ -3,7 +3,7 @@ using UnityEngine.TestTools;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
-using MonkeyBusiness.Enemies;
+using MonkeyBusiness.Enemies.Navigation;
 using NUnit.Framework;
 
 namespace MonkeyBusiness.Tests

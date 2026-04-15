@@ -1,5 +1,5 @@
 using UnityEngine;
-using MonkeyBusiness.Enemies;
+using MonkeyBusiness.Enemies.Navigation;
 using MonkeyBusiness.Combat.Weapons;
 
 namespace MonkeyBusiness.Effects

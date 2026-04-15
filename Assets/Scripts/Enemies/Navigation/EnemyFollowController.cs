@@ -6,7 +6,7 @@ using UnityEngine.AI;
 using System.Collections.Generic;
 
 [assembly: InternalsVisibleTo("MonkeyBusiness.Tests")]
-namespace MonkeyBusiness.Enemies
+namespace MonkeyBusiness.Enemies.Navigation
 {
     public class EnemyFollowController : MonoBehaviour
     {
