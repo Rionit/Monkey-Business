@@ -9,11 +9,15 @@ using MonkeyBusiness.Managers;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
+
+    using Camera = UnityEngine.Camera;
+
     /// <summary>
     /// Controller of the player's weapon.
     /// </summary>
     public class Weapon : MonoBehaviour, IEquippable
     {    
+
         //private Transform[] _transforms = {};
 
         [SerializeField]
