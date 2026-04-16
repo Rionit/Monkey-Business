@@ -37,7 +37,7 @@ namespace MonkeyBusiness.Items
         void Start()
         {
             _rigidbody = GetComponent<Rigidbody>();
-            _rigidbody.useGravity = false;
+            //_rigidbody.useGravity = false;
         }
 
         // Update is called once per frame
@@ -95,18 +95,18 @@ namespace MonkeyBusiness.Items
             OnThrow.Invoke();
         }
 
-        public void LateUpdate()
+        public void FixedUpdate()
         {
             // Apply gravity manually
-            if (!isBeingHeld)
-            {
-                _rigidbody.AddForce(Physics.gravity * _rigidbody.mass * _rigidbody.mass, ForceMode.Force);
-            }
+            //if (!isBeingHeld)
+            //{
+            //    _rigidbody.AddForce(Physics.gravity * _rigidbody.mass * _rigidbody.mass, ForceMode.Force);
+            //}
         }
 
         void OnCollisionEnter(Collision collision)
         {
-             if (!IsBeingThrown)
+            if (!IsBeingThrown)
             {
                 return;            
             }

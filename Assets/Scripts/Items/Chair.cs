@@ -13,10 +13,7 @@ namespace MonkeyBusiness.Items
 
         [SerializeField]
         private int _impactDamage = 25;
-
-        [SerializeField]
-        private float _knockbackStrength = 0.85f;
-
+        
 
         /// <summary>
         /// Number of times the item can be thrown before breaking. Each throw removes 1 durability
