@@ -14,6 +14,7 @@ namespace MonkeyBusiness.Items
         void Start()
         {
             _item = GetComponent<Item>();
+            _item.OnThrownCollision.AddListener(HandleCollision);
         }
 
         // Update is called once per frame
@@ -22,33 +23,17 @@ namespace MonkeyBusiness.Items
         
         }
 
-        void OnCollisionEnter(Collision collision)
+        void HandleCollision(GameObject other)
         {
             
-            if (!_item.IsBeingThrown)
-            {
-                return;            
-            }
-            
-            //Debug.Log(collision.gameObject.name);
-            
-
             // TODO implement with new health system
-            if (collision.gameObject.CompareTag("Enemy"))
+            if (other.CompareTag("Enemy"))
             {
                 // TODO
-                HealthController enemyHealth = collision.gameObject.GetComponent<HealthController>();
+                HealthController enemyHealth = other.GetComponentInParent<HealthController>();
                 enemyHealth.TakeDamage(_impactDamage);
             }
             
-            
-            // Prevent dealing damage multiple times per throw
-            _item.IsBeingThrown = false;
-
-            // Re-enable collision with whoever threw this item
-            Physics.IgnoreCollision(_item.ignoreCollision, GetComponent<Collider>(), false);
-            
-
             Destroy(gameObject);
         }
     }

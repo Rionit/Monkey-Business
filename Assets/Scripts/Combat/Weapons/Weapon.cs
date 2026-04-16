@@ -181,8 +181,8 @@ namespace MonkeyBusiness.Combat.Weapons
         /// <remarks> Inspired by <a href="https://youtu.be/g3zaVxFWiKk?t=123">this video</a> </remarks>
         Vector3 GetAimDirection()
         {
-            var cameraTf = Camera.main.transform;
-            var farPlane = Camera.main.farClipPlane;
+            var cameraTf = UnityEngine.Camera.main.transform;
+            var farPlane = UnityEngine.Camera.main.farClipPlane;
             var aimPoint = cameraTf.TransformPoint(Vector3.forward * farPlane);
 
             Ray r = new Ray(cameraTf.position, cameraTf.forward);

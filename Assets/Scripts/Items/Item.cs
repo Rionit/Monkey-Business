@@ -22,6 +22,12 @@ namespace MonkeyBusiness.Items
 
         public UnityEvent OnPickup;
 
+        public UnityEvent OnThrow;
+
+        public UnityEvent OnDrop;
+
+        public UnityEvent<GameObject> OnThrownCollision;
+
         /// <summary>
         /// This collider will be ignored. Helper variable to prevent collision with player immediately after throwing
         /// </summary>
@@ -63,6 +69,8 @@ namespace MonkeyBusiness.Items
             _rigidbody.isKinematic = false;
             _rigidbody.detectCollisions = true;
             isBeingHeld = false;
+
+            OnDrop.Invoke();
         }
 
         /// <summary>
@@ -84,6 +92,7 @@ namespace MonkeyBusiness.Items
             ignoreCollision = thrower.GetComponentInChildren<Collider>();
             Physics.IgnoreCollision(ignoreCollision, GetComponent<Collider>());
 
+            OnThrow.Invoke();
         }
 
         public void LateUpdate()
@@ -93,6 +102,24 @@ namespace MonkeyBusiness.Items
             {
                 _rigidbody.AddForce(Physics.gravity * _rigidbody.mass * _rigidbody.mass, ForceMode.Force);
             }
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+             if (!IsBeingThrown)
+            {
+                return;            
+            }
+            
+            //Debug.Log(collision.gameObject.name);
+            
+            OnThrownCollision.Invoke(collision.gameObject);
+            
+            // Prevent dealing damage multiple times per throw
+            IsBeingThrown = false;
+
+            // Re-enable collision with whoever threw this item
+            Physics.IgnoreCollision(ignoreCollision, GetComponent<Collider>(), false);
         }
     }
 }
