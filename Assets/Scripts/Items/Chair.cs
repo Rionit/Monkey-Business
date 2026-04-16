@@ -3,6 +3,8 @@ using System.Collections;
 using MonkeyBusiness.Combat.Health;
 using UnityEngine;
 using MonkeyBusiness.Enemies.Navigation;
+using MonkeyBusiness.Misc;
+using Sirenix.Utilities;
 
 namespace MonkeyBusiness.Items
 {
@@ -25,6 +27,11 @@ namespace MonkeyBusiness.Items
         /// </summary>
         [SerializeField]
         private int _durability = 4;
+
+        [SerializeField]
+        private float _knockbackForce = 1f;
+        [SerializeField]
+        private float _knockbackDuration = 0.5f; 
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -50,10 +57,18 @@ namespace MonkeyBusiness.Items
             {
                 other.GetComponentInParent<HealthController>().TakeDamage(_impactDamage);
 
-                if(other.TryGetComponent(out EnemyFollowController enemyFollowController))
+                /* if(other.TryGetComponent(out EnemyFollowController enemyFollowController))
                 {
                     // TODO implement knockback to enemy controller
                     enemyFollowController.Slowdown(0.25f, 0.5f);
+                } */
+
+                if(other.TryGetComponent(out KnockbackController knockbackController))
+                {
+                    var knockbackVector = GetComponentInParent<Rigidbody>().linearVelocity.normalized * _knockbackForce;
+                    knockbackVector.y = Math.Abs(knockbackVector.y);
+                    Debug.Log(knockbackVector);
+                    knockbackController.Knockback(knockbackVector, _knockbackDuration);
                 }
             }
 

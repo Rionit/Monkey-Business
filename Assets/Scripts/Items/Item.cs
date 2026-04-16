@@ -20,13 +20,18 @@ namespace MonkeyBusiness.Items
         private float throwForce = 60.0f;
         public bool IsBeingThrown = false;
 
-        public UnityEvent OnPickup;
+        public UnityEvent<Transform> OnPickup;
 
         public UnityEvent OnThrow;
 
         public UnityEvent OnDrop;
 
         public UnityEvent<GameObject> OnThrownCollision;
+
+        /// <summary>
+        /// True if the player should not switch weapons after throwing this
+        /// </summary>
+        public bool KeepAfterThrowing = false;
 
         /// <summary>
         /// This collider will be ignored. Helper variable to prevent collision with player immediately after throwing
@@ -57,7 +62,7 @@ namespace MonkeyBusiness.Items
             _rigidbody.detectCollisions = false;
             isBeingHeld = true;
 
-            OnPickup.Invoke();
+            OnPickup.Invoke(parent);
         }
 
         /// <summary>

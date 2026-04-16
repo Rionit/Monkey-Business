@@ -6,7 +6,6 @@ namespace MonkeyBusiness.Items
     /// <summary>
     /// A throwable item that shatters after being thrown
     /// </summary>
-    [RequireComponent(typeof(Item))]
     public class Mug : MonoBehaviour
     {
         [SerializeField]
@@ -16,7 +15,7 @@ namespace MonkeyBusiness.Items
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            _item = GetComponent<Item>();
+            _item = GetComponentInChildren<Item>();
             _item.OnThrownCollision.AddListener(HandleCollision);
         }
 

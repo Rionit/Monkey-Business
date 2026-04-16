@@ -23,11 +23,20 @@ namespace MonkeyBusiness.Misc
         [ReadOnly]
         bool _isKnockedback;
 
+        public void Start()
+        {
+            _body.isKinematic = true;
+        }
+
         [Button("Knockback with force", DisplayParameters = true)]
         public void Knockback(Vector3 force, float duration)
         {
-            _body.AddForce(force, ForceMode.VelocityChange);
             _agentOverride.enabled = false;
+            
+            _body.isKinematic = false;
+
+            _body.AddForce(force, ForceMode.VelocityChange);
+            
             _isKnockedback = true;
 
             StartCoroutine(KnockbackCoroutine(duration));
@@ -37,7 +46,12 @@ namespace MonkeyBusiness.Misc
         {
             yield return new WaitForSeconds(duration);
             
+            _body.linearVelocity = Vector3.zero;
+
             _isKnockedback = false;
+
+            _body.isKinematic = true;
+
             _agentOverride.enabled = true;
         }
     }
