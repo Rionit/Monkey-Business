@@ -19,6 +19,9 @@ namespace MonkeyBusiness.Managers
 
     /// <summary>
     /// Manages the game and the game phases
+    /// 
+    /// 
+    /// TODO spawn new items at the start of each round
     /// </summary>
     public class GameManager : MonoBehaviour
     {

@@ -29,7 +29,7 @@ namespace MonkeyBusiness.Items
         private int _durability = 4;
 
         [SerializeField]
-        private float _knockbackForce = 1f;
+        private float _knockbackForce = 10f;
         [SerializeField]
         private float _knockbackDuration = 0.5f; 
 
