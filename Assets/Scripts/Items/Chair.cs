@@ -6,6 +6,11 @@ using MonkeyBusiness.Enemies.Navigation;
 
 namespace MonkeyBusiness.Items
 {
+    /// <summary>
+    /// Throwable item that can be used multiple times before breaking. Hinders enemies hit and deals damage
+    /// 
+    /// TODO impement enemy knockback when hit
+    /// </summary>
     [RequireComponent(typeof(Item))]
     public class Chair : MonoBehaviour
     {
@@ -13,7 +18,7 @@ namespace MonkeyBusiness.Items
 
         [SerializeField]
         private int _impactDamage = 25;
-        
+
 
         /// <summary>
         /// Number of times the item can be thrown before breaking. Each throw removes 1 durability

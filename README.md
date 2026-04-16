@@ -1,12 +1,16 @@
-# Weapons and items branch
+# Items branch
 
 ## Added scripts:
-   - Managers/GameManager (Implemented)
+   - Items/*
 
 ## Added Scene:
-    - Showcase/MP/GameManager
+    - Showcase/MP/Items
 
 ## How to:
-The GameManager will spawn pairs of enemies with short delays.
+Implemented three of the throwable items.
 
-The round state is printed into the console.
+Mug will break when thrown
+
+Chair will slow down hit enemies
+
+Basketball has a high bounciness

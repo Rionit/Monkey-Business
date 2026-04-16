@@ -3,6 +3,9 @@ using MonkeyBusiness.Combat.Health;
 
 namespace MonkeyBusiness.Items
 {
+    /// <summary>
+    /// A throwable item that shatters after being thrown
+    /// </summary>
     [RequireComponent(typeof(Item))]
     public class Mug : MonoBehaviour
     {

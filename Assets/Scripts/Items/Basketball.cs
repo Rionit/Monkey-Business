@@ -3,6 +3,11 @@ using UnityEngine;
 
 namespace MonkeyBusiness.Items
 {
+    /// <summary>
+    /// A throwable object that deals damage and can be thrown a few times before bursting
+    /// 
+    /// TODO implement bouncing towards and chasing enemies like a homing missile
+    /// </summary>
     [RequireComponent(typeof(Item))]
     public class Basketball : MonoBehaviour
     {
