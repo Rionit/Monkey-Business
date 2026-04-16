@@ -289,7 +289,7 @@ MonoBehaviour:
   motor: {fileID: 3049860224932558447}
   root: {fileID: 5931992040774880335}
   cameraTarget: {fileID: 3765419234093669765}
-  walkSpeed: 15
+  <WalkSpeed>k__BackingField: 20
   crouchSpeed: 5
   walkResponse: 25
   crouchResponse: 20
@@ -1047,6 +1047,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3883504051621752614, guid: 02ad5179889e9ae01b288bfda0123625, type: 3}
+      propertyPath: _onEquipped.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883504051621752614, guid: 02ad5179889e9ae01b288bfda0123625, type: 3}
       propertyPath: _onUnequipped.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 0
       objectReference: {fileID: 0}
@@ -1056,7 +1060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3883504051621752614, guid: 02ad5179889e9ae01b288bfda0123625, type: 3}
       propertyPath: _onEquipped.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnWeaponEquipped
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 3883504051621752614, guid: 02ad5179889e9ae01b288bfda0123625, type: 3}
       propertyPath: OnAmmoChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
