@@ -1,4 +1,5 @@
 using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Misc;
 using UnityEngine;
 
 namespace MonkeyBusiness.Items
@@ -6,6 +7,9 @@ namespace MonkeyBusiness.Items
     [RequireComponent(typeof(Item))]
     /// <summary>
     /// A throwable object that heals the player when picked up and leaves behind a slippery banana peel when dropped
+    /// 
+    /// TODO: Currently only stuns on direct impact when thrown
+    /// TODO: Implement trap mechanic
     /// </summary>
     public class Banana : MonoBehaviour
     {
@@ -18,6 +22,10 @@ namespace MonkeyBusiness.Items
         [SerializeField]
         private int _healAmount = 20;
 
+        [SerializeField]
+        private float _stunDuration = 1.0f;
+
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -25,8 +33,10 @@ namespace MonkeyBusiness.Items
 
             _item.OnPickup.AddListener(HandlePickUp);
             _item.OnThrow.AddListener(HandleThrow);
+            _item.OnThrownCollision.AddListener(HandleCollision);
 
             _item.KeepAfterThrowing = true;
+
         }
 
         // Update is called once per frame
@@ -67,6 +77,21 @@ namespace MonkeyBusiness.Items
         void HandlePickUp(Transform parent)
         {
             _holder = parent;
+        }
+
+        void HandleCollision(GameObject other)
+        {
+            if (!_isEaten)
+            {
+                return;
+            }
+            StunController stunController = other.GetComponentInParent<StunController>();
+            if(stunController)
+            {
+                stunController.Stun(_stunDuration);
+            }
+            // TODO add ganana peel remaining on the ground
+            Destroy(gameObject);
         }
     }
 }

@@ -61,6 +61,7 @@ namespace MonkeyBusiness.Items
             _rigidbody.isKinematic = true;
             _rigidbody.detectCollisions = false;
             isBeingHeld = true;
+            IsBeingThrown = false;
 
             OnPickup.Invoke(parent);
         }
