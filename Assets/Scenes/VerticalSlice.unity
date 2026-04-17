@@ -2117,7 +2117,7 @@ MonoBehaviour:
   _hud: {fileID: 110642860}
   _enemiesPerWave: 10
   _enemiesSpawnedAtOnce: 2
-  _preparationPhaseDuration: 10
+  _preparationPhaseDuration: 2
   _enemySpawnDelay: 5
   _enemyPrefabs:
   - {fileID: 5194882674798657818, guid: 6cb4ee61863e8d68391b5018981b7fc8, type: 3}
