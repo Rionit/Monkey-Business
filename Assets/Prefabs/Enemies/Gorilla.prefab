@@ -437,7 +437,7 @@ GameObject:
   - component: {fileID: 3149891129032469904}
   - component: {fileID: 5471382036824694655}
   m_Layer: 0
-  m_Name: Sphere (1)
+  m_Name: Head
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -549,7 +549,7 @@ GameObject:
   - component: {fileID: 2405096542873667106}
   - component: {fileID: 3763900948121543067}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: Buttcheeks
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
