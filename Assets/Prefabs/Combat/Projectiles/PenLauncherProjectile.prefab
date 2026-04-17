@@ -74,7 +74,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
       propertyPath: <Damage>k__BackingField
-      value: 200
+      value: 110
       objectReference: {fileID: 0}
     - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
       propertyPath: <MaxFlyDistance>k__BackingField
