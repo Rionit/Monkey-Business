@@ -4,7 +4,6 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
-using UnityEngine.TestTools;
 
 namespace MonkeyBusiness.Combat.Health
 {
@@ -43,6 +42,16 @@ namespace MonkeyBusiness.Combat.Health
         [field: SerializeField]
         [Tooltip("DEBUG: Allows the entity to not die when health reaches zero.")]
         public bool GodMode { get; private set; } = false;
+
+        [BoxGroup("Poison")]
+        [SerializeField]
+        [Tooltip("Whether the entity has a visual effect when posioned")]
+        bool _hasPoisonEffect = false;
+
+        [BoxGroup("Poison")]
+        [SerializeField]
+        [ShowIf(nameof(_hasPoisonEffect))]
+        Renderer _poisonEffectRenderer;
 
         bool _killed = false;
 
@@ -86,11 +95,25 @@ namespace MonkeyBusiness.Combat.Health
 
         IEnumerator PoisonCoroutine(float damagePerTick, float tickInterval, int numTicks)
         {
+            if(_hasPoisonEffect)
+            {
+                if(_poisonEffectRenderer == null)
+                {
+                    Debug.LogWarning("Poison effect renderer not assigned for " + gameObject.name);
+                }
+                else _poisonEffectRenderer.enabled = true;
+            }
+
             Debug.Log("Starting the poison coroutine - Number of health " + CurrentHealth);
             for(int i = 0; i < numTicks; i++)
             {
                 TakeDamage(damagePerTick);
                 yield return new WaitForSeconds(tickInterval);
+            }
+
+            if(_hasPoisonEffect && _poisonEffectRenderer != null)
+            {
+                _poisonEffectRenderer.enabled = false;
             }
 
             Debug.Log("Finished the poison coroutine - Number of health " + CurrentHealth);
@@ -101,13 +124,24 @@ namespace MonkeyBusiness.Combat.Health
             _killed = true; // Prevents this method to be called multiple times
             OnDeath.Invoke(gameObject);
 
+            // TODO: Game Over screen
             if(CompareTag("Player"))
             {
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
             //Debug.Log(gameObject.name + " has died.");
-            Destroy(gameObject);
+            else Destroy(gameObject);
         }
-
+        
+        /// <summary>
+        /// Changes the current MaxHealth value to a new <paramref name="amount"/>.
+        /// </summary>
+        public void SetMaxHealth(float amount)
+        {
+            // Prevent invalid values
+            MaxHealth = Mathf.Max(1f, amount);
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+            OnHealthChanged.Invoke(CurrentHealth);
+        }
     }
 }

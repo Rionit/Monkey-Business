@@ -1,11 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 using Sirenix.OdinInspector;
-using MonkeyBusiness.Enemies;
 using System.Collections;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Enemies.Navigation;
 using System;
 using System.Linq;
+using Random = UnityEngine.Random;
 
 namespace MonkeyBusiness.Managers
 {
@@ -17,13 +19,23 @@ namespace MonkeyBusiness.Managers
 
     /// <summary>
     /// Manages the game and the game phases
+    /// 
+    /// 
+    /// TODO spawn new items at the start of each round
     /// </summary>
     public class GameManager : MonoBehaviour
     {
         public static GameManager Instance { get; private set; }
         
         //private GameState _currentGameState;
+        
+        public UnityEvent OnWaveDefeated = new();
+        public UnityEvent<int> OnEnemyCountChanged = new();
 
+        [SerializeField] private GameObject _hud;
+
+        private bool _perkSelected = true;
+        
         /// <summary>
         /// How many enemies in total are spawned per wave
         /// </summary>
@@ -55,10 +67,9 @@ namespace MonkeyBusiness.Managers
 
         /// <summary>
         /// Prefab of the enemy to spawn
-        /// TODO: Multiple prefabs for multiple enemies
         /// </summary>
         [SerializeField]
-        private GameObject _enemyPrefab;
+        private List<GameObject> _enemyPrefabs;
 
         /// <summary>
         /// List of all enemy spawn points
@@ -107,9 +118,9 @@ namespace MonkeyBusiness.Managers
         /// Spawns the testing enemy
         /// </summary>
         /// <param name="spawnPointIndex">Index of the spawn point</param>
-        void SpawnDummyEnemy(int spawnPointIndex = 0)
+        void SpawnEnemy(int spawnPointIndex = 0)
         {
-            GameObject enemyObject = Instantiate(_enemyPrefab, _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
+            GameObject enemyObject = Instantiate(_enemyPrefabs[Random.Range(0, _enemyPrefabs.Count)], _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
             
             if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController)){
                 enemyFollowController.ChaseTarget = _playerCharacter;
@@ -138,6 +149,7 @@ namespace MonkeyBusiness.Managers
         {
             Debug.Log($"Enemy {gameObject.name} died :D");
             _enemiesRemaining--;
+            OnEnemyCountChanged.Invoke(_enemiesRemaining);
 
             if (_enemies.Contains(gameObject))
             {
@@ -150,6 +162,16 @@ namespace MonkeyBusiness.Managers
 
             Debug.Log($"{_enemiesRemaining} enemies remaining");
         }
+
+        public void PerkSelected()
+        {
+            _perkSelected = true;
+        }
+
+        public GameObject GetPlayerCharacter()
+        {
+            return _playerCharacter;
+        }
         
         /// <summary>
         /// Preparation phase coroutine
@@ -157,9 +179,17 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator PreparationPhase()
         {
+            Debug.Log("Perk selection started");
+            _hud.SetActive(false);
+            Cursor.lockState = CursorLockMode.Confined;
+            yield return new WaitUntil(() => _perkSelected);
+            Cursor.lockState = CursorLockMode.Locked;
+            _hud.SetActive(true);
+            _perkSelected = false;
+            
             Debug.Log("Preparation phase started");
             yield return new WaitForSeconds(_preparationPhaseDuration);
-
+            
             yield return StartCoroutine(CombatPhase());
         }
 
@@ -170,12 +200,13 @@ namespace MonkeyBusiness.Managers
         private IEnumerator CombatPhase()
         {
             _enemiesRemaining = _enemiesPerWave;
+            OnEnemyCountChanged.Invoke(_enemiesRemaining);
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)
             {   
                 for(int i = 0; i < _enemiesSpawnedAtOnce; i++)
                 {
-                    SpawnDummyEnemy(i);
+                    SpawnEnemy(i);
                 }
                 yield return new WaitForSeconds(_enemySpawnDelay);
             }
@@ -183,6 +214,7 @@ namespace MonkeyBusiness.Managers
             yield return new WaitWhile(()=> _enemiesRemaining > 0);
 
             Debug.Log("All enemies defeated!");
+            OnWaveDefeated.Invoke();
             yield return StartCoroutine(PreparationPhase());
         }
     }

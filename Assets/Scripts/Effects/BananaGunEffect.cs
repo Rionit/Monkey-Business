@@ -1,5 +1,4 @@
 using UnityEngine;
-using MonkeyBusiness.Enemies;
 using MonkeyBusiness.Combat.Weapons;
 using MonkeyBusiness.Combat.Health;
 using System.Collections;
@@ -14,7 +13,6 @@ namespace MonkeyBusiness.Effects
         [field:SerializeField]
         [Tooltip("Duration of the banana poison effect in seconds.")]
         public float BananaPoisonDuration { get; set; } = 3f;
-
 
         [field:SerializeField]
         [Tooltip("Damage dealt per tick of the banana poison effect.")]
@@ -34,7 +32,6 @@ namespace MonkeyBusiness.Effects
                 targetHealth.ApplyPoison(PoisonTickDamage, tickInterval, NumberOfTicks); 
             }
         }
-
 
         void Awake()
         {
@@ -56,6 +53,5 @@ namespace MonkeyBusiness.Effects
                 _projectileController.OnTargetHit.RemoveListener(InflictPoison);
             }
         }
-
     }
 }

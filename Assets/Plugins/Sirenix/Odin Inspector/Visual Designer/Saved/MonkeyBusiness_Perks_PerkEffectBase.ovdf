@@ -1,0 +1,5 @@
+OVDF v1.1
+MonkeyBusiness.Perks.PerkEffectBase, MonkeyBusiness.Perks
+
+# type
++ [Sirenix.OdinInspector.EnumToggleButtonsAttribute]

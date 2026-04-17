@@ -3,9 +3,10 @@ using System.Runtime.CompilerServices;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 [assembly: InternalsVisibleTo("MonkeyBusiness.Tests")]
-namespace MonkeyBusiness.Enemies
+namespace MonkeyBusiness.Enemies.Navigation
 {
     public class EnemyFollowController : MonoBehaviour
     {
@@ -131,6 +132,20 @@ namespace MonkeyBusiness.Enemies
         [Tooltip("Whether the enemy is running <color=red>towards to</color> or <color=green>away from</color> the target.")]
         bool _runningAway = false;
 
+
+        [BoxGroup("Slowdown Effect")]
+        [SerializeField]
+        [Tooltip("Whether the enemy has a slowdown effect or not.")]
+        bool _hasSlowdownEffect = false;
+
+        [BoxGroup("Slowdown Effect")]
+        [SerializeField]
+        [ShowIf(nameof(_hasSlowdownEffect))]
+        [Tooltip("All visualizers of the slowdown effect.")]
+        List<Renderer> _slowdownVisualizers = new List<Renderer>();
+
+        int _currentlyActiveEffects = 0;
+
         float _timeTillPathUpdate = 0f;
 
         Coroutine _slowdownCoroutine;
@@ -162,9 +177,38 @@ namespace MonkeyBusiness.Enemies
             _slowdownCoroutine = StartCoroutine(SlowdownCoroutine(duration, speedMultiplier));
         }
 
+        void AddSlowdownVisualizer()
+        {
+            if(_currentlyActiveEffects >= _slowdownVisualizers.Count)
+            {
+                Debug.LogWarning("Not enough slowdown effect renderers assigned! Please assign at least " + (_currentlyActiveEffects + 1) + " renderers.");
+            }
+            else 
+            {
+                _slowdownVisualizers[_currentlyActiveEffects++].enabled = true;
+            }
+        }
+
+        void ResetSlowdownVisualizers()
+        {
+            foreach(var visualizer in _slowdownVisualizers)
+            {
+                visualizer.enabled = false;
+            }
+
+            _currentlyActiveEffects = 0;
+        }
+
         IEnumerator SlowdownCoroutine(float duration, float speedMultiplier)
         {
+            var prevMaxSpeed = CurrentMaxSpeed;
             CurrentMaxSpeed = Mathf.Max(CurrentMaxSpeed * speedMultiplier, _defaultMaxSpeed * _minimumMovementMultiplier);
+
+            if(CurrentMaxSpeed < prevMaxSpeed && _hasSlowdownEffect)
+            {
+                AddSlowdownVisualizer();
+            }
+
             CurrentAngularSpeed = Mathf.Max(CurrentAngularSpeed * speedMultiplier, _defaultMaxAngularSpeed * _minimumMovementMultiplier);
             CurrentAcceleration = Mathf.Max(CurrentAcceleration * speedMultiplier, _defaultAcceleration * _minimumMovementMultiplier);
             Debug.Log($"Applying slowdown effect with multiplier {speedMultiplier} for duration {duration} seconds.");
@@ -172,6 +216,29 @@ namespace MonkeyBusiness.Enemies
             yield return new WaitForSeconds(duration);
 
             Debug.Log("Slowdown effect ended, resetting values.");
+
+            ResetSlowdownVisualizers();
+            SetDefaultValues();
+        }
+
+        /// <summary>
+        /// Changes the default values by a multiplier, removing all debuffs.
+        /// </summary>
+        public void ChangeDefaultValues(float multiplier)
+        {
+            // Removes slowdown debuff if there is any
+            if(_slowdownCoroutine != null)
+            {
+                StopCoroutine(_slowdownCoroutine);
+            }
+
+            // Resets default values
+            _defaultMaxSpeed = _defaultMaxSpeed * multiplier;
+            _defaultMaxAngularSpeed = _defaultMaxAngularSpeed * multiplier;
+            _defaultAcceleration = _defaultAcceleration * multiplier;
+            _defaultStoppingDistance = _defaultStoppingDistance * multiplier;
+            
+            // Applies new default values
             SetDefaultValues();
         }
 
@@ -220,7 +287,7 @@ namespace MonkeyBusiness.Enemies
         void FixedUpdate()
         {
             _timeTillPathUpdate -= Time.fixedDeltaTime;
-            if (_timeTillPathUpdate <= 0f)
+            if (_timeTillPathUpdate <= 0f && _navMeshAgent.enabled)
             {
                 UpdatePosition();
                 _timeTillPathUpdate = _updatePathInterval;

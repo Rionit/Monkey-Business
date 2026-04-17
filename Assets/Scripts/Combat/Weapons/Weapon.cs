@@ -4,14 +4,20 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using MonkeyBusiness.Misc;
+using System.Diagnostics.CodeAnalysis;
+using MonkeyBusiness.Managers;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
+
+    using Camera = UnityEngine.Camera;
+
     /// <summary>
     /// Controller of the player's weapon.
     /// </summary>
     public class Weapon : MonoBehaviour, IEquippable
     {    
+
         //private Transform[] _transforms = {};
 
         [SerializeField]
@@ -52,6 +58,16 @@ namespace MonkeyBusiness.Combat.Weapons
         /// </summary>
         public UnityEvent<Weapon> OnAmmoChanged = new();
 
+        [SerializeField]
+        UnityEvent<IEquippable> _onEquipped = new();
+
+        [SerializeField]
+        UnityEvent<IEquippable> _onUnequipped = new();
+
+        public UnityEvent<IEquippable> OnEquipped => _onEquipped;
+        
+        public UnityEvent<IEquippable> OnUnequipped => _onUnequipped;
+
         bool _isLoading = false;
 
         [ShowInInspector]
@@ -64,31 +80,42 @@ namespace MonkeyBusiness.Combat.Weapons
         [Tooltip("Current aim point of the weapon.")]
         Vector3 _currentAimPoint;
 
+        /// <summary>
+        /// A reference to an object used to run coroutines for this weapon, since the weapon itself may get disabled when unequipped.
+        /// </summary>
+        [SerializeField]
+        [RequiredIn(PrefabKind.InstanceInScene)]
+        [Tooltip("Component responsible for running shooting coroutines."+
+        "\n <color=red><b>Should be some object inside the player object that doesn't get disabled during gameplay (except for death).</b></color>")]
+        MonoBehaviour _coroutineRunner;
+
         const float MIN_HIT_DISTANCE = 1f;
 
         public void Equip()
         {
             Debug.Log($"Equipped item {gameObject.name}");
             gameObject.SetActive(true);
-            IsEquipped = true;
+
+            OnEquipped.Invoke(this);
+            // Setting to default now, change later if needed
+            //SetChildLayers(0);
         }
 
         public void Unequip()
         {
             Debug.Log($"Unequipped item {gameObject.name}");
             gameObject.SetActive(false);
-            IsEquipped = false;
+            OnUnequipped.Invoke(this);
         }
 
         /// <summary>
         /// Fires the weapon
         /// </summary>
-        /// <exception cref="System.NotImplementedException"></exception>
         public void Use()
         {
-            if(!_isLoading)
+            if(!_isLoading && HasAmmo)
             {
-                StartCoroutine(FireCoroutine());
+                _coroutineRunner.StartCoroutine(FireCoroutine());
             }
         }
 
@@ -110,6 +137,10 @@ namespace MonkeyBusiness.Combat.Weapons
             OnAmmoChanged.Invoke(this);
         }
 
+        /// <summary>
+        /// Fires upon target, then waits for the shooting interval before allowing to fire again.
+        /// </summary>
+        /// <remarks><i>Should be run on an object that doesn't get disabled during gameplay.</i></remarks>
         IEnumerator FireCoroutine()
         {
             var projectile = Instantiate(_data.ProjectilePrefab, _bulletSpawnPoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
@@ -118,6 +149,7 @@ namespace MonkeyBusiness.Combat.Weapons
             {
                 //Debug.Log("Has projectile controller");
                 projectileController.Initialize("Enemy", GetAimDirection());
+                projectileController.DamageMultiplier = StatsManager.Instance.GetDamageMultiplier(_data.ProjectilePrefab);
             }
 
             _isLoading = true;
@@ -135,6 +167,15 @@ namespace MonkeyBusiness.Combat.Weapons
             CurrentAmmo = MaxAmmo;
             
             _shootingInterval = 1f / _data.RateOfFire;
+
+            if(_coroutineRunner == null)
+            {
+                _coroutineRunner = GetComponentInParent<ITargetable>() as MonoBehaviour;
+                if(_coroutineRunner == null)
+                {
+                    Debug.LogError($"No valid coroutine runner found for weapon {gameObject.name}! Please assign one in the inspector.");
+                }
+            }
         }
 
         /// <summary>
@@ -144,21 +185,19 @@ namespace MonkeyBusiness.Combat.Weapons
         /// <remarks> Inspired by <a href="https://youtu.be/g3zaVxFWiKk?t=123">this video</a> </remarks>
         Vector3 GetAimDirection()
         {
-            var cameraTf = Camera.main.transform;
-            var farPlane = Camera.main.farClipPlane;
+            var cameraTf = UnityEngine.Camera.main.transform;
+            var farPlane = UnityEngine.Camera.main.farClipPlane;
             var aimPoint = cameraTf.TransformPoint(Vector3.forward * farPlane);
 
             Ray r = new Ray(cameraTf.position, cameraTf.forward);
-            if (
-                Physics.Raycast(r, out RaycastHit hit, farPlane,
-                 LayerMask.GetMask("Default", "Enemy"), QueryTriggerInteraction.Ignore)
+            if (Physics.Raycast(r, out RaycastHit hit, farPlane,
+                 LayerMask.GetMask("Default", "Navigation"), QueryTriggerInteraction.Ignore)
                 && hit.distance > MIN_HIT_DISTANCE) // Prevents aiming at very close objects, which can cause issues with the projectile's collider
             {
                 aimPoint = hit.point;
             }
 
             _currentAimPoint = aimPoint;
-
             return (aimPoint - _bulletSpawnPoint.position).normalized;
         }
         
@@ -170,15 +209,5 @@ namespace MonkeyBusiness.Combat.Weapons
                 Gizmos.DrawLine(_bulletSpawnPoint.position, _currentAimPoint);
             }
         }
-
-        /*
-        private void SetChildLayers(int layer)
-        {
-            foreach(Transform t in _transforms)
-            {
-                t.gameObject.layer = layer;
-            }
-        }
-        */
     }
 }

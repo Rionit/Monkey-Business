@@ -240,7 +240,7 @@ namespace MonkeyBusiness.Managers
                     // Check if we hit an item
                     if (gameObject.CompareTag("Item"))
                     {
-                        Item item = gameObject.GetComponent<Item>();
+                        Item item = gameObject.GetComponentInChildren<Item>();
                         // Pick the item up
                         item.PickUp(itemAttachPoint);
                         _heldItem = item;
@@ -287,10 +287,18 @@ namespace MonkeyBusiness.Managers
             }
 
             _heldItem.Throw(_cameraTransform.position + (_throwPush * _cameraTransform.forward), _cameraTransform.forward);
-            _heldItem = null;
 
-            //re-equip previous item
-            EquipSlot(_previousItemSlot);
+            if (!_heldItem.KeepAfterThrowing)
+            {
+                _heldItem = null;
+
+                //re-equip previous item
+                EquipSlot(_previousItemSlot);
+            }
+            else
+            {
+                Debug.Log("Not dropping item");
+            }
         }
 
         /// <summary>
