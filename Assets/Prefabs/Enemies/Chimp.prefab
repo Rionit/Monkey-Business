@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed6c600f5cfdf055ac91094ade658bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Health::MonkeyBusiness.Combat.Health.HealthController
-  <MaxHealth>k__BackingField: 200
+  <MaxHealth>k__BackingField: 250
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
