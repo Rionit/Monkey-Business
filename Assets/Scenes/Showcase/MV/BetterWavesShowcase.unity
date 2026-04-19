@@ -582,6 +582,17 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2423622686988326603, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
   m_PrefabInstance: {fileID: 1670417135}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &183718002 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8207855789103581148, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+  m_PrefabInstance: {fileID: 1825895345}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 739280d27b8c4d94daa6b0ac92d47096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1 &195746526
 GameObject:
   m_ObjectHideFlags: 0
@@ -2115,6 +2126,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   _hud: {fileID: 110642860}
+  _equipmentManager: {fileID: 183718002}
   _enemiesPerWave: 10
   _enemiesSpawnedAtOnce: 2
   _preparationPhaseDuration: 2
@@ -2130,22 +2142,28 @@ MonoBehaviour:
   _waveDefinitions:
   - gorillas: 8
     chimps: 12
-    enemiesAtOnce: 2
+    enemiesPerSpawn: 2
+    enemiesAtOnce: 20
   - gorillas: 14
     chimps: 26
-    enemiesAtOnce: 3
+    enemiesPerSpawn: 3
+    enemiesAtOnce: 30
   - gorillas: 40
     chimps: 60
-    enemiesAtOnce: 4
+    enemiesPerSpawn: 4
+    enemiesAtOnce: 30
   - gorillas: 50
     chimps: 50
-    enemiesAtOnce: 5
+    enemiesPerSpawn: 5
+    enemiesAtOnce: 40
   - gorillas: 60
     chimps: 40
-    enemiesAtOnce: 6
+    enemiesPerSpawn: 6
+    enemiesAtOnce: 50
   - gorillas: 80
     chimps: 20
-    enemiesAtOnce: 8
+    enemiesPerSpawn: 8
+    enemiesAtOnce: 80
 --- !u!4 &668953055
 Transform:
   m_ObjectHideFlags: 0

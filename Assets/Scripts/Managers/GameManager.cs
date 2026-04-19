@@ -9,9 +9,12 @@ using System;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using MonkeyBusiness.Player;
 
 namespace MonkeyBusiness.Managers
 {
+    using Player = Player.Player;
+
     enum GameState
     {
         PREPARATION,
@@ -42,7 +45,12 @@ namespace MonkeyBusiness.Managers
             /// <summary>
             /// How many enemies to spawn at once in this wave.
             /// </summary>
-            public int enemiesAtOnce;
+            public int enemiesPerSpawn;
+
+            /// <summary>
+            /// How many enemies there can be at once.
+            /// </summary>
+            public int enemiesAtOnce; 
         }
 
         public static GameManager Instance { get; private set; }
@@ -53,6 +61,10 @@ namespace MonkeyBusiness.Managers
         public UnityEvent<int> OnEnemyCountChanged = new();
 
         [SerializeField] private GameObject _hud;
+
+        [SerializeField]
+        [Required]
+        EquipmentManager _equipmentManager;
 
         private bool _perkSelected = true;
         
@@ -85,10 +97,16 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         private float _enemySpawnDelay = 5;
 
-        /// <summary>
-        /// Prefab of the enemy to spawn
-        /// </summary>
         [SerializeField]
+        [Tooltip("Prefab for the gorilla enemy")]
+        GameObject gorillaPrefab;
+
+        [SerializeField]
+        [Tooltip("Prefab for the chimp enemy")]
+        GameObject chimpPrefab;
+
+        [SerializeField]
+        [Obsolete("Deprecated, maintained to work with old game manager, will be removed in the future. Use gorillaPrefab and chimpPrefab instead")]
         private List<GameObject> _enemyPrefabs;
 
         /// <summary>
@@ -103,6 +121,8 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         private GameObject _playerCharacter;
 
+        Player _playerScript;
+
         /// <summary>
         /// Currently alive enemies
         /// </summary>
@@ -115,6 +135,9 @@ namespace MonkeyBusiness.Managers
         List<SpawnInformation> _waveDefinitions = new();
 
         int _currentWave = 0;
+
+
+        Dictionary<GameObject, int> _typesToSpawn = new();
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -132,7 +155,7 @@ namespace MonkeyBusiness.Managers
 
             _restartAction = InputSystem.actions.FindAction("Restart");
             _restartAction.performed += _ => Restart();
-
+            _playerScript = _playerCharacter.GetComponentInParent<Player>();
             StartCoroutine(PreparationPhase());
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
@@ -142,9 +165,9 @@ namespace MonkeyBusiness.Managers
         /// Spawns the testing enemy
         /// </summary>
         /// <param name="spawnPointIndex">Index of the spawn point</param>
-        void SpawnEnemy(int spawnPointIndex = 0)
+        void SpawnEnemy(GameObject enemy, int spawnPointIndex = 0)
         {
-            GameObject enemyObject = Instantiate(_enemyPrefabs[Random.Range(0, _enemyPrefabs.Count)], _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
+            GameObject enemyObject = Instantiate(enemy, _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
             
             if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController)){
                 enemyFollowController.ChaseTarget = _playerCharacter;
@@ -217,11 +240,17 @@ namespace MonkeyBusiness.Managers
         {
             Debug.Log("Perk selection started");
             _hud.SetActive(false);
+            _playerScript.CanReceiveInput = false;
+            _equipmentManager.CanReceiveInput = false;
+
             Cursor.lockState = CursorLockMode.Confined;
             yield return new WaitUntil(() => _perkSelected);
             Cursor.lockState = CursorLockMode.Locked;
             _hud.SetActive(true);
             _perkSelected = false;
+
+            _playerScript.CanReceiveInput = true;
+            _equipmentManager.CanReceiveInput = true;
             
             Debug.Log("Preparation phase started");
             yield return new WaitForSeconds(_preparationPhaseDuration);
@@ -235,18 +264,39 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator CombatPhase()
         {
-            var waveInfo = _waveDefinitions[_currentWave];
-    
+            var waveInfo = _waveDefinitions[Mathf.Min(_currentWave, _waveDefinitions.Count - 1)];
+            _typesToSpawn = new();
+            _typesToSpawn[gorillaPrefab] = waveInfo.gorillas;
+            _typesToSpawn[chimpPrefab] = waveInfo.chimps;
+
             _enemiesRemaining = waveInfo.gorillas + waveInfo.chimps;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
 
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)
             {   
-                for(int i = 0; i < Mathf.Min(_enemiesSpawnedAtOnce, _enemiesRemaining); i++)
+                int possibleEnemies =  Math.Min(waveInfo.enemiesAtOnce - _enemies.Count, _enemiesPerWave); 
+                
+                for(int i = 0; i < Mathf.Min(possibleEnemies, _enemiesRemaining); i++)
                 {
-                    SpawnEnemy(i);
+                    int totalToSpawn = _typesToSpawn[gorillaPrefab] + _typesToSpawn[chimpPrefab];
+                    int randomPick = Random.Range(0, totalToSpawn); // Picks random type to pick
+
+                    if(randomPick < _typesToSpawn[gorillaPrefab]) // Spawn gorilla
+                    {
+                        SpawnEnemy(gorillaPrefab, i % _enemiesSpawnedAtOnce);
+                        _typesToSpawn[gorillaPrefab]--;
+                    }
+                    else // Spawn chimp
+                    {
+                        SpawnEnemy(chimpPrefab, i % _enemiesSpawnedAtOnce);
+                        _typesToSpawn[chimpPrefab]--;
+                    }
+
+                    // Small wait to avoid collisions
+                    yield return new WaitForSeconds(0.2f);
                 }
+
                 yield return new WaitForSeconds(_enemySpawnDelay);
             }
         }
