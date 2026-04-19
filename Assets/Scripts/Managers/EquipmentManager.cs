@@ -330,5 +330,14 @@ namespace MonkeyBusiness.Managers
         {
             return _currentItemSlot == -1 ? null : Items[_currentItemSlot];
         }
+
+        void OnDestroy()
+        {
+            _interactAction.performed -= OnInteract;
+            _attackAction.performed -= OnAttack;
+            _attackAction.canceled -= OnAttackRelease;
+
+            _scrollWheel.performed -= OnScroll;
+        }
     }
 }

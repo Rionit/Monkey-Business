@@ -9,6 +9,11 @@ namespace MonkeyBusiness.UI
         [SerializeField]
         string ArenaSceneName = "VerticalSlice";
 
+        void Awake()
+        {
+            Time.timeScale = 1f;
+        }
+
         public void StartGame()
         {
             UnityEngine.SceneManagement.SceneManager.LoadScene(ArenaSceneName);

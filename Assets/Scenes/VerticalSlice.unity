@@ -2291,10 +2291,13 @@ MonoBehaviour:
         m_CallState: 2
   _hud: {fileID: 110642860}
   _deathScreen: {fileID: 240766508}
+  _equipmentManager: {fileID: 1825895346}
   _enemiesPerWave: 10
   _enemiesSpawnedAtOnce: 2
   _preparationPhaseDuration: 2
   _enemySpawnDelay: 5
+  gorillaPrefab: {fileID: 651408346807706418, guid: 766f92749119f0ccba58713a22a1ba45, type: 3}
+  chimpPrefab: {fileID: 5194882674798657818, guid: 6cb4ee61863e8d68391b5018981b7fc8, type: 3}
   _enemyPrefabs:
   - {fileID: 5194882674798657818, guid: 6cb4ee61863e8d68391b5018981b7fc8, type: 3}
   - {fileID: 651408346807706418, guid: 766f92749119f0ccba58713a22a1ba45, type: 3}
@@ -2303,6 +2306,11 @@ MonoBehaviour:
   - {fileID: 1160288945}
   - {fileID: 926717323}
   _playerCharacter: {fileID: 1933268447}
+  _waveDefinitions:
+  - gorillas: 0
+    chimps: 0
+    enemiesPerSpawn: 0
+    enemiesAtOnce: 0
 --- !u!4 &668953055
 Transform:
   m_ObjectHideFlags: 0
@@ -6180,6 +6188,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+--- !u!114 &1825895346 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8207855789103581148, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+  m_PrefabInstance: {fileID: 1825895345}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 739280d27b8c4d94daa6b0ac92d47096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
 --- !u!1001 &1841282465
 PrefabInstance:
   m_ObjectHideFlags: 0

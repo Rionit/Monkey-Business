@@ -280,7 +280,7 @@ namespace MonkeyBusiness.Managers
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)
             {   
-                int possibleEnemies =  Math.Min(waveInfo.enemiesAtOnce - _enemies.Count, _enemiesPerWave); 
+                int possibleEnemies =  Mathf.Min(waveInfo.enemiesPerSpawn, Math.Min(waveInfo.enemiesAtOnce - _enemies.Count, _enemiesPerWave)); 
                 
                 for(int i = 0; i < Mathf.Min(possibleEnemies, _enemiesRemaining); i++)
                 {
@@ -311,6 +311,9 @@ namespace MonkeyBusiness.Managers
             Time.timeScale = 0f; // Freezes the game
             _hud.SetActive(false);
             _deathScreen.SetActive(true);
+            _equipmentManager.CanReceiveInput = false;
+            _playerScript.CanReceiveInput = false;
+
             Cursor.lockState = CursorLockMode.Confined;
         }
 
