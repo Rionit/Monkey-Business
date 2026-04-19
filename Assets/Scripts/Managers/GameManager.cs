@@ -36,6 +36,9 @@ namespace MonkeyBusiness.Managers
 
         [SerializeField] private GameObject _hud;
 
+        [SerializeField]
+        GameObject _deathScreen;
+
         private bool _perkSelected = true;
         
         /// <summary>
@@ -92,6 +95,8 @@ namespace MonkeyBusiness.Managers
         
         private InputAction _restartAction;
 
+
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
@@ -106,6 +111,7 @@ namespace MonkeyBusiness.Managers
         {
             //_currentGameState = GameState.PREPARATION;
 
+            Time.timeScale = 1f; // Restarts the time scale
             _restartAction = InputSystem.actions.FindAction("Restart");
             _restartAction.performed += _ => Restart();
 
@@ -222,6 +228,14 @@ namespace MonkeyBusiness.Managers
             Debug.Log("All enemies defeated!");
             OnWaveDefeated.Invoke();
             yield return StartCoroutine(PreparationPhase());
+        }
+
+        void OnPlayerDeath()
+        {
+            Time.timeScale = 0f; // Freezes the game
+            _hud.SetActive(false);
+            _deathScreen.SetActive(true);
+            
         }
 
         void Restart()
