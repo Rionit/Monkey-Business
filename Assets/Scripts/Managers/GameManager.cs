@@ -7,6 +7,9 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Enemies.Navigation;
 using System;
 using System.Linq;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace MonkeyBusiness.Managers
 {
@@ -18,6 +21,9 @@ namespace MonkeyBusiness.Managers
 
     /// <summary>
     /// Manages the game and the game phases
+    /// 
+    /// 
+    /// TODO spawn new items at the start of each round
     /// </summary>
     public class GameManager : MonoBehaviour
     {
@@ -63,10 +69,9 @@ namespace MonkeyBusiness.Managers
 
         /// <summary>
         /// Prefab of the enemy to spawn
-        /// TODO: Multiple prefabs for multiple enemies
         /// </summary>
         [SerializeField]
-        private GameObject _enemyPrefab;
+        private List<GameObject> _enemyPrefabs;
 
         /// <summary>
         /// List of all enemy spawn points
@@ -84,6 +89,8 @@ namespace MonkeyBusiness.Managers
         /// Currently alive enemies
         /// </summary>
         private List<GameObject> _enemies = new();
+        
+        private InputAction _restartAction;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -99,6 +106,9 @@ namespace MonkeyBusiness.Managers
         {
             //_currentGameState = GameState.PREPARATION;
 
+            _restartAction = InputSystem.actions.FindAction("Restart");
+            _restartAction.performed += _ => Restart();
+
             StartCoroutine(PreparationPhase());
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
@@ -110,14 +120,13 @@ namespace MonkeyBusiness.Managers
             Debug.Log("Spawning enemy");
         }
 
-
         /// <summary>
         /// Spawns the testing enemy
         /// </summary>
         /// <param name="spawnPointIndex">Index of the spawn point</param>
-        void SpawnDummyEnemy(int spawnPointIndex = 0)
+        void SpawnEnemy(int spawnPointIndex = 0)
         {
-            GameObject enemyObject = Instantiate(_enemyPrefab, _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
+            GameObject enemyObject = Instantiate(_enemyPrefabs[Random.Range(0, _enemyPrefabs.Count)], _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
             
             if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController)){
                 enemyFollowController.ChaseTarget = _playerCharacter;
@@ -176,18 +185,17 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator PreparationPhase()
         {
-            _hud.SetActive(false);
-            
             Debug.Log("Perk selection started");
+            _hud.SetActive(false);
             Cursor.lockState = CursorLockMode.Confined;
             yield return new WaitUntil(() => _perkSelected);
             Cursor.lockState = CursorLockMode.Locked;
+            _hud.SetActive(true);
             _perkSelected = false;
             
             Debug.Log("Preparation phase started");
             yield return new WaitForSeconds(_preparationPhaseDuration);
             
-            _hud.SetActive(true);
             yield return StartCoroutine(CombatPhase());
         }
 
@@ -204,7 +212,7 @@ namespace MonkeyBusiness.Managers
             {   
                 for(int i = 0; i < _enemiesSpawnedAtOnce; i++)
                 {
-                    SpawnDummyEnemy(i);
+                    SpawnEnemy(i);
                 }
                 yield return new WaitForSeconds(_enemySpawnDelay);
             }
@@ -214,6 +222,11 @@ namespace MonkeyBusiness.Managers
             Debug.Log("All enemies defeated!");
             OnWaveDefeated.Invoke();
             yield return StartCoroutine(PreparationPhase());
+        }
+
+        void Restart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

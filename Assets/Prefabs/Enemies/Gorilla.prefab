@@ -49,9 +49,15 @@ NavMeshAgent:
   m_GameObject: {fileID: 651408346807706418}
   m_Enabled: 1
   m_AgentTypeID: 0
+<<<<<<< HEAD
   m_Radius: 1
   m_Speed: 20
   m_Acceleration: 15
+=======
+  m_Radius: 0.5
+  m_Speed: 8
+  m_Acceleration: 10
+>>>>>>> main
   avoidancePriority: 67
   m_AngularSpeed: 240
   m_StoppingDistance: 1
@@ -340,6 +346,8 @@ Transform:
   - {fileID: 4485611148989088455}
   - {fileID: 5090465119600924194}
   - {fileID: 3526349699211205881}
+  - {fileID: 9026935063937625250}
+  - {fileID: 5967204350526946768}
   m_Father: {fileID: 8303193722649581625}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2676263677281940213
@@ -528,9 +536,15 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+<<<<<<< HEAD
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
+=======
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+>>>>>>> main
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -640,9 +654,15 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
+<<<<<<< HEAD
   m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 0
+=======
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+>>>>>>> main
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3287872068051561479
+--- !u!1 &1320323228889223238
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,48 +8,50 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1366258425310640996}
-  - component: {fileID: 4286351846143961463}
-  - component: {fileID: 9110287608949290941}
-  - component: {fileID: 523776702490205740}
-  - component: {fileID: 5340737632553662261}
-  m_Layer: 1
-  m_Name: AmmoRegen
-  m_TagString: Untagged
+  - component: {fileID: 4948022802120697534}
+  - component: {fileID: 6011491567471591473}
+  - component: {fileID: 7645899787151765683}
+  - component: {fileID: 8818351465669817242}
+  - component: {fileID: 66856124813443596}
+  - component: {fileID: 6925416761062321632}
+  - component: {fileID: 6921187014622220292}
+  m_Layer: 0
+  m_Name: Mug
+  m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1366258425310640996
+--- !u!4 &4948022802120697534
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3287872068051561479}
+  m_GameObject: {fileID: 1320323228889223238}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &4286351846143961463
+--- !u!33 &6011491567471591473
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3287872068051561479}
+  m_GameObject: {fileID: 1320323228889223238}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &9110287608949290941
+--- !u!23 &7645899787151765683
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3287872068051561479}
+  m_GameObject: {fileID: 1320323228889223238}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -68,7 +70,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: af2de5be0472d5b27b5de3ca82eee88c, type: 2}
+  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -92,13 +94,13 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!136 &523776702490205740
+--- !u!136 &8818351465669817242
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3287872068051561479}
+  m_GameObject: {fileID: 1320323228889223238}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -107,27 +109,80 @@ CapsuleCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.9
-  m_Height: 4
+  m_Radius: 0.5000001
+  m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
---- !u!114 &5340737632553662261
+--- !u!114 &66856124813443596
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3287872068051561479}
+  m_GameObject: {fileID: 1320323228889223238}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a7bb5a2e3c234d0bbe3b20173b77e02, type: 3}
+  m_Script: {fileID: 11500000, guid: 20d1570da9a9ede4498a51cf2b9fe436, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.AmmoRegenController
-  _replenishmentPercentage: 20
-  _cooldown: 10
-  _ammoRegenMesh: {fileID: 9110287608949290941}
-  _collider: {fileID: 523776702490205740}
+  m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Item
+  isBeingHeld: 0
+  throwForce: 60
+  IsBeingThrown: 0
+  OnPickup:
+    m_PersistentCalls:
+      m_Calls: []
+  OnThrow:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDrop:
+    m_PersistentCalls:
+      m_Calls: []
+  OnThrownCollision:
+    m_PersistentCalls:
+      m_Calls: []
+  KeepAfterThrowing: 0
+  ignoreCollision: {fileID: 0}
+--- !u!54 &6925416761062321632
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320323228889223238}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!114 &6921187014622220292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320323228889223238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acbcb329b89634345822c77eeb8fd0d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Mug
+  _impactDamage: 35

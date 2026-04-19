@@ -287,7 +287,7 @@ namespace MonkeyBusiness.Enemies.Navigation
         void FixedUpdate()
         {
             _timeTillPathUpdate -= Time.fixedDeltaTime;
-            if (_timeTillPathUpdate <= 0f)
+            if (_timeTillPathUpdate <= 0f && _navMeshAgent.enabled)
             {
                 UpdatePosition();
                 _timeTillPathUpdate = _updatePathInterval;

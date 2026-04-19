@@ -1,7 +1,11 @@
 {
     "name": "MonkeyBusiness.Items",
     "rootNamespace": "MonkeyBusiness.Items",
-    "references": [],
+    "references": [
+        "GUID:5f116cbd8f00992e4bb5d8f7375343e5",
+        "GUID:f022d5f1baedfd5138323777e6f401c1",
+        "GUID:c282b84647f3201a6a87d3ea979d6e2b"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
