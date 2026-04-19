@@ -118,6 +118,7 @@ namespace MonkeyBusiness.Managers
             StartCoroutine(PreparationPhase());
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
+            _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
         }
 
         void SpawnEnemy()
@@ -230,12 +231,12 @@ namespace MonkeyBusiness.Managers
             yield return StartCoroutine(PreparationPhase());
         }
 
-        void OnPlayerDeath()
+        void OnPlayerDeath(GameObject _)
         {
             Time.timeScale = 0f; // Freezes the game
             _hud.SetActive(false);
             _deathScreen.SetActive(true);
-            
+            Cursor.lockState = CursorLockMode.Confined;
         }
 
         void Restart()

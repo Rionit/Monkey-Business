@@ -122,7 +122,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7421800803092072403}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6988955421389563298}
+        m_TargetAssemblyTypeName: MonkeyBusiness.UI.DeathScreenManager, MonkeyBusiness.UI
+        m_MethodName: PlayAgain
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &3832617505295926714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -151,7 +163,7 @@ GameObject:
   - component: {fileID: 2803133284584198567}
   - component: {fileID: 4205688192356782298}
   m_Layer: 5
-  m_Name: credits button
+  m_Name: main menu button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -259,7 +271,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3615742967767299428}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6988955421389563298}
+        m_TargetAssemblyTypeName: MonkeyBusiness.UI.DeathScreenManager, MonkeyBusiness.UI
+        m_MethodName: GoToMainMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4205688192356782298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +358,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 2100000, guid: fc77aaf6e3b525c438c920f615d8f9fa, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -977,7 +1001,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
   m_Color: {r: 0.3679245, g: 0.08503916, b: 0.1550654, a: 0.79607844}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -1005,3 +1029,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 94b4418e77d6b5e57a081caf86c2b0bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.UI::MonkeyBusiness.UI.DeathScreenManager
+  MainMenuSceneName: MainMenu
