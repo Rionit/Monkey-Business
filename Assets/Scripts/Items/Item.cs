@@ -1,16 +1,18 @@
 using UnityEngine;
 using UnityEngine.Events;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.Items
 {
     [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Outline))]
     /// <summary>
     /// An item that can be picked up from the environment, dropped, or thrown.
     /// </summary>
     public class Item : MonoBehaviour
     {
-
         private Rigidbody _rigidbody;
+        private Outline _outline;
         public bool isBeingHeld = false;
 
         /// <summary>
@@ -43,6 +45,7 @@ namespace MonkeyBusiness.Items
         {
             _rigidbody = GetComponent<Rigidbody>();
             //_rigidbody.useGravity = false;
+            _outline = GetComponent<Outline>();
         }
 
         // Update is called once per frame
@@ -62,6 +65,7 @@ namespace MonkeyBusiness.Items
             _rigidbody.detectCollisions = false;
             isBeingHeld = true;
             IsBeingThrown = false;
+            _outline.enabled = false;
 
             OnPickup.Invoke(parent);
         }
@@ -75,6 +79,7 @@ namespace MonkeyBusiness.Items
             _rigidbody.isKinematic = false;
             _rigidbody.detectCollisions = true;
             isBeingHeld = false;
+            _outline.enabled = !IsBeingThrown;
 
             OnDrop.Invoke();
         }
@@ -90,10 +95,10 @@ namespace MonkeyBusiness.Items
             Transform thrower = transform.root;
             
             transform.position = position;
+            IsBeingThrown = true;
             Drop();
             _rigidbody.AddForce(direction * throwForce, ForceMode.Impulse);
-            IsBeingThrown = true;
-
+            
             // TODO replace with logic that works for parents with multiple colliders
             ignoreCollision = thrower.GetComponentInChildren<Collider>();
             Physics.IgnoreCollision(ignoreCollision, GetComponent<Collider>());
@@ -123,6 +128,7 @@ namespace MonkeyBusiness.Items
             
             // Prevent dealing damage multiple times per throw
             IsBeingThrown = false;
+            _outline.enabled = true;
 
             // Re-enable collision with whoever threw this item
             Physics.IgnoreCollision(ignoreCollision, GetComponent<Collider>(), false);
