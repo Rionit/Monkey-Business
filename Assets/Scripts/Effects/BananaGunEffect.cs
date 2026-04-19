@@ -2,13 +2,16 @@ using UnityEngine;
 using MonkeyBusiness.Combat.Weapons;
 using MonkeyBusiness.Combat.Health;
 using System.Collections;
+using Sirenix.Serialization;
+using Sirenix.OdinInspector;
 
 namespace MonkeyBusiness.Effects
 {
     public class BananaGunEffect : MonoBehaviour
     {
         [SerializeField]
-        private ProjectileController _projectileController;
+        [Required]
+        PlayerProjectileController _projectileController;
 
         [field:SerializeField]
         [Tooltip("Duration of the banana poison effect in seconds.")]

@@ -1,0 +1,114 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2583778278494034180
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _destroyedBy.m_Bits
+      value: 129
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: <Speed>k__BackingField
+      value: 225
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: <Damage>k__BackingField
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: <HitboxRadius>k__BackingField
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: <MaxFlyDistance>k__BackingField
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5856281644080234995, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: m_Name
+      value: BananaGunPProjectile
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5856281644080234995, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -7736215895599189957}
+  m_SourcePrefab: {fileID: 100100000, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+--- !u!1 &8259282339474626807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5856281644080234995, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+  m_PrefabInstance: {fileID: 2583778278494034180}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-7736215895599189957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8259282339474626807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 074a17acdf627ef4c975bdfdb427f8ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Effects::MonkeyBusiness.Effects.BananaGunEffect
+  _projectileController: {fileID: 9090723104836463153}
+  <BananaPoisonDuration>k__BackingField: 3
+  <PoisonTickDamage>k__BackingField: 3.3333333
+  <NumberOfTicks>k__BackingField: 10
+--- !u!114 &9090723104836463153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+  m_PrefabInstance: {fileID: 2583778278494034180}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8259282339474626807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b71cf052d76201a7b65d3bacda17c3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.PlayerProjectileController

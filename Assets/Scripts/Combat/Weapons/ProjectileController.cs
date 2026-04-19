@@ -10,7 +10,7 @@ namespace MonkeyBusiness.Combat.Weapons
     /// <summary>
     /// Controls the behavior of projectiles.
     /// </summary>
-    public class ProjectileController : MonoBehaviour
+    public class ProjectileController : MonoBehaviour, IProjectile
     {
         /// <summary>
         /// Damage dealt by the projectile on hit.
@@ -44,7 +44,7 @@ namespace MonkeyBusiness.Combat.Weapons
         /// <summary>
         /// Radious of the projectile hitbox.
         /// </summary>
-        /// <remarks> <i> Directly works with the collider's radius. </i> </remarks> 
+        /// <remarks> <i> Directly works with the collider's radius <color=red>! RELATIVE TO SCALE !</color> </i> </remarks> 
         public float HitboxRadius
         {
             get
@@ -105,32 +105,33 @@ namespace MonkeyBusiness.Combat.Weapons
         /// </summary>
         [SerializeField]
         [Tooltip("Event invoked when the projectile hits its target, passing the hit GameObject as an argument.")]
-        public UnityEvent<GameObject> OnTargetHit = new();
+        UnityEvent<GameObject> _onTargetHit = new();
+
+        public UnityEvent<GameObject> OnTargetHit => _onTargetHit;
 
         [SerializeField]
         [Tooltip("Mask of layers that can destroy the projectile on contact (e.g. walls, obstacles).")]
         LayerMask _destroyedBy;
+
+        public LayerMask DestroyedBy => _destroyedBy;
         
         List<GameObject> _objectsHit = new List<GameObject>(); // List to keep track of objects already hit by the projectile (for piercing projectiles in the future)
 
-        /// <summary>
-        /// Initializes the projectile with the given parameters.
-        /// </summary>
-        public void Initialize(string enemyTag, Vector3 direction)
+        public void Initialize(string EnemyTag, Vector3 firePointDirection)
         {
-            TargetTag = enemyTag;
-            Direction = direction.normalized;
-
-            // BUG: LookRotation + forward axis movement doesn't work for some reason (forward axis is not rotated properly)
-            //transform.rotation = Quaternion.LookRotation(Direction, Vector3.up);
+            TargetTag = EnemyTag;
+            Direction = firePointDirection.normalized;
         }
 
         void FixedUpdate()
         {
-            transform.Translate(Speed * Time.fixedDeltaTime * /*transform.forward*/ Direction);
-            _travelledDistance += Speed * Time.fixedDeltaTime;
+            float frameDistance = Speed * Time.fixedDeltaTime;
+            transform.Translate(frameDistance * Direction, Space.World);
+            _travelledDistance += frameDistance;
+
             if(_travelledDistance >= MaxFlyDistance)
             {
+                Debug.Log("Reached max distance");
                 Destroy(gameObject);
             }
         }
@@ -154,12 +155,14 @@ namespace MonkeyBusiness.Combat.Weapons
 
         void OnTriggerEnter(Collider other)
         {
+
+            Debug.Log("Collided with " + other.gameObject.name);    
             if(_objectsHit.Contains(other.gameObject)) return; // Skip if this collider was already hit (for piercing projectiles in the future)
             _objectsHit.Add(other.gameObject);
             
             if(other.CompareTag(TargetTag)) 
             {
-                OnTargetHit?.Invoke(other.gameObject);
+                _onTargetHit?.Invoke(other.gameObject);
                 var targetHealth = other.GetComponentInParent<HealthController>();
                 if(targetHealth == null)
                 {
