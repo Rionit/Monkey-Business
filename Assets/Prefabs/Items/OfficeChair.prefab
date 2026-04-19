@@ -193,6 +193,7 @@ GameObject:
   - component: {fileID: 1950581011211938288}
   - component: {fileID: 8403763093265858544}
   - component: {fileID: 827235333296628177}
+  - component: {fileID: -5589208822403238517}
   m_Layer: 0
   m_Name: OfficeChair
   m_TagString: Item
@@ -314,6 +315,24 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 2.0090544, z: 1}
   m_Center: {x: 0, y: 0.5045272, z: 0}
+--- !u!114 &-5589208822403238517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4805068019906094342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25e958b035645b4c96c0b99d4a1aca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &5247529081822086196
 GameObject:
   m_ObjectHideFlags: 0
