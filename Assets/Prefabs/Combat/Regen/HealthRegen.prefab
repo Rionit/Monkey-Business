@@ -128,6 +128,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.HealthRegen
   _collider: {fileID: 3813620914497315054}
-  _healthRestored: 20
+  _healthRestored: 33
   _cooldown: 10
   _healMesh: {fileID: 3055680456425886065}

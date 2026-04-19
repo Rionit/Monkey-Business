@@ -87,10 +87,6 @@ namespace MonkeyBusiness.Player
         private bool _requestedCrouch;
         private bool _requestedCrouchInAir;
 
-        [ShowInInspector]
-        [BoxGroup("Debug")]
-        public bool CanReceiveInput { get; set; } = true;
-
         private float _timeSinceUngrounded;
         private float _timeSinceJumpRequest;
         private bool _ungroundedDueToJump;
