@@ -6,11 +6,14 @@ using System.Collections;
 using MonkeyBusiness.Misc;
 using System.Diagnostics.CodeAnalysis;
 using MonkeyBusiness.Managers;
+using Sirenix.Utilities;
+using System.Collections.Generic;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
-
     using Camera = UnityEngine.Camera;
+    using ProjectileHitInfo = PlayerProjectileController.ProjectileHitInfo;
+    using ProjectileHitInfoComparer = PlayerProjectileController.ProjectileHitInfoComparer;
 
     /// <summary>
     /// Controller of the player's weapon.
@@ -89,7 +92,7 @@ namespace MonkeyBusiness.Combat.Weapons
         "\n <color=red><b>Should be some object inside the player object that doesn't get disabled during gameplay (except for death).</b></color>")]
         MonoBehaviour _coroutineRunner;
 
-        const float MIN_HIT_DISTANCE = 1f;
+        const float EPSILON = 0.01f;
 
         public void Equip()
         {
@@ -144,13 +147,72 @@ namespace MonkeyBusiness.Combat.Weapons
         IEnumerator FireCoroutine()
         {
             var projectile = Instantiate(_data.ProjectilePrefab, _bulletSpawnPoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
-            var projectileController = projectile.GetComponent<ProjectileController>();
-            if (projectileController != null)
+            var projectileController = projectile.GetComponent<PlayerProjectileController>();
+            if(projectileController == null)
             {
-                //Debug.Log("Has projectile controller");
-                projectileController.Initialize("Enemy", GetAimDirection());
-                projectileController.DamageMultiplier = StatsManager.Instance.GetDamageMultiplier(_data.ProjectilePrefab);
+                Debug.LogError("Projectile prefab shouldn't be null!");
+                yield break;
             }
+
+            var layersToCheck = projectileController.DestroyedBy;
+            var maxRange = projectileController.MaxFlyDistance;
+            bool destroyedByDefault = (layersToCheck.value & (1 << LayerMask.NameToLayer("Default"))) != 0;
+
+            float deathTime = maxRange / projectileController.Speed;
+
+            var cameraPos = Camera.main.transform.position;
+            var cameraDir = Camera.main.transform.forward;
+            //Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
+
+
+            bool hitsSomething = Physics.SphereCast(
+                cameraPos,
+                projectileController.HitboxRadius,
+                cameraDir,
+                out RaycastHit hit,
+                maxRange,
+                layersToCheck,
+                QueryTriggerInteraction.Collide);
+
+            bool hitDefault = false;
+            var listOfTargets = new SortedSet<ProjectileHitInfo> (new ProjectileHitInfoComparer());
+            if(hitsSomething)
+            {
+                var objectHit = hit.collider.gameObject;
+                var hitPos = hit.point;
+
+                var hitDist = Vector3.Distance(cameraPos, hitPos);
+                maxRange = hitDist;
+                deathTime = hitDist / projectileController.Speed;
+                hitDefault = objectHit.layer == LayerMask.NameToLayer("Default");
+            }   
+            if(!destroyedByDefault || !hitDefault)
+            {
+                var targetsHit = Physics.SphereCastAll(
+                    cameraPos,
+                    projectileController.HitboxRadius,
+                    cameraDir,
+                    maxRange + 1f,
+                    LayerMask.GetMask("Default"), QueryTriggerInteraction.Collide);
+
+                foreach(var target in targetsHit)
+                {
+                    if(target.collider.isTrigger && target.collider.CompareTag("Enemy"))
+                    {
+                        var distance = Vector3.Distance(cameraPos, target.point);
+                        var hitTime = distance / projectileController.Speed;
+                        listOfTargets.Add(new ProjectileHitInfo(target.collider.gameObject, hitTime));
+                    }
+                }
+            }
+            else if(hit.collider.isTrigger && hit.collider.CompareTag("Enemy"))
+            {
+                var distance = Vector3.Distance(cameraPos, hit.point);
+                var hitTime = distance / projectileController.Speed;
+                listOfTargets.Add(new ProjectileHitInfo(hit.collider.gameObject, hitTime));
+            }
+            Debug.Log("Has targets? " + (listOfTargets.Count > 0));
+            projectileController.Initialize(GetAimDirection(), deathTime, listOfTargets);
 
             _isLoading = true;
 
@@ -189,13 +251,13 @@ namespace MonkeyBusiness.Combat.Weapons
             var farPlane = Camera.main.farClipPlane;
             var aimPoint = cameraTf.TransformPoint(Vector3.forward * farPlane);
 
-            Ray r = new Ray(cameraTf.position, cameraTf.forward);
+            /*Ray r = new Ray(cameraTf.position, cameraTf.forward);
             if (Physics.Raycast(r, out RaycastHit hit, farPlane,
                  LayerMask.GetMask("Default", "Navigation"), QueryTriggerInteraction.Ignore)
                 && hit.distance > MIN_HIT_DISTANCE) // Prevents aiming at very close objects, which can cause issues with the projectile's collider
             {
                 aimPoint = hit.point;
-            }
+            }*/
 
             _currentAimPoint = aimPoint;
             return (aimPoint - _bulletSpawnPoint.position).normalized;
@@ -205,8 +267,6 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             if(_bulletSpawnPoint != null)
             {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(_bulletSpawnPoint.position, _currentAimPoint);
             }
         }
     }

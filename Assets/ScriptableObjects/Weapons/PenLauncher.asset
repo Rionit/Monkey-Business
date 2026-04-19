@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: PenLauncher
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.WeaponData
   <MaxAmmo>k__BackingField: 6
-  <ProjectilePrefab>k__BackingField: {fileID: 6742155759220148124, guid: 2c291b13c9de647cc8bddd978e3bc320, type: 3}
+  <ProjectilePrefab>k__BackingField: {fileID: 7513838708788746097, guid: fab08d98d5f9fe162bb6ec4f80b97c8b, type: 3}
   <RateOfFire>k__BackingField: 1

@@ -289,16 +289,16 @@ MonoBehaviour:
   motor: {fileID: 3049860224932558447}
   root: {fileID: 5931992040774880335}
   cameraTarget: {fileID: 3765419234093669765}
-  walkSpeed: 15
+  <WalkSpeed>k__BackingField: 15
   crouchSpeed: 5
   walkResponse: 25
   crouchResponse: 20
   airSpeed: 15
-  airAcceleration: 70
-  jumpSpeed: 20
+  airAcceleration: 50
+  jumpSpeed: 15
   coyoteTime: 0.2
   jumpSustainGravity: 0.4
-  gravity: -90
+  gravity: -50
   slideStartSpeed: 25
   slideEndSpeed: 15
   slideFriction: 0.8
