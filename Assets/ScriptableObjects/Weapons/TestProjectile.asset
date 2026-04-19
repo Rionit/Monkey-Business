@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b7fa2e171f17524e199d5e9751328650, type: 3}
-  m_Name: Stapler
-  m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.WeaponData
-  <MaxAmmo>k__BackingField: 60
-  <ProjectilePrefab>k__BackingField: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
-  <RateOfFire>k__BackingField: 10
+  m_Name: TestProjectile
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.WeaponData
+  <MaxAmmo>k__BackingField: 10
+  <ProjectilePrefab>k__BackingField: {fileID: 2235233305944768110, guid: f294b224f5b8df50dba95a848b1f5641, type: 3}
+  <RateOfFire>k__BackingField: 1

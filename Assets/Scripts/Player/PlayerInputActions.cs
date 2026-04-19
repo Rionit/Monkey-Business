@@ -264,6 +264,15 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Restart"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d65663f-99b7-46a9-a794-7ed76324c0c9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -759,6 +768,17 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Item9"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6622b6b1-f540-40af-b79f-79b56f4b4bb2"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Restart"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1365,6 +1385,7 @@ namespace MonkeyBusiness.Player
             m_Player_Item7 = m_Player.FindAction("Item7", throwIfNotFound: true);
             m_Player_Item8 = m_Player.FindAction("Item8", throwIfNotFound: true);
             m_Player_Item9 = m_Player.FindAction("Item9", throwIfNotFound: true);
+            m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1477,6 +1498,7 @@ namespace MonkeyBusiness.Player
         private readonly InputAction m_Player_Item7;
         private readonly InputAction m_Player_Item8;
         private readonly InputAction m_Player_Item9;
+        private readonly InputAction m_Player_Restart;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1565,6 +1587,10 @@ namespace MonkeyBusiness.Player
             /// </summary>
             public InputAction @Item9 => m_Wrapper.m_Player_Item9;
             /// <summary>
+            /// Provides access to the underlying input action "Player/Restart".
+            /// </summary>
+            public InputAction @Restart => m_Wrapper.m_Player_Restart;
+            /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
             public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1647,6 +1673,9 @@ namespace MonkeyBusiness.Player
                 @Item9.started += instance.OnItem9;
                 @Item9.performed += instance.OnItem9;
                 @Item9.canceled += instance.OnItem9;
+                @Restart.started += instance.OnRestart;
+                @Restart.performed += instance.OnRestart;
+                @Restart.canceled += instance.OnRestart;
             }
 
             /// <summary>
@@ -1715,6 +1744,9 @@ namespace MonkeyBusiness.Player
                 @Item9.started -= instance.OnItem9;
                 @Item9.performed -= instance.OnItem9;
                 @Item9.canceled -= instance.OnItem9;
+                @Restart.started -= instance.OnRestart;
+                @Restart.performed -= instance.OnRestart;
+                @Restart.canceled -= instance.OnRestart;
             }
 
             /// <summary>
@@ -2148,6 +2180,13 @@ namespace MonkeyBusiness.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnItem9(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Restart" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnRestart(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

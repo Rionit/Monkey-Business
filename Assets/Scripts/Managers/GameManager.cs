@@ -7,6 +7,8 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Enemies.Navigation;
 using System;
 using System.Linq;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 namespace MonkeyBusiness.Managers
@@ -87,6 +89,8 @@ namespace MonkeyBusiness.Managers
         /// Currently alive enemies
         /// </summary>
         private List<GameObject> _enemies = new();
+        
+        private InputAction _restartAction;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -102,6 +106,9 @@ namespace MonkeyBusiness.Managers
         {
             //_currentGameState = GameState.PREPARATION;
 
+            _restartAction = InputSystem.actions.FindAction("Restart");
+            _restartAction.performed += _ => Restart();
+
             StartCoroutine(PreparationPhase());
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
@@ -112,7 +119,6 @@ namespace MonkeyBusiness.Managers
             //Debug.Log($"Spawning {_enemiesSpawnedAtOnce} enemies");
             Debug.Log("Spawning enemy");
         }
-
 
         /// <summary>
         /// Spawns the testing enemy
@@ -216,6 +222,11 @@ namespace MonkeyBusiness.Managers
             Debug.Log("All enemies defeated!");
             OnWaveDefeated.Invoke();
             yield return StartCoroutine(PreparationPhase());
+        }
+
+        void Restart()
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }

@@ -127,7 +127,7 @@ namespace MonkeyBusiness.Combat.Health
             // TODO: Game Over screen
             if(CompareTag("Player"))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             }
             //Debug.Log(gameObject.name + " has died.");
             else Destroy(gameObject);

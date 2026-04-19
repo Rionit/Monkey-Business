@@ -118,7 +118,7 @@ namespace MonkeyBusiness.Perks
         /// </summary>
         private void ClearPerks()
         {
-            selectedPerk?.Reset();
+            // selectedPerk?.Reset();
 
             foreach (GameObject perk in activePerks)
             {

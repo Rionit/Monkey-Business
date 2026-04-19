@@ -61,7 +61,7 @@ GameObject:
   - component: {fileID: 1934915082588342069}
   m_Layer: 0
   m_Name: Capsule
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -149,7 +149,7 @@ GameObject:
   - component: {fileID: 5173201346127674885}
   m_Layer: 0
   m_Name: WeaponTransform
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -289,16 +289,16 @@ MonoBehaviour:
   motor: {fileID: 3049860224932558447}
   root: {fileID: 5931992040774880335}
   cameraTarget: {fileID: 3765419234093669765}
-  <WalkSpeed>k__BackingField: 20
+  <WalkSpeed>k__BackingField: 15
   crouchSpeed: 5
   walkResponse: 25
   crouchResponse: 20
   airSpeed: 15
-  airAcceleration: 70
-  jumpSpeed: 20
+  airAcceleration: 50
+  jumpSpeed: 15
   coyoteTime: 0.2
   jumpSustainGravity: 0.4
-  gravity: -90
+  gravity: -50
   slideStartSpeed: 25
   slideEndSpeed: 15
   slideFriction: 0.8
@@ -348,7 +348,7 @@ GameObject:
   - component: {fileID: 5931992040774880335}
   m_Layer: 0
   m_Name: Root
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -381,7 +381,7 @@ GameObject:
   - component: {fileID: 7181605633834092521}
   m_Layer: 0
   m_Name: StanceVignette
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -564,7 +564,7 @@ GameObject:
   - component: {fileID: 3765419234093669765}
   m_Layer: 0
   m_Name: CameraTarget
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -598,7 +598,7 @@ GameObject:
   - component: {fileID: 210557342747799134}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -750,7 +750,7 @@ GameObject:
   - component: {fileID: 4210965176372769071}
   m_Layer: 0
   m_Name: FX
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
