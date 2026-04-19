@@ -2119,7 +2119,9 @@ MonoBehaviour:
   _enemiesSpawnedAtOnce: 2
   _preparationPhaseDuration: 2
   _enemySpawnDelay: 5
-  _enemyPrefabs: []
+  _enemyPrefabs:
+  - {fileID: 5194882674798657818, guid: 6cb4ee61863e8d68391b5018981b7fc8, type: 3}
+  - {fileID: 651408346807706418, guid: 766f92749119f0ccba58713a22a1ba45, type: 3}
   _enemySpawnPoints:
   - {fileID: 1416699209}
   - {fileID: 1160288945}
