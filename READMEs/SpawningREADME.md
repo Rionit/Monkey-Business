@@ -4,8 +4,9 @@ This update documents:
 - releasing/locking player input via `CanReceiveInput` in `Player` and `EquipmentManager`,
 - and the Main Menu + Death Screen scene flow.
 
-Following files are used:
+**<span style="color:red"> ! THIS BRANCH DIRECTLY MODIFIES THE VERTICAL SLICE SCENE AND MAIN MENU SCENE, KEEP THIS IN MIND DURING REVIEW !  </span>**
 
+Following files are added or modified in an important way:
 ```
 .
 ├── Scripts
@@ -39,11 +40,6 @@ Spawning loop behavior:
 - For each enemy in the batch, enemy type is selected randomly but weighted by remaining counts in `_typesToSpawn`, so final composition always matches wave definition.
 - Spawn points are rotated with `i % _enemiesSpawnedAtOnce`.
 - There is a short `0.2s` delay between individual enemies and `_enemySpawnDelay` between spawn batches.
-
-Each spawned enemy:
-- gets `EnemyFollowController.ChaseTarget` set to the player,
-- subscribes `HealthController.OnDeath` to `OnEnemyDestroyed`,
-- is tracked in `_enemies`.
 
 When `OnEnemyDestroyed` reduces `_enemiesRemaining` to `0`, wave is considered defeated:
 - `_currentWave` increments,
