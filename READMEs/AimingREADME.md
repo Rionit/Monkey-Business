@@ -16,6 +16,10 @@ Added files:
 │       └── Weapons
 │           ├── IProjectile.cs
 │           └── PlayerProjectileController.cs
+└── Scenes
+    └── Showcase
+        └── MV
+            └── NewShootingShowcase.unity
 ```
 
 ## New shooting system for player guns
@@ -55,3 +59,6 @@ The aim accuracy can be set up from the [Weapon](../Assets/Scripts/Combat/Weapon
 - Enemy speeds, accelerations & attack ranges have been increased
 - Player's movement has been slowed slightly
 - Chimp's health has been slightly increased
+
+## Showcase
+The showcase scene is ```Scenes/Showcase/MV/NewShootingShowcase.unity```. 
