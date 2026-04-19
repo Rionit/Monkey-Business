@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Enemies.Navigation;
 using System;
-using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -27,6 +26,25 @@ namespace MonkeyBusiness.Managers
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+        [Serializable]
+        class SpawnInformation
+        {
+            /// <summary>
+            /// How many gorillas to spawn in this wave.
+            /// </summary>
+            public int gorillas;
+
+            /// <summary>
+            /// How many chimps to spawn in this wave.
+            /// </summary>
+            public int chimps;
+
+            /// <summary>
+            /// How many enemies to spawn at once in this wave.
+            /// </summary>
+            public int enemiesAtOnce;
+        }
+
         public static GameManager Instance { get; private set; }
         
         //private GameState _currentGameState;
@@ -89,8 +107,14 @@ namespace MonkeyBusiness.Managers
         /// Currently alive enemies
         /// </summary>
         private List<GameObject> _enemies = new();
-        
+
         private InputAction _restartAction;
+
+        [SerializeField]
+        [Tooltip("Number of enemies to spawn in each wave. \n\n<i>If waves get past the last entry, the last entry will be repeated</i>")]
+        List<SpawnInformation> _waveDefinitions = new();
+
+        int _currentWave = 0;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -112,12 +136,6 @@ namespace MonkeyBusiness.Managers
             StartCoroutine(PreparationPhase());
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
-        }
-
-        void SpawnEnemy()
-        {
-            //Debug.Log($"Spawning {_enemiesSpawnedAtOnce} enemies");
-            Debug.Log("Spawning enemy");
         }
 
         /// <summary>
@@ -167,13 +185,25 @@ namespace MonkeyBusiness.Managers
             }
 
             Debug.Log($"{_enemiesRemaining} enemies remaining");
+
+            if(_enemiesRemaining == 0)
+            {
+                Debug.Log("Wave defeated!");
+                _currentWave++;
+                OnWaveDefeated.Invoke();
+                StartCoroutine(PreparationPhase());
+            }
+            if(_enemiesRemaining < 0)
+            {
+                Debug.LogWarning("Enemy count below 0, probably more enemies spawned than expected");
+            }
         }
 
         public void PerkSelected()
         {
             _perkSelected = true;
         }
-
+        
         public GameObject GetPlayerCharacter()
         {
             return _playerCharacter;
@@ -196,7 +226,7 @@ namespace MonkeyBusiness.Managers
             Debug.Log("Preparation phase started");
             yield return new WaitForSeconds(_preparationPhaseDuration);
             
-            yield return StartCoroutine(CombatPhase());
+            StartCoroutine(CombatPhase());
         }
 
         /// <summary>
@@ -205,23 +235,20 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator CombatPhase()
         {
-            _enemiesRemaining = _enemiesPerWave;
+            var waveInfo = _waveDefinitions[_currentWave];
+    
+            _enemiesRemaining = waveInfo.gorillas + waveInfo.chimps;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
+
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)
             {   
-                for(int i = 0; i < _enemiesSpawnedAtOnce; i++)
+                for(int i = 0; i < Mathf.Min(_enemiesSpawnedAtOnce, _enemiesRemaining); i++)
                 {
                     SpawnEnemy(i);
                 }
                 yield return new WaitForSeconds(_enemySpawnDelay);
             }
-            
-            yield return new WaitWhile(()=> _enemiesRemaining > 0);
-
-            Debug.Log("All enemies defeated!");
-            OnWaveDefeated.Invoke();
-            yield return StartCoroutine(PreparationPhase());
         }
 
         void Restart()
