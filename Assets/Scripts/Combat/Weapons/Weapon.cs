@@ -14,13 +14,13 @@ namespace MonkeyBusiness.Combat.Weapons
     using Camera = UnityEngine.Camera;
     using ProjectileHitInfo = PlayerProjectileController.ProjectileHitInfo;
     using ProjectileHitInfoComparer = PlayerProjectileController.ProjectileHitInfoComparer;
+    using Random = UnityEngine.Random;
 
     /// <summary>
     /// Controller of the player's weapon.
     /// </summary>
     public class Weapon : MonoBehaviour, IEquippable
     {    
-
         //private Transform[] _transforms = {};
 
         [SerializeField]
@@ -92,6 +92,17 @@ namespace MonkeyBusiness.Combat.Weapons
         "\n <color=red><b>Should be some object inside the player object that doesn't get disabled during gameplay (except for death).</b></color>")]
         MonoBehaviour _coroutineRunner;
 
+        [BoxGroup("Accuracy")]
+        [SerializeField]
+        [Tooltip("Accuracy radius of the aim circle at the given length. (Accuracy range)")]
+        [Range(0f, 10f)]
+        float _accuracyRadius;
+
+        [BoxGroup("Accuracy")]
+        [SerializeField]
+        [Tooltip("Accuracy range of the aim circle at the given length.")]
+        float _accuracyRange; 
+
         const float EPSILON = 0.01f;
 
         public void Equip()
@@ -141,6 +152,24 @@ namespace MonkeyBusiness.Combat.Weapons
         }
 
         /// <summary>
+        /// Randomizes the aim direction within the accuracy radius and range, based on the selected accuracy distribution.
+        /// </summary>
+        Vector3 RandomAimPos()
+        {
+            // Takes random radius
+            float radius = Random.Range(0, _accuracyRadius);
+            float radius2 = radius * radius;
+
+            Vector2 displacement = Random.insideUnitCircle * radius2;
+            Vector3 displacement3D = new Vector3(displacement.x, displacement.y);
+
+            Vector3 transformedDisplacement = Camera.main.transform.TransformDirection(displacement3D);
+
+            Transform cameraTf = Camera.main.transform;
+            return cameraTf.position + cameraTf.forward * _accuracyRange + transformedDisplacement;
+        }
+
+        /// <summary>
         /// Fires upon target, then waits for the shooting interval before allowing to fire again.
         /// </summary>
         /// <remarks><i>Should be run on an object that doesn't get disabled during gameplay.</i></remarks>
@@ -161,14 +190,15 @@ namespace MonkeyBusiness.Combat.Weapons
             float deathTime = maxRange / projectileController.Speed;
 
             var cameraPos = Camera.main.transform.position;
-            var cameraDir = Camera.main.transform.forward;
+            var aimPos = RandomAimPos();
+            var testDir = aimPos - cameraPos;
+            
             //Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
-
 
             bool hitsSomething = Physics.SphereCast(
                 cameraPos,
                 projectileController.HitboxRadius,
-                cameraDir,
+                testDir,
                 out RaycastHit hit,
                 maxRange,
                 layersToCheck,
@@ -191,7 +221,7 @@ namespace MonkeyBusiness.Combat.Weapons
                 var targetsHit = Physics.SphereCastAll(
                     cameraPos,
                     projectileController.HitboxRadius,
-                    cameraDir,
+                    testDir,
                     maxRange + 1f,
                     LayerMask.GetMask("Default"), QueryTriggerInteraction.Collide);
 
@@ -212,7 +242,7 @@ namespace MonkeyBusiness.Combat.Weapons
                 listOfTargets.Add(new ProjectileHitInfo(hit.collider.gameObject, hitTime));
             }
             Debug.Log("Has targets? " + (listOfTargets.Count > 0));
-            projectileController.Initialize(GetAimDirection(), deathTime, listOfTargets);
+            projectileController.Initialize(GetAimDirection(testDir), deathTime, listOfTargets);
 
             _isLoading = true;
 
@@ -245,11 +275,11 @@ namespace MonkeyBusiness.Combat.Weapons
         /// </summary>
         /// <returns>A normalized direction vector from the weapon to the aim point.</returns>
         /// <remarks> Inspired by <a href="https://youtu.be/g3zaVxFWiKk?t=123">this video</a> </remarks>
-        Vector3 GetAimDirection()
+        Vector3 GetAimDirection(Vector3 aimedDir)
         {
             var cameraTf = UnityEngine.Camera.main.transform;
             var farPlane = UnityEngine.Camera.main.farClipPlane;
-            var aimPoint = cameraTf.TransformPoint(Vector3.forward * farPlane);
+            var aimPoint = cameraTf.position + aimedDir * _accuracyRange;
 
             /*Ray r = new Ray(cameraTf.position, cameraTf.forward);
             if (Physics.Raycast(r, out RaycastHit hit, farPlane,
@@ -267,6 +297,16 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             if(_bulletSpawnPoint != null)
             {
+                Gizmos.color = Color.darkRed;
+                Gizmos.DrawWireSphere(Camera.main.transform.position + Camera.main.transform.forward * _accuracyRange, _accuracyRadius);
+            
+                Vector3[] dirs = { Vector3.left, Vector3.right, Vector3.up, Vector3.down };
+
+                foreach(var dir in dirs)
+                {
+                    var offset = dir * _accuracyRadius;
+                    Gizmos.DrawLine(_bulletSpawnPoint.position, Camera.main.transform.position + Camera.main.transform.forward * _accuracyRange + offset);
+                }
             }
         }
     }

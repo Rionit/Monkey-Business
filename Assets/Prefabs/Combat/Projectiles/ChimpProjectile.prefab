@@ -58,11 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6929967125144684203, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
       propertyPath: <Speed>k__BackingField
-<<<<<<< HEAD
       value: 50
-=======
-      value: 100
->>>>>>> main
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
