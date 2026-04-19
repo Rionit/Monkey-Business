@@ -2307,10 +2307,30 @@ MonoBehaviour:
   - {fileID: 926717323}
   _playerCharacter: {fileID: 1933268447}
   _waveDefinitions:
-  - gorillas: 0
-    chimps: 0
-    enemiesPerSpawn: 0
-    enemiesAtOnce: 0
+  - gorillas: 8
+    chimps: 12
+    enemiesPerSpawn: 2
+    enemiesAtOnce: 20
+  - gorillas: 14
+    chimps: 26
+    enemiesPerSpawn: 3
+    enemiesAtOnce: 30
+  - gorillas: 40
+    chimps: 60
+    enemiesPerSpawn: 4
+    enemiesAtOnce: 30
+  - gorillas: 50
+    chimps: 50
+    enemiesPerSpawn: 5
+    enemiesAtOnce: 40
+  - gorillas: 60
+    chimps: 40
+    enemiesPerSpawn: 6
+    enemiesAtOnce: 50
+  - gorillas: 80
+    chimps: 20
+    enemiesPerSpawn: 8
+    enemiesAtOnce: 80
 --- !u!4 &668953055
 Transform:
   m_ObjectHideFlags: 0
