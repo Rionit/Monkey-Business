@@ -1,14 +1,15 @@
 using UnityEngine;
 using MonkeyBusiness.Enemies.Navigation;
 using MonkeyBusiness.Combat.Weapons;
+using Sirenix.OdinInspector;
 
 namespace MonkeyBusiness.Effects
 {
     public class StaplerEffect : MonoBehaviour
     {
         [SerializeField]
-        private ProjectileController _projectileController;
-
+        [Required]
+        PlayerProjectileController _projectileController;
         
         [field:SerializeField]
         [Tooltip("Duration of the stapler effect in seconds.")]

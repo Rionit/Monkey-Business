@@ -147,7 +147,7 @@ CapsuleCollider:
   m_Radius: 0.9
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.2, z: 0}
 --- !u!1 &4909052521394503693
 GameObject:
   m_ObjectHideFlags: 0
@@ -159,7 +159,6 @@ GameObject:
   - component: {fileID: 8611575218435515665}
   - component: {fileID: 4335301071106969146}
   - component: {fileID: 3847640005139674338}
-  - component: {fileID: 2090496238709203076}
   m_Layer: 0
   m_Name: Head
   m_TagString: Enemy
@@ -239,27 +238,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &2090496238709203076
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4909052521394503693}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5194882674798657818
 GameObject:
   m_ObjectHideFlags: 0
@@ -314,10 +292,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 12
-  m_Acceleration: 8
+  m_Speed: 15
+  m_Acceleration: 6
   avoidancePriority: 50
-  m_AngularSpeed: 120
+  m_AngularSpeed: 240
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -344,7 +322,7 @@ MonoBehaviour:
   _defaultMaxAngularSpeed: 0
   _defaultAcceleration: 0
   _defaultStoppingDistance: 0
-  _avoidancePriorityRange: {x: 20, y: 50}
+  _avoidancePriorityRange: {x: 50, y: 80}
   _minimumMovementMultiplier: 0.4
   _updatePathInterval: 1
   _chaseDistance: 6
@@ -368,7 +346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ed6c600f5cfdf055ac91094ade658bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Health::MonkeyBusiness.Combat.Health.HealthController
-  <MaxHealth>k__BackingField: 200
+  <MaxHealth>k__BackingField: 250
   OnHealthChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -471,7 +449,6 @@ GameObject:
   - component: {fileID: 4530098875398692495}
   - component: {fileID: 2699674081181886666}
   - component: {fileID: 3862481161860564861}
-  - component: {fileID: 1758490390682450127}
   m_Layer: 0
   m_Name: ear
   m_TagString: Enemy
@@ -551,27 +528,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1758490390682450127
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6062144661757838322}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7214862628906302268
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,7 +581,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 10
+  m_Radius: 15
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3602844857421087173
 MonoBehaviour:
@@ -640,7 +596,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Attack::MonkeyBusiness.Combat.Attack.AttackInvoker
   _attackRangeCollider: {fileID: 8499306678646934762}
-  _attackRange: 10
+  _attackRange: 15
   _debugGizmoColor: {r: 0.5, g: 0.5, b: 0.8, a: 0.35}
   OnAttackInvoked:
     m_PersistentCalls:
@@ -674,7 +630,6 @@ GameObject:
   - component: {fileID: 7072433086166570493}
   - component: {fileID: 4988728886152930160}
   - component: {fileID: 4842979744175480717}
-  - component: {fileID: 1219552602929619567}
   m_Layer: 0
   m_Name: ear (1)
   m_TagString: Enemy
@@ -754,27 +709,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &1219552602929619567
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7323075813141242010}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7785131371268374047
 GameObject:
   m_ObjectHideFlags: 0
@@ -846,7 +780,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 8
+  m_Radius: 12
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &987973039596880175
 MonoBehaviour:
@@ -861,7 +795,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Attack::MonkeyBusiness.Combat.Attack.AttackInvoker
   _attackRangeCollider: {fileID: 8871171413499710395}
-  _attackRange: 8
+  _attackRange: 12
   _debugGizmoColor: {r: 0.5283019, g: 0.11284538, b: 0, a: 0.35}
   OnAttackInvoked:
     m_PersistentCalls:
