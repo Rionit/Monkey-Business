@@ -63,6 +63,9 @@ namespace MonkeyBusiness.Managers
         [SerializeField] private GameObject _hud;
 
         [SerializeField]
+        GameObject _deathScreen;
+
+        [SerializeField]
         [Required]
         EquipmentManager _equipmentManager;
 
@@ -153,12 +156,14 @@ namespace MonkeyBusiness.Managers
         {
             //_currentGameState = GameState.PREPARATION;
 
+            Time.timeScale = 1f; // Restarts the time scale
             _restartAction = InputSystem.actions.FindAction("Restart");
             _restartAction.performed += _ => Restart();
             _playerScript = _playerCharacter.GetComponentInParent<Player>();
             StartCoroutine(PreparationPhase());
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
+            _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
         }
 
         /// <summary>
@@ -299,6 +304,14 @@ namespace MonkeyBusiness.Managers
 
                 yield return new WaitForSeconds(_enemySpawnDelay);
             }
+        }
+
+        void OnPlayerDeath(GameObject _)
+        {
+            Time.timeScale = 0f; // Freezes the game
+            _hud.SetActive(false);
+            _deathScreen.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
         }
 
         void Restart()
