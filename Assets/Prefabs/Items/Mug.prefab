@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 66856124813443596}
   - component: {fileID: 6925416761062321632}
   - component: {fileID: 6921187014622220292}
+  - component: {fileID: -7313773265465848361}
+  - component: {fileID: 934807493964204085}
   m_Layer: 0
   m_Name: Mug
   m_TagString: Item
@@ -186,3 +188,42 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Mug
   _impactDamage: 35
+--- !u!114 &-7313773265465848361
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320323228889223238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a25e958b035645b4c96c0b99d4a1aca5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Outline
+  outlineMode: 1
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 5.5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
+--- !u!135 &934807493964204085
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1320323228889223238}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5
+  m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
