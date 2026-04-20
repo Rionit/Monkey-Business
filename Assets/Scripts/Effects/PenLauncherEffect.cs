@@ -1,15 +1,14 @@
 using UnityEngine;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Combat.Weapons;
-
+using Sirenix.Serialization;
 
 namespace MonkeyBusiness.Effects
 {
     public class PenLauncherEffect : MonoBehaviour
     {
-        [SerializeField]
         [Required]
-        ProjectileController _projectileController;
+        PlayerProjectileController _projectileController;
         
         [field:SerializeField]
         [Tooltip("Damage multiplier applied to the projectile for each consecutive hit on the same enemy.")]

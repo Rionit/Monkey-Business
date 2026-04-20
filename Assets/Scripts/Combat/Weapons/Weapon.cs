@@ -6,18 +6,21 @@ using System.Collections;
 using MonkeyBusiness.Misc;
 using System.Diagnostics.CodeAnalysis;
 using MonkeyBusiness.Managers;
+using Sirenix.Utilities;
+using System.Collections.Generic;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
-
     using Camera = UnityEngine.Camera;
+    using ProjectileHitInfo = PlayerProjectileController.ProjectileHitInfo;
+    using ProjectileHitInfoComparer = PlayerProjectileController.ProjectileHitInfoComparer;
+    using Random = UnityEngine.Random;
 
     /// <summary>
     /// Controller of the player's weapon.
     /// </summary>
     public class Weapon : MonoBehaviour, IEquippable
     {    
-
         //private Transform[] _transforms = {};
 
         [SerializeField]
@@ -89,7 +92,18 @@ namespace MonkeyBusiness.Combat.Weapons
         "\n <color=red><b>Should be some object inside the player object that doesn't get disabled during gameplay (except for death).</b></color>")]
         MonoBehaviour _coroutineRunner;
 
-        const float MIN_HIT_DISTANCE = 1f;
+        [BoxGroup("Accuracy")]
+        [SerializeField]
+        [Tooltip("Accuracy radius of the aim circle at the given length. (Accuracy range)")]
+        [Range(0f, 10f)]
+        float _accuracyRadius;
+
+        [BoxGroup("Accuracy")]
+        [SerializeField]
+        [Tooltip("Accuracy range of the aim circle at the given length.")]
+        float _accuracyRange; 
+
+        const float EPSILON = 0.01f;
 
         public void Equip()
         {
@@ -138,19 +152,97 @@ namespace MonkeyBusiness.Combat.Weapons
         }
 
         /// <summary>
+        /// Randomizes the aim direction within the accuracy radius and range, based on the selected accuracy distribution.
+        /// </summary>
+        Vector3 RandomAimPos()
+        {
+            // Takes random radius
+            float radius = Random.Range(0, _accuracyRadius);
+            float radius2 = radius * radius;
+
+            Vector2 displacement = Random.insideUnitCircle * radius2;
+            Vector3 displacement3D = new Vector3(displacement.x, displacement.y);
+
+            Vector3 transformedDisplacement = Camera.main.transform.TransformDirection(displacement3D);
+
+            Transform cameraTf = Camera.main.transform;
+            return cameraTf.position + cameraTf.forward * _accuracyRange + transformedDisplacement;
+        }
+
+        /// <summary>
         /// Fires upon target, then waits for the shooting interval before allowing to fire again.
         /// </summary>
         /// <remarks><i>Should be run on an object that doesn't get disabled during gameplay.</i></remarks>
         IEnumerator FireCoroutine()
         {
             var projectile = Instantiate(_data.ProjectilePrefab, _bulletSpawnPoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
-            var projectileController = projectile.GetComponent<ProjectileController>();
-            if (projectileController != null)
+            var projectileController = projectile.GetComponent<PlayerProjectileController>();
+            if(projectileController == null)
             {
-                //Debug.Log("Has projectile controller");
-                projectileController.Initialize("Enemy", GetAimDirection());
-                projectileController.DamageMultiplier = StatsManager.Instance.GetDamageMultiplier(_data.ProjectilePrefab);
+                Debug.LogError("Projectile prefab shouldn't be null!");
+                yield break;
             }
+
+            var layersToCheck = projectileController.DestroyedBy;
+            var maxRange = projectileController.MaxFlyDistance;
+            bool destroyedByDefault = (layersToCheck.value & (1 << LayerMask.NameToLayer("Default"))) != 0;
+
+            float deathTime = maxRange / projectileController.Speed;
+
+            var cameraPos = Camera.main.transform.position;
+            var aimPos = RandomAimPos();
+            var testDir = aimPos - cameraPos;
+            
+            //Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
+
+            bool hitsSomething = Physics.SphereCast(
+                cameraPos,
+                projectileController.HitboxRadius,
+                testDir,
+                out RaycastHit hit,
+                maxRange,
+                layersToCheck,
+                QueryTriggerInteraction.Collide);
+
+            bool hitDefault = false;
+            var listOfTargets = new SortedSet<ProjectileHitInfo> (new ProjectileHitInfoComparer());
+            if(hitsSomething)
+            {
+                var objectHit = hit.collider.gameObject;
+                var hitPos = hit.point;
+
+                var hitDist = Vector3.Distance(cameraPos, hitPos);
+                maxRange = hitDist;
+                deathTime = hitDist / projectileController.Speed;
+                hitDefault = objectHit.layer == LayerMask.NameToLayer("Default");
+            }   
+            if(!destroyedByDefault || !hitDefault)
+            {
+                var targetsHit = Physics.SphereCastAll(
+                    cameraPos,
+                    projectileController.HitboxRadius,
+                    testDir,
+                    maxRange + 1f,
+                    LayerMask.GetMask("Default"), QueryTriggerInteraction.Collide);
+
+                foreach(var target in targetsHit)
+                {
+                    if(target.collider.isTrigger && target.collider.CompareTag("Enemy"))
+                    {
+                        var distance = Vector3.Distance(cameraPos, target.point);
+                        var hitTime = distance / projectileController.Speed;
+                        listOfTargets.Add(new ProjectileHitInfo(target.collider.gameObject, hitTime));
+                    }
+                }
+            }
+            else if(hit.collider.isTrigger && hit.collider.CompareTag("Enemy"))
+            {
+                var distance = Vector3.Distance(cameraPos, hit.point);
+                var hitTime = distance / projectileController.Speed;
+                listOfTargets.Add(new ProjectileHitInfo(hit.collider.gameObject, hitTime));
+            }
+            Debug.Log("Has targets? " + (listOfTargets.Count > 0));
+            projectileController.Initialize(GetAimDirection(testDir), deathTime, listOfTargets);
 
             _isLoading = true;
 
@@ -183,19 +275,19 @@ namespace MonkeyBusiness.Combat.Weapons
         /// </summary>
         /// <returns>A normalized direction vector from the weapon to the aim point.</returns>
         /// <remarks> Inspired by <a href="https://youtu.be/g3zaVxFWiKk?t=123">this video</a> </remarks>
-        Vector3 GetAimDirection()
+        Vector3 GetAimDirection(Vector3 aimedDir)
         {
             var cameraTf = UnityEngine.Camera.main.transform;
             var farPlane = UnityEngine.Camera.main.farClipPlane;
-            var aimPoint = cameraTf.TransformPoint(Vector3.forward * farPlane);
+            var aimPoint = cameraTf.position + aimedDir * _accuracyRange;
 
-            Ray r = new Ray(cameraTf.position, cameraTf.forward);
+            /*Ray r = new Ray(cameraTf.position, cameraTf.forward);
             if (Physics.Raycast(r, out RaycastHit hit, farPlane,
                  LayerMask.GetMask("Default", "Navigation"), QueryTriggerInteraction.Ignore)
                 && hit.distance > MIN_HIT_DISTANCE) // Prevents aiming at very close objects, which can cause issues with the projectile's collider
             {
                 aimPoint = hit.point;
-            }
+            }*/
 
             _currentAimPoint = aimPoint;
             return (aimPoint - _bulletSpawnPoint.position).normalized;
@@ -205,8 +297,16 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             if(_bulletSpawnPoint != null)
             {
-                Gizmos.color = Color.yellow;
-                Gizmos.DrawLine(_bulletSpawnPoint.position, _currentAimPoint);
+                Gizmos.color = Color.darkRed;
+                Gizmos.DrawWireSphere(Camera.main.transform.position + Camera.main.transform.forward * _accuracyRange, _accuracyRadius);
+            
+                Vector3[] dirs = { Vector3.left, Vector3.right, Vector3.up, Vector3.down };
+
+                foreach(var dir in dirs)
+                {
+                    var offset = dir * _accuracyRadius;
+                    Gizmos.DrawLine(_bulletSpawnPoint.position, Camera.main.transform.position + Camera.main.transform.forward * _accuracyRange + offset);
+                }
             }
         }
     }
