@@ -61,6 +61,9 @@ namespace MonkeyBusiness.Managers
         /// </summary>
         private bool _isShooting;
 
+        [ShowInInspector]
+        [Tooltip("Whether the player can receive input.")]
+        public bool CanReceiveInput {get; set;} = true;
 
         [ShowInInspector]
         [ReadOnly]
@@ -104,7 +107,8 @@ namespace MonkeyBusiness.Managers
 
         void Update()
         {
-            if (_isShooting)
+
+            if (CanReceiveInput &&_isShooting)
             {
                 Items[_currentItemSlot].Use();
             }
@@ -325,6 +329,15 @@ namespace MonkeyBusiness.Managers
         public IEquippable GetEquippedWeapon()
         {
             return _currentItemSlot == -1 ? null : Items[_currentItemSlot];
+        }
+
+        void OnDestroy()
+        {
+            _interactAction.performed -= OnInteract;
+            _attackAction.performed -= OnAttack;
+            _attackAction.canceled -= OnAttackRelease;
+
+            _scrollWheel.performed -= OnScroll;
         }
     }
 }

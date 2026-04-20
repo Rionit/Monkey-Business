@@ -6,13 +6,15 @@ using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Enemies.Navigation;
 using System;
-using System.Linq;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using MonkeyBusiness.Player;
 
 namespace MonkeyBusiness.Managers
 {
+    using Player = Player.Player;
+
     enum GameState
     {
         PREPARATION,
@@ -27,6 +29,30 @@ namespace MonkeyBusiness.Managers
     /// </summary>
     public class GameManager : MonoBehaviour
     {
+        [Serializable]
+        class SpawnInformation
+        {
+            /// <summary>
+            /// How many gorillas to spawn in this wave.
+            /// </summary>
+            public int gorillas;
+
+            /// <summary>
+            /// How many chimps to spawn in this wave.
+            /// </summary>
+            public int chimps;
+
+            /// <summary>
+            /// How many enemies to spawn at once in this wave.
+            /// </summary>
+            public int enemiesPerSpawn;
+
+            /// <summary>
+            /// How many enemies there can be at once.
+            /// </summary>
+            public int enemiesAtOnce; 
+        }
+
         public static GameManager Instance { get; private set; }
         
         //private GameState _currentGameState;
@@ -35,6 +61,13 @@ namespace MonkeyBusiness.Managers
         public UnityEvent<int> OnEnemyCountChanged = new();
 
         [SerializeField] private GameObject _hud;
+
+        [SerializeField]
+        GameObject _deathScreen;
+
+        [SerializeField]
+        [Required]
+        EquipmentManager _equipmentManager;
 
         private bool _perkSelected = true;
         
@@ -67,10 +100,16 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         private float _enemySpawnDelay = 5;
 
-        /// <summary>
-        /// Prefab of the enemy to spawn
-        /// </summary>
         [SerializeField]
+        [Tooltip("Prefab for the gorilla enemy")]
+        GameObject gorillaPrefab;
+
+        [SerializeField]
+        [Tooltip("Prefab for the chimp enemy")]
+        GameObject chimpPrefab;
+
+        [SerializeField]
+        [Obsolete("Deprecated, maintained to work with old game manager, will be removed in the future. Use gorillaPrefab and chimpPrefab instead")]
         private List<GameObject> _enemyPrefabs;
 
         /// <summary>
@@ -85,12 +124,23 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         private GameObject _playerCharacter;
 
+        Player _playerScript;
+
         /// <summary>
         /// Currently alive enemies
         /// </summary>
         private List<GameObject> _enemies = new();
-        
+
         private InputAction _restartAction;
+
+        [SerializeField]
+        [Tooltip("Number of enemies to spawn in each wave. \n\n<i>If waves get past the last entry, the last entry will be repeated</i>")]
+        List<SpawnInformation> _waveDefinitions = new();
+
+        int _currentWave = 0;
+
+
+        Dictionary<GameObject, int> _typesToSpawn = new();
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -106,27 +156,23 @@ namespace MonkeyBusiness.Managers
         {
             //_currentGameState = GameState.PREPARATION;
 
+            Time.timeScale = 1f; // Restarts the time scale
             _restartAction = InputSystem.actions.FindAction("Restart");
             _restartAction.performed += _ => Restart();
-
+            _playerScript = _playerCharacter.GetComponentInParent<Player>();
             StartCoroutine(PreparationPhase());
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
-        }
-
-        void SpawnEnemy()
-        {
-            //Debug.Log($"Spawning {_enemiesSpawnedAtOnce} enemies");
-            Debug.Log("Spawning enemy");
+            _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
         }
 
         /// <summary>
         /// Spawns the testing enemy
         /// </summary>
         /// <param name="spawnPointIndex">Index of the spawn point</param>
-        void SpawnEnemy(int spawnPointIndex = 0)
+        void SpawnEnemy(GameObject enemy, int spawnPointIndex = 0)
         {
-            GameObject enemyObject = Instantiate(_enemyPrefabs[Random.Range(0, _enemyPrefabs.Count)], _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
+            GameObject enemyObject = Instantiate(enemy, _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
             
             if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController)){
                 enemyFollowController.ChaseTarget = _playerCharacter;
@@ -167,13 +213,25 @@ namespace MonkeyBusiness.Managers
             }
 
             Debug.Log($"{_enemiesRemaining} enemies remaining");
+
+            if(_enemiesRemaining == 0)
+            {
+                Debug.Log("Wave defeated!");
+                _currentWave++;
+                OnWaveDefeated.Invoke();
+                StartCoroutine(PreparationPhase());
+            }
+            if(_enemiesRemaining < 0)
+            {
+                Debug.LogWarning("Enemy count below 0, probably more enemies spawned than expected");
+            }
         }
 
         public void PerkSelected()
         {
             _perkSelected = true;
         }
-
+        
         public GameObject GetPlayerCharacter()
         {
             return _playerCharacter;
@@ -187,16 +245,22 @@ namespace MonkeyBusiness.Managers
         {
             Debug.Log("Perk selection started");
             _hud.SetActive(false);
+            _playerScript.CanReceiveInput = false;
+            _equipmentManager.CanReceiveInput = false;
+
             Cursor.lockState = CursorLockMode.Confined;
             yield return new WaitUntil(() => _perkSelected);
             Cursor.lockState = CursorLockMode.Locked;
             _hud.SetActive(true);
             _perkSelected = false;
+
+            _playerScript.CanReceiveInput = true;
+            _equipmentManager.CanReceiveInput = true;
             
             Debug.Log("Preparation phase started");
             yield return new WaitForSeconds(_preparationPhaseDuration);
             
-            yield return StartCoroutine(CombatPhase());
+            StartCoroutine(CombatPhase());
         }
 
         /// <summary>
@@ -205,23 +269,52 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator CombatPhase()
         {
-            _enemiesRemaining = _enemiesPerWave;
+            var waveInfo = _waveDefinitions[Mathf.Min(_currentWave, _waveDefinitions.Count - 1)];
+            _typesToSpawn = new();
+            _typesToSpawn[gorillaPrefab] = waveInfo.gorillas;
+            _typesToSpawn[chimpPrefab] = waveInfo.chimps;
+
+            _enemiesRemaining = waveInfo.gorillas + waveInfo.chimps;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
+
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)
             {   
-                for(int i = 0; i < _enemiesSpawnedAtOnce; i++)
+                int possibleEnemies =  Mathf.Min(waveInfo.enemiesPerSpawn, Math.Min(waveInfo.enemiesAtOnce - _enemies.Count, _enemiesPerWave)); 
+                
+                for(int i = 0; i < Mathf.Min(possibleEnemies, _enemiesRemaining); i++)
                 {
-                    SpawnEnemy(i);
+                    int totalToSpawn = _typesToSpawn[gorillaPrefab] + _typesToSpawn[chimpPrefab];
+                    int randomPick = Random.Range(0, totalToSpawn); // Picks random type to pick
+
+                    if(randomPick < _typesToSpawn[gorillaPrefab]) // Spawn gorilla
+                    {
+                        SpawnEnemy(gorillaPrefab, i % _enemiesSpawnedAtOnce);
+                        _typesToSpawn[gorillaPrefab]--;
+                    }
+                    else // Spawn chimp
+                    {
+                        SpawnEnemy(chimpPrefab, i % _enemiesSpawnedAtOnce);
+                        _typesToSpawn[chimpPrefab]--;
+                    }
+
+                    // Small wait to avoid collisions
+                    yield return new WaitForSeconds(0.2f);
                 }
+
                 yield return new WaitForSeconds(_enemySpawnDelay);
             }
-            
-            yield return new WaitWhile(()=> _enemiesRemaining > 0);
+        }
 
-            Debug.Log("All enemies defeated!");
-            OnWaveDefeated.Invoke();
-            yield return StartCoroutine(PreparationPhase());
+        void OnPlayerDeath(GameObject _)
+        {
+            Time.timeScale = 0f; // Freezes the game
+            _hud.SetActive(false);
+            _deathScreen.SetActive(true);
+            _equipmentManager.CanReceiveInput = false;
+            _playerScript.CanReceiveInput = false;
+
+            Cursor.lockState = CursorLockMode.Confined;
         }
 
         void Restart()

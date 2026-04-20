@@ -22,6 +22,11 @@ namespace MonkeyBusiness.Player
         [SerializeField] private Volume volume;
         [SerializeField] private StanceVignette stanceVignette;
 
+
+        [ShowInInspector]
+        [BoxGroup("Debug")]
+        public bool CanReceiveInput { get; set; } = true;
+
         private PlayerInputActions _inputActions;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -49,37 +54,53 @@ namespace MonkeyBusiness.Player
         // Update is called once per frame
         void Update()
         {
-            var input = _inputActions.Player;
-            var deltaTime = Time.deltaTime;
-            
-            // Get camera input and update its rotation
-            var cameraInput = new CameraInput { Look = input.Look.ReadValue<Vector2>() };
-            playerCamera.UpdateRotation(cameraInput);
-            
-            // Get character input and update it
-            var characterInput = new CharacterInput
+            if(CanReceiveInput)
             {
-                Rotation    = playerCamera.transform.rotation,
-                Move        = input.Move.ReadValue<Vector2>(),
-                Jump        = input.Jump.WasPressedThisFrame(),
-                JumpSustain = input.Jump.IsPressed(),
-                // Press to toggle crouch, TODO: Maybe add to settings as an option?
-                //Crouch      = input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None 
-                Crouch = input.Crouch.IsPressed() ? CrouchInput.Crouch : CrouchInput.Uncrouch
-            };
-            playerCharacter.UpdateInput(characterInput);
-            playerCharacter.UpdateBody(deltaTime);
-            
-            #if UNITY_EDITOR
-            if (Keyboard.current.tKey.wasPressedThisFrame)
-            {
-                var ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                var input = _inputActions.Player;
+                var deltaTime = Time.deltaTime;
+                
+                // Get camera input and update its rotation
+                var cameraInput = new CameraInput { Look = input.Look.ReadValue<Vector2>() };
+                playerCamera.UpdateRotation(cameraInput);
+                
+                // Get character input and update it
+                var characterInput = new CharacterInput
                 {
-                    Teleport(hit.point); 
+                    Rotation    = playerCamera.transform.rotation,
+                    Move        = input.Move.ReadValue<Vector2>(),
+                    Jump        = input.Jump.WasPressedThisFrame(),
+                    JumpSustain = input.Jump.IsPressed(),
+                    // Press to toggle crouch, TODO: Maybe add to settings as an option?
+                    //Crouch      = input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None 
+                    Crouch = input.Crouch.IsPressed() ? CrouchInput.Crouch : CrouchInput.Uncrouch
+                };
+                playerCharacter.UpdateInput(characterInput);
+                playerCharacter.UpdateBody(deltaTime);
+                
+                #if UNITY_EDITOR
+                if (Keyboard.current.tKey.wasPressedThisFrame)
+                {
+                    var ray = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
+                    if (Physics.Raycast(ray, out RaycastHit hit))
+                    {
+                        Teleport(hit.point); 
+                    }
                 }
+                #endif
             }
-            #endif
+            else
+            {
+                CharacterInput characterInput = new CharacterInput
+                {
+                    Rotation    = playerCamera.transform.rotation,
+                    Move        = Vector2.zero,
+                    Jump        = false,
+                    JumpSustain = false,
+                };
+
+                playerCharacter.UpdateInput(characterInput);
+                playerCharacter.UpdateBody(Time.deltaTime);
+            }
         }
 
         void LateUpdate()

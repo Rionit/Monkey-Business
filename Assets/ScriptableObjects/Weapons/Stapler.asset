@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.WeaponData
   <MaxAmmo>k__BackingField: 60
   <ProjectilePrefab>k__BackingField: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
-  <RateOfFire>k__BackingField: 10
+  <RateOfFire>k__BackingField: 20
