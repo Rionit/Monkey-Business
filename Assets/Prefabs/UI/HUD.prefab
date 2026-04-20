@@ -531,14 +531,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
-    - target: {fileID: 6475773146660471201, guid: a8c6e8e9fc3e86a4dac05e740030f6a9, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 3.699997
-      objectReference: {fileID: 0}
-    - target: {fileID: 6475773146660471201, guid: a8c6e8e9fc3e86a4dac05e740030f6a9, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 10.100006
-      objectReference: {fileID: 0}
     - target: {fileID: 6982692403087498164, guid: a8c6e8e9fc3e86a4dac05e740030f6a9, type: 3}
       propertyPath: m_Pivot.x
       value: 0
