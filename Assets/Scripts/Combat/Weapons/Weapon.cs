@@ -67,6 +67,11 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         UnityEvent<IEquippable> _onUnequipped = new();
 
+        [SerializeField]
+        UnityEvent _onWeaponFired = new();
+        
+        public UnityEvent OnWeaponFired => _onWeaponFired;
+        
         public UnityEvent<IEquippable> OnEquipped => _onEquipped;
         
         public UnityEvent<IEquippable> OnUnequipped => _onUnequipped;
@@ -175,6 +180,8 @@ namespace MonkeyBusiness.Combat.Weapons
         /// <remarks><i>Should be run on an object that doesn't get disabled during gameplay.</i></remarks>
         IEnumerator FireCoroutine()
         {
+            OnWeaponFired.Invoke();
+            
             var projectile = Instantiate(_data.ProjectilePrefab, _bulletSpawnPoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
             var projectileController = projectile.GetComponent<PlayerProjectileController>();
             if(projectileController == null)
