@@ -1,16 +1,13 @@
-# Items branch
-
-## Added scripts:
-   - Items/*
-
-## Added Scene:
-    - Showcase/MP/Items
-
-## How to:
-Implemented three of the throwable items.
-
-Mug will break when thrown
-
-Chair will slow down hit enemies
-
-Basketball has a high bounciness
+# Sounds: 
+- Player & Enemy walk: Foootsteps-Essentials/Footsteps_Tile/Footsteps_tile_walk/*
+- Jump: Foootsteps-Essentials/Footsteps_Tile/Footsteps_tile_jump/Footsteps_tile_jump_start_1-3
+- Gun sound 1: ShootingSound/cannon_1
+- Gun sound 2: ShootingSound/machine_gun
+- Gun sound 3: ShootingSound/crossbow
+- Player hit: Assets/Sounds/player_hurt.wav
+- Enemy hit: Assets/Sounds/322640__aruscio28__hitmarker-sound-effect.mp3
+- Main loop: 
+- Enemy death: Assets/Sounds/monkey_death.wav
+- Button click: Assets/Free UI Click Sound Effects Pack/AUDIO/Button/SFX_UI_Button_Mouse_Thick_Generic_2.wav
+- Melee attack (swoosh): Assets/Casual Game Sounds U6/CasualGameSounds/DM-CGS-47.wav
+- Ranged attack (swoosh): Assets/Casual Game Sounds U6/CasualGameSounds/DM-CGS-46.wav
