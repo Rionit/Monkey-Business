@@ -50,6 +50,7 @@ Shader "Custom/Outline Fill" {
       struct v2f {
         float4 position : SV_POSITION;
         fixed4 color : COLOR;
+        float4 screenPos : TEXCOORD0;
         UNITY_VERTEX_OUTPUT_STEREO
       };
 
@@ -67,13 +68,19 @@ Shader "Custom/Outline Fill" {
         float3 viewNormal = normalize(mul((float3x3)UNITY_MATRIX_IT_MV, normal));
 
         output.position = UnityViewToClipPos(viewPosition + viewNormal * -viewPosition.z * _OutlineWidth / 1000.0);
+        output.screenPos = ComputeScreenPos(output.position);
         output.color = _OutlineColor;
 
         return output;
       }
 
       fixed4 frag(v2f input) : SV_Target {
-        return input.color;
+        float2 uv = input.screenPos.xy / input.screenPos.w;
+        float2 center = float2(0.5, 0.5);
+        float dist = distance(uv, center);
+        float fade = saturate(1.0 - dist * 2.0);
+
+        return input.color * fade;
       }
       ENDCG
     }
