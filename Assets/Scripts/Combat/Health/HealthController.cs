@@ -124,13 +124,10 @@ namespace MonkeyBusiness.Combat.Health
             _killed = true; // Prevents this method to be called multiple times
             OnDeath.Invoke(gameObject);
 
-            // TODO: Game Over screen
-            if(CompareTag("Player"))
+            if(!CompareTag("Player"))
             {
-                SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+                Destroy(gameObject);
             }
-            //Debug.Log(gameObject.name + " has died.");
-            else Destroy(gameObject);
         }
         
         /// <summary>

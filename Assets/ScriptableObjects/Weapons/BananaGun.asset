@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: BananaGun
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.WeaponData
   <MaxAmmo>k__BackingField: 90
-  <ProjectilePrefab>k__BackingField: {fileID: 6742155759220148124, guid: cff26d247fb44ee8faf7034c92bf0f77, type: 3}
-  <RateOfFire>k__BackingField: 6
-
+  <ProjectilePrefab>k__BackingField: {fileID: 8259282339474626807, guid: c9f7961fab259ea8e8032145d83eff2f, type: 3}
+  <RateOfFire>k__BackingField: 10

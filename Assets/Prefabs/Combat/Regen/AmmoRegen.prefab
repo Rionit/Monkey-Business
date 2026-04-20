@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a7bb5a2e3c234d0bbe3b20173b77e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.AmmoRegenController
-  _replenishmentPercentage: 20
+  _replenishmentPercentage: 50
   _cooldown: 10
   _ammoRegenMesh: {fileID: 9110287608949290941}
   _collider: {fileID: 523776702490205740}

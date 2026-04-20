@@ -38,6 +38,9 @@ namespace MonkeyBusiness.UI
         [BoxGroup("Health Bar Settings"), Required, Tooltip("Mask image used for stylized clipping.")]
         [SerializeField] private Image mask;
 
+        [BoxGroup("Health Bar Settings"), Required, Tooltip("Image used for the monke face.")]
+        [SerializeField] private Image face;
+
         [PropertyRange(0f, "@endOffset"), BoxGroup("Health Bar Settings")]
         [SerializeField, Tooltip("Minimum width position of the fill (value = 0).")]
         private float startOffset = 100f;
@@ -94,6 +97,18 @@ namespace MonkeyBusiness.UI
         [HorizontalGroup("Health Bar Settings/Masks"), HideLabel, LabelText("High"), Required]
         [SerializeField, Tooltip("Mask sprite for HIGH health.")]
         private Sprite highHealthMaskSprite;
+
+        [HorizontalGroup("Health Bar Settings/Faces", Title = "Masks", Gap = 10), HideLabel, LabelText("Low"), Required]
+        [SerializeField, Tooltip("Monke Face sprite for LOW health.")]
+        private Sprite lowHealthFaceSprite;
+
+        [HorizontalGroup("Health Bar Settings/Faces"), HideLabel, LabelText("Mid"), Required]
+        [SerializeField, Tooltip("Monke Face sprite for MEDIUM health.")]
+        private Sprite mediumHealthFaceSprite;
+
+        [HorizontalGroup("Health Bar Settings/Faces"), HideLabel, LabelText("High"), Required]
+        [SerializeField, Tooltip("Monke Face sprite for HIGH health.")]
+        private Sprite highHealthFaceSprite;
         
         [SerializeField, Tooltip("Duration of the front fill tween."), BoxGroup("Health Bar Settings/Tween Settings", centerLabel: true)]
         private float valueTweenDuration = 0.25f;
@@ -217,14 +232,17 @@ namespace MonkeyBusiness.UI
                 case HealthState.HIGH:
                     outline.sprite = highHealthSprite;
                     mask.sprite = highHealthMaskSprite;
+                    face.sprite = highHealthFaceSprite;
                     break;
                 case HealthState.MEDIUM:
                     outline.sprite = mediumHealthSprite;
                     mask.sprite = mediumHealthMaskSprite;
+                    face.sprite = mediumHealthFaceSprite;
                     break;
                 case HealthState.LOW:
                     outline.sprite = lowHealthSprite;
                     mask.sprite = lowHealthMaskSprite;
+                    face.sprite = lowHealthFaceSprite;
                     break;
                 default:
                     Debug.LogWarning("Missing current health state!");

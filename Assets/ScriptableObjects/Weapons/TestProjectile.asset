@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7fa2e171f17524e199d5e9751328650, type: 3}
+  m_Name: TestProjectile
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.WeaponData
+  <MaxAmmo>k__BackingField: 10
+  <ProjectilePrefab>k__BackingField: {fileID: 2235233305944768110, guid: f294b224f5b8df50dba95a848b1f5641, type: 3}
+  <RateOfFire>k__BackingField: 1
