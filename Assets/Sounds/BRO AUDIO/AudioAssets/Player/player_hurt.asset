@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad670d1adcf8be84f891f82b894c08a5, type: 3}
-  m_Name: stapler
+  m_Name: player_hurt
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
   <ID>k__BackingField: 0
   MulticlipsPlayMode: 0
   _group: {fileID: 0}
   Clips:
-  - AudioClip: {fileID: 8300000, guid: b8dfeab38e35ebd4fbab092e0ecce7b4, type: 3}
+  - AudioClip: {fileID: 8300000, guid: 189930262568a714984f2a8900ed7657, type: 3}
     Volume: 1
     Delay: 0
-    StartPosition: 0.07
+    StartPosition: 0
     EndPosition: 0
     FadeIn: 0
     FadeOut: 0
     Weight: 0
-  <AudioAsset>k__BackingField: {fileID: 11400000, guid: e040321bf1519084fa8d5a51b0bf0001, type: 2}
+  <AudioAsset>k__BackingField: {fileID: 11400000, guid: b1fdd5ec8dca99d44a2fd85488a201f7, type: 2}
   <AudioType>k__BackingField: 8
   <MasterVolume>k__BackingField: 1
   <Loop>k__BackingField: 0

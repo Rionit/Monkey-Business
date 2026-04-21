@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad670d1adcf8be84f891f82b894c08a5, type: 3}
-  m_Name: player_hurt
+  m_Name: monkey_death
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
   <ID>k__BackingField: 0
   MulticlipsPlayMode: 0
   _group: {fileID: 0}
   Clips:
-  - AudioClip: {fileID: 8300000, guid: 189930262568a714984f2a8900ed7657, type: 3}
+  - AudioClip: {fileID: 8300000, guid: 3c21abf13885958488a0281f39db33de, type: 3}
     Volume: 1
     Delay: 0
     StartPosition: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
     FadeIn: 0
     FadeOut: 0
     Weight: 0
-  <AudioAsset>k__BackingField: {fileID: 11400000, guid: 1e08685063d5c5245b2bd642710200f0, type: 2}
+  <AudioAsset>k__BackingField: {fileID: 11400000, guid: 9f9477ed6aa9f9542a5af378a0b4ed2f, type: 2}
   <AudioType>k__BackingField: 8
   <MasterVolume>k__BackingField: 1
   <Loop>k__BackingField: 0

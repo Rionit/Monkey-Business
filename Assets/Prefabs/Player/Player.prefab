@@ -719,7 +719,7 @@ MonoBehaviour:
   _stopOnDisable: 0
   _overrideFadeOut: -1
   _sound:
-    _entity: {fileID: 11400000, guid: 80f947958aebc65469891b833be8a9a2, type: 2}
+    _entity: {fileID: 11400000, guid: 1e6c2a43f00cb534bb28ace42b32beb9, type: 2}
     ID: 0
     <DebugObject>k__BackingField: {fileID: 4866017504137546270}
   _overrideGroup: {fileID: 0}
