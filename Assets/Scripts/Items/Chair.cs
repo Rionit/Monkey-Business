@@ -64,7 +64,7 @@ namespace MonkeyBusiness.Items
             if(other.CompareTag("Enemy"))
             {
                 // apply knockback to all enemies in radius
-                foreach(Collider collider in Physics.OverlapSphere(other.transform.position, 3.0f)){
+                foreach(Collider collider in Physics.OverlapSphere(other.transform.position, _knockbackEffectRadius)){
 
                     if (collider.gameObject.CompareTag("Enemy"))
                     {

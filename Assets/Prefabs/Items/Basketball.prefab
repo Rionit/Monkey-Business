@@ -186,7 +186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Basketball
   _impactDamage: 20
-  _durability: 3
+  _durability: 7
 --- !u!114 &6296776480921587029
 MonoBehaviour:
   m_ObjectHideFlags: 0
