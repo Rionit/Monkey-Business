@@ -686,6 +686,7 @@ MonoBehaviour:
   - {fileID: 1660209261}
   - {fileID: 744071831}
   - {fileID: 744071833}
+  - {fileID: 1660209263}
 --- !u!1001 &751028556
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1159,15 +1160,20 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   _hud: {fileID: 0}
+  _deathScreen: {fileID: 0}
+  _equipmentManager: {fileID: 744071833}
   _enemiesPerWave: 6
   _enemiesSpawnedAtOnce: 2
   _preparationPhaseDuration: 10
   _enemySpawnDelay: 5
+  gorillaPrefab: {fileID: 0}
+  chimpPrefab: {fileID: 0}
   _enemyPrefabs: []
   _enemySpawnPoints:
   - {fileID: 472614448}
   - {fileID: 1423250129}
   _playerCharacter: {fileID: 0}
+  _waveDefinitions: []
 --- !u!4 &1490947610
 Transform:
   m_ObjectHideFlags: 0
@@ -1379,6 +1385,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae3644577ea2a44db2b1efddd0b95a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
+--- !u!114 &1660209263 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3049860224932558447, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+  m_PrefabInstance: {fileID: 1660209258}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660209259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d1bc5515e3ab954e80599c538834774, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::KinematicCharacterController.KinematicCharacterMotor
 --- !u!1001 &1705161590
 PrefabInstance:
   m_ObjectHideFlags: 0

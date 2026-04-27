@@ -1,5 +1,6 @@
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Misc;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace MonkeyBusiness.Items
@@ -16,6 +17,7 @@ namespace MonkeyBusiness.Items
         private Item _item;
 
         private bool _isEaten = false;
+        private bool _bananaPeelPrimed = false;
 
         private Transform _holder;
 
@@ -89,9 +91,39 @@ namespace MonkeyBusiness.Items
             if(stunController)
             {
                 stunController.Stun(_stunDuration);
+                Destroy(gameObject);
+            }           
+        }
+
+/// <summary>
+/// Trigger only used when in banana peel form
+/// </summary>
+/// <param name="other"></param>
+        void OnTriggerEnter(Collider other)
+        {
+            if(!_bananaPeelPrimed)
+            {
+                return;
             }
-            // TODO add ganana peel remaining on the ground
-            Destroy(gameObject);
+
+            HandleCollision(other.gameObject);
+        }
+
+        void OnCollisionEnter(Collision collision)
+        {
+            if(!_isEaten || _item.isBeingHeld)
+            {
+                return;
+            }
+
+            // make banana peel stick
+            Rigidbody rigidbody = GetComponent<Rigidbody>();
+            rigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            rigidbody.freezeRotation = true;
+
+            transform.rotation = Quaternion.identity;
+
+            _bananaPeelPrimed = true;
         }
     }
 }
