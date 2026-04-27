@@ -18,6 +18,9 @@ namespace MonkeyBusiness.Items
     {
         private Item _item;
 
+/// <summary>
+/// Damage dealt to an enemy on thrown impact. Only the enemy directly hit takes damage
+/// </summary>
         [SerializeField]
         private int _impactDamage = 25;
 
@@ -33,6 +36,11 @@ namespace MonkeyBusiness.Items
         [SerializeField]
         private float _knockbackDuration = 0.5f; 
 
+        /// <summary>
+        /// Radius of the knockback effect. If an enemy is hit, all enemies in that radius will be knocked back
+        /// </summary>
+        [SerializeField]
+        private float _knockbackEffectRadius = 3.0f;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -55,6 +63,24 @@ namespace MonkeyBusiness.Items
         {
             if(other.CompareTag("Enemy"))
             {
+                // apply knockback to all enemies in radius
+                foreach(Collider collider in Physics.OverlapSphere(other.transform.position, _knockbackEffectRadius)){
+
+                    if (collider.gameObject.CompareTag("Enemy"))
+                    {
+                        KnockbackController knockbackController = collider.gameObject.GetComponentInParent<KnockbackController>();
+
+                        if(knockbackController != null)
+                        {
+                            var knockbackVector = GetComponentInParent<Rigidbody>().linearVelocity.normalized * _knockbackForce;
+                            knockbackVector.y = Math.Abs(knockbackVector.y);
+                            // Debug.Log(knockbackVector);
+                            knockbackController.Knockback(knockbackVector, _knockbackDuration);
+                        }
+                    }
+                }
+
+                // deal damage to directly hit enemy
                 other.GetComponentInParent<HealthController>().TakeDamage(_impactDamage);
 
                 /* if(other.TryGetComponent(out EnemyFollowController enemyFollowController))
@@ -63,13 +89,13 @@ namespace MonkeyBusiness.Items
                     enemyFollowController.Slowdown(0.25f, 0.5f);
                 } */
 
-                if(other.TryGetComponent(out KnockbackController knockbackController))
+                /* if(other.TryGetComponent(out KnockbackController knockbackController))
                 {
                     var knockbackVector = GetComponentInParent<Rigidbody>().linearVelocity.normalized * _knockbackForce;
                     knockbackVector.y = Math.Abs(knockbackVector.y);
                     Debug.Log(knockbackVector);
                     knockbackController.Knockback(knockbackVector, _knockbackDuration);
-                }
+                } */
             }
 
             // Lower durability
