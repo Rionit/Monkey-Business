@@ -17,7 +17,7 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         [field: SerializeField]
         [field: Tooltip("Target to chase")]
-        public GameObject ChaseTarget { get; set; } 
+        public GameObject ChaseObject { get; set; } 
 
         [SerializeField]
         [ReadOnly]
@@ -144,6 +144,8 @@ namespace MonkeyBusiness.Enemies.Navigation
         [Tooltip("All visualizers of the slowdown effect.")]
         List<Renderer> _slowdownVisualizers = new List<Renderer>();
 
+        FlankingController _flankingController;
+
         int _currentlyActiveEffects = 0;
 
         float _timeTillPathUpdate = 0f;
@@ -154,6 +156,8 @@ namespace MonkeyBusiness.Enemies.Navigation
         {
             _navMeshAgent.avoidancePriority = Random.Range(_avoidancePriorityRange.x, _avoidancePriorityRange.y);
             _timeTillPathUpdate = _updatePathInterval;
+
+            _flankingController = ChaseObject.GetComponentInParent<FlankingController>();
             SetupDefaultValues();
         }
 
@@ -260,8 +264,8 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         void UpdatePosition()
         {
-            if (ChaseTarget == null) return;
-            var distance = Vector3.Distance(transform.position, ChaseTarget.transform.position);
+            if (ChaseObject == null) return;
+            var distance = Vector3.Distance(transform.position, ChaseObject.transform.position);
             if (_runningAway && distance >= _chaseDistance * 1.1f)
             {
                 _runningAway = false;
@@ -271,7 +275,7 @@ namespace MonkeyBusiness.Enemies.Navigation
                 _runningAway = true;
             }
 
-            _currentTargetPos = _runningAway ? GetRunawayPosition() : ChaseTarget.transform.position;
+            _currentTargetPos = _runningAway ? GetRunawayPosition() : ChaseObject.transform.position;
             _navMeshAgent.SetDestination(_currentTargetPos);
         }
 
@@ -280,8 +284,8 @@ namespace MonkeyBusiness.Enemies.Navigation
         /// </summary>
         Vector3 GetRunawayPosition()
         {
-            Vector3 directionToTarget = (ChaseTarget.transform.position - transform.position).normalized;
-            return ChaseTarget.transform.position - directionToTarget * _chaseDistance;
+            Vector3 directionToTarget = (ChaseObject.transform.position - transform.position).normalized;
+            return ChaseObject.transform.position - directionToTarget * _chaseDistance;
         }
 
         void FixedUpdate()

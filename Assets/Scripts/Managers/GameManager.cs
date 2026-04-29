@@ -9,7 +9,6 @@ using System;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
-using MonkeyBusiness.Player;
 
 namespace MonkeyBusiness.Managers
 {
@@ -124,6 +123,11 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         private GameObject _playerCharacter;
 
+        /// <summary>
+        /// Player's character object, used for enemy targeting
+        /// </summary>
+        public GameObject PlayerCharacter => _playerCharacter;
+
         Player _playerScript;
 
         /// <summary>
@@ -175,7 +179,7 @@ namespace MonkeyBusiness.Managers
             GameObject enemyObject = Instantiate(enemy, _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
             
             if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController)){
-                enemyFollowController.ChaseTarget = _playerCharacter;
+                enemyFollowController.ChaseObject = _playerCharacter;
             }else
             {
                 Debug.LogError("No EnemyFollowController on enemy prefab");
