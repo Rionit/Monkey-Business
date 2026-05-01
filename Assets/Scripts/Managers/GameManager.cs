@@ -5,6 +5,7 @@ using System.Collections;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Enemies.Navigation;
+using MonkeyBusiness.Misc;
 using System;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -178,9 +179,11 @@ namespace MonkeyBusiness.Managers
         {
             GameObject enemyObject = Instantiate(enemy, _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
             
-            if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController)){
-                enemyFollowController.ChaseObject = _playerCharacter;
-            }else
+            if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController))
+            {
+                enemyFollowController.ChaseObject = _playerCharacter.GetComponent<ITargetable>().Target;
+            }
+            else
             {
                 Debug.LogError("No EnemyFollowController on enemy prefab");
             }

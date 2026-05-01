@@ -59,7 +59,6 @@ GameObject:
   - component: {fileID: 3981870910625965676}
   - component: {fileID: 2702414980135743268}
   - component: {fileID: 1934915082588342069}
-  - component: {fileID: 4259873353088571684}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Player
@@ -141,23 +140,6 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4259873353088571684
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 754302598161200952}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6c3ac0c42947b84e8b95abbd47c39cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: MonkeyBusiness.Enemies.Navigation::MonkeyBusiness.Enemies.Navigation.FlankingController
-  _flankingPoints:
-  - {fileID: 5396804786981697297}
-  - {fileID: 2433039122935364967}
-  _flankingDistance: 5.84
-  _flankingDisproportionThreshold: 3
 --- !u!1 &1093192211337646556
 GameObject:
   m_ObjectHideFlags: 0

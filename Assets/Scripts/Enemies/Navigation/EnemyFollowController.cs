@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using MonkeyBusiness.Combat.Health;
 
 [assembly: InternalsVisibleTo("MonkeyBusiness.Tests")]
 namespace MonkeyBusiness.Enemies.Navigation
@@ -144,8 +145,6 @@ namespace MonkeyBusiness.Enemies.Navigation
         [Tooltip("All visualizers of the slowdown effect.")]
         List<Renderer> _slowdownVisualizers = new List<Renderer>();
 
-        FlankingController _flankingController;
-
         int _currentlyActiveEffects = 0;
 
         float _timeTillPathUpdate = 0f;
@@ -157,8 +156,12 @@ namespace MonkeyBusiness.Enemies.Navigation
             _navMeshAgent.avoidancePriority = Random.Range(_avoidancePriorityRange.x, _avoidancePriorityRange.y);
             _timeTillPathUpdate = _updatePathInterval;
 
-            _flankingController = ChaseObject.GetComponentInParent<FlankingController>();
             SetupDefaultValues();
+        }
+
+        void Start()
+        {
+            GetComponentInParent<HealthController>().OnDeath.AddListener(UnlistOnDeath);
         }
 
         void SetupDefaultValues()
@@ -191,6 +194,11 @@ namespace MonkeyBusiness.Enemies.Navigation
             {
                 _slowdownVisualizers[_currentlyActiveEffects++].enabled = true;
             }
+        }
+
+        void UnlistOnDeath(GameObject _)
+        {
+            // TODO: Change
         }
 
         void ResetSlowdownVisualizers()
@@ -265,6 +273,9 @@ namespace MonkeyBusiness.Enemies.Navigation
         void UpdatePosition()
         {
             if (ChaseObject == null) return;
+            // TODO: Change
+            //var flankingPos = _flankingController.GetMovementTarget(this);
+
             var distance = Vector3.Distance(transform.position, ChaseObject.transform.position);
             if (_runningAway && distance >= _chaseDistance * 1.1f)
             {
@@ -286,6 +297,12 @@ namespace MonkeyBusiness.Enemies.Navigation
         {
             Vector3 directionToTarget = (ChaseObject.transform.position - transform.position).normalized;
             return ChaseObject.transform.position - directionToTarget * _chaseDistance;
+        }
+
+        void OnDisable()
+        {
+            //TODO: Change
+            //_flankingController.RemoveFromList(this);
         }
 
         void FixedUpdate()
