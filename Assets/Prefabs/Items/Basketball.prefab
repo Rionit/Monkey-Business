@@ -238,8 +238,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d77afe0105d33040875a30d3ef936a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Basketball
-  _impactDamage: 20
+  _impactDamage: 75
   _durability: 7
+  _chaseSpeed: 50
+  _bounceChaseDelay: 0.15
 --- !u!114 &6296776480921587029
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 860e1a71b47ac14449895fa4974d241c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Chair
-  _impactDamage: 13
+  _impactDamage: 100
   _durability: 4
   _knockbackForce: 1
   _knockbackDuration: 0.5

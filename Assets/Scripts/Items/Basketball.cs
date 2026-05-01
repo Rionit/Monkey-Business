@@ -26,7 +26,14 @@ namespace MonkeyBusiness.Items
         private float _bounceRadius = 20.0f;
 
         private Transform _chaseTarget;
+        
+        [SerializeField]
         private float _chaseSpeed = 35.0f;
+
+        /// <summary>
+        /// Delay before the ball begins chasing target after bounce
+        /// </summary>
+        [SerializeField] private float _bounceChaseDelay = 0.15f;
 
         private float _chaseRotation = 5f;
 
@@ -137,7 +144,7 @@ namespace MonkeyBusiness.Items
 
         IEnumerator StartChaseAfterDelay(Transform target)
         {
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(_bounceChaseDelay);
             _chaseTarget = target;
         }
     }
