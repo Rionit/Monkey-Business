@@ -187,7 +187,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acbcb329b89634345822c77eeb8fd0d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Mug
-  _impactDamage: 35
+  _impactDamage: 250
 --- !u!114 &-7313773265465848361
 MonoBehaviour:
   m_ObjectHideFlags: 0
