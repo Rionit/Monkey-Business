@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Basketball
   _impactDamage: 75
   _durability: 7
-  _chaseSpeed: 50
+  _chaseSpeed: 25
   _bounceChaseDelay: 0.15
 --- !u!114 &6296776480921587029
 MonoBehaviour:

@@ -27,33 +27,31 @@ namespace MonkeyBusiness.Items
 
         private Transform _chaseTarget;
         
-        [SerializeField]
-        private float _chaseSpeed = 35.0f;
-
         /// <summary>
-        /// Delay before the ball begins chasing target after bounce
+        /// To stop the ball from targeting some enemies' feet
         /// </summary>
-        [SerializeField] private float _bounceChaseDelay = 0.15f;
+        private float _chaseTargetVerticalOffset;
 
-        private float _chaseRotation = 5f;
-
-        private float _chaseMagnitudeChange = 25f;
+        [SerializeField] private float _chaseSpeed = 35.0f;
+        
+        private Rigidbody _rigidbody;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             _item = GetComponent<Item>();
             _item.OnThrownCollision.AddListener(HandleCollision);
             _item.OnPickup.AddListener((_)=>{ClearChaseTarget();});
+            _rigidbody = GetComponent<Rigidbody>();
         }
 
         void FixedUpdate()
         {
-            if(_chaseTarget != null)
+            if(_chaseTarget is not null)
             {
-                Vector3 directionToTarget =  (_chaseTarget.transform.position - transform.position).normalized;
+                Vector3 directionToTarget =  (_chaseTarget.transform.position + _chaseTargetVerticalOffset * Vector3.up - transform.position).normalized;
 
-                Rigidbody _rigidbody = GetComponent<Rigidbody>();
-                GetComponent<Rigidbody>().linearVelocity = Vector3.RotateTowards(GetComponent<Rigidbody>().linearVelocity, directionToTarget * _chaseSpeed, _chaseRotation * Time.fixedDeltaTime, _chaseMagnitudeChange * Time.fixedDeltaTime);
+                
+                _rigidbody.linearVelocity = directionToTarget * _chaseSpeed;
             }
         }
 
@@ -71,12 +69,12 @@ namespace MonkeyBusiness.Items
                 // Find next target to bounce to
                 Collider[] colliders = Physics.OverlapSphere(transform.position, _bounceRadius, LayerMask.GetMask("Default"), QueryTriggerInteraction.Ignore);
 
-                GameObject nearestEnemy = null;
+                Collider nearestEnemy = null;
                 float nearestEnemyDistance = Mathf.Infinity;
 
                 foreach(Collider collider in colliders)
                 {
-                    Debug.Log(collider.gameObject.name);
+                    //Debug.Log(collider.gameObject.name);
 
                     if (!collider.gameObject.CompareTag("Enemy"))
                     {
@@ -97,14 +95,28 @@ namespace MonkeyBusiness.Items
                     float distanceToEnemy = Vector3.Distance(transform.position, collider.transform.position);
                     if(distanceToEnemy < nearestEnemyDistance)
                     {
-                        nearestEnemy = collider.gameObject;
+                        nearestEnemy = collider;
                         nearestEnemyDistance = distanceToEnemy;
                     }
                 }
 
-                if(nearestEnemy != null)
+                if(nearestEnemy is not null)
                 {
                     Debug.Log($"Nearest enemy: {nearestEnemy}");
+                    Debug.Log($"Nearest enemy position: {nearestEnemy.transform.position}");
+                    _rigidbody.linearVelocity = Vector3.zero;
+
+                    // If we add more collider types to enemies such as boxes, add those here
+                    if (nearestEnemy is CapsuleCollider capsuleCollider)
+                    {
+                        _chaseTargetVerticalOffset = capsuleCollider.center.y;
+                    }
+                    else
+                    {
+                        _chaseTargetVerticalOffset = 0.0f;
+                    }
+                    
+                    
                     SetChaseTarget(nearestEnemy.transform);
                 }
             }
@@ -120,17 +132,12 @@ namespace MonkeyBusiness.Items
         private void SetChaseTarget(Transform target)
         {
             
-
-            Rigidbody rigidbody = GetComponent<Rigidbody>();
-            rigidbody.useGravity = false;
-            rigidbody.linearVelocity = 5 * Vector3.up;
+            _rigidbody.useGravity = false;
             //rigidbody.AddForce(3 * Vector3.up, ForceMode.Impulse);
             
             _item.IsBeingThrown = true;
             
-            //_chaseTarget = target;
-            StartCoroutine(StartChaseAfterDelay(target));
-
+            _chaseTarget = target;
             
         }
 
@@ -140,12 +147,6 @@ namespace MonkeyBusiness.Items
 
             Rigidbody rigidbody = GetComponent<Rigidbody>();
             rigidbody.useGravity = true;
-        }
-
-        IEnumerator StartChaseAfterDelay(Transform target)
-        {
-            yield return new WaitForSeconds(_bounceChaseDelay);
-            _chaseTarget = target;
         }
     }
 }
