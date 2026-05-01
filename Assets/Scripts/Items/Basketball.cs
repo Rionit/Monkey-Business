@@ -45,8 +45,8 @@ namespace MonkeyBusiness.Items
             {
                 Vector3 directionToTarget =  (_chaseTarget.transform.position - transform.position).normalized;
 
-                Rigidbody rigidbody = GetComponent<Rigidbody>();
-                rigidbody.linearVelocity = Vector3.RotateTowards(rigidbody.linearVelocity, directionToTarget * _chaseSpeed, _chaseRotation * Time.fixedDeltaTime, _chaseMagnitudeChange * Time.fixedDeltaTime);
+                Rigidbody _rigidbody = GetComponent<Rigidbody>();
+                GetComponent<Rigidbody>().linearVelocity = Vector3.RotateTowards(GetComponent<Rigidbody>().linearVelocity, directionToTarget * _chaseSpeed, _chaseRotation * Time.fixedDeltaTime, _chaseMagnitudeChange * Time.fixedDeltaTime);
             }
         }
 

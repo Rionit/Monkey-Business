@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
+using UnityEditor;
 using UnityEngine;
 
 namespace MonkeyBusiness.Items
@@ -15,6 +17,13 @@ namespace MonkeyBusiness.Items
         private float _explosionRadius = 10.0f;
         [SerializeField]
         private float _explosionDamage = 400.0f;
+
+        /// <summary>
+        /// Particle system for the explosion.
+        ///
+        /// Make sure the particle system has the property Play on awake enabled and destroys itself when the animation ends.
+        /// </summary>
+        [SerializeField] private ParticleSystem _explosionParticleSystem;
 
         private Item _item;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -69,7 +78,14 @@ namespace MonkeyBusiness.Items
 
             }
 
+            _explosionParticleSystem.transform.parent = null;
+            _explosionParticleSystem.gameObject.SetActive(true);
             Destroy(gameObject);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawWireSphere(transform.position, _explosionRadius);
         }
     }
 }

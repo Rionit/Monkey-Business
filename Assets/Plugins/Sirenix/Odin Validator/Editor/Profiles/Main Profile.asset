@@ -73,5 +73,29 @@ MonoBehaviour:
       IncludeAssetDependencies: 1
     AssetBundle: 
     AddressableGroup: 
+  - Enabled: 1
+    Type: 2
+    Asset:
+      Path: 
+      Filter: 
+    Object: {fileID: 0}
+    Scene:
+      Type: 0
+      Value: Assets/UnityTechnologies
+      IncludeAssetDependencies: 1
+    AssetBundle: 
+    AddressableGroup: 
+  - Enabled: 1
+    Type: 2
+    Asset:
+      Path: 
+      Filter: 
+    Object: {fileID: 0}
+    Scene:
+      Type: 0
+      Value: Assets/UnityTechnologies/ParticlePack
+      IncludeAssetDependencies: 1
+    AssetBundle: 
+    AddressableGroup: 
   Exclude: []
   icon: 391
