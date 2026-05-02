@@ -273,6 +273,15 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Swing"",
+                    ""type"": ""Button"",
+                    ""id"": ""96051902-fc8b-4b41-bde1-159fae89a18c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -779,6 +788,17 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cd34d305-6d77-453c-b114-f4cd99723bd7"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Swing"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1386,6 +1406,7 @@ namespace MonkeyBusiness.Player
             m_Player_Item8 = m_Player.FindAction("Item8", throwIfNotFound: true);
             m_Player_Item9 = m_Player.FindAction("Item9", throwIfNotFound: true);
             m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
+            m_Player_Swing = m_Player.FindAction("Swing", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1499,6 +1520,7 @@ namespace MonkeyBusiness.Player
         private readonly InputAction m_Player_Item8;
         private readonly InputAction m_Player_Item9;
         private readonly InputAction m_Player_Restart;
+        private readonly InputAction m_Player_Swing;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1591,6 +1613,10 @@ namespace MonkeyBusiness.Player
             /// </summary>
             public InputAction @Restart => m_Wrapper.m_Player_Restart;
             /// <summary>
+            /// Provides access to the underlying input action "Player/Swing".
+            /// </summary>
+            public InputAction @Swing => m_Wrapper.m_Player_Swing;
+            /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
             public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1676,6 +1702,9 @@ namespace MonkeyBusiness.Player
                 @Restart.started += instance.OnRestart;
                 @Restart.performed += instance.OnRestart;
                 @Restart.canceled += instance.OnRestart;
+                @Swing.started += instance.OnSwing;
+                @Swing.performed += instance.OnSwing;
+                @Swing.canceled += instance.OnSwing;
             }
 
             /// <summary>
@@ -1747,6 +1776,9 @@ namespace MonkeyBusiness.Player
                 @Restart.started -= instance.OnRestart;
                 @Restart.performed -= instance.OnRestart;
                 @Restart.canceled -= instance.OnRestart;
+                @Swing.started -= instance.OnSwing;
+                @Swing.performed -= instance.OnSwing;
+                @Swing.canceled -= instance.OnSwing;
             }
 
             /// <summary>
@@ -2187,6 +2219,13 @@ namespace MonkeyBusiness.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnRestart(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Swing" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnSwing(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

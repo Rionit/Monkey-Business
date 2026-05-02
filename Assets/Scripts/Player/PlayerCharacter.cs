@@ -17,7 +17,7 @@ namespace MonkeyBusiness.Player
 
     public enum Stance
     {
-        Stand, Crouch, Slide
+        Stand, Crouch, Slide, Swing
     }
 
     public struct CharacterState
@@ -32,6 +32,7 @@ namespace MonkeyBusiness.Player
     {
         public Quaternion Rotation;
         public Vector2 Move;
+        public bool Swing;
         public bool Jump;
         public bool JumpSustain;
         public CrouchInput Crouch;
@@ -43,6 +44,8 @@ namespace MonkeyBusiness.Player
         [SerializeField] private Transform root;
         [SerializeField] private Transform cameraTarget;
 
+        [SerializeField] private LayerMask whatIsSwingable;
+        
         [field:SerializeField] public float WalkSpeed { get; set; } = 20f;
         [SerializeField] private float crouchSpeed = 7f;
         [SerializeField] private float walkResponse = 25f;
@@ -76,6 +79,11 @@ namespace MonkeyBusiness.Player
         [field: Required]
         public GameObject Target { get; private set; }
         
+        [SerializeField] private float swingForce = 30f;
+        [SerializeField] private float swingDamping = 5f;
+
+        private Vector3 _swingVelocity;
+        
         private CharacterState _state;    
         private CharacterState _lastState;    
         private CharacterState _tempState;    
@@ -90,9 +98,19 @@ namespace MonkeyBusiness.Player
         private float _timeSinceUngrounded;
         private float _timeSinceJumpRequest;
         private bool _ungroundedDueToJump;
+        
+        private SpringJoint _swingJoint;
+        private Rigidbody _rb;
+        private LineRenderer _lineRenderer;
+        private Vector3 _ropeEnd;
 
         private Collider[] _uncrouchOverlapResults;
-        
+
+        private void Awake()
+        {
+            _lineRenderer = GetComponent<LineRenderer>();
+        }
+
         public void Initialize()
         {
             _state.Stance = Stance.Stand;
@@ -105,6 +123,9 @@ namespace MonkeyBusiness.Player
 
         public void UpdateInput(CharacterInput input)
         {
+            if (input.Swing && _state.Stance != Stance.Swing) StartSwing();
+            if (!input.Swing && _state.Stance == Stance.Swing) StopSwing();
+            
             _requestedRotation = input.Rotation;    
             // Take the 2D input vector and create a 3D movement vector on the XZ plane
             _requestedMovement = new Vector3(input.Move.x, 0, input.Move.y);
@@ -132,6 +153,77 @@ namespace MonkeyBusiness.Player
                 _requestedCrouchInAir = !_state.Grounded;
             else if (!_requestedCrouch && wasRequestingCrouch)
                 _requestedCrouchInAir = false;
+        }
+
+        void StartSwing()
+        {
+            var cam = UnityEngine.Camera.main;
+            var origin = cam.transform.position;
+            var dir = cam.transform.forward;
+
+            if (Physics.Raycast(origin, dir, out RaycastHit hit, 100f, whatIsSwingable))
+            {
+                _lineRenderer.enabled = true;
+                _state.Stance = Stance.Swing;
+
+                _rb = GetComponent<Rigidbody>();
+                if (_rb != null)
+                {
+                    _rb.freezeRotation = true;
+                    _rb.linearVelocity = motor != null ? motor.Velocity : Vector3.zero; // transfer velocity into swing
+                }
+
+                if (motor != null)
+                {
+                    motor.enabled = false;
+                }
+
+                _swingJoint = gameObject.AddComponent<SpringJoint>();
+                _swingJoint.autoConfigureConnectedAnchor = false;
+                _swingJoint.connectedAnchor = hit.point;
+
+                float distance = Vector3.Distance(transform.position, hit.point);
+
+                _swingJoint.maxDistance = distance * 0.8f;
+                _swingJoint.minDistance = distance * 0.2f;
+
+                _swingJoint.spring = 4.5f;
+                _swingJoint.damper = 7f;
+                _swingJoint.massScale = 4.5f;
+                
+                _ropeEnd = hit.point;;
+            }
+        }
+
+        void StopSwing()
+        {
+            _state.Stance = Stance.Stand;
+
+            Vector3 currentPos = transform.position;
+
+            if (_swingJoint != null)
+            {
+                Destroy(_swingJoint);
+            }
+
+            if (_rb != null)
+            {
+                _rb.freezeRotation = false;
+            }
+
+            if (motor != null)
+            {
+                motor.enabled = true;
+                motor.SetPosition(currentPos);
+            }
+            
+            _lineRenderer.enabled = false;
+        }
+
+        private void LateUpdate()
+        {
+            _lineRenderer.SetPosition(0,transform.position);
+            _lineRenderer.SetPosition(1,_ropeEnd);
         }
 
         public void UpdateBody(float deltaTime)
