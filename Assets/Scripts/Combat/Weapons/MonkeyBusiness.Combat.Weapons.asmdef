@@ -4,7 +4,8 @@
     "references": [
         "GUID:c282b84647f3201a6a87d3ea979d6e2b",
         "GUID:5f116cbd8f00992e4bb5d8f7375343e5",
-        "GUID:63715533141da98f1a4a198975074850"
+        "GUID:63715533141da98f1a4a198975074850",
+        "BroAudio"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
