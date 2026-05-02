@@ -2240,6 +2240,7 @@ GameObject:
   - component: {fileID: 668953054}
   - component: {fileID: 668953056}
   - component: {fileID: 668953057}
+  - component: {fileID: 668953058}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2374,6 +2375,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c802cf7bb17aa141b981f873250a0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Managers::MonkeyBusiness.Managers.StatsManager
+--- !u!114 &668953058
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 668953053}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0cb9e620f425242846e80645f5fc28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.EventManager
+  OnEnemyHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &686858797
 GameObject:
   m_ObjectHideFlags: 0
@@ -6197,11 +6213,11 @@ PrefabInstance:
       objectReference: {fileID: 491849205}
     - target: {fileID: 6151647374474603472, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -5.07
+      value: -12.95
       objectReference: {fileID: 0}
     - target: {fileID: 6151647374474603472, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.104425445
+      value: 28.74
       objectReference: {fileID: 0}
     - target: {fileID: 6151647374474603472, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_LocalPosition.z
