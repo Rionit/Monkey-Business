@@ -121,13 +121,15 @@ namespace MonkeyBusiness.Items
             {
                 return;            
             }
+
+            // Prevent dealing damage multiple times per throw
+            IsBeingThrown = false;
             
             //Debug.Log(collision.gameObject.name);
             
             OnThrownCollision.Invoke(collision.gameObject);
             
-            // Prevent dealing damage multiple times per throw
-            IsBeingThrown = false;
+
             _outline.enabled = true;
 
             // Re-enable collision with whoever threw this item
