@@ -435,7 +435,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13f37cefab95f0c9a2ae2b68bc637e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.KnockbackController
-  _agentOverride: {fileID: 8553173932619770032}
+  _behaviourOverrides:
+  - {fileID: 8553173932619770032}
+  - {fileID: 7584984088641549584}
   _body: {fileID: 6570454771081550698}
   _minimumVelocity: 0.1
 --- !u!1 &6062144661757838322
