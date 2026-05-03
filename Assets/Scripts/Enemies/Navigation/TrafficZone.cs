@@ -89,8 +89,8 @@ namespace MonkeyBusiness.Enemies.Navigation
         /// <summary>
         /// ID of the zone. Used for debugging and visualization purposes.
         /// </summary>
-        [ShowInInspector]
-        [ReadOnly]
+        [field: ReadOnly]
+        [field: SerializeField]
         public int ID { get; set; } = -1;
 
         /// <summary>
@@ -107,7 +107,7 @@ namespace MonkeyBusiness.Enemies.Navigation
         [ShowInInspector]
         [ReadOnly]
         [Tooltip("Enemies pathing through the zone.")]
-        List<EnemyFollowController> _enemies = new List<EnemyFollowController>();
+        internal List<EnemyFollowController> _enemies = new List<EnemyFollowController>();
 
         [Required]
         [SerializeField]
@@ -120,12 +120,6 @@ namespace MonkeyBusiness.Enemies.Navigation
         #endif
 
         public int NumEnemies => _enemies.Count;
-
-
-        void OnValidate()
-        {
-            // TODO: Check in manager if some colliders intersect/stop intersecting and recalculate
-        }
 
         /// <summary>
         /// Adds the <paramref name="enemy"/> to the zone.
@@ -169,7 +163,33 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         void OnTriggerEnter(Collider other)
         {
-            // TODO: Add player entrance logic
+            var tag = other.tag;
+            if(tag == "Enemy")
+            {
+                var followController = other.GetComponentInParent<EnemyFollowController>();
+                if(followController != null)
+                {
+                    followController.CurrentZone = this;
+                    Debug.Log("Enemy entered zone " + ID);
+                }
+                else
+                {
+                    Debug.LogError("Enemy doesn't have EnemyFollowController");
+                }
+            }
+            else if(tag == "Player")
+            {
+                TrafficManager.Instance.PlayerZone = this;
+                Debug.Log("Player entered zone " + ID);
+            }           
+        }
+
+        void Start()
+        {
+            if(Application.isPlaying && ID == -1)
+            {
+                Debug.LogError("Zone " + name + " doesn't have an ID assigned. In GameManager, click on 'Setup Zone' before entering play mode!");
+            }
         }
 
         void OnGUI()
@@ -192,7 +212,7 @@ namespace MonkeyBusiness.Enemies.Navigation
             for (int i = 0; i < Neighbors.Count; i++)
             {
                 bool nullNeighbor = Neighbors[i] == null;
-                Handles.color = nullNeighbor ? Color.red : Color.cyan;
+                Handles.color = nullNeighbor ? Color.red : new Color(0f, 1f, 1f, 0.5f);
                 var position = !nullNeighbor ? Neighbors[i].Keypoint.position : Vector3.up;
 
                 Handles.DrawLine(Keypoint.position, position, 3f);
@@ -209,7 +229,21 @@ namespace MonkeyBusiness.Enemies.Navigation
             style.fontSize = 30;
             style.normal.textColor = Color.black;
             Handles.Label(Keypoint.position + Vector3.up, ID.ToString(), style);
+
+            GUIStyle enemyCountStyle = new GUIStyle();
+            enemyCountStyle.fontSize = 25;
+            enemyCountStyle.normal.textColor = Color.darkRed;
+            Handles.Label(Keypoint.position + Vector3.up + Vector3.back * 4f, NumEnemies.ToString(), enemyCountStyle);
             #endif
+        }
+
+        public override string ToString()
+        {
+            if(ID == -1)
+            {
+                return "Zone - ID NOT ASSIGNED";
+            }
+            else return "Zone " + ID;
         }
     }
 }

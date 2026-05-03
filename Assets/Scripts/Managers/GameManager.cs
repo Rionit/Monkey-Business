@@ -27,7 +27,7 @@ namespace MonkeyBusiness.Managers
     /// 
     /// TODO spawn new items at the start of each round
     /// </summary>
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, ITargetable
     {
         [Serializable]
         class SpawnInformation
@@ -111,6 +111,12 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         [Obsolete("Deprecated, maintained to work with old game manager, will be removed in the future. Use gorillaPrefab and chimpPrefab instead")]
         private List<GameObject> _enemyPrefabs;
+
+        /// <summary>
+        /// Returns the player character as the target.
+        /// </summary>
+        public GameObject Target => _playerCharacter;
+
 
         /// <summary>
         /// List of all enemy spawn points

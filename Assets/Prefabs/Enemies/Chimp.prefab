@@ -293,10 +293,10 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 15
-  m_Acceleration: 6
+  m_Acceleration: 15
   avoidancePriority: 50
   m_AngularSpeed: 240
-  m_StoppingDistance: 1
+  m_StoppingDistance: 2
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -317,7 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Enemies::MonkeyBusiness.Enemies.EnemyFollowController
   _navMeshAgent: {fileID: 8553173932619770032}
-  <ChaseTarget>k__BackingField: {fileID: 0}
+  <ChaseObject>k__BackingField: {fileID: 0}
   _defaultMaxSpeed: 0
   _defaultMaxAngularSpeed: 0
   _defaultAcceleration: 0
