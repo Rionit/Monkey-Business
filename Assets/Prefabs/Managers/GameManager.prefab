@@ -1,0 +1,379 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &978612021204172271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 380336796985234518}
+  m_Layer: 0
+  m_Name: SpawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &380336796985234518
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978612021204172271}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 55.414, y: 7.24, z: 2.286}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4863238726718896131}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1711366639540014009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 762597495365475649}
+  m_Layer: 0
+  m_Name: SpawnPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &762597495365475649
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1711366639540014009}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.81, y: 7.24, z: -27.36}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4863238726718896131}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &5677739966933632926
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4863238726718896131}
+  - component: {fileID: 7623826512875064706}
+  - component: {fileID: 4017804719035218497}
+  - component: {fileID: 5592157480748429877}
+  - component: {fileID: 1083196947981140784}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4863238726718896131
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677739966933632926}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.86573, y: -0, z: 3.05419}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 380336796985234518}
+  - {fileID: 762597495365475649}
+  - {fileID: 3110194932372608894}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7623826512875064706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677739966933632926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3654aa69fa9bc03aa9260abc6a60912d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Managers::MonkeyBusiness.Managers.GameManager
+  OnWaveDefeated:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: MonkeyBusiness.Perks.PerkSelectionController, MonkeyBusiness.Perks
+        m_MethodName: RandomizeNewPerks
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnEnemyCountChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: MonkeyBusiness.UI.InGameHUD, MonkeyBusiness.UI
+        m_MethodName: SetEnemyCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  _hud: {fileID: 0}
+  _deathScreen: {fileID: 0}
+  _equipmentManager: {fileID: 0}
+  _enemiesPerWave: 10
+  _enemiesSpawnedAtOnce: 2
+  _preparationPhaseDuration: 2
+  _enemySpawnDelay: 5
+  gorillaPrefab: {fileID: 651408346807706418, guid: 766f92749119f0ccba58713a22a1ba45, type: 3}
+  chimpPrefab: {fileID: 5194882674798657818, guid: 6cb4ee61863e8d68391b5018981b7fc8, type: 3}
+  _enemyPrefabs:
+  - {fileID: 5194882674798657818, guid: 6cb4ee61863e8d68391b5018981b7fc8, type: 3}
+  - {fileID: 651408346807706418, guid: 766f92749119f0ccba58713a22a1ba45, type: 3}
+  _enemySpawnPoints:
+  - {fileID: 380336796985234518}
+  - {fileID: 762597495365475649}
+  - {fileID: 3110194932372608894}
+  _playerCharacter: {fileID: 0}
+  _waveDefinitions:
+  - gorillas: 8
+    chimps: 12
+    enemiesPerSpawn: 2
+    enemiesAtOnce: 20
+  - gorillas: 14
+    chimps: 26
+    enemiesPerSpawn: 3
+    enemiesAtOnce: 30
+  - gorillas: 40
+    chimps: 60
+    enemiesPerSpawn: 4
+    enemiesAtOnce: 30
+  - gorillas: 50
+    chimps: 50
+    enemiesPerSpawn: 5
+    enemiesAtOnce: 40
+  - gorillas: 60
+    chimps: 40
+    enemiesPerSpawn: 6
+    enemiesAtOnce: 50
+  - gorillas: 80
+    chimps: 20
+    enemiesPerSpawn: 8
+    enemiesAtOnce: 80
+--- !u!114 &4017804719035218497
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677739966933632926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19ee733b1272e845797f3f1f9fd63c48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.ProjectileParentHolder
+  <Object>k__BackingField: {fileID: 5677739966933632926}
+--- !u!114 &5592157480748429877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677739966933632926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c802cf7bb17aa141b981f873250a0f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Managers::MonkeyBusiness.Managers.StatsManager
+--- !u!114 &1083196947981140784
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677739966933632926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cf16034f090adf3c953cdaa7fd261c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Enemies.Navigation::MonkeyBusiness.Enemies.Navigation.TrafficManager
+  _sortingRule: 2
+  _fallbackRule: 0
+  _hardResetOnSoft: 1
+  _zones:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  _distances:
+    _data:
+    - 0
+    - 1
+    - 3
+    - 3
+    - 2
+    - 2
+    - 1
+    - 3
+    - 3
+    - 1
+    - 32.01
+    - 0
+    - 2
+    - 2
+    - 3
+    - 1
+    - 2
+    - 2
+    - 3
+    - 2
+    - 91.73
+    - 67.13
+    - 0
+    - 2
+    - 1
+    - 1
+    - 2
+    - 1
+    - 2
+    - 4
+    - 110.68
+    - 78.67
+    - 60.69
+    - 0
+    - 2
+    - 1
+    - 3
+    - 1
+    - 1
+    - 4
+    - 63.58
+    - 95.28
+    - 28.15
+    - 69.04
+    - 0
+    - 2
+    - 1
+    - 1
+    - 1
+    - 3
+    - 69.18
+    - 37.17
+    - 29.96
+    - 41.5
+    - 58.1
+    - 0
+    - 3
+    - 1
+    - 2
+    - 3
+    - 30.85
+    - 62.86
+    - 60.88
+    - 101.77
+    - 32.73
+    - 90.83
+    - 0
+    - 2
+    - 2
+    - 2
+    - 95.54
+    - 68.03
+    - 23.61
+    - 37.08
+    - 31.96
+    - 30.86
+    - 64.69
+    - 0
+    - 1
+    - 4
+    - 114.43
+    - 94
+    - 49.58
+    - 25.52
+    - 50.85
+    - 56.82
+    - 83.58
+    - 25.96
+    - 0
+    - 4
+    - 28.38
+    - 60.38
+    - 120.1
+    - 139.06
+    - 91.96
+    - 97.56
+    - 59.23
+    - 123.92
+    - 142.81
+    - 0
+    <Width>k__BackingField: 10
+    <Height>k__BackingField: 10
+  OnHardRepath:
+    m_PersistentCalls:
+      m_Calls: []
+  OnSoftRepath:
+    m_PersistentCalls:
+      m_Calls: []
+  <Player>k__BackingField: {fileID: 0}
+--- !u!1 &6484089724411520133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3110194932372608894}
+  m_Layer: 0
+  m_Name: SpawnPoint (2)
+  m_TagString: Untagged
+  m_Icon: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3110194932372608894
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6484089724411520133}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 21.81, y: 7.24, z: -3.71}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4863238726718896131}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
