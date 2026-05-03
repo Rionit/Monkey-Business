@@ -129,6 +129,11 @@ namespace MonkeyBusiness.Enemies.Navigation
         "\n\n<i>Prevents jittery movement when close to the chase distance.</i>")]
         float _chaseDistanceOffset = 0.1f;
 
+        [SerializeField]
+        [Range(0f, 50f)]
+        [Tooltip("Distance from the player at which the enemy will always chase them directly.")]
+        float _alwaysChaseDistance = 10f;
+
         Vector3 _currentTargetPos;
 
         [ShowInInspector]
@@ -389,6 +394,13 @@ namespace MonkeyBusiness.Enemies.Navigation
             }
             else
             {
+                if(Vector3.Distance(transform.position, TrafficManager.Instance.Player.transform.position) <= _alwaysChaseDistance)
+                {
+                    ChaseObject = TrafficManager.Instance.Player;
+                    TrafficManager.Instance.ClearPath(this);
+                    UpdatePlayerPosition();
+                }
+
                 // If we reached a keypoint, move to some other
                 if(Vector3.Distance(transform.position, ChaseObject.transform.position) <= _navMeshAgent.stoppingDistance)
                 {
@@ -444,7 +456,9 @@ namespace MonkeyBusiness.Enemies.Navigation
             }
 
             Handles.color = Color.yellow;
-            Handles.DrawLine(transform.position, ChaseObject.transform.position, 2f);
+
+            if(ChaseObject != null)
+                Handles.DrawLine(transform.position, ChaseObject.transform.position, 2f);
             #endif
         }
     }

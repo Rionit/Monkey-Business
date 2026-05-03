@@ -10,6 +10,7 @@ using MonkeyBusiness.Misc;
 using UnityEditor;
 using System.IO;
 using Sirenix.Utilities;
+using UnityEditor.EditorTools;
 
 [assembly: InternalsVisibleTo("MonkeyBusiness.Tests")]
 namespace MonkeyBusiness.Enemies.Navigation
@@ -32,20 +33,24 @@ namespace MonkeyBusiness.Enemies.Navigation
     {
         public static TrafficManager Instance { get; private set; }
 
+        [FoldoutGroup("Pathfinding settings")]
         [EnumButtons]
         [SerializeField]
         [Tooltip("Sorting rule to use when choosing the best neighbor")]
         internal SortingRule _sortingRule = SortingRule.NDIST_EN_EUCL;
 
-
+        [FoldoutGroup("Pathfinding settings")]
         [EnumButtons]
         [SerializeField]
         [Tooltip("Fallback sorting rule if the road couldn't be found using the previous one")]
         internal SortingRule _fallbackRule = SortingRule.NDIST_EN_EUCL;
 
+        [FoldoutGroup("Pathfinding settings")]
         [SerializeField]
-        bool _hardResetOnSoft = false;
+        [Tooltip("Whether to perform a hard reset (recalculating the whole path) or a soft reset (just altering the existing path as much as possible) when the player moves to a neighboring zone. ")]
+        bool _hardResetOnSoft = true;
 
+        [FoldoutGroup("Precomputed zone data")]
         [ReadOnly]
         [SerializeField]
         internal TrafficZone[] _zones;
@@ -65,6 +70,7 @@ namespace MonkeyBusiness.Enemies.Navigation
         /// </remarks>
         //[TableMatrix(HorizontalTitle = "Neighbor distance", VerticalTitle = "Euclidean distance", Transpose = true)]
         [SerializeField]
+        [FoldoutGroup("Precomputed zone data")]
         internal TwoDArray<float> _distances;
 
         /// <summary>
@@ -74,9 +80,11 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         public UnityEvent OnSoftRepath = new UnityEvent();
 
+        [FoldoutGroup("Player tracking")]
         [ShowInInspector]
         TrafficZone _playerZone = null;
 
+        [FoldoutGroup("Player tracking")]
         [field:SerializeField]
         public GameObject Player {get; private set;}
 
