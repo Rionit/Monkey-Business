@@ -132,17 +132,21 @@ namespace MonkeyBusiness.Combat.Weapons
             while(_targetsByTime.Count > 0 && hitTime <= _travelTime)
             {    
                 GameObject target = _targetsByTime.First().Target;
-                _targetsByTime.Remove(_targetsByTime.First());
 
-                _onTargetHit.Invoke(target);
-
-                var targetHealth = target.GetComponentInParent<HealthController>();
-                if(targetHealth == null)
+                if(target != null)
                 {
-                    Debug.LogError("Target does not have a HealthController component!");
-                    continue;
+                    _targetsByTime.Remove(_targetsByTime.First());
+
+                    _onTargetHit.Invoke(target);
+
+                    var targetHealth = target.GetComponentInParent<HealthController>();
+                    if(targetHealth == null)
+                    {
+                        Debug.LogError("Target does not have a HealthController component!");
+                        continue;
+                    }
+                    targetHealth.TakeDamage(Damage * DamageMultiplier);
                 }
-                targetHealth.TakeDamage(Damage * DamageMultiplier);
             }
         }
 

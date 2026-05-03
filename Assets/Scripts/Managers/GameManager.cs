@@ -294,8 +294,17 @@ namespace MonkeyBusiness.Managers
             while (_enemies.Count < _enemiesRemaining)
             {   
                 int possibleEnemies =  Mathf.Min(waveInfo.enemiesPerSpawn, Math.Min(waveInfo.enemiesAtOnce - _enemies.Count, _enemiesPerWave)); 
-                
-                for(int i = 0; i < Mathf.Min(possibleEnemies, _enemiesRemaining); i++)
+
+                int spawnableEnemies= Mathf.Max(_enemiesRemaining - _enemies.Count, 0);
+
+                int toSpawn = Mathf.Min(possibleEnemies, spawnableEnemies);
+
+                if(_enemies.Count + toSpawn > _enemiesRemaining)
+                {
+                    Debug.LogError("Trying to spawn more enemies than remaining! This should not happen, check the spawn logic!");
+                }
+
+                for(int i = 0; i < Mathf.Min(possibleEnemies, spawnableEnemies); i++)
                 {
                     int totalToSpawn = _typesToSpawn[gorillaPrefab] + _typesToSpawn[chimpPrefab];
                     int randomPick = Random.Range(0, totalToSpawn); // Picks random type to pick
