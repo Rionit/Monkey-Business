@@ -1,5 +1,6 @@
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Misc;
+using NUnit.Framework;
 using UnityEngine;
 
 namespace MonkeyBusiness.Items
@@ -15,13 +16,27 @@ namespace MonkeyBusiness.Items
     {
         private Item _item;
 
+        /// <summary>
+        /// Has the banana been eaten
+        /// </summary>
         private bool _isEaten = false;
+
+        /// <summary>
+        /// If true, the banana acts as a trap.
+        /// </summary>
+        private bool _bananaPeelPrimed = false;
 
         private Transform _holder;
 
+/// <summary>
+/// How much this item heals when eaten
+/// </summary>
         [SerializeField]
         private int _healAmount = 20;
 
+/// <summary>
+/// How long the banana peel stuns for when stepped on
+/// </summary>
         [SerializeField]
         private float _stunDuration = 1.0f;
 
@@ -89,9 +104,49 @@ namespace MonkeyBusiness.Items
             if(stunController)
             {
                 stunController.Stun(_stunDuration);
+                Destroy(gameObject);
+            }           
+        }
+
+/// <summary>
+/// Trigger only used when in banana peel form
+/// </summary>
+/// <param name="other"></param>
+        void OnTriggerEnter(Collider other)
+        {
+            if(!_bananaPeelPrimed)
+            {
+                return;
             }
-            // TODO add ganana peel remaining on the ground
-            Destroy(gameObject);
+
+            HandleCollision(other.gameObject);
+        }
+
+
+        /// <summary>
+        /// This method only executes when eaten and dropped/thrown.
+        /// Sets up this item as a trap.
+        /// </summary>
+        /// <param name="collision"></param>
+        void OnCollisionEnter(Collision collision)
+        {
+            if(!_isEaten || _item.isBeingHeld)
+            {
+                return;
+            }
+
+            // make banana peel stick
+            Rigidbody rigidbody = GetComponent<Rigidbody>();
+            rigidbody.constraints = RigidbodyConstraints.FreezePositionX | RigidbodyConstraints.FreezePositionZ;
+            rigidbody.freezeRotation = true;
+            rigidbody.linearVelocity = Vector3.zero;
+
+            transform.rotation = Quaternion.identity;
+
+            // Change state from thrown/dropped to active peel trap
+            _bananaPeelPrimed = true;
+            // Remove Item tag from this gameobject to prevent it from being picked up again by the player
+            gameObject.tag = "Untagged";
         }
     }
 }
