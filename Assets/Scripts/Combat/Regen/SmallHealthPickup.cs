@@ -16,10 +16,12 @@ namespace MonkeyBusiness.Combat.Regen
         /// </summary>
         [SerializeField]
         private float _lifeTime = 10f;
+        private Coroutine _lifetimeCoroutine;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            StartCoroutine(StartLifetime(_lifeTime));
+            _lifetimeCoroutine = StartCoroutine(StartLifetime(_lifeTime));
         }
 
         // Update is called once per frame
@@ -41,6 +43,7 @@ namespace MonkeyBusiness.Combat.Regen
             {
                 HealthController healthController = other.gameObject.GetComponentInParent<HealthController>();
                 healthController.Heal(_healthRestored);
+                StopCoroutine(_lifetimeCoroutine);
                 Destroy(gameObject);
             }
         }

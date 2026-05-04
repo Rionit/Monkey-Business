@@ -18,10 +18,12 @@ namespace MonkeyBusiness.Combat.Regen
         /// </summary>
         [SerializeField]
         private float _lifeTime = 10f;
+        
+        private Coroutine _lifetimeCoroutine;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
-            StartCoroutine(StartLifetime(_lifeTime));
+            _lifetimeCoroutine = StartCoroutine(StartLifetime(_lifeTime));
         }
 
         // Update is called once per frame
@@ -44,12 +46,13 @@ namespace MonkeyBusiness.Combat.Regen
                 var equipManager = other.GetComponentInParent<EquipmentManager>();
                 foreach(var item in equipManager.Items)
                 {
-                    if(item is Weapon weapon)
+                    if(item is IWeapon weapon)
                     {
                         weapon.ReloadPercent(_replenishmentPercentage);
                     }
                 }
                 
+                StopCoroutine(_lifetimeCoroutine);
                 Destroy(gameObject);
             }
         }
