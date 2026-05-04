@@ -201,7 +201,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 470, y: 0}
+  m_SizeDelta: {x: 415, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &1713260229892193367
 CanvasRenderer:
@@ -374,8 +374,8 @@ MonoBehaviour:
   backFill: {fileID: 8005236224574459935}
   mask: {fileID: 3100027746813947624}
   face: {fileID: 8394465049069130922}
-  startOffset: 117
-  endOffset: 470
+  startOffset: 105
+  endOffset: 415
   value: 1
   mediumCutOff: 0.25
   highCutOff: 0.69
@@ -432,7 +432,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 470, y: 0}
+  m_SizeDelta: {x: 415, y: 0}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!222 &2442004610233816133
 CanvasRenderer:

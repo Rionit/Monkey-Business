@@ -3,12 +3,12 @@ using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.SceneManagement;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.Combat.Health
 {
     /// <summary>
-    /// Manages the entitiy's health, damage taking and death.
+    /// Manages the entity's health, damage taking and death.
     /// </summary>
     public class HealthController : MonoBehaviour
     {
@@ -30,6 +30,12 @@ namespace MonkeyBusiness.Combat.Health
         /// Event invoked when health changes, with the new health value as a parameter.
         /// </summary>
         public UnityEvent<float> OnHealthChanged = new();
+        
+        /// <summary>
+        /// Event invoked when the entity takes damage.
+        /// Passes the damage amount as parameter.
+        /// </summary>
+        public UnityEvent<float> OnTakenDamage = new();
 
         /// <summary>
         /// Event invoked when the entity dies. The GameObject of the dying entity is passed as a parameter.
@@ -60,6 +66,11 @@ namespace MonkeyBusiness.Combat.Health
         public void Start()
         {
             CurrentHealth = MaxHealth;
+            OnTakenDamage.AddListener(arg0 =>
+            {
+                if (EventManager.Instance == null) return;
+                EventManager.Instance.OnEnemyHit?.Invoke(arg0);
+            });
         }
 
         /// <summary>
@@ -74,9 +85,15 @@ namespace MonkeyBusiness.Combat.Health
         /// <summary>
         /// Damages the entity by the given <paramref name="damage"/> amount.
         /// </summary>
-        /// <remarks><i>Invokes <see cref="OnHealthChanged"/> if health is below 0 and god mode is disabled.</i></remarks>
+        /// <remarks>
+        /// Invokes:
+        /// - OnTakenDamage (always when damage is applied)
+        /// - OnHealthChanged (if still alive)
+        /// - OnDeath (if killed)
+        /// </remarks>
         public void TakeDamage(float damage)
         {
+            OnTakenDamage?.Invoke(damage);
             CurrentHealth -= damage;
             if (CurrentHealth <= 0f && !_killed && !GodMode)
             {

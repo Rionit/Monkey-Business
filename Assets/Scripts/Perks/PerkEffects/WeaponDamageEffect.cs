@@ -42,6 +42,10 @@ namespace MonkeyBusiness.Perks.PerkEffects
                 StatsManager.Instance.SetDamageMultiplier(entry.ProjectilePrefab, entry.Multiplier);
             }
         }
+        
+        public override void Update()
+        {
+        }
 
         // Resets all modified projectiles back to default multiplier (1x damage)
         public override void Reset()

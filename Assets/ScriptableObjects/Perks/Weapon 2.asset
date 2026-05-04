@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
+  m_Name: Weapon 2
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSO
+  nftImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  effectType: 2
+  buffEffect:
+    rid: 915476820060012735
+  debuffEffect:
+    rid: 915476820060012733
+  useCustomEffectName: 0
+  customEffectName: 
+  effectName: 
+  funnyDescription: oh yeah sonic & crazy frog nft collab lets go!!!
+  isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 915476820060012733
+      type: {class: WeaponDamageEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: 'Your weapons damage have decreased: <data>'
+        _projectiles:
+        - ProjectilePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
+          Multiplier: 0.6
+    - rid: 915476820060012735
+      type: {class: WeaponDamageEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: 'Your weapons damage have increased: <data>'
+        _projectiles:
+        - ProjectilePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
+          Multiplier: 3.5

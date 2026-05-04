@@ -13,6 +13,10 @@ namespace MonkeyBusiness.Perks.PerkEffects
         {
             StatsManager.Instance.PlayerMaxHealth += value;
         }
+        
+        public override void Update()
+        {
+        }
 
         public override void Reset()
         {

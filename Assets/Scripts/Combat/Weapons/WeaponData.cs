@@ -1,4 +1,5 @@
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -21,6 +22,7 @@ namespace MonkeyBusiness.Combat.Weapons
         /// Rate of fire, in bullets per <b>second</b>.
         /// </summary>
         [field:SerializeField]
+        [Unit("bullets/s")]
         public float RateOfFire { get; set; }
     }
 }
