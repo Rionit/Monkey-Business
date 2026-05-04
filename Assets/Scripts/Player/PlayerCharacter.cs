@@ -78,9 +78,11 @@ namespace MonkeyBusiness.Player
         [field: Tooltip("Object that should be targeted by attacks.")]
         [field: Required]
         public GameObject Target { get; private set; }
-        
+
         [SerializeField] private float swingForce = 30f;
-        [SerializeField] private float swingDamping = 5f;
+        [SerializeField] private float swingSpring = 4.5f;
+        [SerializeField] private float swingDamping = 7f;
+        [SerializeField] private float swingMassScale = 4.5f;
 
         private Vector3 _swingVelocity;
         
@@ -170,7 +172,7 @@ namespace MonkeyBusiness.Player
                 if (_rb != null)
                 {
                     _rb.freezeRotation = true;
-                    _rb.linearVelocity = motor != null ? motor.Velocity : Vector3.zero; // transfer velocity into swing
+                    _rb.linearVelocity = motor.Velocity; // transfer velocity into swing
                 }
 
                 if (motor != null)
@@ -184,12 +186,12 @@ namespace MonkeyBusiness.Player
 
                 float distance = Vector3.Distance(transform.position, hit.point);
 
-                _swingJoint.maxDistance = distance * 0.8f;
-                _swingJoint.minDistance = distance * 0.2f;
+                _swingJoint.maxDistance = distance * 0.6f;
+                _swingJoint.minDistance = distance * 0.5f;
 
-                _swingJoint.spring = 4.5f;
-                _swingJoint.damper = 7f;
-                _swingJoint.massScale = 4.5f;
+                _swingJoint.spring = swingSpring;
+                _swingJoint.damper = swingDamping;
+                _swingJoint.massScale = swingMassScale;
                 
                 _ropeEnd = hit.point;;
             }
@@ -200,6 +202,12 @@ namespace MonkeyBusiness.Player
             _state.Stance = Stance.Stand;
 
             Vector3 currentPos = transform.position;
+            Vector3 exitVelocity = Vector3.zero;
+
+            if (_rb != null)
+            {
+                exitVelocity = _rb.linearVelocity;
+            }
 
             if (_swingJoint != null)
             {
@@ -215,9 +223,26 @@ namespace MonkeyBusiness.Player
             {
                 motor.enabled = true;
                 motor.SetPosition(currentPos);
+                motor.BaseVelocity = exitVelocity;
             }
-            
+
             _lineRenderer.enabled = false;
+        }
+        
+        void FixedUpdate()
+        {
+            if (_state.Stance != Stance.Swing) return;
+
+            Vector3 inputDir = _requestedMovement;
+
+            if (inputDir.sqrMagnitude > 0f)
+            {
+                // Project input onto plane perpendicular to world up
+                Vector3 swingDir = Vector3.ProjectOnPlane(inputDir, Vector3.up).normalized;
+
+                // Apply force
+                _rb.AddForce(swingDir * swingForce, ForceMode.Acceleration);
+            }
         }
 
         private void LateUpdate()
