@@ -31,6 +31,56 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4577452497267426177}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &3195263503874273928
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6940660794277773613}
+  - component: {fileID: 9013381475866843977}
+  m_Layer: 0
+  m_Name: Dropper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6940660794277773613
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195263503874273928}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4577452497267426177}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9013381475866843977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3195263503874273928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84012a1ed7a104f43b7b86653e87f150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.Dropper
+  _lootPool:
+  - {fileID: 4477180092756245541, guid: 74a175d099f52024a9d117f5d37643a2, type: 3}
+  - {fileID: 4477180092756245541, guid: 74a175d099f52024a9d117f5d37643a2, type: 3}
+  - {fileID: 4477180092756245541, guid: 74a175d099f52024a9d117f5d37643a2, type: 3}
+  - {fileID: 3878638373698229944, guid: 0ee23871a9dc1fe4b82ead644e17144f, type: 3}
+  _dropChance: 0.67
 --- !u!1 &4179872123248469374
 GameObject:
   m_ObjectHideFlags: 0
@@ -280,6 +330,7 @@ Transform:
   - {fileID: 8611575218435515665}
   - {fileID: 4530098875398692495}
   - {fileID: 7072433086166570493}
+  - {fileID: 6940660794277773613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!195 &8553173932619770032
@@ -327,6 +378,7 @@ MonoBehaviour:
   _updatePathInterval: 1
   _chaseDistance: 6
   _chaseDistanceOffset: 0.1
+  _alwaysChaseDistance: 10
   _hasSlowdownEffect: 1
   _slowdownVisualizers:
   - {fileID: 8828489348359364865}
@@ -352,7 +404,19 @@ MonoBehaviour:
       m_Calls: []
   OnDeath:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 9013381475866843977}
+        m_TargetAssemblyTypeName: MonkeyBusiness.Misc.Dropper, MonkeyBusiness.Misc
+        m_MethodName: DropRandomFromPool
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <GodMode>k__BackingField: 0
   _hasPoisonEffect: 1
   _poisonEffectRenderer: {fileID: 8770030658711458225}
@@ -435,9 +499,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13f37cefab95f0c9a2ae2b68bc637e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.KnockbackController
-  _behaviourOverrides:
-  - {fileID: 8553173932619770032}
-  - {fileID: 7584984088641549584}
+  _suppressedComponents: []
   _body: {fileID: 6570454771081550698}
   _minimumVelocity: 0.1
 --- !u!1 &6062144661757838322
