@@ -15,6 +15,9 @@ namespace MonkeyBusiness.Perks.PerkEffects
             
         // Applies the perk effect (implemented by subclasses)
         public abstract void Apply();
+
+        // Call this from Perk in its Update if you need to change stuff dynamically
+        public abstract void Update();
         
         // Reverts the perk effect (implemented by subclasses)
         public abstract void Reset();

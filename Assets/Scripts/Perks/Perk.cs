@@ -61,7 +61,7 @@ namespace MonkeyBusiness.Perks
             isBuff = Random.value > 0.5f;
 
             UpdateVisuals();
-            ApplyEffect();
+            ApplyEffect(isBuff);
 
             onPerkSelected?.Invoke(this);
         }
@@ -80,12 +80,20 @@ namespace MonkeyBusiness.Perks
             }
         }
 
+        private void Update()
+        {
+            if (isBuff)
+                perkSO.buffEffect.Update();
+            else
+                perkSO.debuffEffect.Update();
+        }
+
         /// <summary>
         /// Applies the perk effect.
         /// </summary>
-        private void ApplyEffect()
+        public void ApplyEffect(bool applyAsBuff)
         {
-            if (isBuff)
+            if (applyAsBuff)
                 perkSO.buffEffect.Apply();
             else
                 perkSO.debuffEffect.Apply();

@@ -282,6 +282,15 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Swing"",
+                    ""type"": ""Button"",
+                    ""id"": ""3ce4c34d-109f-4b2e-9a8c-d6cd3d87201c"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -799,6 +808,17 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""MeleeAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b9ab34fd-3255-4966-b28b-78e6447fd0ba"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Swing"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1407,6 +1427,7 @@ namespace MonkeyBusiness.Player
             m_Player_Item9 = m_Player.FindAction("Item9", throwIfNotFound: true);
             m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
             m_Player_MeleeAttack = m_Player.FindAction("MeleeAttack", throwIfNotFound: true);
+            m_Player_Swing = m_Player.FindAction("Swing", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1521,6 +1542,7 @@ namespace MonkeyBusiness.Player
         private readonly InputAction m_Player_Item9;
         private readonly InputAction m_Player_Restart;
         private readonly InputAction m_Player_MeleeAttack;
+        private readonly InputAction m_Player_Swing;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1617,6 +1639,10 @@ namespace MonkeyBusiness.Player
             /// </summary>
             public InputAction @MeleeAttack => m_Wrapper.m_Player_MeleeAttack;
             /// <summary>
+            /// Provides access to the underlying input action "Player/Swing".
+            /// </summary>
+            public InputAction @Swing => m_Wrapper.m_Player_Swing;
+            /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
             public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1705,6 +1731,9 @@ namespace MonkeyBusiness.Player
                 @MeleeAttack.started += instance.OnMeleeAttack;
                 @MeleeAttack.performed += instance.OnMeleeAttack;
                 @MeleeAttack.canceled += instance.OnMeleeAttack;
+                @Swing.started += instance.OnSwing;
+                @Swing.performed += instance.OnSwing;
+                @Swing.canceled += instance.OnSwing;
             }
 
             /// <summary>
@@ -1779,6 +1808,9 @@ namespace MonkeyBusiness.Player
                 @MeleeAttack.started -= instance.OnMeleeAttack;
                 @MeleeAttack.performed -= instance.OnMeleeAttack;
                 @MeleeAttack.canceled -= instance.OnMeleeAttack;
+                @Swing.started -= instance.OnSwing;
+                @Swing.performed -= instance.OnSwing;
+                @Swing.canceled -= instance.OnSwing;
             }
 
             /// <summary>
@@ -2226,6 +2258,13 @@ namespace MonkeyBusiness.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnMeleeAttack(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Swing" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnSwing(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.
