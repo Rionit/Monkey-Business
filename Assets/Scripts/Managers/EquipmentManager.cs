@@ -243,7 +243,7 @@ namespace MonkeyBusiness.Managers
                     // Check if we hit an item
                     if (gameObject.CompareTag("Item"))
                     {
-                        Item item = gameObject.GetComponentInChildren<Item>();
+                        Item item = gameObject.GetComponentInParent<Item>();
                         // Pick the item up
                         item.PickUp(itemAttachPoint);
                         _heldItem = item;
