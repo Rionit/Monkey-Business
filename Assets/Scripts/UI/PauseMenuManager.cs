@@ -9,7 +9,6 @@ namespace MonkeyBusiness.UI
         string MainMenuSceneName = "MainMenu";
         public static PauseMenuManager Instance { get; private set; }
 
-
         [SerializeField]
         GameObject _controlsMenu;
 

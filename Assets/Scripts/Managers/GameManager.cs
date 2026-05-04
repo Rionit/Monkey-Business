@@ -187,7 +187,7 @@ namespace MonkeyBusiness.Managers
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
         }
 
-        void PauseOrUnpause(InputAction.CallbackContext context)
+        public void PauseOrUnpause(InputAction.CallbackContext context)
         {
             if(!_canPause) return;
             Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
