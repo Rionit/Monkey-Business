@@ -189,7 +189,7 @@ Rigidbody:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
   m_UseGravity: 1
@@ -241,7 +241,6 @@ MonoBehaviour:
   _impactDamage: 75
   _durability: 7
   _chaseSpeed: 25
-  _bounceChaseDelay: 0.15
 --- !u!114 &6296776480921587029
 MonoBehaviour:
   m_ObjectHideFlags: 0
