@@ -4142,6 +4142,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 445439787}
     m_Modifications:
     - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: perks.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'perks.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 882be58c83f9e05418ed9e741990be18, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'perks.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: af5d7da4a0f9e584a9f479bf1489b5be, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
       propertyPath: OnPerkSelected.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}

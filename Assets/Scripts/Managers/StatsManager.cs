@@ -46,6 +46,17 @@ namespace MonkeyBusiness.Managers
                 _characterController.WalkSpeed = value;
             }
         }
+
+        public bool canUseRope
+        {
+            // Null check is only to avoid error in the Editor
+            get => _characterController != null && _characterController.canUseRope;
+            set
+            {
+                if (_characterController == null) return;
+                _characterController.canUseRope = value;
+            }
+        }
         
         public float GetDamageMultiplier(GameObject prefab)
         {

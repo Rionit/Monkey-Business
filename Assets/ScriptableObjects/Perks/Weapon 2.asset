@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
-  m_Name: Weapon
+  m_Name: Weapon 2
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
   nftImage: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   effectType: 2
@@ -31,12 +31,12 @@ MonoBehaviour:
       data:
         description: 'Your weapons damage have decreased: <data>'
         _projectiles:
-        - ProjectilePrefab: {fileID: 7513838708788746097, guid: fab08d98d5f9fe162bb6ec4f80b97c8b, type: 3}
-          Multiplier: 0.5
+        - ProjectilePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
+          Multiplier: 0.6
     - rid: 915476820060012735
       type: {class: WeaponDamageEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
         description: 'Your weapons damage have increased: <data>'
         _projectiles:
-        - ProjectilePrefab: {fileID: 7513838708788746097, guid: fab08d98d5f9fe162bb6ec4f80b97c8b, type: 3}
-          Multiplier: 5
+        - ProjectilePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
+          Multiplier: 3.5
