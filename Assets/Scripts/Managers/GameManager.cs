@@ -66,7 +66,7 @@ namespace MonkeyBusiness.Managers
         GameObject _deathScreen;
 
         [SerializeField]
-        [Required]
+        [RequiredIn(PrefabKind.InstanceInScene)]
         EquipmentManager _equipmentManager;
 
         private bool _perkSelected = true;
