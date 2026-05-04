@@ -10,6 +10,7 @@ namespace MonkeyBusiness.Tests
 {
     public class EnemyFollowTests
     {
+        // TODO: Change
         List<GameObject> _agents;
         List<GameObject> _targets;
 
@@ -76,7 +77,7 @@ namespace MonkeyBusiness.Tests
 
             // Assert
             float distance = Vector3.Distance(distanceObject.transform.position,
-            _agents[0].GetComponent<EnemyFollowController>().ChaseTarget.transform.position);
+            _agents[0].GetComponent<EnemyFollowController>().ChaseObject.transform.position);
             Assert.LessOrEqual(distance, 0.5f, $"Agent did not reach the target. Distance: {distance}");
         }
 
@@ -96,7 +97,7 @@ namespace MonkeyBusiness.Tests
 
             // Assert
             float distance = Vector3.Distance(_agents[0].transform.position,
-            _agents[0].GetComponent<EnemyFollowController>().ChaseTarget.transform.position);
+            _agents[0].GetComponent<EnemyFollowController>().ChaseObject.transform.position);
 
             float distanceFromDesired = Mathf.Abs(distance - 5f);
             Assert.LessOrEqual(distanceFromDesired, 0.5f, 

@@ -2,15 +2,15 @@ using System.Collections;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Collections.Generic;
 
 namespace MonkeyBusiness.Misc
 {
     public class KnockbackController : MonoBehaviour
     {
-
         [SerializeField]
-        [Tooltip("The agent that will be suppressed during the knockback")]
-        NavMeshAgent _agentOverride;
+        [Tooltip("Components that will be suppressed during the knockback")]
+        List<Behaviour> _suppressedComponents;
 
         [SerializeField]
         [Tooltip("The rigidbody that will be used for the knockback")]
@@ -31,7 +31,8 @@ namespace MonkeyBusiness.Misc
         [Button("Knockback with force", DisplayParameters = true)]
         public void Knockback(Vector3 force, float duration)
         {
-            _agentOverride.enabled = false;
+            foreach (var behaviour in _suppressedComponents)
+                behaviour.enabled = false;
             
             _body.isKinematic = false;
 
@@ -52,7 +53,8 @@ namespace MonkeyBusiness.Misc
 
             _body.isKinematic = true;
 
-            _agentOverride.enabled = true;
+            foreach (var behaviour in _suppressedComponents)
+                behaviour.enabled = true;
         }
     }
 }
