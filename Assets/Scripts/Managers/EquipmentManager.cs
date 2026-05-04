@@ -236,7 +236,7 @@ namespace MonkeyBusiness.Managers
             else
             {
                 // Raycast in front of the player
-                if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _maxPickupDistance))
+                if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _maxPickupDistance, LayerMask.GetMask("Default")))
                 {
                     GameObject gameObject = hit.transform.gameObject;
                     Debug.Log(gameObject.name);
