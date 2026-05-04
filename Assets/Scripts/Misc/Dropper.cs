@@ -3,11 +3,19 @@ using UnityEngine;
 
 namespace MonkeyBusiness.Misc
 {
+    /// <summary>
+    /// Class that implements spawning loot into the game world
+    /// </summary>
     public class Dropper : MonoBehaviour
     {
-
+        /// <summary>
+        /// List of all droppable loot.
+        /// </summary>
         [SerializeField] private List<GameObject> _lootPool;
-
+        
+        /// <summary>
+        /// Chance to drop an item
+        /// </summary>
         [SerializeField] private float _dropChance = 0.67f;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created

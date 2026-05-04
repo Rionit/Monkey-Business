@@ -8,8 +8,14 @@ namespace MonkeyBusiness.Combat.Regen
 {
     public class SmallAmmoPickup : MonoBehaviour
     {
+        /// <summary>
+        /// How much ammo to restore
+        /// </summary>
         [SerializeField]
         private float _replenishmentPercentage = 20f;
+        /// <summary>
+        /// How long before this despawns
+        /// </summary>
         [SerializeField]
         private float _lifeTime = 10f;
         // Start is called once before the first execution of Update after the MonoBehaviour is created

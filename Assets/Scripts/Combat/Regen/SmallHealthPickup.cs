@@ -6,8 +6,14 @@ namespace MonkeyBusiness.Combat.Regen
 {
     public class SmallHealthPickup : MonoBehaviour
     {
+        /// <summary>
+        /// How much to heal on pickup
+        /// </summary>
         [SerializeField] 
         private float _healthRestored = 20f;
+        /// <summary>
+        /// How long before this despawns
+        /// </summary>
         [SerializeField]
         private float _lifeTime = 10f;
         // Start is called once before the first execution of Update after the MonoBehaviour is created
