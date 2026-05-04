@@ -1,0 +1,18 @@
+{
+    "name": "MonkeyBusiness.Misc.Editor",
+    "rootNamespace": "MonkeyBusiness.Misc.Editor",
+    "references": [
+        "GUID:c282b84647f3201a6a87d3ea979d6e2b"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

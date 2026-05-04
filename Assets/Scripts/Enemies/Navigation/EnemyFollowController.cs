@@ -4,12 +4,16 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.AI;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEngine.PlayerLoop;
 
 [assembly: InternalsVisibleTo("MonkeyBusiness.Tests")]
 namespace MonkeyBusiness.Enemies.Navigation
 {
     public class EnemyFollowController : MonoBehaviour
     {
+        const float ZONE_STOPPING_DISTANCE = 7f;
+
         [Required]
         [SerializeField]
         [Tooltip("NavMesh agent used for navigating")]
@@ -17,7 +21,7 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         [field: SerializeField]
         [field: Tooltip("Target to chase")]
-        public GameObject ChaseTarget { get; set; } 
+        public GameObject ChaseObject { get; set; } 
 
         [SerializeField]
         [ReadOnly]
@@ -125,6 +129,11 @@ namespace MonkeyBusiness.Enemies.Navigation
         "\n\n<i>Prevents jittery movement when close to the chase distance.</i>")]
         float _chaseDistanceOffset = 0.1f;
 
+        [SerializeField]
+        [Range(0f, 50f)]
+        [Tooltip("Distance from the player at which the enemy will always chase them directly.")]
+        float _alwaysChaseDistance = 10f;
+
         Vector3 _currentTargetPos;
 
         [ShowInInspector]
@@ -144,6 +153,14 @@ namespace MonkeyBusiness.Enemies.Navigation
         [Tooltip("All visualizers of the slowdown effect.")]
         List<Renderer> _slowdownVisualizers = new List<Renderer>();
 
+        [ShowInInspector]
+        public List<TrafficZone> Path { get; internal set; } = new();
+
+        [ShowInInspector]
+        public TrafficZone CurrentZone { get; internal set; } = null;
+
+        public bool ChasingPlayer => Path.Count <= 1;
+
         int _currentlyActiveEffects = 0;
 
         float _timeTillPathUpdate = 0f;
@@ -155,6 +172,26 @@ namespace MonkeyBusiness.Enemies.Navigation
             _navMeshAgent.avoidancePriority = Random.Range(_avoidancePriorityRange.x, _avoidancePriorityRange.y);
             _timeTillPathUpdate = _updatePathInterval;
             SetupDefaultValues();
+        }
+
+        void Start()
+        {
+            TrafficManager.Instance.OnSoftRepath.AddListener(GetAlteringPath);
+            TrafficManager.Instance.OnHardRepath.AddListener(GetNewPath);
+
+
+            CurrentZone = TrafficManager.Instance.GetZone(transform.position);
+            GetNewPath();
+        }
+
+        void OnDestroy()
+        {
+            if(TrafficManager.Instance != null)
+            {
+                TrafficManager.Instance.OnSoftRepath.RemoveListener(GetAlteringPath);
+                TrafficManager.Instance.OnHardRepath.RemoveListener(GetNewPath);
+                TrafficManager.Instance.ClearPath(this);
+            }
         }
 
         void SetupDefaultValues()
@@ -236,7 +273,7 @@ namespace MonkeyBusiness.Enemies.Navigation
             _defaultMaxSpeed = _defaultMaxSpeed * multiplier;
             _defaultMaxAngularSpeed = _defaultMaxAngularSpeed * multiplier;
             _defaultAcceleration = _defaultAcceleration * multiplier;
-            _defaultStoppingDistance = _defaultStoppingDistance * multiplier;
+            //_defaultStoppingDistance = _defaultStoppingDistance * multiplier;
             
             // Applies new default values
             SetDefaultValues();
@@ -258,10 +295,14 @@ namespace MonkeyBusiness.Enemies.Navigation
             CurrentStoppingDistance = _defaultStoppingDistance;
         }
 
-        void UpdatePosition()
+        void UpdatePlayerPosition()
         {
-            if (ChaseTarget == null) return;
-            var distance = Vector3.Distance(transform.position, ChaseTarget.transform.position);
+            CurrentStoppingDistance = _defaultStoppingDistance;
+            if (ChaseObject == null) return;
+            // TODO: Change
+            //var flankingPos = _flankingController.GetMovementTarget(this);
+
+            var distance = Vector3.Distance(transform.position, ChaseObject.transform.position);
             if (_runningAway && distance >= _chaseDistance * 1.1f)
             {
                 _runningAway = false;
@@ -271,8 +312,51 @@ namespace MonkeyBusiness.Enemies.Navigation
                 _runningAway = true;
             }
 
-            _currentTargetPos = _runningAway ? GetRunawayPosition() : ChaseTarget.transform.position;
+            _currentTargetPos = _runningAway ? GetRunawayPosition() : ChaseObject.transform.position;
             _navMeshAgent.SetDestination(_currentTargetPos);
+        }
+
+        void GetAlteringPath()
+        {
+            if(enabled)
+            {
+                var playerZone = TrafficManager.Instance.PlayerZone;
+                if(!TrafficManager.Instance.TryAlterPath(this, playerZone))
+                {
+                    TrafficManager.Instance.GetPath(this, playerZone);        
+                }
+
+                if(Path.Count > 1)
+                {
+                    ChaseObject = Path[0].Keypoint.gameObject;
+                    MoveToKeypoint();
+                }
+                else
+                {
+                    ChaseObject = TrafficManager.Instance.Player;
+                    UpdatePlayerPosition();
+                }
+            }
+        }
+
+        void GetNewPath()
+        {
+            if(enabled)
+            {
+                var playerZone = TrafficManager.Instance.PlayerZone;
+                TrafficManager.Instance.GetPath(this, playerZone);        
+
+                if(Path.Count > 1)
+                {
+                    ChaseObject = Path[0].Keypoint.gameObject;
+                    MoveToKeypoint();
+                }
+                else
+                {
+                    ChaseObject = TrafficManager.Instance.Player;
+                    UpdatePlayerPosition();
+                }
+            }
         }
 
         /// <summary>
@@ -280,28 +364,102 @@ namespace MonkeyBusiness.Enemies.Navigation
         /// </summary>
         Vector3 GetRunawayPosition()
         {
-            Vector3 directionToTarget = (ChaseTarget.transform.position - transform.position).normalized;
-            return ChaseTarget.transform.position - directionToTarget * _chaseDistance;
+            Vector3 directionToTarget = (ChaseObject.transform.position - transform.position).normalized;
+            return ChaseObject.transform.position - directionToTarget * _chaseDistance;
+        }
+
+        void OnEnable()
+        {
+            UpdatePlayerPosition();
+        }
+
+        void OnDisable()
+        {
+            if(TrafficManager.Instance != null)
+            {
+                TrafficManager.Instance.ClearPath(this);
+            }
         }
 
         void FixedUpdate()
         {
-            _timeTillPathUpdate -= Time.fixedDeltaTime;
-            if (_timeTillPathUpdate <= 0f && _navMeshAgent.enabled)
+            if(ChasingPlayer)
             {
-                UpdatePosition();
-                _timeTillPathUpdate = _updatePathInterval;
+                _timeTillPathUpdate -= Time.fixedDeltaTime;
+                if (_timeTillPathUpdate <= 0f && _navMeshAgent.enabled)
+                {
+                    UpdatePlayerPosition();
+                    _timeTillPathUpdate = _updatePathInterval;
+                }
             }
+            else
+            {
+                if(Vector3.Distance(transform.position, TrafficManager.Instance.Player.transform.position) <= _alwaysChaseDistance)
+                {
+                    ChaseObject = TrafficManager.Instance.Player;
+                    TrafficManager.Instance.ClearPath(this);
+                    UpdatePlayerPosition();
+                }
+
+                // If we reached a keypoint, move to some other
+                if(Vector3.Distance(transform.position, ChaseObject.transform.position) <= _navMeshAgent.stoppingDistance)
+                {
+                    Path[0].RemoveEnemy(this);
+                    Path.RemoveAt(0);
+                    if(ChasingPlayer)
+                    {
+                        ChaseObject = TrafficManager.Instance.Player;
+                        UpdatePlayerPosition();
+                    }
+                    else
+                    {
+                        ChaseObject = Path[0].Keypoint.gameObject;
+                        MoveToKeypoint();
+                    }
+                }
+            }
+        }
+
+        // Moves to next keypoint
+        void MoveToKeypoint()
+        {
+            CurrentStoppingDistance = ZONE_STOPPING_DISTANCE;
+            _navMeshAgent.SetDestination(ChaseObject.transform.position);            
         }
 
         void OnDrawGizmos()
         {
+            #if UNITY_EDITOR
             Gizmos.color = _runningAway ? Color.green : Color.red;
             Gizmos.DrawWireSphere(transform.position, _chaseDistance);
             if (_currentTargetPos != null)
             {
                 Gizmos.DrawLine(transform.position, _currentTargetPos);
             }
+
+            if(Path.Count > 0)
+            {
+                Handles.color = Color.brown;
+                if(Path.Count > 1)
+                {
+                    Handles.DrawLine(transform.position, Path[0].Keypoint.position, 2f);  
+                    for(int i = 0; i < Path.Count - 2; i++)
+                    {
+                        Handles.DrawLine(Path[i].Keypoint.position, Path[i + 1].Keypoint.position, 2f);
+                    }
+                    Handles.DrawLine(Path[Path.Count - 2].Keypoint.position, TrafficManager.Instance.Player.transform.position, 2f);
+                }
+                else
+                {
+                    Handles.DrawLine(transform.position, TrafficManager.Instance.Player.transform.position, 2f);
+                }
+            }
+
+            Handles.color = Color.yellow;
+
+            if(ChaseObject != null)
+                Handles.DrawLine(transform.position, ChaseObject.transform.position, 2f);
+            #endif
         }
     }
 }

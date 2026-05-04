@@ -135,7 +135,6 @@ namespace MonkeyBusiness.Combat.Weapons
 
                 if(target != null)
                 {
-                    _targetsByTime.Remove(_targetsByTime.First());
 
                     _onTargetHit.Invoke(target);
 
@@ -147,6 +146,7 @@ namespace MonkeyBusiness.Combat.Weapons
                     }
                     targetHealth.TakeDamage(Damage * DamageMultiplier);
                 }
+                _targetsByTime.Remove(_targetsByTime.First());
             }
         }
 
