@@ -75,6 +75,7 @@ GameObject:
   - component: {fileID: 4017804719035218497}
   - component: {fileID: 5592157480748429877}
   - component: {fileID: 1083196947981140784}
+  - component: {fileID: 8961619586941697689}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -184,6 +185,7 @@ MonoBehaviour:
     chimps: 20
     enemiesPerSpawn: 8
     enemiesAtOnce: 80
+  _pauseMenu: {fileID: 0}
 --- !u!114 &4017804719035218497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +348,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   <Player>k__BackingField: {fileID: 0}
+--- !u!114 &8961619586941697689
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677739966933632926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad0cb9e620f425242846e80645f5fc28, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.EventManager
+  OnEnemyHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &6484089724411520133
 GameObject:
   m_ObjectHideFlags: 0
