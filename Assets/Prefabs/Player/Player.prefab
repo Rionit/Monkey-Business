@@ -409,8 +409,8 @@ MonoBehaviour:
   cameraStandHeight: 0.9
   cameraCrouchHeight: 0.7
   <Target>k__BackingField: {fileID: 754302598161200952}
-  swingForce: 30
-  swingSpring: 4.5
+  swingForce: 0
+  swingSpring: 0
   swingDamping: 7
   swingMassScale: 4.5
 --- !u!54 &2447207728374608361
@@ -421,7 +421,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389186312543903172}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
