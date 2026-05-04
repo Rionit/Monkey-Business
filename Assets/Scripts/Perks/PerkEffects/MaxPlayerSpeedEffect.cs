@@ -13,6 +13,10 @@ namespace MonkeyBusiness.Perks.PerkEffects
         {
             StatsManager.Instance.PlayerWalkSpeed += value;
         }
+        
+        public override void Update()
+        {
+        }
 
         public override void Reset()
         {

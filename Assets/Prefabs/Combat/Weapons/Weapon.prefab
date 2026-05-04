@@ -142,3 +142,15 @@ MonoBehaviour:
   OnAmmoChanged:
     m_PersistentCalls:
       m_Calls: []
+  _onEquipped:
+    m_PersistentCalls:
+      m_Calls: []
+  _onUnequipped:
+    m_PersistentCalls:
+      m_Calls: []
+  _onWeaponFired:
+    m_PersistentCalls:
+      m_Calls: []
+  _coroutineRunner: {fileID: 0}
+  _accuracyRadius: 0
+  _accuracyRange: 0

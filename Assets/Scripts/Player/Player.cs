@@ -1,8 +1,8 @@
 using System;
 using TMPro;
 using Unity.VisualScripting;
-using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.TextCore.Text;
@@ -66,10 +66,11 @@ namespace MonkeyBusiness.Player
                 // Get character input and update it
                 var characterInput = new CharacterInput
                 {
-                    Rotation    = playerCamera.transform.rotation,
-                    Move        = input.Move.ReadValue<Vector2>(),
-                    Jump        = input.Jump.WasPressedThisFrame(),
-                    JumpSustain = input.Jump.IsPressed(),
+                    Rotation     = playerCamera.transform.rotation,
+                    Move         = input.Move.ReadValue<Vector2>(),
+                    Jump         = input.Jump.WasPressedThisFrame(),
+                    Swing        = input.Swing.IsPressed(),
+                    JumpSustain  = input.Jump.IsPressed(),
                     // Press to toggle crouch, TODO: Maybe add to settings as an option?
                     //Crouch      = input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None 
                     Crouch = input.Crouch.IsPressed() ? CrouchInput.Crouch : CrouchInput.Uncrouch
@@ -94,6 +95,7 @@ namespace MonkeyBusiness.Player
                 {
                     Rotation    = playerCamera.transform.rotation,
                     Move        = Vector2.zero,
+                    Swing       = false, 
                     Jump        = false,
                     JumpSustain = false,
                 };

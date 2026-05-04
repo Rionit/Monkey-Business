@@ -17,7 +17,7 @@ namespace MonkeyBusiness.Player
 
     public enum Stance
     {
-        Stand, Crouch, Slide
+        Stand, Crouch, Slide, Swing
     }
 
     public struct CharacterState
@@ -32,6 +32,7 @@ namespace MonkeyBusiness.Player
     {
         public Quaternion Rotation;
         public Vector2 Move;
+        public bool Swing;
         public bool Jump;
         public bool JumpSustain;
         public CrouchInput Crouch;
@@ -43,6 +44,8 @@ namespace MonkeyBusiness.Player
         [SerializeField] private Transform root;
         [SerializeField] private Transform cameraTarget;
 
+        [SerializeField] private LayerMask whatIsSwingable;
+        
         [field:SerializeField] public float WalkSpeed { get; set; } = 20f;
         [SerializeField] private float crouchSpeed = 7f;
         [SerializeField] private float walkResponse = 25f;
@@ -75,6 +78,14 @@ namespace MonkeyBusiness.Player
         [field: Tooltip("Object that should be targeted by attacks.")]
         [field: Required]
         public GameObject Target { get; private set; }
+
+        public bool canUseRope { get; set; } = true; // TODO: MAKE ME FALSE LATER
+        [SerializeField] private float swingForce = 30f;
+        [SerializeField] private float swingSpring = 4.5f;
+        [SerializeField] private float swingDamping = 7f;
+        [SerializeField] private float swingMassScale = 4.5f;
+
+        private Vector3 _swingVelocity;
         
         private CharacterState _state;    
         private CharacterState _lastState;    
@@ -90,9 +101,19 @@ namespace MonkeyBusiness.Player
         private float _timeSinceUngrounded;
         private float _timeSinceJumpRequest;
         private bool _ungroundedDueToJump;
+        
+        private SpringJoint _swingJoint;
+        private Rigidbody _rb;
+        private LineRenderer _lineRenderer;
+        private Vector3 _ropeEnd;
 
         private Collider[] _uncrouchOverlapResults;
-        
+
+        private void Awake()
+        {
+            _lineRenderer = GetComponent<LineRenderer>();
+        }
+
         public void Initialize()
         {
             _state.Stance = Stance.Stand;
@@ -105,6 +126,9 @@ namespace MonkeyBusiness.Player
 
         public void UpdateInput(CharacterInput input)
         {
+            if (input.Swing && _state.Stance != Stance.Swing) StartSwing();
+            if (!input.Swing && _state.Stance == Stance.Swing) StopSwing();
+            
             _requestedRotation = input.Rotation;    
             // Take the 2D input vector and create a 3D movement vector on the XZ plane
             _requestedMovement = new Vector3(input.Move.x, 0, input.Move.y);
@@ -132,6 +156,102 @@ namespace MonkeyBusiness.Player
                 _requestedCrouchInAir = !_state.Grounded;
             else if (!_requestedCrouch && wasRequestingCrouch)
                 _requestedCrouchInAir = false;
+        }
+
+        void StartSwing()
+        {
+            if (!canUseRope) return;
+            
+            var cam = UnityEngine.Camera.main;
+            var origin = cam.transform.position;
+            var dir = cam.transform.forward;
+
+            if (Physics.Raycast(origin, dir, out RaycastHit hit, 100f, whatIsSwingable))
+            {
+                _lineRenderer.enabled = true;
+                _state.Stance = Stance.Swing;
+
+                _rb = GetComponent<Rigidbody>();
+                if (_rb != null)
+                {
+                    _rb.freezeRotation = true;
+                    _rb.linearVelocity = motor.Velocity; // transfer velocity into swing
+                }
+
+                if (motor != null)
+                {
+                    motor.enabled = false;
+                }
+
+                _swingJoint = gameObject.AddComponent<SpringJoint>();
+                _swingJoint.autoConfigureConnectedAnchor = false;
+                _swingJoint.connectedAnchor = hit.point;
+
+                float distance = Vector3.Distance(transform.position, hit.point);
+
+                _swingJoint.maxDistance = distance * 0.6f;
+                _swingJoint.minDistance = distance * 0.5f;
+
+                _swingJoint.spring = swingSpring;
+                _swingJoint.damper = swingDamping;
+                _swingJoint.massScale = swingMassScale;
+                
+                _ropeEnd = hit.point;;
+            }
+        }
+
+        void StopSwing()
+        {
+            _state.Stance = Stance.Stand;
+
+            Vector3 currentPos = transform.position;
+            Vector3 exitVelocity = Vector3.zero;
+
+            if (_rb != null)
+            {
+                exitVelocity = _rb.linearVelocity;
+            }
+
+            if (_swingJoint != null)
+            {
+                Destroy(_swingJoint);
+            }
+
+            if (_rb != null)
+            {
+                _rb.freezeRotation = false;
+            }
+
+            if (motor != null)
+            {
+                motor.enabled = true;
+                motor.SetPosition(currentPos);
+                motor.BaseVelocity = exitVelocity;
+            }
+
+            _lineRenderer.enabled = false;
+        }
+        
+        void FixedUpdate()
+        {
+            if (_state.Stance != Stance.Swing) return;
+
+            Vector3 inputDir = _requestedMovement;
+
+            if (inputDir.sqrMagnitude > 0f)
+            {
+                // Project input onto plane perpendicular to world up
+                Vector3 swingDir = Vector3.ProjectOnPlane(inputDir, Vector3.up).normalized;
+
+                // Apply force
+                _rb.AddForce(swingDir * swingForce, ForceMode.Acceleration);
+            }
+        }
+
+        private void LateUpdate()
+        {
+            _lineRenderer.SetPosition(0,transform.position);
+            _lineRenderer.SetPosition(1,_ropeEnd);
         }
 
         public void UpdateBody(float deltaTime)

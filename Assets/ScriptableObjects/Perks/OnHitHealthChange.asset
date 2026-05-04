@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
+  m_Name: OnHitHealthChange
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSO
+  nftImage: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  effectType: 0
+  buffEffect:
+    rid: 5385079254299967571
+  debuffEffect:
+    rid: 5385079240882126925
+  useCustomEffectName: 0
+  customEffectName: 
+  effectName: 
+  funnyDescription: Hit or miss, I guess they never miss huh?
+  isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5385079240882126925
+      type: {class: NoHitLoseHealth, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: If you do not hit an enemy every <time> s, you will lose <damage>
+          health.
+        damagePerTick: 1
+        tickInterval: 1
+        maxNoHitTime: 1
+    - rid: 5385079254299967571
+      type: {class: NoHitHealthRegen, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: If you do not hit an enemy every <time> s, you will gain <heal>
+          health.
+        healthPerTick: 1
+        tickInterval: 1
+        maxNoHitTime: 1

@@ -70,6 +70,7 @@ namespace MonkeyBusiness.Perks
     {
         Health,
         Speed,
-        Weapon
+        Weapon,
+        Player
     }
 }

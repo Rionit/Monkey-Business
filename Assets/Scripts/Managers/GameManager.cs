@@ -142,6 +142,8 @@ namespace MonkeyBusiness.Managers
         /// </summary>
         private List<GameObject> _enemies = new();
 
+        private InputAction _pauseAction;
+
         private InputAction _restartAction;
 
         [SerializeField]
@@ -150,8 +152,12 @@ namespace MonkeyBusiness.Managers
 
         int _currentWave = 0;
 
-
         Dictionary<GameObject, int> _typesToSpawn = new();
+
+        [SerializeField]
+        GameObject _pauseMenu;
+
+        bool _canPause = true;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -161,6 +167,7 @@ namespace MonkeyBusiness.Managers
                 Debug.LogWarning("Multiple instances of GameManager detected! Replacing the old one.");
             }
             Instance = this;
+            _canPause = true;
         }
 
         void Start()
@@ -170,11 +177,25 @@ namespace MonkeyBusiness.Managers
             Time.timeScale = 1f; // Restarts the time scale
             _restartAction = InputSystem.actions.FindAction("Restart");
             _restartAction.performed += _ => Restart();
+
+            _pauseAction = InputSystem.actions.FindAction("Pause");
+            _pauseAction.performed += PauseOrUnpause;
             _playerScript = _playerCharacter.GetComponentInParent<Player>();
             StartCoroutine(PreparationPhase());
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
+        }
+
+        void PauseOrUnpause(InputAction.CallbackContext context)
+        {
+            if(!_canPause) return;
+            Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
+            _pauseMenu.SetActive(Time.timeScale == 0f);
+            Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
+
+            _equipmentManager.CanReceiveInput = Time.timeScale != 0f;
+            _playerScript.CanReceiveInput = Time.timeScale != 0f;
         }
 
         /// <summary>

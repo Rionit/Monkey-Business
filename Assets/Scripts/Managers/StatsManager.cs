@@ -3,6 +3,7 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Managers
 {
@@ -20,6 +21,20 @@ namespace MonkeyBusiness.Managers
                 _healthController.SetMaxHealth(value);
             }
         }
+        
+        [ShowInInspector] public float PlayerHealth
+        {
+            // Null check is only to avoid error in the Editor
+            get => _healthController == null ? float.NaN : _healthController.CurrentHealth;
+            set
+            {
+                if (_healthController == null) return;
+                if (value < _healthController.CurrentHealth)
+                    _healthController.TakeDamage(_healthController.CurrentHealth - value);
+                else if(value > _healthController.CurrentHealth)
+                    _healthController.Heal(value - _healthController.CurrentHealth);
+            }
+        }
 
         [ShowInInspector] public float PlayerWalkSpeed
         {
@@ -29,6 +44,17 @@ namespace MonkeyBusiness.Managers
             {
                 if (_characterController == null) return;
                 _characterController.WalkSpeed = value;
+            }
+        }
+
+        public bool canUseRope
+        {
+            // Null check is only to avoid error in the Editor
+            get => _characterController != null && _characterController.canUseRope;
+            set
+            {
+                if (_characterController == null) return;
+                _characterController.canUseRope = value;
             }
         }
         

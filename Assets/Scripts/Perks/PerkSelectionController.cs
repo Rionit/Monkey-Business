@@ -145,5 +145,12 @@ namespace MonkeyBusiness.Perks
 
             return perks[Random.Range(0, perks.Count)];
         }
+
+        [Button]
+        private void ApplyPerk(PerkSO perk, bool applyAsBuff = true)
+        {
+            var instance = InstantiatePerk(perk);
+            instance.GetComponent<Perk>().ApplyEffect(applyAsBuff);
+        }
     }
 }
