@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Item
   - Enemy
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -17,7 +18,7 @@ TagManager:
   - Navigation
   - Range
   - Traffic
-  - 
+  - Swing
   - 
   - 
   - 
