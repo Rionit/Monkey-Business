@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4778029033752670998
+--- !u!1 &4257615980788977292
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,9 +8,9 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 3715914056457528506}
-  - component: {fileID: 156512610552666363}
-  - component: {fileID: 4071582306596843946}
+  - component: {fileID: 1784679112063324582}
+  - component: {fileID: 7727277456828149346}
+  - component: {fileID: 5512037952928848984}
   m_Layer: 0
   m_Name: Particle
   m_TagString: Untagged
@@ -18,28 +18,28 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &3715914056457528506
+--- !u!4 &1784679112063324582
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4778029033752670998}
+  m_GameObject: {fileID: 4257615980788977292}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: -0.0318, z: 0.0149}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.70710677}
+  m_LocalPosition: {x: 0, y: -0.0254, z: 0.0135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3554572132705927485}
+  m_Father: {fileID: 5735542492878657775}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
---- !u!198 &156512610552666363
+--- !u!198 &7727277456828149346
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4778029033752670998}
+  m_GameObject: {fileID: 4257615980788977292}
   serializedVersion: 8
   lengthInSec: 1
   simulationSpeed: 1
@@ -50,7 +50,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -980,7 +980,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 10
+        scalar: 30
         minScalar: 30
         maxCurve:
           serializedVersion: 2
@@ -2634,7 +2634,7 @@ ParticleSystem:
     magnitude:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1
+      scalar: 30
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -2692,7 +2692,7 @@ ParticleSystem:
     drag:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.8
+      scalar: 0.2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -4814,14 +4814,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &4071582306596843946
+--- !u!199 &5512037952928848984
 ParticleSystemRenderer:
   serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4778029033752670998}
+  m_GameObject: {fileID: 4257615980788977292}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -4894,7 +4894,7 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
---- !u!1001 &9058659204814668729
+--- !u!1001 &250529817002072683
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -4902,18 +4902,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 221661243460642512, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.02955
-      objectReference: {fileID: 0}
-    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: _accuracyRange
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: _accuracyRadius
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -4956,18 +4944,59 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8453933904731248803, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_Name
-      value: BananaGun
+      value: Shotgun
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 5596078140349675692, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 3715914056457528506}
-    m_AddedComponents: []
+      addedObject: {fileID: 1784679112063324582}
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8453933904731248803, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6682867497587419945}
   m_SourcePrefab: {fileID: 100100000, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
---- !u!4 &3554572132705927485 stripped
+--- !u!4 &5735542492878657775 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-  m_PrefabInstance: {fileID: 9058659204814668729}
+  m_PrefabInstance: {fileID: 250529817002072683}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &8514168976571253448 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8453933904731248803, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+  m_PrefabInstance: {fileID: 250529817002072683}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6682867497587419945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514168976571253448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e256c6179e9141919c9cc9064c108d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.Shotgun
+  <MaxAmmo>k__BackingField: 30
+  <OnAmmoChanged>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnEquipped>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  <OnUnequipped>k__BackingField:
+    m_PersistentCalls:
+      m_Calls: []
+  _coroutineRunner: {fileID: 0}
+  _weaponHitbox: {fileID: 0}
+  _shotDuration: 0.25
+  _shotCooldown: 0.7
+  _damage: 275
+  _maxDistance: 6
+  _knockbackForce: 2
+  _knockbackDuration: 0.5
+  _shotEffect: {fileID: 7727277456828149346}

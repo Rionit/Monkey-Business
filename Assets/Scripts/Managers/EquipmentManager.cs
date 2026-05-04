@@ -74,7 +74,6 @@ namespace MonkeyBusiness.Managers
         {
             _scrollWheel = InputSystem.actions.FindAction("ScrollWheel");
 
-
             for(int i = 0; i < ITEM_CAPACITY; i++)
             {
                 _itemInputActions[i] = InputSystem.actions.FindAction($"Item{i + 1}");

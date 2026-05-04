@@ -19,7 +19,7 @@ namespace MonkeyBusiness.Combat.Weapons
     /// <summary>
     /// Controller of the player's weapon.
     /// </summary>
-    public class Weapon : MonoBehaviour, IEquippable
+    public class Rifle : MonoBehaviour, IWeapon
     {    
         //private Transform[] _transforms = {};
 
@@ -56,10 +56,13 @@ namespace MonkeyBusiness.Combat.Weapons
         /// </summary>
         public bool IsEquipped { get; private set; } = false;
 
+        [SerializeField]
+        UnityEvent<IWeapon> _onAmmoChanged = new();
+        
         /// <summary>
         /// Event invoked when the ammo count changes, passing the new ammo count as an argument.
         /// </summary>
-        public UnityEvent<Weapon> OnAmmoChanged = new();
+        public UnityEvent<IWeapon> OnAmmoChanged => _onAmmoChanged;
 
         [SerializeField]
         UnityEvent<IEquippable> _onEquipped = new();
@@ -102,8 +105,6 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         [Tooltip("Accuracy range of the aim circle at the given length.")]
         float _accuracyRange; 
-
-        const float EPSILON = 0.01f;
 
         public void Equip()
         {
@@ -148,7 +149,7 @@ namespace MonkeyBusiness.Combat.Weapons
         public void Reload(int ammo)
         {
             CurrentAmmo = Mathf.Clamp(CurrentAmmo + ammo, 0, MaxAmmo);
-            OnAmmoChanged.Invoke(this);
+            OnAmmoChanged.Invoke(this as IWeapon);
         }
 
         /// <summary>
@@ -247,7 +248,7 @@ namespace MonkeyBusiness.Combat.Weapons
             _isLoading = true;
 
             CurrentAmmo--;
-            OnAmmoChanged.Invoke(this);
+            OnAmmoChanged.Invoke(this as IWeapon);
             yield return new WaitForSeconds(_shootingInterval);
             _isLoading = false;
         }
