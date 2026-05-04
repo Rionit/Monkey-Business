@@ -79,7 +79,7 @@ namespace MonkeyBusiness.Player
         [field: Required]
         public GameObject Target { get; private set; }
 
-        public bool canUseRope { get; set; } = false;
+        public bool canUseRope { get; set; } = true; // TODO: MAKE ME FALSE LATER
         [SerializeField] private float swingForce = 30f;
         [SerializeField] private float swingSpring = 4.5f;
         [SerializeField] private float swingDamping = 7f;
