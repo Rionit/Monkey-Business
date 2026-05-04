@@ -44,6 +44,10 @@ PrefabInstance:
       propertyPath: _accuracyRadius
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: _projectilesPerShot
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
