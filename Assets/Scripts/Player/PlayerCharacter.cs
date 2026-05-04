@@ -112,6 +112,7 @@ namespace MonkeyBusiness.Player
         private void Awake()
         {
             _lineRenderer = GetComponent<LineRenderer>();
+            _lineRenderer.enabled = false;
         }
 
         public void Initialize()
