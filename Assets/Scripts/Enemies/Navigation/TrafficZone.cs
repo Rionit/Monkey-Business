@@ -194,13 +194,14 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         void OnGUI()
         {
-            
+#if UNITY_EDITOR
             Handles.color = Color.red;
             foreach(var neighbor in Neighbors)
             {
                 if(neighbor != null)
                     Handles.DrawLine(Keypoint.position, neighbor.Keypoint.position, 3f);
             }
+#endif
         }
 
         void OnDrawGizmos()
