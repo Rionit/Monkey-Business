@@ -918,6 +918,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnTakenDamage:
+    m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 8625472717696608940}
         m_TargetAssemblyTypeName: Ami.BroAudio.SoundSource, BroAudio
         m_MethodName: Play
@@ -930,9 +933,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnTakenDamage:
-    m_PersistentCalls:
-      m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
