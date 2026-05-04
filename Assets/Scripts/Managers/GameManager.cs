@@ -5,11 +5,11 @@ using System.Collections;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Enemies.Navigation;
+using MonkeyBusiness.Misc;
 using System;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
-using MonkeyBusiness.Player;
 
 namespace MonkeyBusiness.Managers
 {
@@ -27,7 +27,7 @@ namespace MonkeyBusiness.Managers
     /// 
     /// TODO spawn new items at the start of each round
     /// </summary>
-    public class GameManager : MonoBehaviour
+    public class GameManager : MonoBehaviour, ITargetable
     {
         [Serializable]
         class SpawnInformation
@@ -113,6 +113,12 @@ namespace MonkeyBusiness.Managers
         private List<GameObject> _enemyPrefabs;
 
         /// <summary>
+        /// Returns the player character as the target.
+        /// </summary>
+        public GameObject Target => _playerCharacter;
+
+
+        /// <summary>
         /// List of all enemy spawn points
         /// </summary>
         [SerializeField]
@@ -123,6 +129,11 @@ namespace MonkeyBusiness.Managers
         /// </summary>
         [SerializeField]
         private GameObject _playerCharacter;
+
+        /// <summary>
+        /// Player's character object, used for enemy targeting
+        /// </summary>
+        public GameObject PlayerCharacter => _playerCharacter;
 
         Player _playerScript;
 
@@ -174,9 +185,11 @@ namespace MonkeyBusiness.Managers
         {
             GameObject enemyObject = Instantiate(enemy, _enemySpawnPoints[spawnPointIndex].position, Quaternion.identity);
             
-            if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController)){
-                enemyFollowController.ChaseTarget = _playerCharacter;
-            }else
+            if(enemyObject.TryGetComponent<EnemyFollowController>(out EnemyFollowController enemyFollowController))
+            {
+                enemyFollowController.ChaseObject = _playerCharacter.GetComponent<ITargetable>().Target;
+            }
+            else
             {
                 Debug.LogError("No EnemyFollowController on enemy prefab");
             }
