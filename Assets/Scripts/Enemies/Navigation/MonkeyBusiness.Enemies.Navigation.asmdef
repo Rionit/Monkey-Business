@@ -2,7 +2,9 @@
     "name": "MonkeyBusiness.Enemies.Navigation",
     "rootNamespace": "MonkeyBusiness.Enemies.Navigation",
     "references": [
-        "GUID:8c4dd21966739024fbd72155091d199e"
+        "GUID:8c4dd21966739024fbd72155091d199e",
+        "GUID:5f116cbd8f00992e4bb5d8f7375343e5",
+        "GUID:c282b84647f3201a6a87d3ea979d6e2b"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

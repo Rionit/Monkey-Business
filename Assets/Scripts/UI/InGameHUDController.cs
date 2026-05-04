@@ -68,20 +68,20 @@ namespace MonkeyBusiness.UI
             ammoText.text = $"{value}";
         }
         
-        public void OnAmmoChanged(Weapon weapon){
+        public void OnAmmoChanged(IWeapon weapon){
             SetAmmo(weapon.CurrentAmmo);
         }
 
         public void OnWeaponEquipped(IEquippable weaponEquippable)
         {
-            var weapon = weaponEquippable as Weapon;
+            var weapon = weaponEquippable as IWeapon;
             weapon.OnAmmoChanged.AddListener(OnAmmoChanged);
             SetAmmo(weapon.CurrentAmmo);
         }
 
         public void OnWeaponUnequipped(IEquippable weaponEquippable)
         {
-            var weapon = weaponEquippable as Weapon;
+            var weapon = weaponEquippable as IWeapon;
             weapon.OnAmmoChanged.RemoveListener(OnAmmoChanged);
         }
     }

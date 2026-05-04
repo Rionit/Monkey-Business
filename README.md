@@ -7,10 +7,12 @@
     - Showcase/MP/Items
 
 ## How to:
-Implemented three of the throwable items.
+Since last merge:
 
-Mug will break when thrown
+- Added thrown bananas leaving behind a peel
+- Added AoE push to chair impact (Chairs can now knock back multiple enemies per hit)
+- Added basketball bounce mechanic
+- Added microwave item
+- Added rake item
 
-Chair will slow down hit enemies
-
-Basketball has a high bounciness
+Items can be tested in Showcase/MP/Items scene or in vertical slice

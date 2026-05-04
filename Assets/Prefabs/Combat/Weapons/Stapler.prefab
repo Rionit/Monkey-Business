@@ -45,28 +45,8 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: _onWeaponFired.m_PersistentCalls.m_Calls.Array.size
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: _onWeaponFired.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: _onWeaponFired.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: _onWeaponFired.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: Play
-      objectReference: {fileID: 0}
-    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: _onWeaponFired.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: Ami.BroAudio.SoundSource, BroAudio
-      objectReference: {fileID: 0}
-    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
-      propertyPath: _onWeaponFired.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
+      propertyPath: _projectilesPerShot
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_LocalPosition.x

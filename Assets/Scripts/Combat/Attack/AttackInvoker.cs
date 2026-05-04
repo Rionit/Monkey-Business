@@ -110,9 +110,11 @@ namespace MonkeyBusiness.Combat.Attack
         {
             if(other.tag == "Player")
             {
+                Debug.Log("Enemy Colliding with " + other.name);
                 PlayerInRange = true;
                 if(!OnCooldown)
                 {
+
                     StartCoroutine(InvokeAttackCoroutine(other.GetComponent<ITargetable>().Target));
                 }
             }

@@ -187,9 +187,18 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "MeleeAttack",
+                    "type": "Button",
+                    "id": "c331ec08-baf4-4fe6-a111-41ffd20b5065",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "Swing",
                     "type": "Button",
-                    "id": "96051902-fc8b-4b41-bde1-159fae89a18c",
+                    "id": "3ce4c34d-109f-4b2e-9a8c-d6cd3d87201c",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -705,7 +714,18 @@
                 },
                 {
                     "name": "",
-                    "id": "cd34d305-6d77-453c-b114-f4cd99723bd7",
+                    "id": "1a87d39e-ad46-4455-8cdd-2abd9e575cce",
+                    "path": "<Keyboard>/f",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "MeleeAttack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b9ab34fd-3255-4966-b28b-78e6447fd0ba",
                     "path": "<Mouse>/rightButton",
                     "interactions": "",
                     "processors": "",
