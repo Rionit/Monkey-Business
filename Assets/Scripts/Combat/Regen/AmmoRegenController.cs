@@ -50,7 +50,7 @@ namespace MonkeyBusiness.Combat
             var equipManager = playerObject.GetComponentInParent<EquipmentManager>();
             foreach(var item in equipManager.Items)
             {
-                if(item is Weapon weapon)
+                if(item is IWeapon weapon)
                 {
                     weapon.ReloadPercent(_replenishmentPercentage);
                 }
