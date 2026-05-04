@@ -8,6 +8,7 @@ using System.Diagnostics.CodeAnalysis;
 using MonkeyBusiness.Managers;
 using Sirenix.Utilities;
 using System.Collections.Generic;
+using DG.Tweening;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -21,7 +22,7 @@ namespace MonkeyBusiness.Combat.Weapons
     /// </summary>
     public class Rifle : MonoBehaviour, IWeapon
     {    
-        //private Transform[] _transforms = {};
+        static Tween _scopeTween;
 
         [SerializeField]
         [Tooltip("Stats of the weapon used")]
@@ -74,6 +75,32 @@ namespace MonkeyBusiness.Combat.Weapons
         
         public UnityEvent<IEquippable> OnUnequipped => _onUnequipped;
 
+        [SerializeField]
+        int _projectilesPerShot = 1;
+
+
+        [BoxGroup("Scope")]
+        [SerializeField]
+        [Tooltip("Number of projectiles fired per shot.")]
+        bool _usesScope;
+
+        [BoxGroup("Scope")]
+        [ShowIf("_usesScope")]
+        [SerializeField]
+        [Tooltip("Field of view when aiming down sights.")]
+        float _scopedFOV = 30f;
+
+        [BoxGroup("Scope")]
+        [ShowIf("_usesScope")]
+        [SerializeField]
+        [Tooltip("Time it takes to aim down sights, in seconds.")]
+        float _scopeTransitionTime = 0.2f;
+
+        [SerializeField]
+        [Tooltip("Shooting angle of the weapon, in degrees.")]
+        [Range(0f, 135f)]
+        float _shootingAngle = 30f; 
+
         bool _isLoading = false;
 
         [ShowInInspector]
@@ -108,6 +135,16 @@ namespace MonkeyBusiness.Combat.Weapons
 
         public void Equip()
         {
+            if(_usesScope)
+            {
+                if(_scopeTween != null)
+                {
+                    _scopeTween.Kill();
+                    _scopeTween = null;
+                }
+                Scope();
+            }
+        
             Debug.Log($"Equipped item {gameObject.name}");
             gameObject.SetActive(true);
 
@@ -118,6 +155,16 @@ namespace MonkeyBusiness.Combat.Weapons
 
         public void Unequip()
         {
+            if(_usesScope)
+            {
+                if(_scopeTween != null)
+                {
+                    _scopeTween.Kill();
+                    _scopeTween = null;
+                }
+                Unscope();
+            }
+
             Debug.Log($"Unequipped item {gameObject.name}");
             gameObject.SetActive(false);
             OnUnequipped.Invoke(this);
@@ -149,7 +196,7 @@ namespace MonkeyBusiness.Combat.Weapons
         public void Reload(int ammo)
         {
             CurrentAmmo = Mathf.Clamp(CurrentAmmo + ammo, 0, MaxAmmo);
-            OnAmmoChanged.Invoke(this as IWeapon);
+            OnAmmoChanged.Invoke(this);
         }
 
         /// <summary>
@@ -170,18 +217,84 @@ namespace MonkeyBusiness.Combat.Weapons
             return cameraTf.position + cameraTf.forward * _accuracyRange + transformedDisplacement;
         }
 
+        void Scope()
+        {
+            Camera.main.fieldOfView = 60f;
+            _scopeTween = Camera.main.DOFieldOfView(_scopedFOV, _scopeTransitionTime);
+            _scopeTween.OnComplete(() => _scopeTween = null);
+        }
+
+        void Unscope()
+        {
+            Camera.main.fieldOfView = _scopedFOV;
+            _scopeTween = Camera.main.DOFieldOfView(60f, _scopeTransitionTime);
+            _scopeTween.OnComplete(() => _scopeTween = null);
+        }
+        
+
         /// <summary>
         /// Fires upon target, then waits for the shooting interval before allowing to fire again.
         /// </summary>
         /// <remarks><i>Should be run on an object that doesn't get disabled during gameplay.</i></remarks>
         IEnumerator FireCoroutine()
         {
+            _isLoading = true;
+            if(_projectilesPerShot == 1)
+            {
+                FireProjectile(Camera.main.transform.forward);
+                //yield return new WaitForSeconds(_shootingInterval);
+            }
+            else
+            {
+                float angleStep = _shootingAngle / (_projectilesPerShot - 1);
+                float startingAngle = -_shootingAngle / 2;
+
+                for(int i = 0; i < _projectilesPerShot; i++)
+                {
+                    float currentAngle = startingAngle + (angleStep * i);
+                    Vector3 direction = Quaternion.Euler(0, currentAngle, 0) * Camera.main.transform.forward;
+                    FireProjectile(direction);
+
+                    //yield return new WaitForSeconds(_shootingInterval/_projectilesPerShot);
+                }
+            }
+
+           /* float waitTime = _shootingInterval / _projectilesPerShot;
+
+            if(_projectilesPerShot % 2 == 1)
+            {
+                FireProjectile(Camera.main.transform.forward);
+                yield return new WaitForSeconds(waitTime);
+            }
+            float angleStep = _shootingAngle / (2*(_projectilesPerShot - 1));
+            for(int i = 0; i < _projectilesPerShot/2; i++)
+            {
+                float currentAngle = angleStep * (i + 1);
+                Vector3 directionRight = Quaternion.Euler(0, currentAngle, 0) * Camera.main.transform.forward;
+                Vector3 directionLeft = Quaternion.Euler(0, -currentAngle, 0) * Camera.main.transform.forward;
+                FireProjectile(directionRight);
+                FireProjectile(directionLeft);
+
+                yield return new WaitForSeconds(waitTime);
+
+                //yield return new WaitForSeconds(_shootingInterval/_projectilesPerShot);
+            }*/
+
+
+
+
+            
+            yield return new WaitForSeconds(_shootingInterval);
+            _isLoading = false;
+        }
+
+        void FireProjectile(Vector3 direction)
+        {
             var projectile = Instantiate(_data.ProjectilePrefab, _bulletSpawnPoint.position, Quaternion.identity, ProjectileParentHolder.Instance.Object.transform);
             var projectileController = projectile.GetComponent<PlayerProjectileController>();
             if(projectileController == null)
             {
                 Debug.LogError("Projectile prefab shouldn't be null!");
-                yield break;
             }
 
             var layersToCheck = projectileController.DestroyedBy;
@@ -191,9 +304,10 @@ namespace MonkeyBusiness.Combat.Weapons
             float deathTime = maxRange / projectileController.Speed;
 
             var cameraPos = Camera.main.transform.position;
-            var aimPos = RandomAimPos();
-            var testDir = aimPos - cameraPos;
-            
+            //var aimPos = RandomAimPos();
+            //var testDir = aimPos - cameraPos;
+            var testDir = direction.normalized;
+
             //Ray cameraRay = new(Camera.main.transform.position, Camera.main.transform.forward);
 
             bool hitsSomething = Physics.SphereCast(
@@ -249,9 +363,9 @@ namespace MonkeyBusiness.Combat.Weapons
 
             CurrentAmmo--;
             OnAmmoChanged.Invoke(this as IWeapon);
-            yield return new WaitForSeconds(_shootingInterval);
-            _isLoading = false;
+            
         }
+
 
         void Awake()
         {
