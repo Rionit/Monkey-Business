@@ -236,14 +236,14 @@ namespace MonkeyBusiness.Managers
             else
             {
                 // Raycast in front of the player
-                if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _maxPickupDistance))
+                if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _maxPickupDistance, LayerMask.GetMask("Default")))
                 {
                     GameObject gameObject = hit.transform.gameObject;
                     Debug.Log(gameObject.name);
                     // Check if we hit an item
                     if (gameObject.CompareTag("Item"))
                     {
-                        Item item = gameObject.GetComponentInChildren<Item>();
+                        Item item = gameObject.GetComponentInParent<Item>();
                         // Pick the item up
                         item.PickUp(itemAttachPoint);
                         _heldItem = item;

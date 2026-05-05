@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: df9352e9307379b4685ccc9ab7f31301
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/VerticalSlice.unity
     guid: f4c75ec4b191cb846b6915b869348eb1
+  - enabled: 1
+    path: Assets/Scenes/PreAlpha.unity
+    guid: 53274ae2afe3b734cb336e1288221d49
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
