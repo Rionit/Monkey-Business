@@ -7385,6 +7385,10 @@ PrefabInstance:
       objectReference: {fileID: 1665814288}
     - target: {fileID: 2211465859848255771, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: swingForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211465859848255771, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: swingSpring
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2211465859848255771, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
@@ -8741,6 +8745,10 @@ PrefabInstance:
       propertyPath: _deathScreen
       value: 
       objectReference: {fileID: 240766508}
+    - target: {fileID: 7623826512875064706, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: _enemiesPerWave
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7623826512875064706, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: _playerCharacter
       value: 

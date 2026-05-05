@@ -387,7 +387,7 @@ MonoBehaviour:
   cameraTarget: {fileID: 3765419234093669765}
   whatIsSwingable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   <WalkSpeed>k__BackingField: 15
   crouchSpeed: 5
   walkResponse: 25
@@ -409,8 +409,8 @@ MonoBehaviour:
   cameraStandHeight: 0.9
   cameraCrouchHeight: 0.7
   <Target>k__BackingField: {fileID: 754302598161200952}
-  swingForce: 0
-  swingSpring: 0
+  swingForce: 5
+  swingSpring: 1
   swingDamping: 7
   swingMassScale: 4.5
 --- !u!54 &2447207728374608361
