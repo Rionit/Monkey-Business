@@ -4996,7 +4996,7 @@ MonoBehaviour:
   _shotDuration: 0.25
   _shotCooldown: 0.7
   _damage: 275
-  _maxDistance: 6
-  _knockbackForce: 2
-  _knockbackDuration: 0.5
+  _maxDistance: 50
+  _knockbackForce: 3
+  _knockbackDuration: 0.8
   _shotEffect: {fileID: 7727277456828149346}

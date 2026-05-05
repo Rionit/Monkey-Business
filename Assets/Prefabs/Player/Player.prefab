@@ -1055,13 +1055,16 @@ GameObject:
   - component: {fileID: 5037580927550042740}
   - component: {fileID: 5018883195978780030}
   - component: {fileID: 3338241831950960515}
+  - component: {fileID: 3392419268067765865}
+  - component: {fileID: 1181255014200113357}
+  - component: {fileID: 2295838430691119569}
   m_Layer: 8
   m_Name: ShotgunHitbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5037580927550042740
 Transform:
   m_ObjectHideFlags: 0
@@ -1090,6 +1093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.ProximityWeaponZone
   _targetTag: Enemy
+  _hitsThroughWalls: 1
   <OnTargetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -1112,8 +1116,71 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.586205, y: 1.9566753, z: 5.2692184}
+  m_Size: {x: 4.208752, y: 2, z: 5.2692184}
   m_Center: {x: 0, y: 0, z: 3.292995}
+--- !u!65 &3392419268067765865
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6472994901029594296}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 6.952917, y: 2.5, z: 4.741579}
+  m_Center: {x: 0, y: 0, z: 7.809676}
+--- !u!65 &1181255014200113357
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6472994901029594296}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 12.88649, y: 3.7751818, z: 7.080929}
+  m_Center: {x: 0, y: 0, z: 13.61879}
+--- !u!65 &2295838430691119569
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6472994901029594296}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 16.606985, y: 4.4520435, z: 4.5919876}
+  m_Center: {x: 0, y: 0, z: 19.309334}
 --- !u!1 &6739530559017346360
 GameObject:
   m_ObjectHideFlags: 0
@@ -6086,6 +6153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.ProximityWeaponZone
   _targetTag: Enemy
+  _hitsThroughWalls: 1
   <OnTargetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -6211,6 +6279,10 @@ PrefabInstance:
       propertyPath: _weaponHitbox
       value: 
       objectReference: {fileID: 5018883195978780030}
+    - target: {fileID: 6682867497587419945, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: _distanceTarget
+      value: 
+      objectReference: {fileID: 3981870910625965676}
     - target: {fileID: 6682867497587419945, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
       propertyPath: _coroutineRunner
       value: 

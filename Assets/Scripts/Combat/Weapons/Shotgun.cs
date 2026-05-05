@@ -20,11 +20,10 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         float _damage = 270f;
 
-
         [BoxGroup("Shooting stats")]
         [SerializeField]
         [Tooltip("Maximum distance the enemy receives damage in.")]
-        float _maxDistance = 5f;
+        float _maxDistance = 50f;
 
         [BoxGroup("Shooting stats/Knockback")]
         [SerializeField]
@@ -36,6 +35,9 @@ namespace MonkeyBusiness.Combat.Weapons
 
         [SerializeField]
         ParticleSystem _shotEffect;
+
+        [SerializeField]
+        Transform _distanceTarget;
 
         void Awake()
         {
@@ -53,16 +55,18 @@ namespace MonkeyBusiness.Combat.Weapons
 
             if(knockbackController != null)
             {
-                Vector3 knockbackDirection = (target.transform.position - transform.position).normalized;
+                Vector3 knockbackDirection = (target.transform.position - _distanceTarget.transform.position).normalized;
+                Vector2 knockback2D = new Vector2(knockbackDirection.x, knockbackDirection.z);
+                //knockbackController.Knockback(knockback2D * _knockbackForce, _knockbackDuration);
                 knockbackController.Knockback(knockbackDirection * _knockbackForce, _knockbackDuration);
             }
             else
             {
                 Debug.LogWarning("Target " + target.name + " hit by shotgun but has no KnockbackController.");
             }            
-
-            var distance = Vector3.Distance(target.transform.position, transform.position);
-            float damageModifier = 1f - Mathf.Pow(distance / _maxDistance, 2);
+    
+            var distance = Vector3.Distance(target.transform.position, _distanceTarget.transform.position);
+            float damageModifier = 1f - Mathf.Pow(distance / _maxDistance, 1.5f);
 
             Debug.Log("Calculated damage:" + _damage * damageModifier + " with distance: " + distance);
             target.TakeDamage(_damage * damageModifier);
