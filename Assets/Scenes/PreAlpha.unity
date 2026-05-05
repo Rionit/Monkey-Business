@@ -7329,6 +7329,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1665814288}
     - target: {fileID: 2211465859848255771, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: swingForce
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2211465859848255771, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: whatIsSwingable.m_Bits
       value: 1024
       objectReference: {fileID: 0}
