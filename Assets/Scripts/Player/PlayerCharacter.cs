@@ -160,6 +160,9 @@ namespace MonkeyBusiness.Player
         [Tooltip("Maximum swing duration.")]
         [SerializeField] private float swingDuration = 2.0f;
 
+        [Tooltip("Minimum swing duration (actual duration is rope length dependent)")]
+        [SerializeField] private float swingMinDuraion = 0.7f;
+
         [Tooltip("Cooldown between swings.")]
         [SerializeField] private float swingCooldown = 0.35f;
 
@@ -173,6 +176,10 @@ namespace MonkeyBusiness.Player
         private float _swingRopeLength;
         private float _swingTimeRemaining;
         private float _swingCooldownRemaining;
+
+        [SerializeField]
+        [Range(0f, 100f)]
+        private float _swingMaxDistance = 20f;
 
         // Character state tracking
         private CharacterState _state;
@@ -229,7 +236,7 @@ namespace MonkeyBusiness.Player
         public void UpdateInput(CharacterInput input)
         {
             // Handle swing input
-            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f)
+            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f && !motor.GroundingStatus.IsStableOnGround)
                 StartSwing();
 
             if (!input.Swing && _state.Stance == Stance.Swing)
@@ -279,7 +286,7 @@ namespace MonkeyBusiness.Player
             var dir = cam.transform.forward;
 
             // Raycast to find swing anchor
-            if (!Physics.Raycast(origin, dir, out RaycastHit hit, 100f, whatIsSwingable))
+            if (!Physics.Raycast(origin, dir, out RaycastHit hit, _swingMaxDistance, whatIsSwingable))
                 return;
 
             _lineRenderer.enabled = true;
@@ -298,7 +305,7 @@ namespace MonkeyBusiness.Player
 
             _swingAnchor = hit.point;
             _swingRopeLength = Vector3.Distance(transform.position, hit.point);
-            _swingTimeRemaining = swingDuration;
+            _swingTimeRemaining = Mathf.Lerp(swingMinDuraion, swingDuration, _swingRopeLength / _swingMaxDistance);
 
             _ropeEnd = hit.point;
         }
@@ -349,12 +356,13 @@ namespace MonkeyBusiness.Player
 
             var ropeVector = _rb.position - _swingAnchor;
             var ropeDistance = ropeVector.magnitude;
-            if (ropeDistance > 0.0001f)
+            Debug.Log("Rope distance: " + ropeDistance + " Rope length: " + _swingRopeLength);
+            if (swingCooldown - _swingCooldownRemaining > 0.2f && ropeDistance > 0.0001f && ropeDistance > _swingRopeLength)
             {
                 var ropeDir = ropeVector / ropeDistance;
 
                 // Hard constraint: exact rope length, no springiness
-                _rb.position = _swingAnchor + ropeDir * _swingRopeLength;
+                //_rb.position = _swingAnchor + ropeDir * _swingRopeLength;
 
                 // Remove radial velocity so the rope stays rigid
                 var v = _rb.linearVelocity;
@@ -377,12 +385,29 @@ namespace MonkeyBusiness.Player
 
                 _rb.linearVelocity = v;
             }
+
+            else if(ropeDistance < _swingRopeLength)
+            {
+                _swingRopeLength = ropeDistance;
+                if(_requestedMovement.sqrMagnitude > 0f)
+                {
+                    var inputDir = _requestedMovement;
+                    if(inputDir.z < 0f)
+                    {
+                        inputDir.z *= -1;
+                    }
+
+                    _rb.AddForce(transform.TransformDirection(inputDir.normalized) * swingForce, ForceMode.Acceleration);
+                }
+            }
         }
         
         private void OnCollisionEnter(Collision collision)
         {
             if (_state.Stance != Stance.Swing || _rb == null || collision.contactCount == 0)
                 return;
+
+            StopSwing();
 
             var contactNormal = collision.GetContact(0).normal;
             var velocity = _rb.linearVelocity;
@@ -730,6 +755,16 @@ namespace MonkeyBusiness.Player
             _lastState = _tempState;
         }
 
+
+        void OnDrawGizmos()
+        {
+            #if UNITY_EDITOR
+            Gizmos.color = Color.gray2;
+            Gizmos.DrawWireSphere(transform.position, _swingMaxDistance);
+
+            #endif
+        }
+
         public bool IsColliderValidForCollisions(Collider coll)
         {
             return true;
@@ -767,6 +802,5 @@ namespace MonkeyBusiness.Player
             if(killVelocity)
                 motor.BaseVelocity = Vector3.zero;
         }
-
     }
 }
