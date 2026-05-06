@@ -410,9 +410,10 @@ MonoBehaviour:
   cameraCrouchHeight: 0.7
   <Target>k__BackingField: {fileID: 754302598161200952}
   swingForce: 5
-  swingSpring: 1
-  swingDamping: 7
-  swingMassScale: 4.5
+  swingMaxSpeed: 35
+  swingDuration: 1.5
+  swingCooldown: 0.35
+  swingBounceRetention: 0.9
 --- !u!54 &2447207728374608361
 Rigidbody:
   m_ObjectHideFlags: 0
