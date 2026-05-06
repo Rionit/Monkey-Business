@@ -3,11 +3,22 @@ using System.Collections;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Misc;
+using UnityEditor.Toolbars;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
     public class Shotgun : ProximityBasedWeapon
     {
+        enum DistanceFalloff
+        {
+            LINEAR,
+            QUADRATIC,
+            CUBIC,
+        }
+
+        [SerializeField]
+        AnimationCurve _damageFalloffCurve = AnimationCurve.Linear(0f, 1f, 1f, 0f);
+
         [BoxGroup("Shooting stats")]
         [SerializeField]
         float _shotDuration = 0.25f;
@@ -25,9 +36,11 @@ namespace MonkeyBusiness.Combat.Weapons
         [Tooltip("Maximum distance the enemy receives damage in.")]
         float _maxDistance = 50f;
 
-        [BoxGroup("Shooting stats/Knockback")]
         [SerializeField]
-        float _knockbackForce = 5f;
+        [BoxGroup("Shooting stats/Knockback")]
+        [Tooltip("Minimal and maximal knockback force applied to target, actual value is lerped based on distance.")]
+        [MinMaxSlider(0f, 50f)]
+        Vector2 _knockbackForceRange = new Vector2(5f, 20f);
         
         [BoxGroup("Shooting stats/Knockback")]
         [SerializeField]
@@ -53,23 +66,26 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             var knockbackController = target.GetComponent<KnockbackController>();
 
+            var distance = Vector3.Distance(target.transform.position, _distanceTarget.transform.position);
+            //float distanceModifier = 1f - Mathf.Pow(distance / _maxDistance, 1.5f);
+            float distanceModifier = _damageFalloffCurve.Evaluate(distance / _maxDistance);
+
             if(knockbackController != null)
             {
-                Vector3 knockbackDirection = (target.transform.position - _distanceTarget.transform.position).normalized;
-                Vector2 knockback2D = new Vector2(knockbackDirection.x, knockbackDirection.z);
-                //knockbackController.Knockback(knockback2D * _knockbackForce, _knockbackDuration);
-                knockbackController.Knockback(knockbackDirection * _knockbackForce, _knockbackDuration);
+                Vector3 knockbackDirection = (target.transform.position + Vector3.up * 0.3f -  _distanceTarget.transform.position).normalized;
+                //Vector2 knockback2D = new Vector2(knockbackDirection.x, knockbackDirection.z);
+                float knockbackForce = Mathf.Lerp(_knockbackForceRange.x, _knockbackForceRange.y, distanceModifier);
+                //knockbackController.Knockback(knockback2D * knockbackForce, _knockbackDuration);
+
+                knockbackController.Knockback(knockbackDirection * knockbackForce, _knockbackDuration, 0.925f);
             }
             else
             {
                 Debug.LogWarning("Target " + target.name + " hit by shotgun but has no KnockbackController.");
-            }            
-    
-            var distance = Vector3.Distance(target.transform.position, _distanceTarget.transform.position);
-            float damageModifier = 1f - Mathf.Pow(distance / _maxDistance, 1.5f);
+            }  
 
-            Debug.Log("Calculated damage:" + _damage * damageModifier + " with distance: " + distance);
-            target.TakeDamage(_damage * damageModifier);
+            Debug.Log("Calculated damage:" + _damage * distanceModifier + " with distance: " + distance);
+            target.TakeDamage(_damage * distanceModifier);
         }
 
         protected override IEnumerator FireCoroutine()

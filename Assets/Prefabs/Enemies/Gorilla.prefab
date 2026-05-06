@@ -85,6 +85,7 @@ MonoBehaviour:
   _updatePathInterval: 0.5
   _chaseDistance: 1
   _chaseDistanceOffset: 0.1
+  _alwaysChaseDistance: 10
   _hasSlowdownEffect: 1
   _slowdownVisualizers:
   - {fileID: 4016573290801342877}
@@ -106,6 +107,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: MonkeyBusiness.Combat::MonkeyBusiness.Combat.HealthController
   <MaxHealth>k__BackingField: 400
   OnHealthChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTakenDamage:
     m_PersistentCalls:
       m_Calls: []
   OnDeath:
@@ -213,11 +217,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13f37cefab95f0c9a2ae2b68bc637e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.KnockbackController
-  _behaviourOverrides:
-  - {fileID: 629078932287645410}
+  _suppressedComponents:
   - {fileID: 1388641176820628042}
+  - {fileID: 1158444943826890477}
+  - {fileID: 629078932287645410}
   _body: {fileID: 576045929676939833}
   _minimumVelocity: 0.1
+  _defaultDamping: 1
 --- !u!1 &5758220776333362340
 GameObject:
   m_ObjectHideFlags: 0

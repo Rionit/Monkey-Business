@@ -452,9 +452,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13f37cefab95f0c9a2ae2b68bc637e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.KnockbackController
-  _suppressedComponents: []
+  _suppressedComponents:
+  - {fileID: 7584984088641549584}
+  - {fileID: 3602844857421087173}
+  - {fileID: 987973039596880175}
+  - {fileID: 8553173932619770032}
   _body: {fileID: 6570454771081550698}
   _minimumVelocity: 0.1
+  _defaultDamping: 1
 --- !u!114 &4496793223053938207
 MonoBehaviour:
   m_ObjectHideFlags: 0

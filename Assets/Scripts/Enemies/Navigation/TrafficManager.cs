@@ -289,21 +289,17 @@ namespace MonkeyBusiness.Enemies.Navigation
             var neighA = GetNeighborDistance(a.ID, to.ID);
             var neighB = GetNeighborDistance(b.ID, to.ID);
 
-            Debug.Log("Neigh distance: A= " + neighA + ", B= " + neighB);
 
             if(neighA < neighB)
             {
-                Debug.Log("Neigh distance - A is less");
                 return -1;
             }
             else if(neighA > neighB)
             {
-                Debug.Log("Neigh distance - B is less");
                 return 1;
             }
             else
             {
-                Debug.Log("Neigh distance - A and B are equal");
                 return 0;
             } 
         }

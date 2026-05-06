@@ -34,6 +34,8 @@ Transform:
   - {fileID: 5173201346127674885}
   - {fileID: 6384481924346578729}
   - {fileID: 8228495413884811110}
+  - {fileID: 5037580927550042740}
+  - {fileID: 4976268819071506166}
   m_Father: {fileID: 6151647374474603472}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &555698616238130017
@@ -80,9 +82,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 5037580927550042740}
-  - {fileID: 4976268819071506166}
+  m_Children: []
   m_Father: {fileID: 5931992040774880335}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &2702414980135743268
@@ -172,8 +172,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6176943201396351488}
-  - {fileID: 1039972640719630528}
   - {fileID: 531774328080636471}
+  - {fileID: 1039972640719630528}
   m_Father: {fileID: 67784507368217480}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1327886353562767839
@@ -1064,7 +1064,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5037580927550042740
 Transform:
   m_ObjectHideFlags: 0
@@ -1073,12 +1073,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6472994901029594296}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3981870910625965676}
+  m_Father: {fileID: 67784507368217480}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5018883195978780030
 MonoBehaviour:
@@ -1093,7 +1093,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.ProximityWeaponZone
   _targetTag: Enemy
-  _hitsThroughWalls: 1
+  _hitsThroughWalls: 0
+  _debugDrawColliders: 1
   <OnTargetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -1116,7 +1117,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.208752, y: 2, z: 5.2692184}
+  m_Size: {x: 4.208752, y: 3.6, z: 5.2692184}
   m_Center: {x: 0, y: 0, z: 3.292995}
 --- !u!65 &3392419268067765865
 BoxCollider:
@@ -1137,7 +1138,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 6.952917, y: 2.5, z: 4.741579}
+  m_Size: {x: 6.952917, y: 3.7, z: 4.741579}
   m_Center: {x: 0, y: 0, z: 7.809676}
 --- !u!65 &1181255014200113357
 BoxCollider:
@@ -1158,7 +1159,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 12.88649, y: 3.7751818, z: 7.080929}
+  m_Size: {x: 12.88649, y: 3.8, z: 7.080929}
   m_Center: {x: 0, y: 0, z: 13.61879}
 --- !u!65 &2295838430691119569
 BoxCollider:
@@ -1175,11 +1176,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 16.606985, y: 4.4520435, z: 4.5919876}
+  m_Size: {x: 16.606985, y: 4.5, z: 4.5919876}
   m_Center: {x: 0, y: 0, z: 19.309334}
 --- !u!1 &6739530559017346360
 GameObject:
@@ -6133,12 +6134,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8211693197114897220}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3981870910625965676}
+  m_Father: {fileID: 67784507368217480}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5403299255457365124
 MonoBehaviour:
@@ -6154,6 +6155,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.ProximityWeaponZone
   _targetTag: Enemy
   _hitsThroughWalls: 1
+  _debugDrawColliders: 0
   <OnTargetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
@@ -6237,7 +6239,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.124
       objectReference: {fileID: 0}
     - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
       propertyPath: m_LocalPosition.y
@@ -6245,7 +6247,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.03
       objectReference: {fileID: 0}
     - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
       propertyPath: m_LocalRotation.w
@@ -6287,6 +6289,34 @@ PrefabInstance:
       propertyPath: _coroutineRunner
       value: 
       objectReference: {fileID: 4932702847181503216}
+    - target: {fileID: 7727277456828149346, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: ShapeModule.angle
+      value: 23.019396
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727277456828149346, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: ShapeModule.m_Scale.y
+      value: 0.35
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727277456828149346, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: ShapeModule.m_Scale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727277456828149346, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: ShapeModule.radiusThickness
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727277456828149346, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727277456828149346, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7727277456828149346, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 8514168976571253448, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
       propertyPath: m_Name
       value: Shotgun
@@ -6516,9 +6546,17 @@ PrefabInstance:
       value: 180
       objectReference: {fileID: 0}
     - target: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
+      propertyPath: _shootingAngle
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: _coroutineRunner
       value: 
       objectReference: {fileID: 4932702847181503216}
+    - target: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
+      propertyPath: _projectilesPerShot
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: _onEquipped.m_PersistentCalls.m_Calls.Array.size
       value: 1
