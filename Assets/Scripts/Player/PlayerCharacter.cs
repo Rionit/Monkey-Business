@@ -10,68 +10,136 @@ using Sirenix.OdinInspector;
 
 namespace MonkeyBusiness.Player
 {
+    /// <summary>
+    /// Represents crouch input states.
+    /// </summary>
     public enum CrouchInput
     {
-        None, Toggle, Crouch, Uncrouch
+        None,       // No change
+        Toggle,     // Toggle crouch state
+        Crouch,     // Force crouch
+        Uncrouch    // Force stand
     }
 
+    /// <summary>
+    /// Represents player stance states.
+    /// </summary>
     public enum Stance
     {
-        Stand, Crouch, Slide, Swing
+        Stand,
+        Crouch,
+        Slide,
+        Swing
     }
 
+    /// <summary>
+    /// Runtime state of the character.
+    /// </summary>
     public struct CharacterState
     {
-        public bool Grounded;
-        public Stance Stance;
-        public Vector3 Velocity;
-        public Vector3 Acceleration;
+        public bool Grounded;        // Is player grounded
+        public Stance Stance;        // Current stance
+        public Vector3 Velocity;     // Current velocity
+        public Vector3 Acceleration; // Current acceleration
     }
 
+    /// <summary>
+    /// Input snapshot passed into the character each frame.
+    /// </summary>
     public struct CharacterInput
     {
-        public Quaternion Rotation;
-        public Vector2 Move;
-        public bool Swing;
-        public bool Jump;
-        public bool JumpSustain;
-        public CrouchInput Crouch;
+        public Quaternion Rotation; // Camera rotation
+        public Vector2 Move;        // Movement input (WASD / stick)
+        public bool Swing;          // Swing input
+        public bool Jump;           // Jump pressed
+        public bool JumpSustain;    // Jump held
+        public CrouchInput Crouch;  // Crouch input
     }
 
+    /// <summary>
+    /// Main player controller handling movement, jumping, crouching, sliding, and swinging.
+    /// </summary>
     public class PlayerCharacter : MonoBehaviour, ICharacterController, ITargetable
     {
+        [Header("Core References")]
+        [Tooltip("Kinematic motor responsible for movement and collisions.")]
         [SerializeField] private KinematicCharacterMotor motor;
+
+        [Tooltip("Root transform used for scaling (crouch effect).")]
         [SerializeField] private Transform root;
+
+        [Tooltip("Camera follow target.")]
         [SerializeField] private Transform cameraTarget;
 
+        [Tooltip("Layers that can be used for swinging.")]
         [SerializeField] private LayerMask whatIsSwingable;
-        
-        [field:SerializeField] public float WalkSpeed { get; set; } = 20f;
+
+        [Header("Ground Movement")]
+        [field: SerializeField, Tooltip("Maximum walking speed.")]
+        public float WalkSpeed { get; set; } = 20f;
+
+        [Tooltip("Movement speed while crouching.")]
         [SerializeField] private float crouchSpeed = 7f;
+
+        [Tooltip("Responsiveness of walking acceleration.")]
         [SerializeField] private float walkResponse = 25f;
+
+        [Tooltip("Responsiveness of crouch acceleration.")]
         [SerializeField] private float crouchResponse = 20f;
-        [Space]
+
+        [Header("Air Movement")]
+        [Tooltip("Maximum air movement speed.")]
         [SerializeField] private float airSpeed = 15f;
+
+        [Tooltip("Acceleration while in air.")]
         [SerializeField] private float airAcceleration = 70f;
-        [Space]
+
+        [Header("Jumping")]
+        [Tooltip("Initial jump velocity.")]
         [SerializeField] private float jumpSpeed = 20f;
+
+        [Tooltip("Coyote time (grace period after leaving ground).")]
         [SerializeField] private float coyoteTime = 0.2f;
+
         [Range(0f, 1f)]
+        [Tooltip("Gravity multiplier while holding jump.")]
         [SerializeField] private float jumpSustainGravity = 0.4f;
+
+        [Tooltip("Base gravity force.")]
         [SerializeField] private float gravity = -90f;
-        [Space] 
+
+        [Header("Sliding")]
+        [Tooltip("Minimum speed required to start sliding.")]
         [SerializeField] private float slideStartSpeed = 25f;
+
+        [Tooltip("Speed at which slide ends.")]
         [SerializeField] private float slideEndSpeed = 15f;
+
+        [Tooltip("Friction applied during slide.")]
         [SerializeField] private float slideFriction = 0.8f;
+
+        [Tooltip("Steering responsiveness while sliding.")]
         [SerializeField] private float slideSteerAcceleration = 5f;
+
+        [Tooltip("Gravity applied while sliding.")]
         [SerializeField] private float slideGravity = -90f;
-        [Space]
+
+        [Header("Crouching")]
+        [Tooltip("Capsule height while standing.")]
         [SerializeField] private float standHeight = 2f;
+
+        [Tooltip("Capsule height while crouching.")]
         [SerializeField] private float crouchHeight = 1f;
+
+        [Tooltip("Speed of height interpolation.")]
         [SerializeField] private float crouchHeightResponse = 15f;
+
         [Range(0f, 1f)]
+        [Tooltip("Camera height ratio when standing.")]
         [SerializeField] private float cameraStandHeight = .9f;
+
         [Range(0f, 1f)]
+        [Tooltip("Camera height ratio when crouching.")]
         [SerializeField] private float cameraCrouchHeight = .7f;
 
         [field: SerializeField]
@@ -79,18 +147,46 @@ namespace MonkeyBusiness.Player
         [field: Required]
         public GameObject Target { get; private set; }
 
-        public bool canUseRope { get; set; } = true; // TODO: MAKE ME FALSE LATER
-        [SerializeField] private float swingForce = 30f;
-        [SerializeField] private float swingSpring = 4.5f;
-        [SerializeField] private float swingDamping = 7f;
-        [SerializeField] private float swingMassScale = 4.5f;
+        [Header("Swinging")]
+        [Tooltip("Whether rope can currently be used.")]
+        public bool canUseRope { get; set; } = true;
 
+        [Tooltip("Force applied while swinging and pressing WASD keys.")]
+        [SerializeField] private float swingForce = 30f;
+
+        [Tooltip("Maximum swing speed.")]
+        [SerializeField] private float swingMaxSpeed = 35f;
+
+        [Tooltip("Maximum swing duration.")]
+        [SerializeField] private float swingDuration = 2.0f;
+
+        [Tooltip("Minimum swing duration (actual duration is rope length dependent)")]
+        [SerializeField] private float swingMinDuraion = 0.7f;
+
+        [Tooltip("Cooldown between swings.")]
+        [SerializeField] private float swingCooldown = 0.35f;
+
+        [Range(0f, 1f)]
+        [Tooltip("Velocity retained after bouncing during swing.")]
+        [SerializeField] private float swingBounceRetention = 0.9f;
+
+        // Swing internals
         private Vector3 _swingVelocity;
-        
-        private CharacterState _state;    
-        private CharacterState _lastState;    
-        private CharacterState _tempState;    
-        
+        private Vector3 _swingAnchor;
+        private float _swingRopeLength;
+        private float _swingTimeRemaining;
+        private float _swingCooldownRemaining;
+
+        [SerializeField]
+        [Range(0f, 100f)]
+        private float _swingMaxDistance = 20f;
+
+        // Character state tracking
+        private CharacterState _state;
+        private CharacterState _lastState;
+        private CharacterState _tempState;
+
+        // Input requests
         private Quaternion _requestedRotation;
         private Vector3 _requestedMovement;
         private bool _requestedJump;
@@ -98,53 +194,69 @@ namespace MonkeyBusiness.Player
         private bool _requestedCrouch;
         private bool _requestedCrouchInAir;
 
+        // Timing helpers
         private float _timeSinceUngrounded;
         private float _timeSinceJumpRequest;
         private bool _ungroundedDueToJump;
-        
+
+        // Swing components
         private SpringJoint _swingJoint;
         private Rigidbody _rb;
         private LineRenderer _lineRenderer;
         private Vector3 _ropeEnd;
 
+        // Collision buffer for uncrouch checks
         private Collider[] _uncrouchOverlapResults;
 
+        /// <summary>
+        /// Initialize required components.
+        /// </summary>
         private void Awake()
         {
             _lineRenderer = GetComponent<LineRenderer>();
             _lineRenderer.enabled = false;
         }
 
+        /// <summary>
+        /// Initializes character state and motor.
+        /// </summary>
         public void Initialize()
         {
             _state.Stance = Stance.Stand;
             _lastState = _state;
-            
+
             _uncrouchOverlapResults = new Collider[8];
-            
+
             motor.CharacterController = this;
         }
 
+        /// <summary>
+        /// Receives input and converts it into internal requests.
+        /// </summary>
         public void UpdateInput(CharacterInput input)
         {
-            if (input.Swing && _state.Stance != Stance.Swing) StartSwing();
-            if (!input.Swing && _state.Stance == Stance.Swing) StopSwing();
-            
-            _requestedRotation = input.Rotation;    
-            // Take the 2D input vector and create a 3D movement vector on the XZ plane
+            // Handle swing input
+            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f && !motor.GroundingStatus.IsStableOnGround)
+                StartSwing();
+
+            if (!input.Swing && _state.Stance == Stance.Swing)
+                StopSwing();
+
+            // Movement direction (camera-relative)
+            _requestedRotation = input.Rotation;
             _requestedMovement = new Vector3(input.Move.x, 0, input.Move.y);
-            // Clamp the length to 1 to prevent moving faster on diagonals
             _requestedMovement = Vector3.ClampMagnitude(_requestedMovement, 1f);
-            // Orient the input so it's relative to the direction the player is facing
             _requestedMovement = input.Rotation * _requestedMovement;
-            
+
+            // Jump buffering
             var wasRequestingJump = _requestedJump;
             _requestedJump = _requestedJump || input.Jump;
-            if(_requestedJump && !wasRequestingJump)
+            if (_requestedJump && !wasRequestingJump)
                 _timeSinceJumpRequest = 0f;
-            
+
             _requestedSustainedJump = input.JumpSustain;
-            
+
+            // Crouch handling
             var wasRequestingCrouch = _requestedCrouch;
             _requestedCrouch = input.Crouch switch
             {
@@ -153,75 +265,69 @@ namespace MonkeyBusiness.Player
                 CrouchInput.Toggle => !_requestedCrouch,
                 _ => _requestedCrouch
             };
+
+            // Track crouch started in air
             if (_requestedCrouch && !wasRequestingCrouch)
                 _requestedCrouchInAir = !_state.Grounded;
             else if (!_requestedCrouch && wasRequestingCrouch)
                 _requestedCrouchInAir = false;
         }
 
+        /// <summary>
+        /// Starts rope swing if a valid surface is hit.
+        /// </summary>
         void StartSwing()
         {
-            if (!canUseRope) return;
-            
+            if (!canUseRope || _swingCooldownRemaining > 0f)
+                return;
+
             var cam = UnityEngine.Camera.main;
             var origin = cam.transform.position;
             var dir = cam.transform.forward;
 
-            if (Physics.Raycast(origin, dir, out RaycastHit hit, 100f, whatIsSwingable))
+            // Raycast to find swing anchor
+            if (!Physics.Raycast(origin, dir, out RaycastHit hit, _swingMaxDistance, whatIsSwingable))
+                return;
+
+            _lineRenderer.enabled = true;
+            _state.Stance = Stance.Swing;
+
+            _rb = GetComponent<Rigidbody>();
+            if (_rb != null)
             {
-                _lineRenderer.enabled = true;
-                _state.Stance = Stance.Swing;
-
-                _rb = GetComponent<Rigidbody>();
-                if (_rb != null)
-                {
-                    _rb.freezeRotation = true;
-                    _rb.linearVelocity = motor.Velocity; // transfer velocity into swing
-                }
-
-                if (motor != null)
-                {
-                    motor.enabled = false;
-                }
-
-                _swingJoint = gameObject.AddComponent<SpringJoint>();
-                _swingJoint.autoConfigureConnectedAnchor = false;
-                _swingJoint.connectedAnchor = hit.point;
-
-                float distance = Vector3.Distance(transform.position, hit.point);
-
-                _swingJoint.maxDistance = distance * 0.6f;
-                _swingJoint.minDistance = distance * 0.5f;
-
-                _swingJoint.spring = swingSpring;
-                _swingJoint.damper = swingDamping;
-                _swingJoint.massScale = swingMassScale;
-                
-                _ropeEnd = hit.point;;
+                _rb.freezeRotation = true;
+                _rb.linearVelocity = motor.Velocity;
+                _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             }
+
+            if (motor != null)
+                motor.enabled = false;
+
+            _swingAnchor = hit.point;
+            _swingRopeLength = Vector3.Distance(transform.position, hit.point);
+            _swingTimeRemaining = Mathf.Lerp(swingMinDuraion, swingDuration, _swingRopeLength / _swingMaxDistance);
+
+            _ropeEnd = hit.point;
         }
 
+        /// <summary>
+        /// Stops swinging and restores motor control.
+        /// </summary>
         void StopSwing()
         {
             _state.Stance = Stance.Stand;
 
             Vector3 currentPos = transform.position;
-            Vector3 exitVelocity = Vector3.zero;
+            Vector3 exitVelocity = _rb != null ? _rb.linearVelocity : Vector3.zero;
 
-            if (_rb != null)
-            {
-                exitVelocity = _rb.linearVelocity;
-            }
+            _swingTimeRemaining = 0f;
+            _swingCooldownRemaining = swingCooldown;
 
             if (_swingJoint != null)
-            {
                 Destroy(_swingJoint);
-            }
 
             if (_rb != null)
-            {
                 _rb.freezeRotation = false;
-            }
 
             if (motor != null)
             {
@@ -235,17 +341,85 @@ namespace MonkeyBusiness.Player
         
         void FixedUpdate()
         {
-            if (_state.Stance != Stance.Swing) return;
+            if (_swingCooldownRemaining > 0f)
+                _swingCooldownRemaining = Mathf.Max(0f, _swingCooldownRemaining - Time.fixedDeltaTime);
 
-            Vector3 inputDir = _requestedMovement;
+            if (_state.Stance != Stance.Swing || _rb == null)
+                return;
 
-            if (inputDir.sqrMagnitude > 0f)
+            _swingTimeRemaining -= Time.fixedDeltaTime;
+            if (_swingTimeRemaining <= 0f)
             {
-                // Project input onto plane perpendicular to world up
-                Vector3 swingDir = Vector3.ProjectOnPlane(inputDir, Vector3.up).normalized;
+                StopSwing();
+                return;
+            }
 
-                // Apply force
-                _rb.AddForce(swingDir * swingForce, ForceMode.Acceleration);
+            var ropeVector = _rb.position - _swingAnchor;
+            var ropeDistance = ropeVector.magnitude;
+            Debug.Log("Rope distance: " + ropeDistance + " Rope length: " + _swingRopeLength);
+            if (swingCooldown - _swingCooldownRemaining > 0.2f && ropeDistance > 0.0001f && ropeDistance > _swingRopeLength)
+            {
+                var ropeDir = ropeVector / ropeDistance;
+
+                // Hard constraint: exact rope length, no springiness
+                //_rb.position = _swingAnchor + ropeDir * _swingRopeLength;
+
+                // Remove radial velocity so the rope stays rigid
+                var v = _rb.linearVelocity;
+                v = Vector3.ProjectOnPlane(v, ropeDir);
+
+                // Player input only adds tangential swing force
+                if (_requestedMovement.sqrMagnitude > 0f)
+                {
+                    var inputDir = Vector3.ProjectOnPlane(_requestedMovement, ropeDir);
+                    if (inputDir.sqrMagnitude > 0f)
+                        _rb.AddForce(inputDir.normalized * swingForce, ForceMode.Acceleration);
+                }
+
+                v = _rb.linearVelocity;
+                v = Vector3.ProjectOnPlane(v, ropeDir);
+
+                // Speed cap
+                if (v.magnitude > swingMaxSpeed)
+                    v = v.normalized * swingMaxSpeed;
+
+                _rb.linearVelocity = v;
+            }
+
+            else if(ropeDistance < _swingRopeLength)
+            {
+                _swingRopeLength = ropeDistance;
+                if(_requestedMovement.sqrMagnitude > 0f)
+                {
+                    var inputDir = _requestedMovement;
+                    if(inputDir.z < 0f)
+                    {
+                        inputDir.z *= -1;
+                    }
+
+                    _rb.AddForce(transform.TransformDirection(inputDir.normalized) * swingForce, ForceMode.Acceleration);
+                }
+            }
+        }
+        
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (_state.Stance != Stance.Swing || _rb == null || collision.contactCount == 0)
+                return;
+
+            StopSwing();
+
+            var contactNormal = collision.GetContact(0).normal;
+            var velocity = _rb.linearVelocity;
+
+            if (Vector3.Dot(velocity, contactNormal) < 0f)
+            {
+                velocity = Vector3.Reflect(velocity, contactNormal) * swingBounceRetention * 10.0f;
+
+                if (velocity.magnitude > swingMaxSpeed)
+                    velocity = velocity.normalized * swingMaxSpeed;
+
+                _rb.linearVelocity = velocity;
             }
         }
 
@@ -581,6 +755,16 @@ namespace MonkeyBusiness.Player
             _lastState = _tempState;
         }
 
+
+        void OnDrawGizmos()
+        {
+            #if UNITY_EDITOR
+            Gizmos.color = Color.gray2;
+            Gizmos.DrawWireSphere(transform.position, _swingMaxDistance);
+
+            #endif
+        }
+
         public bool IsColliderValidForCollisions(Collider coll)
         {
             return true;
@@ -618,6 +802,5 @@ namespace MonkeyBusiness.Player
             if(killVelocity)
                 motor.BaseVelocity = Vector3.zero;
         }
-
     }
 }
