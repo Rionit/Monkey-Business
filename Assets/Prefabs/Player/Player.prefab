@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 555698616238130017}
   m_Layer: 0
   m_Name: Camera
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -281,6 +281,7 @@ GameObject:
   - component: {fileID: 2447207728374608361}
   - component: {fileID: 1191527966759369659}
   - component: {fileID: 5581703602166546430}
+  - component: {fileID: 4041198625708387850}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -461,6 +462,7 @@ MonoBehaviour:
   _animationTf: {fileID: 6384481924346578729}
   _attackEffect: {fileID: 5097106963689983980}
   _chargeImage: {fileID: 0}
+  _enemyTag: Enemy
 --- !u!120 &5581703602166546430
 LineRenderer:
   serializedVersion: 3
@@ -571,6 +573,26 @@ LineRenderer:
   m_UseWorldSpace: 1
   m_Loop: 0
   m_ApplyActiveColorSpace: 1
+--- !u!114 &4041198625708387850
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1389186312543903172}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0058ff74aaac772c0bfd3eda8da771ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.StunController
+  _stunnedComponents:
+  - {fileID: 1191527966759369659}
+  - {fileID: 2211465859848255771}
+  - {fileID: 3049860224932558447}
+  - {fileID: 5088509077965574598}
+  - {fileID: 275184883275396140}
+  - {fileID: 783102165424217819}
+  - {fileID: 8207855789103581148}
 --- !u!1 &1644833479611325685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1023,7 +1045,7 @@ GameObject:
   - component: {fileID: 6384481924346578729}
   m_Layer: 0
   m_Name: TailMoveParent
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1060,7 +1082,7 @@ GameObject:
   - component: {fileID: 2295838430691119569}
   m_Layer: 8
   m_Name: ShotgunHitbox
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1195,7 +1217,7 @@ GameObject:
   - component: {fileID: 6513565761561876150}
   m_Layer: 0
   m_Name: SwooshParticle
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6121,7 +6143,7 @@ GameObject:
   - component: {fileID: 3519895754353565429}
   m_Layer: 8
   m_Name: MeleeAttackHitbox
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6192,7 +6214,7 @@ GameObject:
   - component: {fileID: 5176609808047444876}
   m_Layer: 0
   m_Name: Spring
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6237,6 +6259,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5173201346127674885}
     m_Modifications:
+    - target: {fileID: 4257615980788977292, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.124
@@ -6321,11 +6347,26 @@ PrefabInstance:
       propertyPath: m_Name
       value: Shotgun
       objectReference: {fileID: 0}
+    - target: {fileID: 8514168976571253448, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+--- !u!114 &5088509077965574598 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6682867497587419945, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+  m_PrefabInstance: {fileID: 1882597687036918511}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9e256c6179e9141919c9cc9064c108d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.Shotgun
 --- !u!4 &6176943201396351488 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
@@ -6342,6 +6383,10 @@ PrefabInstance:
     - target: {fileID: 640842197153749786, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
       propertyPath: m_Name
       value: PenLauncher
+      objectReference: {fileID: 0}
+    - target: {fileID: 640842197153749786, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
       propertyPath: m_LocalScale.x
@@ -6476,6 +6521,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
+--- !u!114 &275184883275396140 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3883504051621752614, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
+  m_PrefabInstance: {fileID: 3906130963936811786}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c71fbcf173bf04ea841afa09ab69b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness::MonkeyBusiness.TestEquippable
 --- !u!4 &531774328080636471 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3554572132705927485, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
@@ -6492,6 +6548,10 @@ PrefabInstance:
     - target: {fileID: 640842197153749786, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: m_Name
       value: Stapler
+      objectReference: {fileID: 0}
+    - target: {fileID: 640842197153749786, guid: 988f55859c304945e841cca4d61a9339, type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: m_LocalScale.x
@@ -6555,7 +6615,7 @@ PrefabInstance:
       objectReference: {fileID: 4932702847181503216}
     - target: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: _projectilesPerShot
-      value: 3
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: _onEquipped.m_PersistentCalls.m_Calls.Array.size
@@ -6634,6 +6694,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 988f55859c304945e841cca4d61a9339, type: 3}
+--- !u!114 &783102165424217819 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
+  m_PrefabInstance: {fileID: 4556192699136831997}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07c71fbcf173bf04ea841afa09ab69b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness::MonkeyBusiness.TestEquippable
 --- !u!4 &1039972640719630528 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3554572132705927485, guid: 988f55859c304945e841cca4d61a9339, type: 3}

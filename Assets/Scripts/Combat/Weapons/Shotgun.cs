@@ -3,7 +3,12 @@ using System.Collections;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Misc;
-using UnityEditor.Toolbars;
+using System.Collections.Generic;
+
+using Vector3 = UnityEngine.Vector3;
+using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -18,10 +23,6 @@ namespace MonkeyBusiness.Combat.Weapons
 
         [SerializeField]
         AnimationCurve _damageFalloffCurve = AnimationCurve.Linear(0f, 1f, 1f, 0f);
-
-        [BoxGroup("Shooting stats")]
-        [SerializeField]
-        float _shotDuration = 0.25f;
 
         [BoxGroup("Shooting stats")]
         [SerializeField]
@@ -47,19 +48,42 @@ namespace MonkeyBusiness.Combat.Weapons
         float _knockbackDuration = 0.7f;
 
         [SerializeField]
+        [Tooltip("Direction and strength of the recoil kickback applied to the shotgun when firing.")]
+        Vector3 _recoilKickback = new Vector3(0f, 0f, -0.5f);
+
+        [SerializeField]
         ParticleSystem _shotEffect;
 
         [SerializeField]
         Transform _distanceTarget;
 
-        void Awake()
+        [ShowInInspector]
+        Vector3 _defaultPosition;
+
+        [SerializeField]
+        string _enemyTag = "Enemy";
+
+        List<ParticleCollisionEvent> _events;
+
+        TweenerCore<Vector3,Vector3,VectorOptions> _shootTween;
+
+        protected override void Awake()
         {
+            _events = new List<ParticleCollisionEvent>(_shotEffect.main.maxParticles);
+            _defaultPosition = transform.localPosition;
+            base.Awake();
             CurrentAmmo = MaxAmmo;
-            if(_shotDuration > _shotCooldown)
-            {
-                Debug.LogError("Shot duration cannot be longer than shot cooldown!");
-            }
             _weaponHitbox.OnTargetHit.AddListener(OnTargetHit);
+        }
+
+        public override void Unequip()
+        {
+            if(_shootTween != null)
+            {
+                DOTween.Kill(_shootTween);
+            }
+            transform.localPosition = _defaultPosition;
+            base.Unequip();
         }
 
         void OnTargetHit(HealthController target)
@@ -85,27 +109,57 @@ namespace MonkeyBusiness.Combat.Weapons
             }  
 
             Debug.Log("Calculated damage:" + _damage * distanceModifier + " with distance: " + distance);
-            target.TakeDamage(_damage * distanceModifier);
+            //target.TakeDamage(_damage * distanceModifier);
+            target.TakeDamage(_damage);
         }
 
         protected override IEnumerator FireCoroutine()
         {
             _isLoading = true;
-            _weaponHitbox.gameObject.SetActive(true);
-            _weaponHitbox.enabled = true;
+            //_weaponHitbox.gameObject.SetActive(true);
+            //_weaponHitbox.enabled = true;
             _shotEffect.Play();
 
             CurrentAmmo--;
 
             OnAmmoChanged.Invoke(this);
 
-            yield return new WaitForSeconds(_shotDuration);
+            _shootTween = transform.DOLocalMove(_defaultPosition + _recoilKickback, 0.1f).SetEase(Ease.OutQuad)
+            .OnComplete(() =>
+            {
+                _shootTween = transform.DOLocalMove(_defaultPosition, 0.2f).SetEase(Ease.InQuad);
+            });
+            yield return new WaitForFixedUpdate();
 
-            _weaponHitbox.gameObject.SetActive(false);
-            _weaponHitbox.enabled = false;
+            //_weaponHitbox.gameObject.SetActive(false);
+            // _weaponHitbox.enabled = false;
 
-            yield return new WaitForSeconds(_shotCooldown - _shotDuration);
+            yield return new WaitForSeconds(_shotCooldown - Time.fixedDeltaTime); // 1 frame is already waited, so subtracting it from cooldown
             _isLoading = false;
+        }
+
+        void OnParticleCollision(GameObject other)
+        {
+            var numHits = _shotEffect.GetCollisionEvents(other, _events);
+            Debug.Log("Particle collision with " + other.name + ", " + numHits + " hits.");
+
+            if(other.tag == _enemyTag)
+            {
+                var healthController = other.GetComponent<HealthController>();
+                if(healthController != null)
+                {
+                    for(int i = 0; i < numHits; i++)
+                    {
+                        OnTargetHit(healthController);
+                    }
+
+                }
+            }
+        }
+
+        void OnParticleTrigger()
+        {
+            Debug.Log("Particle trigger");
         }
     }
 }

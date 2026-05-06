@@ -62,6 +62,9 @@ namespace MonkeyBusiness.Combat.Weapons
         [RequiredIn(PrefabKind.InstanceInScene)]
         Image _chargeImage;
 
+        [SerializeField]
+        string _enemyTag = "Enemy";
+
         void Awake()
         {
             _inputActions = new PlayerInputActions();
@@ -78,7 +81,7 @@ namespace MonkeyBusiness.Combat.Weapons
             if(knockbackController != null)
             {
                 Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
-                knockbackController.Knockback(knockbackDirection * _knockbackForce, _knockbackDuration);
+                knockbackController.Knockback(knockbackDirection * _knockbackForce, _knockbackDuration, 0.95f);
             }
             else
             {
@@ -102,13 +105,17 @@ namespace MonkeyBusiness.Combat.Weapons
                 DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 0f, 0.5f).SetEase(Ease.InOutCubic)
                 .OnComplete(() => DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 1f, _attackCooldown - 0.5f).SetEase(Ease.Linear));
 
-                yield return new WaitForSeconds(_attackDuration); // Duration of the attack hitbox being active
-                _animationTf.gameObject.SetActive(false);
-
+                yield return new WaitForFixedUpdate();
                 _attackHitbox.gameObject.SetActive(false);
                 _attackHitbox.enabled = false;
+                yield return new WaitForSeconds(0.2f - Time.fixedDeltaTime); // Wait for the rest of the attack animation to finish, minus the fixed update wait at the start
 
-                yield return new WaitForSeconds(_attackCooldown - _attackDuration); // Cooldown duration
+                //yield return new WaitForSeconds(_attackDuration); // Duration of the attack hitbox being active
+                _animationTf.gameObject.SetActive(false);
+
+
+
+                yield return new WaitForSeconds(_attackCooldown - 0.2f + Time.fixedDeltaTime); // Cooldown duration
     
                 _onCooldown = false;
         }
