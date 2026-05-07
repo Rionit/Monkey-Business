@@ -404,8 +404,11 @@ namespace MonkeyBusiness.Enemies.Navigation
                 // If we reached a keypoint, move to some other
                 if(Vector3.Distance(transform.position, ChaseObject.transform.position) <= _navMeshAgent.stoppingDistance)
                 {
-                    Path[0].RemoveEnemy(this);
-                    Path.RemoveAt(0);
+                    if(Path.Count > 0)
+                    {
+                        Path[0].RemoveEnemy(this);
+                        Path.RemoveAt(0);
+                    }
                     if(ChasingPlayer)
                     {
                         ChaseObject = TrafficManager.Instance.Player;

@@ -300,6 +300,15 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Scope"",
+                    ""type"": ""Button"",
+                    ""id"": ""070af884-9f48-46c1-8bb3-b6dafe01c53d"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -822,8 +831,8 @@ namespace MonkeyBusiness.Player
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b9ab34fd-3255-4966-b28b-78e6447fd0ba"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""id"": ""e18ab3f6-f5ff-4b6f-8293-153e046006a3"",
+                    ""path"": ""<Keyboard>/leftShift"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -839,6 +848,17 @@ namespace MonkeyBusiness.Player
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b530ca12-3b83-4166-84b0-b1be04241e6b"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""Scope"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -1449,6 +1469,7 @@ namespace MonkeyBusiness.Player
             m_Player_MeleeAttack = m_Player.FindAction("MeleeAttack", throwIfNotFound: true);
             m_Player_Swing = m_Player.FindAction("Swing", throwIfNotFound: true);
             m_Player_Pause = m_Player.FindAction("Pause", throwIfNotFound: true);
+            m_Player_Scope = m_Player.FindAction("Scope", throwIfNotFound: true);
             // UI
             m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
             m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -1565,6 +1586,7 @@ namespace MonkeyBusiness.Player
         private readonly InputAction m_Player_MeleeAttack;
         private readonly InputAction m_Player_Swing;
         private readonly InputAction m_Player_Pause;
+        private readonly InputAction m_Player_Scope;
         /// <summary>
         /// Provides access to input actions defined in input action map "Player".
         /// </summary>
@@ -1669,6 +1691,10 @@ namespace MonkeyBusiness.Player
             /// </summary>
             public InputAction @Pause => m_Wrapper.m_Player_Pause;
             /// <summary>
+            /// Provides access to the underlying input action "Player/Scope".
+            /// </summary>
+            public InputAction @Scope => m_Wrapper.m_Player_Scope;
+            /// <summary>
             /// Provides access to the underlying input action map instance.
             /// </summary>
             public InputActionMap Get() { return m_Wrapper.m_Player; }
@@ -1763,6 +1789,9 @@ namespace MonkeyBusiness.Player
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @Scope.started += instance.OnScope;
+                @Scope.performed += instance.OnScope;
+                @Scope.canceled += instance.OnScope;
             }
 
             /// <summary>
@@ -1843,6 +1872,9 @@ namespace MonkeyBusiness.Player
                 @Pause.started -= instance.OnPause;
                 @Pause.performed -= instance.OnPause;
                 @Pause.canceled -= instance.OnPause;
+                @Scope.started -= instance.OnScope;
+                @Scope.performed -= instance.OnScope;
+                @Scope.canceled -= instance.OnScope;
             }
 
             /// <summary>
@@ -2304,6 +2336,13 @@ namespace MonkeyBusiness.Player
             /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
             /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
             void OnPause(InputAction.CallbackContext context);
+            /// <summary>
+            /// Method invoked when associated input action "Scope" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+            /// </summary>
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+            /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+            void OnScope(InputAction.CallbackContext context);
         }
         /// <summary>
         /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "UI" which allows adding and removing callbacks.

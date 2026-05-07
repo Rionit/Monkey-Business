@@ -916,13 +916,45 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9135429037878271256}
     m_Modifications:
+    - target: {fileID: 483604566259533644, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 775017350366927766, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 832104749135780868, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 999404845381593654, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1544932914139885092, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1839285613029293726, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2765368123732149797, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
+    - target: {fileID: 3184314609648357529, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283345951244197583, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3283345951244197583, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3283345951244197583, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -956,9 +988,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5368100568707487602, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
+    - target: {fileID: 6668004286699266416, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125789753282054695, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
     - target: {fileID: 7275475546431700924, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
       propertyPath: m_Name
       value: SlowdownSphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547233060149850006, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
+    - target: {fileID: 7870995120555796389, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
+    - target: {fileID: 8239963297909989799, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8720206725810549006, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

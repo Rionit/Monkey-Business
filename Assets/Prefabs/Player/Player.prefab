@@ -413,8 +413,10 @@ MonoBehaviour:
   swingForce: 5
   swingMaxSpeed: 35
   swingDuration: 1.5
+  swingMinDuraion: 0.7
   swingCooldown: 0.35
   swingBounceRetention: 0.9
+  _swingMaxDistance: 20
 --- !u!54 &2447207728374608361
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -6265,6 +6267,18 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5735542492878657775, guid: 3c8975c045b24c19ab14e2575c68e086, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.124
       objectReference: {fileID: 0}
@@ -6391,15 +6405,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
       propertyPath: m_LocalScale.x
-      value: 33.864998
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
       propertyPath: m_LocalScale.y
-      value: 33.864998
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
       propertyPath: m_LocalScale.z
-      value: 33.864998
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6441,6 +6455,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180
       objectReference: {fileID: 0}
+    - target: {fileID: 3883504051621752614, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
+      propertyPath: _playerCamera
+      value: 
+      objectReference: {fileID: 555698616238130017}
     - target: {fileID: 3883504051621752614, guid: 166887d3290b5d65598ca930fe875d93, type: 3}
       propertyPath: _coroutineRunner
       value: 
@@ -6556,15 +6574,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: m_LocalScale.x
-      value: 20.960001
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: m_LocalScale.y
-      value: 20.959997
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: m_LocalScale.z
-      value: 20.959997
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3554572132705927485, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6606,6 +6624,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
       objectReference: {fileID: 0}
+    - target: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
+      propertyPath: _playerCamera
+      value: 
+      objectReference: {fileID: 555698616238130017}
     - target: {fileID: 3883504051621752614, guid: 988f55859c304945e841cca4d61a9339, type: 3}
       propertyPath: _shootingAngle
       value: 5

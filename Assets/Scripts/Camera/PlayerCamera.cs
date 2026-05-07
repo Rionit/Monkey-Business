@@ -8,7 +8,7 @@ public struct CameraInput
 
 public class PlayerCamera : MonoBehaviour
 {
-    [SerializeField] private float sensitivity = 0.1f;
+    [SerializeField] public float sensitivity = 0.1f;
     private Vector3 _eulerAngles;
 
     [SerializeField]

@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
 using System.Linq;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -93,36 +94,90 @@ namespace MonkeyBusiness.Combat.Weapons
         [Tooltip("Mask of layers that can destroy the projectile on contact (e.g. walls, obstacles).")]
         LayerMask _destroyedBy;
  
+
+        [SerializeField]
+        [Tooltip("Time for which the projectile sticks to the target after hitting, before being destroyed.")]
+        float _stickTime = 1f;
+
         public LayerMask DestroyedBy => _destroyedBy;
 
         float _travelTime = 0f;
 
+        bool _sticks = false;
+
+        bool _isStuck = false;
+
+        Vector3 _stickPosition;
+
+        MeshRenderer _renderer;
+
         SortedSet<ProjectileHitInfo> _targetsByTime;
 
-        public void Initialize(Vector3 firePointDirection, float deathTime, SortedSet<ProjectileHitInfo> targetsByTime)  
+
+        void Awake()
         {
+            _renderer = GetComponentInChildren<MeshRenderer>();
+            _renderer.enabled = false;
+        }
+
+        public void Initialize(Vector3 firePointDirection, float deathTime, SortedSet<ProjectileHitInfo> targetsByTime, bool sticks, Vector3 stickPosition)  
+        {
+            _sticks = sticks;
             Direction = firePointDirection.normalized;
-            _targetsByTime = targetsByTime;
+            
+            _targetsByTime = targetsByTime != null ? targetsByTime : new SortedSet<ProjectileHitInfo>();
             _deathTime = deathTime;
+
+            _stickPosition = stickPosition;
 
             if(_targetsByTime == null)
                 Debug.LogError("Projectile initialized with null targetsByTime set!");
         }
 
+
         void Update()
         {
-            float frameDistance = Speed * Time.deltaTime;
-            transform.position += Direction * frameDistance;
-            _travelTime += Time.deltaTime;
+             _travelTime += Time.deltaTime;
+            if(!_renderer.enabled && _travelTime >= 0.1f)
+            {
+                _renderer.enabled = true;
+            }
 
-            if(_targetsByTime.Count > 0)
+            if(!_isStuck)
             {
-                CheckForHit();
+                float frameDistance = Speed * Time.deltaTime;
+                transform.position += Direction * frameDistance;
+                _travelTime += Time.deltaTime;
+
+                if(_targetsByTime.Count > 0)
+                {
+                    CheckForHit();
+                }
+                if(_travelTime >= _deathTime)
+                {
+                    if(!_sticks)
+                    {
+                        Destroy(gameObject); // If the projectile didn't hit anything stickable, it gets destroyed after reaching its max lifetime.
+                    }
+                    else
+                    {
+                        Debug.Log("Sticking!");
+                        _isStuck = true;
+                        transform.forward = Direction;
+                        transform.position = _stickPosition;
+                        _travelTime = 0f;
+                    }
+                }
             }
-            if(_travelTime >= _deathTime)
+            else // If the projectile hit something and is now sticking to it, it will be destroyed after the stick time elapses.
             {
-                Destroy(gameObject);
+                if(_travelTime >= _stickTime)
+                {
+                    Destroy(gameObject);
+                }
             }
+        
+
         }
 
         void CheckForHit()
@@ -135,7 +190,6 @@ namespace MonkeyBusiness.Combat.Weapons
 
                 if(target != null)
                 {
-
                     _onTargetHit.Invoke(target);
 
                     var targetHealth = target.GetComponentInParent<HealthController>();
