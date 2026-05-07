@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Managers;
 
 namespace MonkeyBusiness.Combat.Weapons
 {

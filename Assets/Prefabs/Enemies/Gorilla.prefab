@@ -37,6 +37,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 7869849481633469890}
   - {fileID: 3343822903242606426}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -115,6 +116,21 @@ MonoBehaviour:
   OnDeath:
     m_PersistentCalls:
       m_Calls: []
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 256866884491211723}
+        m_TargetAssemblyTypeName: MonkeyBusiness.Misc.Dropper, MonkeyBusiness.Misc
+        m_MethodName: DropRandomFromPool
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   <GodMode>k__BackingField: 0
   _hasPoisonEffect: 1
   _poisonEffectRenderer: {fileID: 3271741600601372873}
@@ -656,6 +672,56 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7810763023937222652
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7869849481633469890}
+  - component: {fileID: 256866884491211723}
+  m_Layer: 0
+  m_Name: Dropper
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7869849481633469890
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810763023937222652}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8303193722649581625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &256866884491211723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7810763023937222652}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84012a1ed7a104f43b7b86653e87f150, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.Dropper
+  _lootPool:
+  - {fileID: 4477180092756245541, guid: 74a175d099f52024a9d117f5d37643a2, type: 3}
+  - {fileID: 4477180092756245541, guid: 74a175d099f52024a9d117f5d37643a2, type: 3}
+  - {fileID: 4477180092756245541, guid: 74a175d099f52024a9d117f5d37643a2, type: 3}
+  - {fileID: 3878638373698229944, guid: 0ee23871a9dc1fe4b82ead644e17144f, type: 3}
+  _dropChance: 0.67
 --- !u!1001 &7724868192420808941
 PrefabInstance:
   m_ObjectHideFlags: 0

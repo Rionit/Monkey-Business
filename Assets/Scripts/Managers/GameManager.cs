@@ -7,6 +7,7 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Enemies.Navigation;
 using MonkeyBusiness.Misc;
 using System;
+using Ami.BroAudio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -185,6 +186,8 @@ namespace MonkeyBusiness.Managers
 
             _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
+            
+            BroAudio.SetVolume(BroAudioType.All, PlayerPrefs.GetFloat("MasterVolume", 1f));
         }
 
         void PauseOrUnpause(InputAction.CallbackContext context)
