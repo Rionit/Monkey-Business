@@ -6210,17 +6210,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 5087103809280462509, guid: bf832f2400bf97247aad9d0dd2c5d773, type: 3}
   m_PrefabInstance: {fileID: 1652477565}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1665814288 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7427909688054071265, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
-  m_PrefabInstance: {fileID: 1670417135}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &1670417135
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6310,17 +6299,37 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
     - target: {fileID: 4444384507273328690, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_fontSize
+      value: 57.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 4444384507273328690, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 4444384507273328690, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4444384507273328690, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5199682739077383826, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
       propertyPath: m_text
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 5199682739077383826, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+    - target: {fileID: 5199682739077383826, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
       propertyPath: m_RaycastTarget
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5199682739077383826, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
     - target: {fileID: 5652636158225330849, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -6427,6 +6436,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 5652636158225330849, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
   m_PrefabInstance: {fileID: 1670417135}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1670417137 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7427909688054071265, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+  m_PrefabInstance: {fileID: 1670417135}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!114 &1670417139 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4423644452575038040, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
@@ -7382,7 +7402,7 @@ PrefabInstance:
     - target: {fileID: 1191527966759369659, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: _chargeImage
       value: 
-      objectReference: {fileID: 1665814288}
+      objectReference: {fileID: 1670417137}
     - target: {fileID: 2211465859848255771, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: swingForce
       value: 5

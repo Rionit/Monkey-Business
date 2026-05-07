@@ -10,21 +10,45 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ad670d1adcf8be84f891f82b894c08a5, type: 3}
-  m_Name: pen_sniper
+  m_Name: chimp_hit
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
   <ID>k__BackingField: 0
-  MulticlipsPlayMode: 0
+  MulticlipsPlayMode: 2
   _group: {fileID: 0}
   Clips:
-  - AudioClip: {fileID: 8300000, guid: b8e7b57e507035546977ad9dd50fac96, type: 3}
-    Volume: 1
+  - AudioClip: {fileID: 8300000, guid: 0a365d87428461d46b77a6bd7e3cd861, type: 3}
+    Volume: 3
     Delay: 0
-    StartPosition: 0
-    EndPosition: 0
+    StartPosition: 0.2
+    EndPosition: 0.679
     FadeIn: 0
     FadeOut: 0
     Weight: 0
-  <AudioAsset>k__BackingField: {fileID: 11400000, guid: e040321bf1519084fa8d5a51b0bf0001, type: 2}
+  - AudioClip: {fileID: 8300000, guid: 0a365d87428461d46b77a6bd7e3cd861, type: 3}
+    Volume: 3
+    Delay: 0
+    StartPosition: 0.455
+    EndPosition: 0.426
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 0a365d87428461d46b77a6bd7e3cd861, type: 3}
+    Volume: 3
+    Delay: 0
+    StartPosition: 0.711
+    EndPosition: 0.138
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 3c21abf13885958488a0281f39db33de, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 0.015
+    EndPosition: 0.016
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  <AudioAsset>k__BackingField: {fileID: 11400000, guid: 9f9477ed6aa9f9542a5af378a0b4ed2f, type: 2}
   <AudioType>k__BackingField: 8
   <MasterVolume>k__BackingField: 1
   <Loop>k__BackingField: 0
@@ -32,8 +56,8 @@ MonoBehaviour:
   <TransitionTime>k__BackingField: 0
   <SpatialSetting>k__BackingField: {fileID: 0}
   <Priority>k__BackingField: 128
-  <Pitch>k__BackingField: 1.05
-  <PitchRandomRange>k__BackingField: 0.30000007
+  <Pitch>k__BackingField: 1.025
+  <PitchRandomRange>k__BackingField: 0.15000004
   <VolumeRandomRange>k__BackingField: 0
   <RandomFlags>k__BackingField: 1
   SeamlessTransitionType: 0
