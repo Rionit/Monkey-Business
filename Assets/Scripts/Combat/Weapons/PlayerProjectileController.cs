@@ -113,9 +113,12 @@ namespace MonkeyBusiness.Combat.Weapons
 
         SortedSet<ProjectileHitInfo> _targetsByTime;
 
+        TrailRenderer _trailRenderer;
+
 
         void Awake()
         {
+            _trailRenderer = GetComponentInChildren<TrailRenderer>();
             _renderer = GetComponentInChildren<MeshRenderer>();
             _renderer.enabled = false;
         }
@@ -162,6 +165,7 @@ namespace MonkeyBusiness.Combat.Weapons
                     else
                     {
                         Debug.Log("Sticking!");
+                        _trailRenderer.enabled = false;
                         _isStuck = true;
                         transform.forward = Direction;
                         transform.position = _stickPosition;

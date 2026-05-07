@@ -18,7 +18,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: <Damage>k__BackingField
-      value: 35
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: <HitboxRadius>k__BackingField
@@ -202,7 +202,7 @@ TrailRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Time: 0.1
+  m_Time: 0.05
   m_PreviewTimeScale: 1
   m_Parameters:
     serializedVersion: 3
