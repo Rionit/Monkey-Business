@@ -13,9 +13,33 @@ MonoBehaviour:
   m_Name: explosion
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
   <ID>k__BackingField: 0
-  MulticlipsPlayMode: 0
+  MulticlipsPlayMode: 2
   _group: {fileID: 0}
-  Clips: []
+  Clips:
+  - AudioClip: {fileID: 8300000, guid: 1a9081af0e108c24baaa481188bb9b6a, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 0
+    EndPosition: 0
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 51796c8d2a496724fb5da930ec42e4d8, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 0
+    EndPosition: 0
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 42debf996562bdf41aaaf561f4f3630a, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 0
+    EndPosition: 0.927
+    FadeIn: 0
+    FadeOut: 1.17
+    Weight: 0
   <AudioAsset>k__BackingField: {fileID: 11400000, guid: d5099da36db13f64c8d71db7f46757a5, type: 2}
   <AudioType>k__BackingField: 8
   <MasterVolume>k__BackingField: 1
@@ -24,10 +48,10 @@ MonoBehaviour:
   <TransitionTime>k__BackingField: 0
   <SpatialSetting>k__BackingField: {fileID: 0}
   <Priority>k__BackingField: 128
-  <Pitch>k__BackingField: 1
-  <PitchRandomRange>k__BackingField: 0
+  <Pitch>k__BackingField: 0.95000005
+  <PitchRandomRange>k__BackingField: 0.3
   <VolumeRandomRange>k__BackingField: 0
-  <RandomFlags>k__BackingField: 0
+  <RandomFlags>k__BackingField: 1
   SeamlessTransitionType: 0
   TransitionTempo:
     BPM: 0
