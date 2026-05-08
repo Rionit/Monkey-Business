@@ -847,6 +847,58 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1414476518}
     m_Modifications:
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: negativePerks.Array.size
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: positivePerks.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'negativePerks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 882be58c83f9e05418ed9e741990be18, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'negativePerks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 9142e07e5dba33744a53230a466c3866, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'negativePerks.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: fe94fd047a060a44b87c0bedcb37e9b9, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'negativePerks.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 04869639510f95c4ba1404bbaf547598, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'negativePerks.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 97f52a2fb4255ed40a01fee55e1b3e8c, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'negativePerks.Array.data[5]'
+      value: 
+      objectReference: {fileID: 11400000, guid: d0b99e98acd8a7343b81cd980bf8a7a3, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'positivePerks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: a650ca9bc85de25498048bad2e7108c8, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'positivePerks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: af5d7da4a0f9e584a9f479bf1489b5be, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'positivePerks.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 88548538ee0516c48812bd1b9e886e70, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'positivePerks.Array.data[3]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 0d4db1e26c5faa8468f268b48bfc208c, type: 2}
+    - target: {fileID: 6496468336253521786, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
+      propertyPath: 'positivePerks.Array.data[4]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 42a345c9ca66ad14d8a881ec5030d6c4, type: 2}
     - target: {fileID: 7666179372715581214, guid: a79f87e7faaa79843b8cd827f8131e55, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 300
