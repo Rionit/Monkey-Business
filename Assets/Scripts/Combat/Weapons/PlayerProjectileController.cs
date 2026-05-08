@@ -141,10 +141,10 @@ namespace MonkeyBusiness.Combat.Weapons
         void Update()
         {
              _travelTime += Time.deltaTime;
-            if(!_renderer.enabled && _travelTime >= 0.1f)
+            /*if(!_renderer.enabled && _travelTime >= 0.1f)
             {
                 _renderer.enabled = true;
-            }
+            }*/
 
             if(!_isStuck)
             {

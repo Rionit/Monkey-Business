@@ -31,7 +31,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2156033542841502210}
-  - {fileID: 5173201346127674885}
   - {fileID: 6384481924346578729}
   - {fileID: 8228495413884811110}
   - {fileID: 5037580927550042740}
@@ -168,14 +167,14 @@ Transform:
   m_GameObject: {fileID: 1093192211337646556}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.631, y: -0.443, z: 0.937}
+  m_LocalPosition: {x: 0.6310005, y: -0.4430008, z: 0.9370003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6176943201396351488}
   - {fileID: 531774328080636471}
   - {fileID: 1039972640719630528}
-  m_Father: {fileID: 67784507368217480}
+  m_Father: {fileID: 1042423681157048141}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1327886353562767839
 GameObject:
@@ -708,7 +707,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 5173201346127674885}
   m_Father: {fileID: 2148449546760214463}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1677709596792652664
@@ -948,6 +948,7 @@ GameObject:
   - component: {fileID: 8207855789103581148}
   - component: {fileID: 210557342747799134}
   - component: {fileID: 8625472717696608940}
+  - component: {fileID: 7412529655325867993}
   m_Layer: 11
   m_Name: Player
   m_TagString: Player
@@ -1035,6 +1036,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnHealthRatioChanged:
+    m_PersistentCalls:
+      m_Calls: []
   OnTakenDamage:
     m_PersistentCalls:
       m_Calls:

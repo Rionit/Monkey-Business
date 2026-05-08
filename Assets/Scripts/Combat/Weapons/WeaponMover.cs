@@ -16,6 +16,9 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         float _moveDistance = 0.5f;
 
+        [SerializeField]
+        bool _moveInstantly = false;
+
         InputAction _moveAction;
 
 
@@ -28,9 +31,18 @@ namespace MonkeyBusiness.Combat.Weapons
         }
 
         void FixedUpdate()
-        {
+        {            
+            Debug.Log("Moving weapon " + _moveAction.ReadValue<Vector2>());
             var movement = _moveAction.ReadValue<Vector2>().x;
-            transform.localPosition = Vector3.Lerp(transform.localPosition, _initialPosition + Vector3.right * movement * _moveDistance, Time.fixedDeltaTime * 10f);
+            
+            if(_moveInstantly)
+            {
+                transform.localPosition = _initialPosition - Vector3.right * movement * _moveDistance;
+            }
+            else
+            {
+                transform.localPosition = Vector3.Lerp(transform.localPosition, _initialPosition - Vector3.right * movement * _moveDistance, Time.fixedDeltaTime * 10f);
+            }
         }
 
     

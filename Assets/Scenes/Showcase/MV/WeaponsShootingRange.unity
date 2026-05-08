@@ -4408,6 +4408,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3247297896883016600, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: _moveDistance
+      value: -0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 3338241831950960515, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_Size.x
       value: 5.321935

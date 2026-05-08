@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 221661243460642512, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.033
+      value: 0.629
       objectReference: {fileID: 0}
     - target: {fileID: 221661243460642512, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0073
+      value: 0.151
       objectReference: {fileID: 0}
     - target: {fileID: 859704824868229792, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_Materials.Array.size
@@ -73,6 +73,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: _weaponMover
+      value: 
+      objectReference: {fileID: 1308965456330269285}
+    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: _accuracyRange
       value: 40
       objectReference: {fileID: 0}
@@ -80,6 +84,10 @@ PrefabInstance:
       propertyPath: _accuracyRadius
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: _bulletSpawnMover
+      value: 
+      objectReference: {fileID: 3080827382221557125}
     - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: _recoilKickback.z
       value: -0.1
@@ -134,7 +142,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8042500572934283740, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: _moveDistance
-      value: 0.7
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8453933904731248803, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_Name
@@ -152,6 +160,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8453933904731248803, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       insertIndex: -1
       addedObject: {fileID: 4911255601275251069}
+    - targetCorrespondingSourceObject: {fileID: 5596078140349675692, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 3080827382221557125}
   m_SourcePrefab: {fileID: 100100000, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
 --- !u!1 &640842197153749786 stripped
 GameObject:
@@ -4962,3 +4973,33 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &1308965456330269285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8042500572934283740, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+  m_PrefabInstance: {fileID: 9058659204814668729}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6036fce6aa0859e1ab64c00ed598af0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.WeaponMover
+--- !u!1 &3467650655505873685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5596078140349675692, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+  m_PrefabInstance: {fileID: 9058659204814668729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &3080827382221557125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3467650655505873685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6036fce6aa0859e1ab64c00ed598af0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.WeaponMover
+  _moveDistance: 0.4
+  _moveInstantly: 1

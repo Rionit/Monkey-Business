@@ -11,7 +11,6 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using UnityEngine.VFX;
 using MonkeyBusiness.Player;
 
 namespace MonkeyBusiness.Combat.Weapons
@@ -140,7 +139,11 @@ namespace MonkeyBusiness.Combat.Weapons
         [Tooltip("Direction and strength of the recoil kickback applied to the shotgun when firing.")]
         Vector3 _recoilKickback = new Vector3(0f, 0f, -0.7f);
 
+        [SerializeField]
         WeaponMover _weaponMover;
+
+        [SerializeField]
+        WeaponMover _bulletSpawnMover;
 
         InputAction _scopeAction;
 
@@ -156,7 +159,8 @@ namespace MonkeyBusiness.Combat.Weapons
 
         bool _isScoped = false;
 
-        Vector3 _defaultPosition;
+        Vector3 _defaultMeshPosition;
+        Vector3 _defaultBulletSpawnPosition;
 
         Vector3 _scopePosition; 
 
@@ -183,7 +187,7 @@ namespace MonkeyBusiness.Combat.Weapons
                     _scopeTween.Kill();
                     _scopeTween = null;
                 }
-                transform.localPosition = _defaultPosition; 
+                transform.localPosition = _defaultMeshPosition; 
                 Unscope();
             }
 
@@ -236,6 +240,9 @@ namespace MonkeyBusiness.Combat.Weapons
             _weaponMover.enabled = false;
             _weaponMover.MoveTo(_scopePosition, _scopeTransitionTime, Ease.InOutQuad);
 
+            //_bulletSpawnMover.enabled = false;
+            _bulletSpawnMover.MoveTo(_scopePosition + (_defaultMeshPosition - _defaultBulletSpawnPosition), _scopeTransitionTime, Ease.InOutQuad);
+
             _scopeTween.OnComplete(() => _scopeTween = null);
         }
 
@@ -247,11 +254,13 @@ namespace MonkeyBusiness.Combat.Weapons
             
             _scopeTween.Join(Camera.main.DOFieldOfView(60f, _scopeTransitionTime));
             _scopeTween.Join(DOTween.To(() => _playerCamera.sensitivity, x => _playerCamera.sensitivity = x, _defaultSensitivity, _scopeTransitionTime));
-            _weaponMover.MoveTo(_defaultPosition, _scopeTransitionTime, Ease.InOutQuad);
+            _weaponMover.MoveTo(_defaultMeshPosition, _scopeTransitionTime, Ease.InOutQuad);
+            _bulletSpawnMover.MoveTo(_bulletSpawnPoint.localPosition, _scopeTransitionTime, Ease.InOutQuad);
             _scopeTween.OnComplete(() => 
             {
                 _scopeTween = null;
-                _weaponMover.enabled = true;    
+                _weaponMover.enabled = true;
+                _bulletSpawnMover.enabled = true;
             });
         }
         
@@ -306,7 +315,7 @@ namespace MonkeyBusiness.Combat.Weapons
             _recoilTween = transform.DOLocalMove(transform.localPosition + _recoilKickback, recoilTime).SetEase(Ease.OutQuad)
             .OnComplete(() =>
             {
-                _recoilTween = transform.DOLocalMove(_defaultPosition, recoilReturnTime).SetEase(Ease.InQuad)
+                _recoilTween = transform.DOLocalMove(_defaultMeshPosition, recoilReturnTime).SetEase(Ease.InQuad)
                 .OnComplete(() => _recoilTween = null);
             });
 
@@ -431,14 +440,14 @@ namespace MonkeyBusiness.Combat.Weapons
 
         void Awake()
         {
-            _weaponMover = GetComponentInChildren<WeaponMover>();
             _moveAction = InputSystem.actions.FindAction("Move");
             
             _defaultSensitivity = _playerCamera.sensitivity;
             //_transforms = GetComponentsInChildren<Transform>();
             MaxAmmo = _data.MaxAmmo;
             CurrentAmmo = MaxAmmo;
-            _defaultPosition = transform.localPosition;
+            _defaultMeshPosition = transform.localPosition;
+            _defaultBulletSpawnPosition = _bulletSpawnPoint.localPosition;
             _shootingInterval = 1f / _data.RateOfFire;
             _scopeAction = InputSystem.actions.FindAction("Scope");
             //_scopeAction.performed += ScopeOrUnscope;
