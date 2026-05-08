@@ -412,8 +412,10 @@ MonoBehaviour:
   swingForce: 5
   swingMaxSpeed: 35
   swingDuration: 1.5
+  swingMinDuraion: 0.7
   swingCooldown: 0.35
   swingBounceRetention: 0.9
+  _swingMaxDistance: 20
 --- !u!54 &2447207728374608361
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -832,6 +834,7 @@ GameObject:
   - component: {fileID: 8207855789103581148}
   - component: {fileID: 210557342747799134}
   - component: {fileID: 8625472717696608940}
+  - component: {fileID: 7412529655325867993}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -963,6 +966,23 @@ MonoBehaviour:
   _overrideGroup: {fileID: 0}
   _positionMode: 0
   _delay: 0
+--- !u!114 &7412529655325867993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4866017504137546270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0058ff74aaac772c0bfd3eda8da771ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.StunController
+  _stunnedComponents:
+  - {fileID: 2211465859848255771}
+  - {fileID: 4932702847181503216}
+  - {fileID: 8207855789103581148}
+  - {fileID: 3049860224932558447}
 --- !u!1 &5654318105315347084
 GameObject:
   m_ObjectHideFlags: 0
