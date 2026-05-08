@@ -97,5 +97,10 @@ namespace MonkeyBusiness.Combat.Weapons
         }
 
         protected abstract IEnumerator FireCoroutine();
+
+        public void Hover(bool hovered)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

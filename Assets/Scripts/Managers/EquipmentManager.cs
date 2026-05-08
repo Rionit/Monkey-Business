@@ -70,6 +70,8 @@ namespace MonkeyBusiness.Managers
         private int _currentItemSlot = -1;
         private int _previousItemSlot = -1;
 
+        private Item _hoveredItem = null;
+
         void Start()
         {
             _scrollWheel = InputSystem.actions.FindAction("ScrollWheel");
@@ -235,23 +237,18 @@ namespace MonkeyBusiness.Managers
             }
             else
             {
-                // Raycast in front of the player
-                if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _maxPickupDistance, LayerMask.GetMask("Default")))
+                // Pick the item up
+                if (_hoveredItem)
                 {
-                    GameObject gameObject = hit.transform.gameObject;
-                    Debug.Log(gameObject.name);
-                    // Check if we hit an item
-                    if (gameObject.CompareTag("Item"))
-                    {
-                        Item item = gameObject.GetComponentInParent<Item>();
-                        // Pick the item up
-                        item.PickUp(itemAttachPoint);
-                        _heldItem = item;
+                    _hoveredItem.PickUp(itemAttachPoint);
+                    _heldItem = _hoveredItem;
 
-                        //unequip current weapon
-                        UnequipCurrentItem();
-                    }
-                }
+                    //unequip current weapon
+                    UnequipCurrentItem();
+
+                    _hoveredItem.Hover(false);
+                    _hoveredItem = null;
+                }    
             }
         }
 
@@ -337,6 +334,41 @@ namespace MonkeyBusiness.Managers
             _attackAction.canceled -= OnAttackRelease;
 
             _scrollWheel.performed -= OnScroll;
+        }
+
+        void FixedUpdate()
+        {
+            // Raycast in front of the player
+            if (Physics.Raycast(_cameraTransform.position, _cameraTransform.forward, out RaycastHit hit, _maxPickupDistance, LayerMask.GetMask("Default")))
+            {
+                GameObject gameObject = hit.transform.gameObject;
+                // Check if we hit an item
+                if (gameObject.CompareTag("Item"))
+                {
+                    Item item = gameObject.GetComponentInParent<Item>();
+                    if(item == _hoveredItem)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        if (_hoveredItem)
+                        {
+                            _hoveredItem.Hover(false);
+                        }
+                        _hoveredItem = item;
+                        _hoveredItem.Hover(true);
+                    }
+                }
+            }
+            else
+            {
+                if (_hoveredItem)
+                {
+                    _hoveredItem.Hover(false);
+                    _hoveredItem = null;
+                }
+            }
         }
     }
 }

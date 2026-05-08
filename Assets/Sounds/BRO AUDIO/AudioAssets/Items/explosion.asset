@@ -42,11 +42,11 @@ MonoBehaviour:
     Weight: 0
   <AudioAsset>k__BackingField: {fileID: 11400000, guid: d5099da36db13f64c8d71db7f46757a5, type: 2}
   <AudioType>k__BackingField: 8
-  <MasterVolume>k__BackingField: 1
+  <MasterVolume>k__BackingField: 1.4
   <Loop>k__BackingField: 0
   <SeamlessLoop>k__BackingField: 0
   <TransitionTime>k__BackingField: 0
-  <SpatialSetting>k__BackingField: {fileID: 0}
+  <SpatialSetting>k__BackingField: {fileID: 11400000, guid: 1961343badb8ca6408dc00aa30a5ac78, type: 2}
   <Priority>k__BackingField: 128
   <Pitch>k__BackingField: 0.95000005
   <PitchRandomRange>k__BackingField: 0.3
