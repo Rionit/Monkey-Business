@@ -31,6 +31,12 @@ namespace MonkeyBusiness.Items
         public UnityEvent<GameObject> OnThrownCollision;
 
         /// <summary>
+        /// Specify collider for this item. If no collider is specified, it will try automatically assign one
+        /// </summary>
+        [SerializeField]
+        private Collider _collider;
+
+        /// <summary>
         /// True if the player should not switch weapons after throwing this
         /// </summary>
         public bool KeepAfterThrowing = false;
@@ -46,6 +52,11 @@ namespace MonkeyBusiness.Items
             _rigidbody = GetComponent<Rigidbody>();
             //_rigidbody.useGravity = false;
             _outline = GetComponent<Outline>();
+
+            if (!_collider)
+            {
+                _collider = GetComponent<Collider>();
+            }
         }
 
         // Update is called once per frame
@@ -101,7 +112,7 @@ namespace MonkeyBusiness.Items
             
             // TODO replace with logic that works for parents with multiple colliders
             ignoreCollision = thrower.GetComponentInChildren<Collider>();
-            Physics.IgnoreCollision(ignoreCollision, GetComponent<Collider>());
+            Physics.IgnoreCollision(ignoreCollision, _collider);
 
             OnThrow.Invoke();
         }
@@ -133,7 +144,7 @@ namespace MonkeyBusiness.Items
             _outline.enabled = true;
 
             // Re-enable collision with whoever threw this item
-            Physics.IgnoreCollision(ignoreCollision, GetComponent<Collider>(), false);
+            Physics.IgnoreCollision(ignoreCollision, _collider, false);
         }
     }
 }

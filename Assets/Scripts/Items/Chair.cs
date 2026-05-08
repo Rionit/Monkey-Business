@@ -49,6 +49,7 @@ namespace MonkeyBusiness.Items
             // reset rotation on throw
             _item.OnThrow.AddListener(()=>{transform.rotation = Quaternion.identity;});
             _item.OnDrop.AddListener(()=>{transform.rotation = Quaternion.identity;});
+            _item.OnPickup.AddListener((_)=>{transform.rotation = Quaternion.identity;});
 
             _item.OnThrownCollision.AddListener(HandleCollision);
         }

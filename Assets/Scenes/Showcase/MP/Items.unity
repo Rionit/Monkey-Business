@@ -1907,6 +1907,9 @@ MonoBehaviour:
   OnWaveDefeated:
     m_PersistentCalls:
       m_Calls: []
+  OnWaveStarted:
+    m_PersistentCalls:
+      m_Calls: []
   OnEnemyCountChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -1925,6 +1928,7 @@ MonoBehaviour:
   - {fileID: 1423250129}
   _playerCharacter: {fileID: 0}
   _waveDefinitions: []
+  _pauseMenu: {fileID: 0}
 --- !u!4 &1490947610
 Transform:
   m_ObjectHideFlags: 0
@@ -2121,6 +2125,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1191527966759369659, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: _chargeImage
+      value: 
+      objectReference: {fileID: 1858707234}
     - target: {fileID: 4866017504137546270, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2653,6 +2661,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf832f2400bf97247aad9d0dd2c5d773, type: 3}
+--- !u!114 &1858707234 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7427909688054071265, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+  m_PrefabInstance: {fileID: 2031646743}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
 --- !u!1001 &2031646743
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2661,9 +2680,41 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1515918604}
     m_Modifications:
+    - target: {fileID: 1689011756629552644, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689011756629552644, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689011756629552644, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1689011756629552644, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2423622686988326603, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
       propertyPath: m_Name
       value: HUD
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236255344356955617, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236255344356955617, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236255344356955617, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4236255344356955617, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5652636158225330849, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
       propertyPath: m_Pivot.x
