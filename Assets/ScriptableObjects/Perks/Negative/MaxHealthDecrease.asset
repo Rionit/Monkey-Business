@@ -16,7 +16,7 @@ MonoBehaviour:
   perkAlignment: 1
   effect:
     rid: 915476820060012761
-  effectName: Health boost!
+  effectName: Fragile bones
   isUnique: 0
   references:
     version: 2
