@@ -10,67 +10,38 @@ namespace MonkeyBusiness.Perks
     public class PerkSO : ScriptableObject
     {
         [BoxGroup("Public Info (Shown Before Pick)", centerLabel: true)]
-        [PreviewField(75)] [Tooltip("Visual representation of the perk as NFT image")]
+        [PreviewField(75)]
+        [Tooltip("Visual representation of the perk as NFT image")]
         public Sprite nftImage;
 
-        [BoxGroup("Hidden Outcome (Revealed After Pick)", centerLabel: true)]
-        [FormerlySerializedAs("effect")]
-        [Tooltip("Type of effect this perk modifies (player only sees this before choosing)")]
-        [LabelText("Effect Type")]
-        public PerkEffectType effectType;
+        [BoxGroup("Hidden Outcome (Revealed After Pick)")]
+        [Tooltip("Determines if this perk is positive or negative")]
+        [LabelText("Perk Alignment")]
+        public PerkAlignment perkAlignment;
 
         [BoxGroup("Hidden Outcome (Revealed After Pick)")]
-        [Tooltip("The buff effect that will be applied after selection")]
-        [LabelText("Buff Effect")]
+        [FormerlySerializedAs("buffEffect")]
+        [FormerlySerializedAs("debuffEffect")]
+        [Tooltip("The effect applied when this perk is selected")]
+        [LabelText("Effect")]
         [SerializeReference, InlineProperty, OdinSerialize]
-        public PerkEffectBase buffEffect;
-        
-        [BoxGroup("Hidden Outcome (Revealed After Pick)")]
-        [Tooltip("The debuff effect that will be applied after selection")]
-        [LabelText("Debuff Effect")]
-        [SerializeReference, InlineProperty, OdinSerialize]
-        public PerkEffectBase debuffEffect;
-        
-        [BoxGroup("Public Info (Shown Before Pick)")]
-        [LabelText("Use Custom Effect Name")]
-        [Tooltip("Enable to override the default effect name (enum) with a custom one")]
-        public bool useCustomEffectName;
+        public PerkEffectBase effect;
 
         [BoxGroup("Public Info (Shown Before Pick)")]
-        [ShowIf(nameof(useCustomEffectName))]
         [LabelText("Custom Effect Name")]
         [Tooltip("Custom name shown to the player before selection")]
-        public string customEffectName;
-
-        [HideInInspector] public string effectName;
-
-        [BoxGroup("Public Info (Shown Before Pick)")]
-        [LabelText("Funny Description")]
-        [Tooltip("e.g.: \"This rag is gonna get pulled!\"")]
-        [TextArea]
-        public string funnyDescription;
+        public string effectName;
 
         [BoxGroup("Rules")]
         [LabelText("Is Unique")]
         [Tooltip("If true, this perk will not appear again after being picked")]
-        public bool isUnique; // TODO: Implement this
+        public bool isUnique;
 
-        /// <summary>
-        /// Returns the name shown to the player before picking.
-        /// </summary>
-        public string GetDisplayName()
-        {
-            return useCustomEffectName && !string.IsNullOrEmpty(customEffectName)
-                ? customEffectName
-                : effectType.ToString();
-        }
     }
 
-    public enum PerkEffectType
+    public enum PerkAlignment
     {
-        Health,
-        Speed,
-        Weapon,
-        Player
+        Positive,
+        Negative
     }
 }
