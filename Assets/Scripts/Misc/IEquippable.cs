@@ -15,5 +15,7 @@ namespace MonkeyBusiness.Misc
 
         public void Unequip();
         public void Use();
+
+        public void Hover(bool hovered);
     }
 }

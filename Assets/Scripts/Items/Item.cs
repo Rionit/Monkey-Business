@@ -31,6 +31,12 @@ namespace MonkeyBusiness.Items
         public UnityEvent<GameObject> OnThrownCollision;
 
         /// <summary>
+        /// "Press E to pick up" label
+        /// </summary>
+        [SerializeField]
+        private GameObject _hoverLabel;
+
+        /// <summary>
         /// Specify collider for this item. If no collider is specified, it will try automatically assign one
         /// </summary>
         [SerializeField]
@@ -145,6 +151,14 @@ namespace MonkeyBusiness.Items
 
             // Re-enable collision with whoever threw this item
             Physics.IgnoreCollision(ignoreCollision, _collider, false);
+        }
+
+        public void Hover(bool hovered)
+        {
+            if (_hoverLabel)
+            {
+                _hoverLabel.SetActive(hovered && !IsBeingThrown);
+            }
         }
     }
 }
