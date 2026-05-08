@@ -59,6 +59,7 @@ namespace MonkeyBusiness.Managers
         //private GameState _currentGameState;
         
         public UnityEvent OnWaveDefeated = new();
+        public UnityEvent OnWaveStarted = new();
         public UnityEvent<int> OnEnemyCountChanged = new();
 
         [SerializeField] private GameObject _hud;
@@ -306,6 +307,7 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator CombatPhase()
         {
+            OnWaveStarted?.Invoke();
             var waveInfo = _waveDefinitions[Mathf.Min(_currentWave, _waveDefinitions.Count - 1)];
             _typesToSpawn = new();
             _typesToSpawn[gorillaPrefab] = waveInfo.gorillas;
