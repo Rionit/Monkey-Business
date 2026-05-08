@@ -1,3 +1,4 @@
+using Ami.BroAudio;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Misc;
 using NUnit.Framework;
@@ -41,10 +42,19 @@ namespace MonkeyBusiness.Items
         private float _stunDuration = 1.0f;
 
 
+        [SerializeField]
+        private GameObject _bananaModel;
+        [SerializeField]
+        private GameObject _peelModel;
+
+        private SoundSource _soundSource;
+
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             _item = GetComponent<Item>();
+            _soundSource = GetComponent<SoundSource>();
 
             _item.OnPickup.AddListener(HandlePickUp);
             _item.OnThrow.AddListener(HandleThrow);
@@ -80,6 +90,11 @@ namespace MonkeyBusiness.Items
 
             _isEaten = true;
             _item.PickUp(_holder);
+
+            // Switch model to eaten model
+            _bananaModel.SetActive(false);
+            transform.rotation = Quaternion.identity;
+            _peelModel.SetActive(true);
         }
 
         void HandleSecondThrow()
@@ -104,6 +119,7 @@ namespace MonkeyBusiness.Items
             if(stunController)
             {
                 stunController.Stun(_stunDuration);
+                _soundSource.Play();
                 Destroy(gameObject);
             }           
         }
