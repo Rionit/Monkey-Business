@@ -3,7 +3,202 @@ guid: df50fbb1985930141a520c8987cf4369
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black plastic
+    second: {fileID: 2100000, guid: 21cd022fbcb276c439b9865aeef0a13e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black plastic.001
+    second: {fileID: 2100000, guid: 76846b9094fca8a4e818fee8274f8c8a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black plastic.002
+    second: {fileID: 2100000, guid: 4ad7fda182488db45878a23b2dafbf42, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Black plastic.003
+    second: {fileID: 2100000, guid: 8316372cfaa6a2f4db2ac07ee92fba88, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HeightColor
+    second: {fileID: 2100000, guid: 24e08bf5f626d874b833dfde3efd5a1f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.001
+    second: {fileID: 2100000, guid: e9e7108f882fc4948bd519798473cb9d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: f89aeb48c3386474ba51c31efaf55bf7, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.003
+    second: {fileID: 2100000, guid: da0823aff8a551b4da7788a6b92ebecb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.004
+    second: {fileID: 2100000, guid: 8729a8810bfa51e45a106d752880b64b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: 426a95543f80afa49bee3cf84f80a9b5, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal.001
+    second: {fileID: 2100000, guid: 208f214e92476724da45fdb3cf82c8ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal.002
+    second: {fileID: 2100000, guid: 8899fad5a16c4d341ac2fc8c5dad9512, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Metal.003
+    second: {fileID: 2100000, guid: 8ba1d8dab3304db4f8fb532f210ab855, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OfficeChair_Modern
+    second: {fileID: 2100000, guid: 19c76f3393710e442a01dc2992635818, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OfficeChair_Modern.001
+    second: {fileID: 2100000, guid: 0cf26797cfe2a8e41b0c72b237a21b01, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OfficeChair_Modern.002
+    second: {fileID: 2100000, guid: a554db3f3f1d4024fa9456a1e4f8cbac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: OfficeChair_Modern.003
+    second: {fileID: 2100000, guid: 8c6ddb3779971a64ab1c46bd438602e4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Office_Sh.001
+    second: {fileID: 2100000, guid: 7787b05159a0e824caede0b9abcc5b65, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pam desk
+    second: {fileID: 2100000, guid: 63829895921966c4fadffc0306921e3f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pam desk.001
+    second: {fileID: 2100000, guid: f5cbdde7a0125634ab15cce8c629d652, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pam desk.002
+    second: {fileID: 2100000, guid: e516cf86a8711c94fb4dab310b1f78b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Pam desk.003
+    second: {fileID: 2100000, guid: b499dcc123f65e049b1c0deb6b331722, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ground mat
+    second: {fileID: 2100000, guid: 4868e132fe75c4c44877be8148e9edb0, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ground mat.003
+    second: {fileID: 2100000, guid: a893569a72365484da9d963c0ec62ec6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ladder_mat
+    second: {fileID: 2100000, guid: 9e7cf2f63e52c2b46a60443048797d08, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: platform mat
+    second: {fileID: 2100000, guid: 538aa7524bdba2a4ab3a8137c91753a4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: rock mat
+    second: {fileID: 2100000, guid: fea52d7311ecd0b4dadba7b55fad26b9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tree leaf mat.003
+    second: {fileID: 2100000, guid: a5eb86fd94a7c0c45b63107be3c80653, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tree mat
+    second: {fileID: 2100000, guid: 748e273333b949545b83a860d8c332ec, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: tree stump mat.003
+    second: {fileID: 2100000, guid: 6fc662cc38690c04f9da9a378397f51e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood
+    second: {fileID: 2100000, guid: 8bcb48e1a6b06e34c8477d99360c91f4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood.001
+    second: {fileID: 2100000, guid: d8699e73d12ec844ebf8d9225e13f59a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood.002
+    second: {fileID: 2100000, guid: b90771c6455e682498fbfbf8075618d4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wood.003
+    second: {fileID: 2100000, guid: 0e7bf60f30305a74b9868583ad0a7edd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wooden pole mat.001
+    second: {fileID: 2100000, guid: c4dac4210bc21d2439f9c7585de60f99, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wooden pole mat.002
+    second: {fileID: 2100000, guid: d454d5da773866a4ca0cacf89096091d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wooden pole mat.003
+    second: {fileID: 2100000, guid: c05e09f1e77d65e448102872be84dc50, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wooden pole mat.004
+    second: {fileID: 2100000, guid: 730792f6042d41e439a1cc259fb4be8c, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: wooden pole mat.005
+    second: {fileID: 2100000, guid: 04f6097c8d982504881f8d364abb6517, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

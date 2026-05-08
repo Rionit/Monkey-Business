@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using MonkeyBusiness.Managers;
 using Random = UnityEngine.Random;
 
 namespace MonkeyBusiness.Perks
