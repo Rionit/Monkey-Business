@@ -1,8 +1,5 @@
 using UnityEngine;
 using System;
-using Sirenix.OdinInspector;
-using Sirenix.OdinInspector.Editor;
-using UnityEditor;
 using System.Runtime.CompilerServices;
 
 [assembly:InternalsVisibleTo("MonkeyBusiness.Misc.Editor")]

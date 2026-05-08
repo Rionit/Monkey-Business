@@ -43,27 +43,48 @@ namespace MonkeyBusiness.Perks
             perkDescriptionText.text = perk.funnyDescription;
         }
 
-        /// <summary>
-        /// Rolls buff/debuff and applies result.
-        /// </summary>
-        [Button, Tooltip("Rolls the perk result (buff or debuff).")]
-        public void RollResult()
+        public void SetNeutral()
         {
-            Debug.Log("Perk Clicked");
-            if (isSelected)
-            {
-                onClickConfirmed?.Invoke();
-                return;
-            }
+            isSelected = false;
 
-            Debug.Log("Rolling result");
+            if (perkSO != null)
+                perkDescriptionText.text = perkSO.funnyDescription;
+
+            Image bg = GetComponent<Image>();
+            if (bg != null)
+                bg.color = Color.white;
+        }
+
+        public bool IsBuff()
+        {
+            return isSelected && isBuff;
+        }
+
+        public void ForceResult(bool buff)
+        {
+            if (perkSO == null) return;
+
             isSelected = true;
-            isBuff = Random.value > 0.5f;
+            isBuff = buff;
 
             UpdateVisuals();
-            ApplyEffect(isBuff);
+        }
 
-            onPerkSelected?.Invoke(this);
+        private void Update()
+        {
+            if (!isSelected || perkSO == null) return;
+
+            if (isBuff)
+                perkSO.buffEffect?.Update();
+            else
+                perkSO.debuffEffect?.Update();
+        }
+        
+        public void SetInteractable(bool value)
+        {
+            var btn = GetComponent<Button>();
+            if (btn != null)
+                btn.interactable = value;
         }
 
         /// <summary>
@@ -80,20 +101,12 @@ namespace MonkeyBusiness.Perks
             }
         }
 
-        private void Update()
-        {
-            if (isBuff)
-                perkSO.buffEffect.Update();
-            else
-                perkSO.debuffEffect.Update();
-        }
-
         /// <summary>
         /// Applies the perk effect.
         /// </summary>
-        public void ApplyEffect(bool applyAsBuff)
+        public void ApplyEffect()
         {
-            if (applyAsBuff)
+            if (isBuff)
                 perkSO.buffEffect.Apply();
             else
                 perkSO.debuffEffect.Apply();
@@ -108,11 +121,6 @@ namespace MonkeyBusiness.Perks
                 perkSO.buffEffect.Reset();
             else
                 perkSO.debuffEffect.Reset();
-        }
-
-        public bool IsBuff()
-        {
-            return isBuff;
         }
 
         public override string ToString()

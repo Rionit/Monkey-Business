@@ -297,6 +297,8 @@ namespace MonkeyBusiness.Combat.Weapons
                 Debug.LogError("Projectile prefab shouldn't be null!");
             }
 
+            projectileController.DamageMultiplier = StatsManager.Instance.GetDamageMultiplier(_data.ProjectilePrefab);
+
             var layersToCheck = projectileController.DestroyedBy;
             var maxRange = projectileController.MaxFlyDistance;
             bool destroyedByDefault = (layersToCheck.value & (1 << LayerMask.NameToLayer("Default"))) != 0;

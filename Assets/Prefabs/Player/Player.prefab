@@ -387,7 +387,7 @@ MonoBehaviour:
   cameraTarget: {fileID: 3765419234093669765}
   whatIsSwingable:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   <WalkSpeed>k__BackingField: 15
   crouchSpeed: 5
   walkResponse: 25
@@ -409,10 +409,11 @@ MonoBehaviour:
   cameraStandHeight: 0.9
   cameraCrouchHeight: 0.7
   <Target>k__BackingField: {fileID: 754302598161200952}
-  swingForce: 30
-  swingSpring: 4.5
-  swingDamping: 7
-  swingMassScale: 4.5
+  swingForce: 5
+  swingMaxSpeed: 35
+  swingDuration: 1.5
+  swingCooldown: 0.35
+  swingBounceRetention: 0.9
 --- !u!54 &2447207728374608361
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -421,7 +422,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1389186312543903172}
   serializedVersion: 5
-  m_Mass: 1
+  m_Mass: 5
   m_LinearDamping: 0
   m_AngularDamping: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
@@ -918,6 +919,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  OnTakenDamage:
+    m_PersistentCalls:
+      m_Calls:
       - m_Target: {fileID: 8625472717696608940}
         m_TargetAssemblyTypeName: Ami.BroAudio.SoundSource, BroAudio
         m_MethodName: Play
@@ -930,9 +934,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  OnTakenDamage:
-    m_PersistentCalls:
-      m_Calls: []
   OnDeath:
     m_PersistentCalls:
       m_Calls: []

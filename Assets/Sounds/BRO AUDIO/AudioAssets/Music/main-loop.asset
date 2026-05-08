@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad670d1adcf8be84f891f82b894c08a5, type: 3}
+  m_Name: main-loop
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
+  <ID>k__BackingField: 0
+  MulticlipsPlayMode: 0
+  _group: {fileID: 0}
+  Clips:
+  - AudioClip: {fileID: 8300000, guid: 2cf73e53beb6f60459b9b34940e61080, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 0
+    EndPosition: 0
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  <AudioAsset>k__BackingField: {fileID: 11400000, guid: 09d3fc380ddfa5d45a47c19f235e8d46, type: 2}
+  <AudioType>k__BackingField: 1
+  <MasterVolume>k__BackingField: 1
+  <Loop>k__BackingField: 1
+  <SeamlessLoop>k__BackingField: 0
+  <TransitionTime>k__BackingField: 0
+  <SpatialSetting>k__BackingField: {fileID: 0}
+  <Priority>k__BackingField: 128
+  <Pitch>k__BackingField: 1
+  <PitchRandomRange>k__BackingField: 0
+  <VolumeRandomRange>k__BackingField: 0
+  <RandomFlags>k__BackingField: 0
+  SeamlessTransitionType: 2
+  TransitionTempo:
+    BPM: 120
+    Beats: 0
+  SnapToFullVolume: 0
