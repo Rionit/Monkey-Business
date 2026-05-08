@@ -10,29 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
-  m_Name: RopeSwing
+  m_Name: DisableRopeSwing
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
-  nftImage: {fileID: 21300000, guid: 8533de057388bfd458227efe4fe2f703, type: 3}
-  effectType: 3
-  buffEffect:
+  nftImage: {fileID: 21300000, guid: c13f86a44aa07f84ba949adbcd3dcbda, type: 3}
+  perkAlignment: 1
+  effect:
     rid: 5385079298697724259
-  debuffEffect:
-    rid: 5385079298697724258
-  useCustomEffectName: 0
-  customEffectName: 
-  effectName: 
-  funnyDescription: hmm this one seems special
+  effectName: No more swinging
   isUnique: 0
   references:
     version: 2
     RefIds:
-    - rid: 5385079298697724258
-      type: {class: RopeSwingEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
-      data:
-        description: You cannot swing on a rope anymore!
-        canUse: 0
     - rid: 5385079298697724259
       type: {class: RopeSwingEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: You can swing on a rope! Press and hold RMB to use it.
-        canUse: 1
+        description: You can no longer use your rope swing for this round!
+        canUse: 0

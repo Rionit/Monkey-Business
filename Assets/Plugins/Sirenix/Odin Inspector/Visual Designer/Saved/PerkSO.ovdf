@@ -16,7 +16,7 @@ Position: $968UiGaz7ScTEhXdvMQFsP:0
 Position: $968UiGaz7ScTEhXdvMQFsP:1
 
 # $8qo1BZFDFMDQ42iVfyd3QL
-Position: "Public Info (Shown Before Pick)":2
+Position: "Public Info (Shown Before Pick)":3
 + [Sirenix.OdinInspector.ColumnGroupAttribute]
 
 # $Ntd7P35FqyTxmNNUmkEq2i
@@ -33,11 +33,11 @@ Position: $8qo1BZFDFMDQ42iVfyd3QL:1
 Position: $968UiGaz7ScTEhXdvMQFsP:2
 
 # effectType
-Position: "Public Info (Shown Before Pick)":0
+Position: "Public Info (Shown Before Pick)":1
 + [Sirenix.OdinInspector.EnumToggleButtonsAttribute]
 
 # nftImage
-Position: "Public Info (Shown Before Pick)":1
+Position: "Public Info (Shown Before Pick)":2
 * [Sirenix.OdinInspector.PreviewFieldAttribute]
 	alignment = Left
 	alignmentHasValue = True
@@ -50,3 +50,7 @@ Position: $Ntd7P35FqyTxmNNUmkEq2i:0
 * [Sirenix.OdinInspector.LabelTextAttribute]
 	NicifyText = False
 + [Sirenix.OdinInspector.ToggleLeftAttribute]
+
+# perkAlignment
+Position: "Public Info (Shown Before Pick)":0
++ [Sirenix.OdinInspector.EnumToggleButtonsAttribute]

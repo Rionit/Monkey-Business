@@ -12,12 +12,23 @@ namespace MonkeyBusiness.Perks
     {
         public UnityEvent OnPerkSelected = new();
 
-        [BoxGroup("Setup")] [SerializeField] private GameObject perkPrefab;
-        [BoxGroup("Setup")] [SerializeField] private RectTransform perkSelectionUI;
-        [BoxGroup("Setup")] [SerializeField] private RectTransform leftAnchor;
-        [BoxGroup("Setup")] [SerializeField] private RectTransform centerAnchor;
+        [BoxGroup("Setup")]
+        [SerializeField] private GameObject perkPrefab;
 
-        [BoxGroup("Setup")] [SerializeField] private List<PerkSO> perks;
+        [BoxGroup("Setup")]
+        [SerializeField] private RectTransform perkSelectionUI;
+
+        [BoxGroup("Setup")]
+        [SerializeField] private RectTransform leftAnchor;
+
+        [BoxGroup("Setup")]
+        [SerializeField] private RectTransform centerAnchor;
+
+        [BoxGroup("Perk Pools")]
+        [SerializeField] private List<PerkSO> positivePerks = new();
+
+        [BoxGroup("Perk Pools")]
+        [SerializeField] private List<PerkSO> negativePerks = new();
 
         private readonly List<GameObject> activePerks = new();
 
@@ -26,7 +37,6 @@ namespace MonkeyBusiness.Perks
 
         private bool waitingForPositiveConfirm;
         private bool waitingForNegativeConfirm;
-        private bool negativeRevealed;
 
         [Button]
         public void RandomizeNewPerks()
@@ -34,22 +44,32 @@ namespace MonkeyBusiness.Perks
             ClearPerks();
 
             for (int i = 0; i < 3; i++)
-                activePerks.Add(InstantiatePerk(GetRandomPerk()));
+            {
+                activePerks.Add(
+                    InstantiatePerk(GetRandomPositivePerk())
+                );
+            }
         }
 
         private GameObject InstantiatePerk(PerkSO perkSO)
         {
             var go = Instantiate(perkPrefab, perkSelectionUI);
+
             var rt = go.GetComponent<RectTransform>();
 
             rt.localScale = Vector3.zero;
-            StartCoroutine(ScaleTween(rt, Vector3.one, 0.25f));
+
+            StartCoroutine(
+                ScaleTween(rt, Vector3.one, 0.25f)
+            );
 
             var perk = go.GetComponent<Perk>();
+
             perk.Setup(perkSO);
             perk.SetNeutral();
 
             var btn = go.GetComponent<Button>();
+
             if (btn != null)
             {
                 btn.onClick.RemoveAllListeners();
@@ -62,7 +82,7 @@ namespace MonkeyBusiness.Perks
                     }
                     else if (selectedPerk == perk && waitingForPositiveConfirm)
                     {
-                        ConfirmPerk();
+                        ConfirmPositivePerk();
                     }
                 });
             }
@@ -72,7 +92,8 @@ namespace MonkeyBusiness.Perks
 
         private void SelectPerk(Perk perk)
         {
-            if (selectedPerk != null) return;
+            if (selectedPerk != null)
+                return;
 
             selectedPerk = perk;
 
@@ -83,6 +104,7 @@ namespace MonkeyBusiness.Perks
             }
 
             RectTransform rt = selectedPerk.GetComponent<RectTransform>();
+
             rt.SetParent(transform, true);
 
             StartCoroutine(MoveAndRevealPositive(rt));
@@ -92,35 +114,25 @@ namespace MonkeyBusiness.Perks
 
         private IEnumerator MoveAndRevealPositive(RectTransform rt)
         {
-            yield return MoveTweenWorld(rt, leftAnchor.position, 0.4f);
-            selectedPerk.ForceResult(true);
+            yield return MoveTweenWorld(
+                rt,
+                leftAnchor.position,
+                0.4f
+            );
+
+            selectedPerk.ForceSelect();
         }
 
-        private void ConfirmPerk()
+        private void ConfirmPositivePerk()
         {
-            // POSITIVE CONFIRM
-            if (waitingForPositiveConfirm && selectedPerk != null)
-            {
-                waitingForPositiveConfirm = false;
-                selectedPerk.ApplyEffect();
-                StartCoroutine(HandlePositiveConfirmed());
+            if (!waitingForPositiveConfirm || selectedPerk == null)
                 return;
-            }
 
-            // NEGATIVE REVEAL -> CONFIRM (SECOND CLICK)
-            if (negativePerk != null && negativeRevealed)
-            {
-                negativePerk.ApplyEffect();
-                
-                negativePerk.SetInteractable(false);
-                StartCoroutine(FadeOut(negativePerk.gameObject));
+            waitingForPositiveConfirm = false;
 
-                negativePerk = null;
-                negativeRevealed = false;
-                waitingForNegativeConfirm = false;
+            selectedPerk.ApplyEffect();
 
-                OnPerkSelected.Invoke();
-            }
+            StartCoroutine(HandlePositiveConfirmed());
         }
 
         private IEnumerator HandlePositiveConfirmed()
@@ -138,51 +150,50 @@ namespace MonkeyBusiness.Perks
         private void SpawnNegativeRollingPerk()
         {
             var go = Instantiate(perkPrefab, perkSelectionUI);
+
             var rt = go.GetComponent<RectTransform>();
 
             rt.localScale = Vector3.zero;
             rt.anchoredPosition = centerAnchor.anchoredPosition;
 
             negativePerk = go.GetComponent<Perk>();
-            negativePerk.Setup(GetRandomPerk());
+
+            negativePerk.Setup(GetRandomNegativePerk());
             negativePerk.SetNeutral();
 
-            // MUST stay disabled during rolling
             negativePerk.SetInteractable(false);
 
-            negativeRevealed = false;
-            waitingForNegativeConfirm = true;
+            waitingForNegativeConfirm = false;
 
             var btn = go.GetComponent<Button>();
+
             if (btn != null)
             {
                 btn.onClick.RemoveAllListeners();
+
                 btn.onClick.AddListener(() =>
                 {
-                    if (!waitingForNegativeConfirm || negativePerk == null) return;
-
-                    if (!negativeRevealed)
-                    {
-                        negativePerk.ForceResult(false);
-                        negativePerk.SetInteractable(true); // enable AFTER reveal only
-                        negativeRevealed = true;
+                    if (!waitingForNegativeConfirm || negativePerk == null)
                         return;
-                    }
 
-                    if (negativeRevealed)
-                    {
-                        ConfirmPerk();
-                    }
+                    negativePerk.ApplyEffect();
+
+                    negativePerk.SetInteractable(false);
+
+                    StartCoroutine(FadeOut(negativePerk.gameObject));
+
+                    negativePerk = null;
+                    waitingForNegativeConfirm = false;
+
+                    OnPerkSelected.Invoke();
                 });
             }
 
             StartCoroutine(RollAnimation(negativePerk, rt));
         }
 
-
         private IEnumerator RollAnimation(Perk perk, RectTransform rt)
         {
-            // keep disabled during animation
             perk.SetInteractable(false);
 
             yield return ScaleTween(rt, Vector3.one, 0.25f);
@@ -192,18 +203,27 @@ namespace MonkeyBusiness.Perks
 
             while (elapsed < duration)
             {
-                var random = GetRandomPerk();
+                var random = GetRandomNegativePerk();
+
                 perk.Setup(random);
                 perk.SetNeutral();
 
-                float step = Mathf.Lerp(0.05f, 0.2f, elapsed / duration);
+                float step = Mathf.Lerp(
+                    0.05f,
+                    0.2f,
+                    elapsed / duration
+                );
+
                 yield return new WaitForSeconds(step);
 
                 elapsed += step;
             }
 
-            perk.Setup(GetRandomPerk());
-            perk.SetNeutral();
+            perk.Setup(GetRandomNegativePerk());
+
+            perk.ForceSelect();
+
+            waitingForNegativeConfirm = true;
 
             perk.SetInteractable(true);
         }
@@ -211,7 +231,9 @@ namespace MonkeyBusiness.Perks
         private IEnumerator FadeOut(GameObject go)
         {
             CanvasGroup cg = go.GetComponent<CanvasGroup>();
-            if (cg == null) cg = go.AddComponent<CanvasGroup>();
+
+            if (cg == null)
+                cg = go.AddComponent<CanvasGroup>();
 
             RectTransform rt = go.GetComponent<RectTransform>();
 
@@ -223,10 +245,16 @@ namespace MonkeyBusiness.Perks
             while (t < d)
             {
                 t += Time.deltaTime;
+
                 float lerp = t / d;
 
                 cg.alpha = 1 - lerp;
-                rt.localScale = Vector3.Lerp(startScale, Vector3.zero, lerp);
+
+                rt.localScale = Vector3.Lerp(
+                    startScale,
+                    Vector3.zero,
+                    lerp
+                );
 
                 yield return null;
             }
@@ -234,30 +262,54 @@ namespace MonkeyBusiness.Perks
             Destroy(go);
         }
 
-        private IEnumerator MoveTweenWorld(RectTransform rt, Vector3 target, float duration)
+        private IEnumerator MoveTweenWorld(
+            RectTransform rt,
+            Vector3 target,
+            float duration
+        )
         {
             Vector3 start = rt.position;
+
             float t = 0;
 
             while (t < duration)
             {
                 t += Time.deltaTime;
+
                 float eased = EaseOutBack(t / duration);
-                rt.position = Vector3.Lerp(start, target, eased);
+
+                rt.position = Vector3.Lerp(
+                    start,
+                    target,
+                    eased
+                );
+
                 yield return null;
             }
         }
 
-        private IEnumerator ScaleTween(RectTransform rt, Vector3 target, float duration)
+        private IEnumerator ScaleTween(
+            RectTransform rt,
+            Vector3 target,
+            float duration
+        )
         {
             Vector3 start = rt.localScale;
+
             float t = 0;
 
             while (t < duration)
             {
                 t += Time.deltaTime;
+
                 float eased = EaseOutBack(t / duration);
-                rt.localScale = Vector3.Lerp(start, target, eased);
+
+                rt.localScale = Vector3.Lerp(
+                    start,
+                    target,
+                    eased
+                );
+
                 yield return null;
             }
         }
@@ -266,26 +318,53 @@ namespace MonkeyBusiness.Perks
         {
             float c1 = 1.70158f;
             float c3 = c1 + 1f;
-            return 1 + c3 * Mathf.Pow(x - 1, 3) + c1 * Mathf.Pow(x - 1, 2);
+
+            return 1 +
+                   c3 * Mathf.Pow(x - 1, 3) +
+                   c1 * Mathf.Pow(x - 1, 2);
         }
 
         private void ClearPerks()
         {
             foreach (var p in activePerks)
-                if (p) Destroy(p);
+            {
+                if (p)
+                    Destroy(p);
+            }
 
             activePerks.Clear();
 
             selectedPerk = null;
             negativePerk = null;
-            negativeRevealed = false;
+
             waitingForPositiveConfirm = false;
             waitingForNegativeConfirm = false;
         }
 
-        private PerkSO GetRandomPerk()
+        private PerkSO GetRandomPositivePerk()
         {
-            return perks[Random.Range(0, perks.Count)];
+            if (positivePerks.Count == 0)
+            {
+                Debug.LogError("No positive perks assigned.");
+                return null;
+            }
+
+            return positivePerks[
+                Random.Range(0, positivePerks.Count)
+            ];
+        }
+
+        private PerkSO GetRandomNegativePerk()
+        {
+            if (negativePerks.Count == 0)
+            {
+                Debug.LogError("No negative perks assigned.");
+                return null;
+            }
+
+            return negativePerks[
+                Random.Range(0, negativePerks.Count)
+            ];
         }
     }
 }

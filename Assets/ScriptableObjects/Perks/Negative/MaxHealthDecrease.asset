@@ -10,18 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
-  m_Name: MaxHealth
+  m_Name: MaxHealthDecrease
   m_EditorClassIdentifier: Assembly-CSharp::PerkSO
-  nftImage: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  effectType: 0
-  buffEffect:
+  nftImage: {fileID: 21300000, guid: 07d17cdc2d70749469991e82e6b66e34, type: 3}
+  perkAlignment: 1
+  effect:
     rid: 915476820060012761
-  debuffEffect:
-    rid: 915476820060012762
-  useCustomEffectName: 0
-  customEffectName: 
-  effectName: 
-  funnyDescription: sweet sweet juicy nft yumm
+  effectName: Health boost!
   isUnique: 0
   references:
     version: 2
@@ -29,10 +24,5 @@ MonoBehaviour:
     - rid: 915476820060012761
       type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: Your health is increased by <value>
-        value: 20
-    - rid: 915476820060012762
-      type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
-      data:
         description: Your health is decreased by <value>
-        value: -20
+        value: 20
