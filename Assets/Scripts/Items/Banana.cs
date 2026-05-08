@@ -47,14 +47,16 @@ namespace MonkeyBusiness.Items
         [SerializeField]
         private GameObject _peelModel;
 
-        private SoundSource _soundSource;
+        [SerializeField]
+        private SoundSource _slipSoundSource;
 
+        [SerializeField]
+        private SoundSource _eatingSoundSource;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             _item = GetComponent<Item>();
-            _soundSource = GetComponent<SoundSource>();
 
             _item.OnPickup.AddListener(HandlePickUp);
             _item.OnThrow.AddListener(HandleThrow);
@@ -88,6 +90,9 @@ namespace MonkeyBusiness.Items
 
             _holder.gameObject.GetComponentInParent<HealthController>().Heal(_healAmount);
 
+            // play eating sound
+            _eatingSoundSource.Play();
+
             _isEaten = true;
             _item.PickUp(_holder);
 
@@ -119,7 +124,7 @@ namespace MonkeyBusiness.Items
             if(stunController)
             {
                 stunController.Stun(_stunDuration);
-                _soundSource.Play();
+                _slipSoundSource.Play();
                 Destroy(gameObject);
             }           
         }
