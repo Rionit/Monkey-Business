@@ -1,3 +1,4 @@
+using Ami.BroAudio;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Misc;
 using NUnit.Framework;
@@ -41,6 +42,17 @@ namespace MonkeyBusiness.Items
         private float _stunDuration = 1.0f;
 
 
+        [SerializeField]
+        private GameObject _bananaModel;
+        [SerializeField]
+        private GameObject _peelModel;
+
+        [SerializeField]
+        private SoundSource _slipSoundSource;
+
+        [SerializeField]
+        private SoundSource _eatingSoundSource;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
@@ -78,8 +90,16 @@ namespace MonkeyBusiness.Items
 
             _holder.gameObject.GetComponentInParent<HealthController>().Heal(_healAmount);
 
+            // play eating sound
+            _eatingSoundSource.Play();
+
             _isEaten = true;
             _item.PickUp(_holder);
+
+            // Switch model to eaten model
+            _bananaModel.SetActive(false);
+            transform.rotation = Quaternion.identity;
+            _peelModel.SetActive(true);
         }
 
         void HandleSecondThrow()
@@ -104,12 +124,15 @@ namespace MonkeyBusiness.Items
             if(stunController)
             {
                 stunController.Stun(_stunDuration);
+                _slipSoundSource.Play();
                 Destroy(gameObject);
             }           
         }
 
 /// <summary>
 /// Trigger only used when in banana peel form
+/// 
+/// NOTE: the stun area is tied to the size of the pickup trigger
 /// </summary>
 /// <param name="other"></param>
         void OnTriggerEnter(Collider other)

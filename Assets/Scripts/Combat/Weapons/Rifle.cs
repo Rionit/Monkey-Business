@@ -500,5 +500,10 @@ namespace MonkeyBusiness.Combat.Weapons
                 }
             }
         }
+
+        public void Hover(bool hovered)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

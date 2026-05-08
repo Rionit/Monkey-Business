@@ -129,7 +129,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 50, y: 0}
+  m_AnchoredPosition: {x: 350, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8865748152077701956
@@ -190,9 +190,16 @@ MonoBehaviour:
   perkSelectionUI: {fileID: 3583502118141869154}
   leftAnchor: {fileID: 7666179372715581214}
   centerAnchor: {fileID: 2531039914029065648}
-  perks:
+  positivePerks:
   - {fileID: 11400000, guid: a650ca9bc85de25498048bad2e7108c8, type: 2}
-  - {fileID: 11400000, guid: 0d4db1e26c5faa8468f268b48bfc208c, type: 2}
-  - {fileID: 11400000, guid: 88548538ee0516c48812bd1b9e886e70, type: 2}
-  - {fileID: 11400000, guid: 882be58c83f9e05418ed9e741990be18, type: 2}
   - {fileID: 11400000, guid: af5d7da4a0f9e584a9f479bf1489b5be, type: 2}
+  - {fileID: 11400000, guid: 88548538ee0516c48812bd1b9e886e70, type: 2}
+  - {fileID: 11400000, guid: 0d4db1e26c5faa8468f268b48bfc208c, type: 2}
+  - {fileID: 11400000, guid: 42a345c9ca66ad14d8a881ec5030d6c4, type: 2}
+  negativePerks:
+  - {fileID: 11400000, guid: 882be58c83f9e05418ed9e741990be18, type: 2}
+  - {fileID: 11400000, guid: 9142e07e5dba33744a53230a466c3866, type: 2}
+  - {fileID: 11400000, guid: fe94fd047a060a44b87c0bedcb37e9b9, type: 2}
+  - {fileID: 11400000, guid: 04869639510f95c4ba1404bbaf547598, type: 2}
+  - {fileID: 11400000, guid: 97f52a2fb4255ed40a01fee55e1b3e8c, type: 2}
+  - {fileID: 11400000, guid: d0b99e98acd8a7343b81cd980bf8a7a3, type: 2}

@@ -49,6 +49,7 @@ namespace MonkeyBusiness.Items
             // reset rotation on throw
             _item.OnThrow.AddListener(()=>{transform.rotation = Quaternion.identity;});
             _item.OnDrop.AddListener(()=>{transform.rotation = Quaternion.identity;});
+            _item.OnPickup.AddListener((_)=>{transform.rotation = Quaternion.identity;});
 
             _item.OnThrownCollision.AddListener(HandleCollision);
         }
@@ -72,7 +73,7 @@ namespace MonkeyBusiness.Items
 
                         if(knockbackController != null)
                         {
-                            var knockbackVector = GetComponentInParent<Rigidbody>().linearVelocity.normalized * _knockbackForce;
+                            var knockbackVector = (collider.transform.position - transform.position).normalized * _knockbackForce;
                             knockbackVector.y = Math.Abs(knockbackVector.y);
                             // Debug.Log(knockbackVector);
                             knockbackController.Knockback(knockbackVector, _knockbackDuration);
