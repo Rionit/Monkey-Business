@@ -22,7 +22,7 @@ MonoBehaviour:
     StartPosition: 0.447
     EndPosition: 0.41
     FadeIn: 0
-    FadeOut: 0
+    FadeOut: 0.052
     Weight: 0
   <AudioAsset>k__BackingField: {fileID: 11400000, guid: e040321bf1519084fa8d5a51b0bf0001, type: 2}
   <AudioType>k__BackingField: 8
@@ -33,9 +33,9 @@ MonoBehaviour:
   <SpatialSetting>k__BackingField: {fileID: 0}
   <Priority>k__BackingField: 128
   <Pitch>k__BackingField: 1
-  <PitchRandomRange>k__BackingField: 0
+  <PitchRandomRange>k__BackingField: 0.40000004
   <VolumeRandomRange>k__BackingField: 0
-  <RandomFlags>k__BackingField: 0
+  <RandomFlags>k__BackingField: 1
   SeamlessTransitionType: 0
   TransitionTempo:
     BPM: 0

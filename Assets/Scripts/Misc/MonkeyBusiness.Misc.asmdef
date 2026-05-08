@@ -2,7 +2,8 @@
     "name": "MonkeyBusiness.Misc",
     "rootNamespace": "MonkeyBusiness.Misc",
     "references": [
-        "GUID:8c4dd21966739024fbd72155091d199e"
+        "GUID:8c4dd21966739024fbd72155091d199e",
+        "GUID:111d4e39aeddad44898002abada9c174"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
