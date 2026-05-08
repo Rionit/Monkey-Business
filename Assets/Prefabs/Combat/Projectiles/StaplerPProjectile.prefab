@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: <HitboxRadius>k__BackingField
-      value: 0.075
+      value: 0.15
       objectReference: {fileID: 0}
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: <MaxFlyDistance>k__BackingField
@@ -38,15 +38,15 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: e001c70900aface248003edee59c1ebc, type: 2}
     - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.2
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 697157145129289834, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: m_LocalPosition.x

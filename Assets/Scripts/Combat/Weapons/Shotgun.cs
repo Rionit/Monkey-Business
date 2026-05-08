@@ -9,6 +9,7 @@ using Vector3 = UnityEngine.Vector3;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
+using Ami.BroAudio;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -67,10 +68,15 @@ namespace MonkeyBusiness.Combat.Weapons
 
         TweenerCore<Vector3,Vector3,VectorOptions> _shootTween;
 
+        SoundSource _shotSound;
+
         protected override void Awake()
         {
             _events = new List<ParticleCollisionEvent>(_shotEffect.main.maxParticles);
             _defaultPosition = transform.localPosition;
+            _shotSound = GetComponent<SoundSource>();
+            Debug.Assert(_shotEffect != null, "Shot effect particle system is not assigned in the inspector.");
+            Debug.Assert(_shotSound != null, "Shot sound source is not found on the object");
             base.Awake();
             CurrentAmmo = MaxAmmo;
             _weaponHitbox.OnTargetHit.AddListener(OnTargetHit);
@@ -119,6 +125,7 @@ namespace MonkeyBusiness.Combat.Weapons
             //_weaponHitbox.gameObject.SetActive(true);
             //_weaponHitbox.enabled = true;
             _shotEffect.Play();
+            _shotSound.Play();
 
             CurrentAmmo--;
 

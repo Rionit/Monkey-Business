@@ -73,6 +73,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8453933904731248803, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       insertIndex: -1
       addedObject: {fileID: 8168916876963653428}
+    - targetCorrespondingSourceObject: {fileID: 8453933904731248803, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2636991147828587218}
   m_SourcePrefab: {fileID: 100100000, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
 --- !u!1 &8514168976571253448 stripped
 GameObject:
@@ -5025,3 +5028,26 @@ ParticleSystemRenderer:
   m_MeshWeighting1: 1
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
+--- !u!114 &2636991147828587218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8514168976571253448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 684057357d2040e4997e5ac0d74c1620, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 8514168976571253448}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0

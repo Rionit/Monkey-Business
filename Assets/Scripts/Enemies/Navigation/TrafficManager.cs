@@ -157,10 +157,12 @@ namespace MonkeyBusiness.Enemies.Navigation
             var position = enemy.transform.position;
             var start = enemy.CurrentZone;
 
+            Debug.Assert(goal != null, "Goal zone is null!");
+
             if(path.Count > 0)
                 ClearPath(enemy);
             
-            if(!FindPath(enemy, start, goal, position, path, _sortingRule))
+            if(start != null &&!FindPath(enemy, start, goal, position, path, _sortingRule))
             {
                 if(!FindPath(enemy, start, goal, position, path, _fallbackRule))
                 {
@@ -281,6 +283,10 @@ namespace MonkeyBusiness.Enemies.Navigation
         /// </summary>
         internal int CompareNeighDistance(TrafficZone a, TrafficZone b, TrafficZone to)
         {
+            Debug.Assert(a != null, "A is null");
+            Debug.Assert(b != null, "B is null");
+            Debug.Assert(to != null, "To is null");
+
             var neighA = GetNeighborDistance(a.ID, to.ID);
             var neighB = GetNeighborDistance(b.ID, to.ID);
 
@@ -452,6 +458,7 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         public float GetNeighborDistance(int from, int to)
         {
+            Debug.Assert(_distances != null, "Distances haven't been calculated yet! Call RecalculateDistance() first.");
             if(from < to)
             {
                 return _distances[from, to];

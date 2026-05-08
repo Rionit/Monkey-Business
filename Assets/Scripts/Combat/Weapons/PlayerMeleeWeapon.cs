@@ -8,13 +8,13 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Misc;
 using DG.Tweening;
 using UnityEngine.UI;
+using Ami.BroAudio;
 
 
 namespace MonkeyBusiness.Combat.Weapons
 {
     public class PlayerMeleeWeapon : MonoBehaviour
     {
-
         [SerializeField]
         [BoxGroup("Melee stats")]
         float _meleeDamage = 10f;
@@ -55,6 +55,8 @@ namespace MonkeyBusiness.Combat.Weapons
         [RequiredIn(PrefabKind.InstanceInScene)]
         ParticleSystem _attackEffect;
 
+        [SerializeField]
+        SoundSource _meleeAttackSound;
 
         InputAction _meleeAttackAction;
 
@@ -93,31 +95,31 @@ namespace MonkeyBusiness.Combat.Weapons
 
         IEnumerator MeleeAttackCoroutine()
         {
-                _onCooldown = true;
-                _attackHitbox.enabled = true;
-                _attackHitbox.gameObject.SetActive(true);
+            _onCooldown = true;
+            _attackHitbox.enabled = true;
+            _attackHitbox.gameObject.SetActive(true);
 
-                _attackEffect.Play();
-                _animationTf.localRotation = Quaternion.Euler(0, 90f, 0f); // Rotate the weapon downwards for the attack animation
-                _animationTf.gameObject.SetActive(true);
-                var tween = _animationTf.DOLocalRotate(new Vector3(0, -90f, 0f), 0.2f).SetEase(Ease.Linear); // TODO: Make editable
-                // Tween charge image to 0 with quadratic ease in-and-out
-                DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 0f, 0.5f).SetEase(Ease.InOutCubic)
-                .OnComplete(() => DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 1f, _attackCooldown - 0.5f).SetEase(Ease.Linear));
+            _attackEffect.Play();
 
-                yield return new WaitForFixedUpdate();
-                _attackHitbox.gameObject.SetActive(false);
-                _attackHitbox.enabled = false;
-                yield return new WaitForSeconds(0.2f - Time.fixedDeltaTime); // Wait for the rest of the attack animation to finish, minus the fixed update wait at the start
+            _animationTf.localRotation = Quaternion.Euler(0, 90f, 0f); // Rotate the weapon downwards for the attack animation
+            _animationTf.gameObject.SetActive(true);
+            _meleeAttackSound.Play();
+            var tween = _animationTf.DOLocalRotate(new Vector3(0, -90f, 0f), 0.2f).SetEase(Ease.Linear); // TODO: Make editable
+            // Tween charge image to 0 with quadratic ease in-and-out
+            DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 0f, 0.5f).SetEase(Ease.InOutCubic)
+            .OnComplete(() => DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 1f, _attackCooldown - 0.5f).SetEase(Ease.Linear));
 
-                //yield return new WaitForSeconds(_attackDuration); // Duration of the attack hitbox being active
-                _animationTf.gameObject.SetActive(false);
+            yield return new WaitForFixedUpdate();
+            _attackHitbox.gameObject.SetActive(false);
+            _attackHitbox.enabled = false;
+            yield return new WaitForSeconds(0.2f - Time.fixedDeltaTime); // Wait for the rest of the attack animation to finish, minus the fixed update wait at the start
 
+            //yield return new WaitForSeconds(_attackDuration); // Duration of the attack hitbox being active
+            _animationTf.gameObject.SetActive(false);
 
+            yield return new WaitForSeconds(_attackCooldown - 0.2f + Time.fixedDeltaTime); // Cooldown duration
 
-                yield return new WaitForSeconds(_attackCooldown - 0.2f + Time.fixedDeltaTime); // Cooldown duration
-    
-                _onCooldown = false;
+            _onCooldown = false;
         }
 
         void Update()

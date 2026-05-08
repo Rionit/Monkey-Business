@@ -7666,6 +7666,10 @@ PrefabInstance:
       propertyPath: OnAmmoChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 754302598161200952, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 783102165424217819, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: _scopedFOV
       value: 45
@@ -8022,9 +8026,25 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: -0.35
       objectReference: {fileID: 0}
+    - target: {fileID: 6234731734899295501, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234731734899295501, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 6234731734899295501, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 6472994901029594296, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211693197114897220, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 8211693197114897220, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_IsActive
@@ -8036,9 +8056,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4259873353088571684, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+    - {fileID: 3519895754353565429, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1389186312543903172, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1933268458}
     - targetCorrespondingSourceObject: {fileID: 8211693197114897220, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 612648077}
@@ -8406,6 +8430,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d1bc5515e3ab954e80599c538834774, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::KinematicCharacterController.KinematicCharacterMotor
+--- !u!114 &1933268458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1933268447}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 166bafd4bdd40c141b55cfb6b2eadcef, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 1933268447}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1 &1948977206 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6374851534073479281, guid: df50fbb1985930141a520c8987cf4369, type: 3}
@@ -9271,6 +9318,186 @@ PrefabInstance:
       propertyPath: <Player>k__BackingField
       value: 
       objectReference: {fileID: 1933268447}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[10]'
+      value: 32.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[20]'
+      value: 91.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[21]'
+      value: 67.13
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[30]'
+      value: 110.68
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[31]'
+      value: 78.67
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[32]'
+      value: 60.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[40]'
+      value: 63.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[41]'
+      value: 95.28
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[42]'
+      value: 28.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[43]'
+      value: 69.04
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[50]'
+      value: 69.18
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[51]'
+      value: 37.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[52]'
+      value: 29.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[53]'
+      value: 41.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[54]'
+      value: 58.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[60]'
+      value: 30.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[61]'
+      value: 62.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[62]'
+      value: 60.88
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[63]'
+      value: 101.77
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[64]'
+      value: 32.73
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[65]'
+      value: 90.83
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[70]'
+      value: 95.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[71]'
+      value: 68.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[72]'
+      value: 23.61
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[73]'
+      value: 37.08
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[74]'
+      value: 31.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[75]'
+      value: 30.86
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[76]'
+      value: 64.69
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[80]'
+      value: 114.43
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[81]'
+      value: 94
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[82]'
+      value: 49.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[83]'
+      value: 25.52
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[84]'
+      value: 50.85
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[85]'
+      value: 56.82
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[86]'
+      value: 83.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[87]'
+      value: 25.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[90]'
+      value: 28.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[91]'
+      value: 60.38
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[92]'
+      value: 120.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[93]'
+      value: 139.06
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[94]'
+      value: 91.96
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[95]'
+      value: 97.56
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[96]'
+      value: 59.23
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[97]'
+      value: 123.92
+      objectReference: {fileID: 0}
+    - target: {fileID: 1083196947981140784, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: '_distances._data.Array.data[98]'
+      value: 142.81
+      objectReference: {fileID: 0}
     - target: {fileID: 4863238726718896131, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.86573

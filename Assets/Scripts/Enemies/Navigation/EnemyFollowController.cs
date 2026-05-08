@@ -313,7 +313,8 @@ namespace MonkeyBusiness.Enemies.Navigation
             }
 
             _currentTargetPos = _runningAway ? GetRunawayPosition() : ChaseObject.transform.position;
-            _navMeshAgent.SetDestination(_currentTargetPos);
+            if(_navMeshAgent.enabled)
+                _navMeshAgent.SetDestination(_currentTargetPos);
         }
 
         void GetAlteringPath()
