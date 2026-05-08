@@ -73,7 +73,7 @@ namespace MonkeyBusiness.Items
 
                         if(knockbackController != null)
                         {
-                            var knockbackVector = GetComponentInParent<Rigidbody>().linearVelocity.normalized * _knockbackForce;
+                            var knockbackVector = (collider.transform.position - transform.position).normalized * _knockbackForce;
                             knockbackVector.y = Math.Abs(knockbackVector.y);
                             // Debug.Log(knockbackVector);
                             knockbackController.Knockback(knockbackVector, _knockbackDuration);
