@@ -110,6 +110,8 @@ namespace MonkeyBusiness.Items
 
 /// <summary>
 /// Trigger only used when in banana peel form
+/// 
+/// NOTE: the stun area is tied to the size of the pickup trigger
 /// </summary>
 /// <param name="other"></param>
         void OnTriggerEnter(Collider other)
