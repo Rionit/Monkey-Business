@@ -190,7 +190,7 @@ namespace MonkeyBusiness.Managers
             BroAudio.SetVolume(BroAudioType.All, PlayerPrefs.GetFloat("MasterVolume", 1f));
         }
 
-        void PauseOrUnpause(InputAction.CallbackContext context)
+        public void PauseOrUnpause(InputAction.CallbackContext context)
         {
             if(!_canPause) return;
             Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
