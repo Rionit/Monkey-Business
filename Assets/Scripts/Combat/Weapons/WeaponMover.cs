@@ -32,7 +32,7 @@ namespace MonkeyBusiness.Combat.Weapons
 
         void FixedUpdate()
         {            
-            Debug.Log("Moving weapon " + _moveAction.ReadValue<Vector2>());
+            //Debug.Log("Moving weapon " + _moveAction.ReadValue<Vector2>());
             var movement = _moveAction.ReadValue<Vector2>().x;
             
             if(_moveInstantly)

@@ -4,7 +4,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
 using System.Linq;
-using MonkeyBusiness.Misc;
+using UnityEngine.AI;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -74,6 +74,10 @@ namespace MonkeyBusiness.Combat.Weapons
         [BoxGroup("Debug")]
         [Tooltip("Current direction the projectile is flying towards. <br/> <br/> <i>Normalized.</i>")]
         public Vector3 Direction {get; private set; }
+
+
+        [SerializeField]
+        float _impactForce = 20f;
 
         [ShowInInspector]
         [BoxGroup("Debug")]
@@ -180,8 +184,6 @@ namespace MonkeyBusiness.Combat.Weapons
                     Destroy(gameObject);
                 }
             }
-        
-
         }
 
         void CheckForHit()
@@ -202,9 +204,40 @@ namespace MonkeyBusiness.Combat.Weapons
                         Debug.LogError("Target does not have a HealthController component!");
                         continue;
                     }
+
+                    if(_impactForce > 0f)
+                    {
+                        ApplyImpact(target);
+                    }
                     targetHealth.TakeDamage(Damage * DamageMultiplier);
                 }
                 _targetsByTime.Remove(_targetsByTime.First());
+            }
+        }
+
+        void ApplyImpact(GameObject target)
+        {
+            var targetAgent = target.GetComponentInParent<NavMeshAgent>();
+
+            var calculatedImpact = Direction * _impactForce * Time.deltaTime;;
+            Debug.Log("Calculated impact: " + calculatedImpact);
+            if(targetAgent == null)
+            {
+                Debug.LogError("Target does not have a NavMeshAgent component!");
+            }
+            else if(targetAgent.enabled)
+            {
+                Debug.Log("Applying impact to NavMeshAgent: " + calculatedImpact);
+                targetAgent.velocity += calculatedImpact;
+            }
+            else
+            {
+                var targetRb = target.GetComponentInParent<Rigidbody>();
+                if(targetRb != null)
+                {
+                    Debug.Log("Applying impact to Rigidbody: " + calculatedImpact);
+                    targetRb.AddForce(calculatedImpact, ForceMode.Impulse);
+                }
             }
         }
 

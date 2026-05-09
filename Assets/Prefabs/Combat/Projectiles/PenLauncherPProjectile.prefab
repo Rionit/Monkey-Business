@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _impactForce
+      value: 900
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: <Speed>k__BackingField
       value: 1000
       objectReference: {fileID: 0}
