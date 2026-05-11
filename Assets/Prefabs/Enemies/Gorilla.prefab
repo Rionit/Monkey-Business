@@ -41,6 +41,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1434435400766006065}
   - {fileID: 7869849481633469890}
   - {fileID: 3343822903242606426}
   m_Father: {fileID: 0}
@@ -178,6 +179,7 @@ MonoBehaviour:
   _health: {fileID: 4361588836593131136}
   _followController: {fileID: 1388641176820628042}
   _attackController: {fileID: 8160779452035621708}
+  _poopCollider: {fileID: 2879694326325379403}
   _renderer: {fileID: 5061553580921696482}
   _enragedMaterial: {fileID: 2100000, guid: d62a9777a63ac5c40b9d46d7587e12af, type: 2}
   _rageHealthThreshold: 50
@@ -370,6 +372,99 @@ MonoBehaviour:
   _overrideGroup: {fileID: 0}
   _positionMode: 0
   _delay: 0
+--- !u!1 &1501616512239829523
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4777044187095705011}
+  - component: {fileID: 8852284926497082735}
+  - component: {fileID: 2879694326325379403}
+  - component: {fileID: 3542806742543019145}
+  m_Layer: 8
+  m_Name: PoopAttack
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4777044187095705011
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501616512239829523}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.7, y: 1, z: 0.7}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3343822903242606426}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8852284926497082735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501616512239829523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6ef9f7f514edd13d8ab8fc168e51ece, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Attack::MonkeyBusiness.Combat.Attack.RangedAttackController
+  <Damage>k__BackingField: 0
+  <ChargeTime>k__BackingField: 0.7
+  _manuallyAssignInvoker: 1
+  _attackInvoker: {fileID: 3542806742543019145}
+  _projectilePrefab: {fileID: 2235233305944768110, guid: 7214bc0e14868fc41a6fe8759991f681, type: 3}
+  _firePoint: {fileID: 1434435400766006065}
+--- !u!135 &2879694326325379403
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501616512239829523}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Radius: 12
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3542806742543019145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1501616512239829523}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7fc1d7ad92c63ec7588c93af94cd0925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Attack::MonkeyBusiness.Combat.Attack.AttackInvoker
+  _attackRangeCollider: {fileID: 2879694326325379403}
+  _attackRange: 12
+  _cooldownTime: 5
+  _attackSpeed: 0.2
+  _debugGizmoColor: {r: 0.5283019, g: 0.11284538, b: 0, a: 0.35}
+  OnAttackInvoked:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1931553726719539987
 GameObject:
   m_ObjectHideFlags: 0
@@ -863,6 +958,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 4777044187095705011}
   - {fileID: 7684809378410626428}
   - {fileID: 2636251509319370849}
   - {fileID: 4485611148989088455}
@@ -952,6 +1048,37 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &6867172975368304802
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1434435400766006065}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Enemy
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1434435400766006065
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6867172975368304802}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.5, z: 1.25}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8303193722649581625}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7448685491234103537
 GameObject:
   m_ObjectHideFlags: 0

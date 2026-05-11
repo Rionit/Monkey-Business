@@ -5,13 +5,11 @@ using UnityEngine;
 namespace MonkeyBusiness.Perks.PerkEffects
 {
     [Serializable]
-    public class RopeSwingEffect : PerkEffectBase
+    public class ShitfestEffect : PerkEffectBase
     {
-        [SerializeField] private bool canUse;
-        
         public override void Apply()
         {
-            StatsManager.Instance.CanUseRope = canUse;
+            StatsManager.Instance.onNonChimpCanPoop?.Invoke(true);
         }
 
         public override void Update()
@@ -21,14 +19,14 @@ namespace MonkeyBusiness.Perks.PerkEffects
 
         public override void Reset()
         {
-            StatsManager.Instance.CanUseRope = !canUse;
+            StatsManager.Instance.onNonChimpCanPoop?.Invoke(false);
         }
-        
+        /*
          
         // You can also override this function to return text with your values
         public override string GetDescription()
         {
-            return description.Replace("<>", canUse.ToString());
+            return description.Replace("<value>", value.ToString());
         }
         
         // Don't forget to tell the designers what <placeholder> types they can use!
@@ -37,5 +35,7 @@ namespace MonkeyBusiness.Perks.PerkEffects
         {
             return "Available placeholders:\n<value> - Max health change amount";
         }
+        
+        */
     }
 }
