@@ -11,6 +11,10 @@ namespace MonkeyBusiness.Managers
     {
         public static StatsManager Instance { get; private set; }
 
+        public UnityEvent<bool> onNonChimpCanPoop;
+
+        public bool canNonChimpPoop = false;
+        
         [ShowInInspector] public float PlayerMaxHealth
         {
             // Null check is only to avoid error in the Editor
@@ -47,18 +51,25 @@ namespace MonkeyBusiness.Managers
             }
         }
 
-        public bool canUseRope
+        private bool canUseRope = true;
+
+        [ShowInInspector]
+        public bool CanUseRope
         {
-            // Null check is only to avoid error in the Editor
-            get => _characterController != null && _characterController.canUseRope;
+            get => _characterController != null
+                ? _characterController.CanUseRope
+                : canUseRope;
+
             set
             {
-                if (_characterController == null) return;
-                _characterController.canUseRope = value;
+                canUseRope = value;
+
+                if (_characterController != null)
+                    _characterController.CanUseRope = value;
             }
         }
         
-        public float GetDamageMultiplier(GameObject prefab)
+        [ShowInInspector] public float GetDamageMultiplier(GameObject prefab)
         {
             if (_damageMultipliers.TryGetValue(prefab, out var value))
                 return value;
@@ -66,7 +77,7 @@ namespace MonkeyBusiness.Managers
             return 1f; // default multiplier
         }
         
-        public void SetDamageMultiplier(GameObject prefab, float amount)
+        [ShowInInspector] public void SetDamageMultiplier(GameObject prefab, float amount)
         {
             _damageMultipliers[prefab] = amount;
         }
@@ -80,17 +91,37 @@ namespace MonkeyBusiness.Managers
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
-            if(Instance != null && Instance != this)
+            if (Instance != null && Instance != this)
             {
                 Debug.LogWarning("Multiple instances of StatsManager detected! Replacing the old one.");
             }
+
             Instance = this;
 
-            var player = GameObject.FindGameObjectsWithTag("Player");
-            _characterController = player[0].GetComponent<PlayerCharacter>();
-            _healthController = player[0].GetComponentInParent<HealthController>();
-            _equipmentManager = player[0].GetComponentInParent<EquipmentManager>();
+            GameManager gameManager = GetComponent<GameManager>();
 
+            if (gameManager == null)
+            {
+                Debug.LogError("StatsManager requires GameManager on the same object.");
+                return;
+            }
+
+            GameObject player = gameManager.PlayerCharacter;
+
+            if (player == null)
+            {
+                Debug.LogError("GameManager PlayerCharacter is null.");
+                return;
+            }
+
+            _characterController = player.GetComponent<PlayerCharacter>();
+            _healthController = player.GetComponentInParent<HealthController>();
+            _equipmentManager = player.GetComponentInParent<EquipmentManager>();
+
+            if (_characterController != null)
+            {
+                _characterController.CanUseRope = canUseRope;
+            }
         }
     }
 }

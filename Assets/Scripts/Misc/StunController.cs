@@ -70,7 +70,7 @@ namespace MonkeyBusiness.Misc
             Debug.Log("Fading " + (fadeIn ? "in" : "out") + " stun VFX over " + duration + " seconds.");
             _stunVFXFadeTween = DOTween.To(GetStunVFXAlpha, SetStunVFXAlpha, endValue, duration).From(startValue);
 
-            if(fadeIn)
+            if(fadeIn && _stunVFX != null)
             {
                 _stunVFX.SetActive(true);
             }

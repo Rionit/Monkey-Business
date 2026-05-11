@@ -171,5 +171,41 @@ namespace MonkeyBusiness.Items
             // Remove Item tag from this gameobject to prevent it from being picked up again by the player
             gameObject.tag = "Untagged";
         }
+        
+        public void ForcePeelState()
+        {
+            _isEaten = true;
+            _bananaPeelPrimed = false;
+
+            // Ensure Item reference exists
+            if (_item == null)
+            {
+                _item = GetComponent<Item>();
+            }
+
+            if (_item != null)
+            {
+                _item.KeepAfterThrowing = false;
+            }
+
+            // Safely toggle visuals
+            if (_bananaModel != null)
+            {
+                _bananaModel.SetActive(false);
+            }
+            else
+            {
+                Debug.LogWarning($"{name}: _bananaModel is not assigned!");
+            }
+
+            if (_peelModel != null)
+            {
+                _peelModel.SetActive(true);
+            }
+            else
+            {
+                Debug.LogWarning($"{name}: _peelModel is not assigned!");
+            }
+        }
     }
 }
