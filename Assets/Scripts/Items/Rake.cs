@@ -81,7 +81,7 @@ namespace MonkeyBusiness.Items
                         enemyFollowController.Slowdown(_slowDuration, _onHitSpeedModifier);
                     }
                    
-                    collider.gameObject.GetComponentInParent<HealthController>().TakeDamage(_impactDamage);
+                    collider.gameObject.GetComponentInParent<HealthController>().TakeDamage(_impactDamage, (collider.transform.position - transform.position).normalized);
                     _enemiesHitSinceLastThrow.Add(collider.transform.root);
                 }
             }

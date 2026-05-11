@@ -79,10 +79,10 @@ namespace MonkeyBusiness.Combat.Weapons
         void OnEnemyHit(HealthController enemy)
         {
             var knockbackController = enemy.GetComponent<KnockbackController>();
+            Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
 
             if(knockbackController != null)
             {
-                Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
                 knockbackController.Knockback(knockbackDirection * _knockbackForce, _knockbackDuration, 0.95f);
             }
             else
@@ -90,7 +90,7 @@ namespace MonkeyBusiness.Combat.Weapons
                 Debug.LogWarning("Enemy " + enemy.name + " hit by melee weapon but has no KnockbackController.");
             }            
 
-            enemy.TakeDamage(_meleeDamage);
+            enemy.TakeDamage(_meleeDamage, knockbackDirection);
         }
 
         IEnumerator MeleeAttackCoroutine()

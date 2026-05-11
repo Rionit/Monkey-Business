@@ -459,7 +459,7 @@ MonoBehaviour:
   _meleeDamage: 10
   _attackDuration: 0.3
   _attackCooldown: 5
-  _knockbackForce: 10
+  _knockbackForce: 25
   _knockbackDuration: 1.5
   _attackHitbox: {fileID: 5403299255457365124}
   _animationTf: {fileID: 6384481924346578729}
@@ -597,6 +597,10 @@ MonoBehaviour:
   - {fileID: 275184883275396140}
   - {fileID: 783102165424217819}
   - {fileID: 8207855789103581148}
+  _vfxType: 0
+  _stunVFX: {fileID: 0}
+  _stunVFXFadeDuration: 0.3
+  _stunStarRenderers: []
 --- !u!1 &1644833479611325685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1060,6 +1064,7 @@ MonoBehaviour:
   <GodMode>k__BackingField: 0
   _hasPoisonEffect: 0
   _poisonEffectRenderer: {fileID: 0}
+  _damageAnimator: {fileID: 0}
 --- !u!114 &8625472717696608940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1100,6 +1105,10 @@ MonoBehaviour:
   - {fileID: 4932702847181503216}
   - {fileID: 8207855789103581148}
   - {fileID: 3049860224932558447}
+  _vfxType: 1
+  _stunVFX: {fileID: 0}
+  _stunVFXFadeDuration: 0.3
+  _stunStarRenderers: []
 --- !u!1 &5654318105315347084
 GameObject:
   m_ObjectHideFlags: 0
@@ -6280,14 +6289,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4976268819071506166}
   - component: {fileID: 5403299255457365124}
-  - component: {fileID: 3519895754353565429}
+  - component: {fileID: 1349685315117928313}
   m_Layer: 8
   m_Name: MeleeAttackHitbox
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4976268819071506166
 Transform:
   m_ObjectHideFlags: 0
@@ -6321,8 +6330,8 @@ MonoBehaviour:
   <OnTargetHit>k__BackingField:
     m_PersistentCalls:
       m_Calls: []
---- !u!65 &3519895754353565429
-BoxCollider:
+--- !u!135 &1349685315117928313
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -6340,8 +6349,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 3.4073205, y: 2.0960388, z: 2.214647}
-  m_Center: {x: 0, y: 0, z: 1.662095}
+  m_Radius: 6
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8788582014187748650
 GameObject:
   m_ObjectHideFlags: 0
