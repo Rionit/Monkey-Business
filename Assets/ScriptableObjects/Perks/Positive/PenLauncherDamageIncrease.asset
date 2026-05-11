@@ -16,7 +16,7 @@ MonoBehaviour:
   perkAlignment: 0
   effect:
     rid: 915476820060012735
-  effectName: 
+  effectName: Better projectiles!
   isUnique: 0
   references:
     version: 2

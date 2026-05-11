@@ -16,7 +16,7 @@ MonoBehaviour:
   perkAlignment: 0
   effect:
     rid: 5385079254299967571
-  effectName: 
+  effectName: Don't you hit 'em!
   isUnique: 0
   references:
     version: 2
