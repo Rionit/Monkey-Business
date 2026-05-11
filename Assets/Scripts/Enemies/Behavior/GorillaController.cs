@@ -96,6 +96,7 @@ namespace MonkeyBusiness.Enemies.Behavior
         {
             _health.OnHealthChanged.AddListener(EnrageIfLow);
             StatsManager.Instance.onNonChimpCanPoop.AddListener(OnCanPoop);
+            OnCanPoop(StatsManager.Instance.canNonChimpPoop);
         }
 
         void OnCanPoop(bool status)

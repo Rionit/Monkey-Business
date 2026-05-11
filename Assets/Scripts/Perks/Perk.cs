@@ -20,7 +20,7 @@ namespace MonkeyBusiness.Perks
         [BoxGroup("UI"), Required]
         [SerializeField] private GameObject confirmLabel;
 
-        private PerkSO perkSO;
+        [SerializeField] private PerkSO perkSO;
         private bool isSelected;
 
         public void Setup(PerkSO perk)
@@ -88,7 +88,7 @@ namespace MonkeyBusiness.Perks
 
         public void ApplyEffect()
         {
-            Debug.Log("Applying effect");
+            Debug.Log("Applying effect " + this.name);
             perkSO.effect?.Apply();
         }
 

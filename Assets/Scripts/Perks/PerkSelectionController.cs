@@ -34,10 +34,9 @@ namespace MonkeyBusiness.Perks
         private readonly List<GameObject> activePerks = new();
 
         // Positive perks stay forever
-        private readonly List<Perk> permanentPerks = new();
-
+        [SerializeField] private List<Perk> permanentPerks = new();
         // Negative perks reset after wave
-        private readonly List<Perk> temporaryPerks = new();
+        [SerializeField] private List<Perk> temporaryPerks = new();
 
         private Perk selectedPerk;
         private Perk negativePerk;
