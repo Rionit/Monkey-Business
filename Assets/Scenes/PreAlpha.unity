@@ -5626,6 +5626,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 6144148375791529375, guid: 50b079fad7386f046a3dd68967ac88f2, type: 3}
   m_PrefabInstance: {fileID: 859071406}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &868228086 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7811822896854748589, guid: d2fc37b85356abd2d978b47dfd7a1d84, type: 3}
+  m_PrefabInstance: {fileID: 4013728348394945660}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &883851438
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12324,11 +12335,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3700747655115154793, guid: d2fc37b85356abd2d978b47dfd7a1d84, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 600
       objectReference: {fileID: 0}
     - target: {fileID: 3700747655115154793, guid: d2fc37b85356abd2d978b47dfd7a1d84, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -150
+      value: -132
       objectReference: {fileID: 0}
     - target: {fileID: 3700747655115154793, guid: d2fc37b85356abd2d978b47dfd7a1d84, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -13216,6 +13227,10 @@ PrefabInstance:
       propertyPath: _pauseMenu
       value: 
       objectReference: {fileID: 1107137842}
+    - target: {fileID: 7623826512875064706, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: _scoreText
+      value: 
+      objectReference: {fileID: 868228086}
     - target: {fileID: 7623826512875064706, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: _deathScreen
       value: 
