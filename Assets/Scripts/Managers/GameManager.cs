@@ -11,6 +11,7 @@ using Ami.BroAudio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using TMPro;
 
 namespace MonkeyBusiness.Managers
 {
@@ -30,6 +31,16 @@ namespace MonkeyBusiness.Managers
     /// </summary>
     public class GameManager : MonoBehaviour, ITargetable
     {
+        public static int Score = 0;
+
+        public static int HighScore = 0;
+
+        public static UnityEvent<int> OnScoreChanged = new();
+
+        const string HIGH_SCORE_KEY = "HighScore";
+
+        const int KILL_SCORE = 100;
+
         [Serializable]
         class SpawnInformation
         {
@@ -66,6 +77,10 @@ namespace MonkeyBusiness.Managers
 
         [SerializeField]
         GameObject _deathScreen;
+
+
+        [SerializeField]
+        TMP_Text _scoreText;
 
         [SerializeField]
         [RequiredIn(PrefabKind.InstanceInScene)]
@@ -107,7 +122,6 @@ namespace MonkeyBusiness.Managers
         /// </summary>
         public GameObject Target => _playerCharacter;
 
-
         /// <summary>
         /// List of all enemy spawn points
         /// </summary>
@@ -124,6 +138,7 @@ namespace MonkeyBusiness.Managers
         /// Player's character object, used for enemy targeting
         /// </summary>
         public GameObject PlayerCharacter => _playerCharacter;
+
 
         Player _playerScript;
 
@@ -158,6 +173,7 @@ namespace MonkeyBusiness.Managers
             }
             Instance = this;
             _canPause = true;
+            Score = 0;
         }
 
         void Start()
@@ -176,6 +192,17 @@ namespace MonkeyBusiness.Managers
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
             
             BroAudio.SetVolume(BroAudioType.All, PlayerPrefs.GetFloat("MasterVolume", 1f));
+        }
+
+        public void PauseOrUnpause()
+        {
+            if(!_canPause) return;
+            Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
+            _pauseMenu.SetActive(Time.timeScale == 0f);
+            Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
+
+            _equipmentManager.CanReceiveInput = Time.timeScale != 0f;
+            _playerScript.CanReceiveInput = Time.timeScale != 0f;
         }
 
         public void PauseOrUnpause(InputAction.CallbackContext context)
@@ -209,6 +236,11 @@ namespace MonkeyBusiness.Managers
             if(enemyObject.TryGetComponent<HealthController>(out HealthController healthController))
             {
                 healthController.OnDeath.AddListener(OnEnemyDestroyed);
+                healthController.OnTakenDamage.AddListener(damage =>
+                {
+                    AddScore(Mathf.RoundToInt(damage));
+                    _scoreText.text = Score.ToString();
+                });
             }
             else
             {
@@ -218,12 +250,27 @@ namespace MonkeyBusiness.Managers
             _enemies.Add(enemyObject);
         }
 
+        public static void AddKillScore()
+        {
+            Score += KILL_SCORE;
+
+        }
+
+        public static void AddScore(int score)
+        {
+            Score += score;
+        }
+
+
+
         /// <summary>
         /// Callback when an enemy is defeated
         /// </summary>
         /// <param name="gameObject">the defeated enemy</param>
         void OnEnemyDestroyed(GameObject gameObject)
         {
+            AddKillScore();
+            _scoreText.text = Score.ToString();
             Debug.Log($"Enemy {gameObject.name} died :D");
             _enemiesRemaining--;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
@@ -356,9 +403,16 @@ namespace MonkeyBusiness.Managers
             Cursor.lockState = CursorLockMode.Confined;
         }
 
+
+
         void Restart()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        void OnDestroy()
+        {
+            PlayerPrefs.SetInt(HIGH_SCORE_KEY, HighScore);
         }
     }
 }
