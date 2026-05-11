@@ -82,7 +82,7 @@ namespace MonkeyBusiness.Items
                 }
 
                 // deal damage to directly hit enemy
-                other.GetComponentInParent<HealthController>().TakeDamage(_impactDamage);
+                other.GetComponentInParent<HealthController>().TakeDamage(_impactDamage, (other.transform.position - transform.position).normalized);
 
                 /* if(other.TryGetComponent(out EnemyFollowController enemyFollowController))
                 {

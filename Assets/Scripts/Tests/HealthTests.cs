@@ -18,7 +18,7 @@ namespace MonkeyBusiness.Tests
             yield return null; // Start() is called after the first frame, so we wait for it to initialize health
 
             // Act
-            healthController.TakeDamage(30f);
+            healthController.TakeDamage(30f, Vector3.zero);
             yield return null;
 
             // Assert
@@ -38,7 +38,7 @@ namespace MonkeyBusiness.Tests
             yield return null; // Start() is called after the first frame, so we wait for it to initialize health
 
             // Act
-            healthController.TakeDamage(50f);
+            healthController.TakeDamage(50f, Vector3.zero);
             yield return null;
             healthController.Heal(20f);
             yield return null;
@@ -60,7 +60,7 @@ namespace MonkeyBusiness.Tests
             healthController.OnDeath.AddListener((obj) => deathEventInvoked = true);
 
             // Act
-            healthController.TakeDamage(maxHealth);
+            healthController.TakeDamage(maxHealth, Vector3.zero );
             yield return null;
 
             // Assert
@@ -80,7 +80,7 @@ namespace MonkeyBusiness.Tests
             healthController.OnDeath.AddListener((obj) => deathEventInvoked = true);
 
             // Act
-            healthController.TakeDamage(2 * maxHealth);
+            healthController.TakeDamage(2 * maxHealth, Vector3.zero);
             yield return null;
 
             // Assert

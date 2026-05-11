@@ -63,7 +63,7 @@ namespace MonkeyBusiness.Items
             if (other.CompareTag("Enemy"))
             {
                 HealthController enemyHealth = other.GetComponentInParent<HealthController>();
-                enemyHealth.TakeDamage(_impactDamage);
+                enemyHealth.TakeDamage(_impactDamage, (other.transform.position - transform.position).normalized);
 
 
                 // Find next target to bounce to

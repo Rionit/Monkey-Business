@@ -30,7 +30,7 @@ namespace MonkeyBusiness.Managers
             {
                 if (_healthController == null) return;
                 if (value < _healthController.CurrentHealth)
-                    _healthController.TakeDamage(_healthController.CurrentHealth - value);
+                    _healthController.TakeDamage(_healthController.CurrentHealth - value, Vector3.up);
                 else if(value > _healthController.CurrentHealth)
                     _healthController.Heal(value - _healthController.CurrentHealth);
             }

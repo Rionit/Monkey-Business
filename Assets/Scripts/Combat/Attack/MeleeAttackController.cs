@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Combat.Health;
+using DG.Tweening;
+using Ami.BroAudio;
 
 namespace MonkeyBusiness.Combat.Attack
 {
@@ -35,6 +37,24 @@ namespace MonkeyBusiness.Combat.Attack
         [Tooltip("If the attack is currently charging")]
         bool _aboutToAttack = false;
 
+        [SerializeField]
+        Renderer _chargeRenderer;
+
+        [SerializeField]
+        GameObject _attackVFX;
+
+        [SerializeField]
+        Color _chargeFinalColor = new Color(188f/255f, 0f, 0f, 0.25f);
+
+        [SerializeField]
+        GameObject _animToggle;
+
+        [SerializeField]
+        SoundSource _chargeSFX;
+
+        [SerializeField]
+        SoundSource _attackSFX;
+
         public void ExecuteAttack(GameObject target)
         {
             StartCoroutine(MeleeAttackCoroutine(target));
@@ -50,20 +70,34 @@ namespace MonkeyBusiness.Combat.Attack
                 yield break;
             }
             _aboutToAttack = true;
+
+            _chargeSFX.Play();
+            var tween = _chargeRenderer.material.DOColor(_chargeFinalColor, ChargeTime).From(new Color(188f/255f, 0f, 0f, 0f)).OnComplete(() => _chargeRenderer.material.color = new Color(188f/255f, 0f, 0f, 0f)); // TODO: Make the color and material properties to tween parameters
+            Debug.Log("Started animating");
             yield return new WaitForSeconds(ChargeTime); // Waits for the charge
 
+            _animToggle.SetActive(true);
+            _attackVFX.SetActive(true);
+            _attackSFX.Play();
+            
+            Debug.Log("activated attack vfx");
             _aboutToAttack = false; // Makes the attack
             // TODO: Attack animation will be here
 
             // If the player gets hit by the attack, it takes damage
             if(_attackInvoker.PlayerInRange)
             {
-                targetHealth.TakeDamage(Damage);
+                targetHealth.TakeDamage(Damage, Vector3.zero);
             }
+
+            yield return new WaitUntil(() => _animToggle.activeSelf == false);
+            _attackVFX.SetActive(false);
+            Debug.Log("Deactivated attack vfx");
         }
 
         void Awake()
         {
+            _chargeRenderer.material.color = new Color(188f/255f, 0f, 0f, 0f);
             if(!_manuallyAssignInvoker)
                 _attackInvoker = GetComponent<AttackInvoker>();
             if(_attackInvoker == null)

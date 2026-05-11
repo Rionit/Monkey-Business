@@ -3,6 +3,9 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Combat.Attack;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Enemies.Navigation;
+using System.Collections.Generic;
+using System;
+using System.Collections;
 
 
 namespace MonkeyBusiness.Enemies.Behavior
@@ -72,8 +75,15 @@ namespace MonkeyBusiness.Enemies.Behavior
         bool _hasRaged = false;
 
         [ShowInInspector]
+        [BoxGroup("Rage")]
         [ReadOnly]
         public float AbsoluteHealthThreshold => _health.MaxHealth * (_rageHealthThreshold / 100f);
+
+
+        [SerializeField]
+        [Tooltip("Index of the material to change when enraged (if the renderer has multiple materials)")]
+        [BoxGroup("Rage")]
+        int _enragedMaterialIndex = 0;
 
         void Awake()
         {
@@ -91,7 +101,15 @@ namespace MonkeyBusiness.Enemies.Behavior
                 _followController.ChangeDefaultValues(_speedMultiplier);
                 _attackController.Damage *= _speedMultiplier; // Increase damage as well for more challenge
                 _attackController.ChargeTime *= _chargeTimeMultiplier; // Decrease charge time for more challenge
-                _renderer.material = _enragedMaterial;
+
+
+                var materials = new Material[_renderer.materials.Length];
+                Array.Copy(_renderer.materials, materials, materials.Length);
+
+                materials[_enragedMaterialIndex] = _enragedMaterial;
+                _renderer.materials = materials;
+
+                Debug.Log("Changing enraged material to " + _enragedMaterial.name);
             }
         }
     }

@@ -44,6 +44,8 @@ namespace MonkeyBusiness.Combat.Attack
             } 
         }
 
+        [SerializeField]
+        [HideInInspector]
         float _cooldownTime = 5f;
 
         /// <summary>
@@ -60,6 +62,8 @@ namespace MonkeyBusiness.Combat.Attack
             }
         }
 
+        [SerializeField]
+        [HideInInspector]
         float _attackSpeed = 0.2f;
 
 
@@ -74,6 +78,8 @@ namespace MonkeyBusiness.Combat.Attack
                 _cooldownTime = 1f / _attackSpeed;   
             }
         }
+
+        const float RAYCAST_CHECK_INTERVAL = 0.5f;
 
         /// <summary>
         /// Whether the player is in the attack range or not.
@@ -106,15 +112,18 @@ namespace MonkeyBusiness.Combat.Attack
         /// </summary>
         public UnityEvent<GameObject> OnAttackInvoked = new();
 
+        float _timeWhenDisabled = float.MinValue;
+
+        GameObject _checkedTarget;
+
         void OnTriggerEnter(Collider other)
         {
             if(other.tag == "Player")
             {
-                Debug.Log("Enemy Colliding with " + other.name);
                 PlayerInRange = true;
+                _checkedTarget = other.gameObject;
                 if(!OnCooldown)
                 {
-
                     StartCoroutine(InvokeAttackCoroutine(other.GetComponent<ITargetable>().Target));
                 }
             }
@@ -137,6 +146,58 @@ namespace MonkeyBusiness.Combat.Attack
             _attackRangeCollider.radius = AttackRange;
         }
 
+        void OnEnable()
+        {
+            var currentTime = Time.time;
+            if(OnCooldown && currentTime - _timeWhenDisabled < CooldownTime)
+            {
+                StartCoroutine(WaitAndStartChecking(CooldownTime - (currentTime - _timeWhenDisabled)));
+            }
+             else if(PlayerInRange && _checkedTarget != null)
+            {
+                StartCoroutine(CheckAttackCoroutine(_checkedTarget));   
+            }
+        }
+
+                void OnDisable()
+        {
+            _timeWhenDisabled = Time.time; 
+        }
+
+        IEnumerator WaitAndStartChecking(float waitTime)
+        {
+            yield return new WaitForSeconds(waitTime);
+            if(_checkedTarget != null && PlayerInRange)
+            {
+                StartCoroutine(CheckAttackCoroutine(_checkedTarget));
+            }
+        }
+
+
+
+        IEnumerator CheckAttackCoroutine(GameObject target)
+        {
+            while(PlayerInRange)
+            {
+                bool inSight = !Physics.Raycast(transform.position, (target.transform.position - transform.position).normalized, out RaycastHit hit, Vector3.Distance(target.transform.position, transform.position), LayerMask.GetMask("Default", "Navigation", "Swing"));
+                if(inSight) // The enemy can directly see the target -> attack
+                {
+                    if(!OnCooldown)
+                    {
+                        Debug.Log("Player in sight - invoking attack");
+                        StartCoroutine(InvokeAttackCoroutine(target));
+                        yield break; 
+                    }
+                    else yield return new WaitForSeconds(RAYCAST_CHECK_INTERVAL); // Wait for cooldown to expire and check again
+                }
+                else // The enemy cannot directly see the target -> check again after a short delay
+                {
+                    Debug.Log("Enemy not in sight - waiting");
+                    yield return new WaitForSeconds(RAYCAST_CHECK_INTERVAL);
+                }        
+            }
+        }
+
         /// <summary>
         /// Invokes the attack and waits for the cooldown to expire.
         /// </summary>
@@ -144,13 +205,15 @@ namespace MonkeyBusiness.Combat.Attack
         /// <remarks> Might start another attack coroutine after cooldown expiration. </remarks>
         IEnumerator InvokeAttackCoroutine(GameObject target)
         {
+            Debug.Log("Attack about to be invoked - waiting for cooldown");
             OnCooldown = true;
             OnAttackInvoked.Invoke(target);
             yield return new WaitForSeconds(CooldownTime);
             OnCooldown = false;
             if(PlayerInRange)
             {
-                StartCoroutine(InvokeAttackCoroutine(target));
+                Debug.Log("Cooldown expired and player still in range - checking attack again");
+                StartCoroutine(CheckAttackCoroutine(target));
             }
         }
 

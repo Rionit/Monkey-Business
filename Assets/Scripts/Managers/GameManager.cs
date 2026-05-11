@@ -72,23 +72,11 @@ namespace MonkeyBusiness.Managers
         EquipmentManager _equipmentManager;
 
         private bool _perkSelected = true;
-        
-        /// <summary>
-        /// How many enemies in total are spawned per wave
-        /// </summary>
-        [SerializeField]
-        private int _enemiesPerWave = 10;
 
         /// <summary>
         /// How many enemies remain until the wave ends
         /// </summary>
         private int _enemiesRemaining;
-
-        /// <summary>
-        /// How many enemies are spawned at once
-        /// </summary>
-        [SerializeField]
-        private int _enemiesSpawnedAtOnce = 2;
 
         /// <summary>
         /// How long the preparation phase lasts in seconds
@@ -185,7 +173,6 @@ namespace MonkeyBusiness.Managers
             _playerScript = _playerCharacter.GetComponentInParent<Player>();
             StartCoroutine(PreparationPhase());
 
-            _enemiesSpawnedAtOnce = Math.Min(_enemiesSpawnedAtOnce, _enemySpawnPoints.Count);
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
             
             BroAudio.SetVolume(BroAudioType.All, PlayerPrefs.GetFloat("MasterVolume", 1f));
@@ -319,7 +306,9 @@ namespace MonkeyBusiness.Managers
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)
             {   
-                int possibleEnemies =  Mathf.Min(waveInfo.enemiesPerSpawn, Math.Min(waveInfo.enemiesAtOnce - _enemies.Count, _enemiesPerWave)); 
+                int possibleEnemies =  Mathf.Min(waveInfo.enemiesPerSpawn, Mathf.Min(waveInfo.enemiesAtOnce - _enemies.Count, _enemiesRemaining - _enemies.Count)); 
+
+                Debug.Assert(_enemiesRemaining >= _enemies.Count, "Enemies remaining should never be less than currently alive enemies");
 
                 int spawnableEnemies= Mathf.Max(_enemiesRemaining - _enemies.Count, 0);
 
@@ -329,6 +318,8 @@ namespace MonkeyBusiness.Managers
                 {
                     Debug.LogError("Trying to spawn more enemies than remaining! This should not happen, check the spawn logic!");
                 }
+            
+                Debug.Log("Spawning " + Mathf.Min(possibleEnemies, spawnableEnemies) + " enemies. " + _enemies.Count + "/" + _enemiesRemaining + " currently alive.");
 
                 for(int i = 0; i < Mathf.Min(possibleEnemies, spawnableEnemies); i++)
                 {
@@ -337,12 +328,12 @@ namespace MonkeyBusiness.Managers
 
                     if(randomPick < _typesToSpawn[gorillaPrefab]) // Spawn gorilla
                     {
-                        SpawnEnemy(gorillaPrefab, i % _enemiesSpawnedAtOnce);
+                        SpawnEnemy(gorillaPrefab, i % _enemySpawnPoints.Count);
                         _typesToSpawn[gorillaPrefab]--;
                     }
                     else // Spawn chimp
                     {
-                        SpawnEnemy(chimpPrefab, i % _enemiesSpawnedAtOnce);
+                        SpawnEnemy(chimpPrefab, i % _enemySpawnPoints.Count);
                         _typesToSpawn[chimpPrefab]--;
                     }
 

@@ -48,7 +48,10 @@ namespace MonkeyBusiness.Combat.Weapons
 
         public virtual void Equip()
         {
+            #if DEBUG_PROXIMITY_WEAPON
             Debug.Log($"Equipped item {gameObject.name}");
+            #endif
+            
             gameObject.SetActive(true);
 
 
@@ -83,7 +86,9 @@ namespace MonkeyBusiness.Combat.Weapons
 
         public virtual void Unequip()
         {
+            #if DEBUG_PROXIMITY_WEAPON
             Debug.Log($"Unequipped item {gameObject.name}");
+            #endif
             gameObject.SetActive(false);
             OnUnequipped.Invoke(this);
         }
