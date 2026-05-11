@@ -51,7 +51,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 1
-  m_Speed: 15
+  m_Speed: 20
   m_Acceleration: 20
   avoidancePriority: 67
   m_AngularSpeed: 270
@@ -115,19 +115,7 @@ MonoBehaviour:
       m_Calls: []
   OnDeath:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 256866884491211723}
-        m_TargetAssemblyTypeName: MonkeyBusiness.Misc.Dropper, MonkeyBusiness.Misc
-        m_MethodName: DropRandomFromPool
-        m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   <GodMode>k__BackingField: 0
   _hasPoisonEffect: 1
   _poisonEffectRenderer: {fileID: 3271741600601372873}
@@ -230,9 +218,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e13f37cefab95f0c9a2ae2b68bc637e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.KnockbackController
-  _suppressedComponents: []
+  _suppressedComponents:
+  - {fileID: 1388641176820628042}
+  - {fileID: 1158444943826890477}
+  - {fileID: 629078932287645410}
   _body: {fileID: 576045929676939833}
   _minimumVelocity: 0.1
+  _defaultDamping: 1
 --- !u!1 &5758220776333362340
 GameObject:
   m_ObjectHideFlags: 0
@@ -723,13 +715,29 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3343822903242606426}
     m_Modifications:
+    - target: {fileID: 775017350366927766, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 832104749135780868, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2765368123732149797, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
+    - target: {fileID: 3184314609648357529, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3283345951244197583, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3283345951244197583, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.18
       objectReference: {fileID: 0}
     - target: {fileID: 3283345951244197583, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -763,9 +771,33 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5368100568707487602, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
+    - target: {fileID: 6668004286699266416, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7125789753282054695, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
     - target: {fileID: 7275475546431700924, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
       propertyPath: m_Name
       value: SlowdownSphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 7547233060149850006, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
+    - target: {fileID: 7870995120555796389, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 8269699034371843587, guid: 4fbf2b62db1111f09872dafd9cae3e96, type: 3}
+    - target: {fileID: 8239963297909989799, guid: a4cb147d624dc2a6aa49f252a1311e0f, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

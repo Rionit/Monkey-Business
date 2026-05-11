@@ -46,7 +46,7 @@ namespace MonkeyBusiness.Combat.Weapons
 
         protected bool _isLoading = false;
 
-        public void Equip()
+        public virtual void Equip()
         {
             Debug.Log($"Equipped item {gameObject.name}");
             gameObject.SetActive(true);
@@ -81,7 +81,7 @@ namespace MonkeyBusiness.Combat.Weapons
             OnAmmoChanged.Invoke(this as IWeapon);
         }
 
-        public void Unequip()
+        public virtual void Unequip()
         {
             Debug.Log($"Unequipped item {gameObject.name}");
             gameObject.SetActive(false);

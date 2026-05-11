@@ -30,6 +30,11 @@ namespace MonkeyBusiness.Combat.Health
         /// Event invoked when health changes, with the new health value as a parameter.
         /// </summary>
         public UnityEvent<float> OnHealthChanged = new();
+
+        /// <summary> 
+        /// Same as OnHealthChanged, just returns the ratio of max and current health.
+        /// </summary>
+        public UnityEvent<float> OnHealthRatioChanged = new();
         
         /// <summary>
         /// Event invoked when the entity takes damage.
@@ -80,6 +85,7 @@ namespace MonkeyBusiness.Combat.Health
         {
             CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
             OnHealthChanged.Invoke(CurrentHealth);
+            OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
         }
 
         /// <summary>
@@ -99,7 +105,11 @@ namespace MonkeyBusiness.Combat.Health
             {
                 Die();
             }
-            else OnHealthChanged.Invoke(CurrentHealth);
+            else
+            {
+                OnHealthChanged.Invoke(CurrentHealth);
+                OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
+            }
 
             Debug.Log("Current health " + CurrentHealth);
         }
@@ -156,6 +166,7 @@ namespace MonkeyBusiness.Combat.Health
             MaxHealth = Mathf.Max(1f, amount);
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
             OnHealthChanged.Invoke(CurrentHealth);
+            OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
         }
     }
 }
