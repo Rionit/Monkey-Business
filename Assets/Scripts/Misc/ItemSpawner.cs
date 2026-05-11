@@ -57,6 +57,7 @@ namespace MonkeyBusiness.Misc
         {
             Gizmos.color = Color.limeGreen;
             Gizmos.DrawWireCube(transform.position, Vector3.one * .25f);
+            Gizmos.DrawRay(new Ray(transform.position, transform.forward));
         }
     }
 }
