@@ -10,11 +10,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 221661243460642512, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0278
+      value: 0.929
       objectReference: {fileID: 0}
     - target: {fileID: 221661243460642512, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0.0057
+      value: 0.174
       objectReference: {fileID: 0}
     - target: {fileID: 859704824868229792, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_Materials.Array.size
@@ -32,6 +32,34 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
       objectReference: {fileID: -8067726398312463513, guid: b32a9381648b65945992d14a9cc27bf7, type: 3}
+    - target: {fileID: 2573148377517740207, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2573148377517740207, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: -8067726398312463513, guid: b32a9381648b65945992d14a9cc27bf7, type: 3}
+    - target: {fileID: 2573148377517740207, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 229b412a4f3e61345887880fdb49fba6, type: 2}
+    - target: {fileID: 2653857834709012642, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 33.864998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2653857834709012642, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 33.864998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2653857834709012642, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 33.864998
+      objectReference: {fileID: 0}
+    - target: {fileID: 2836267563123040543, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: -5495902117074765545, guid: a7546af037de3904986e20202f006b2b, type: 3}
     - target: {fileID: 4055812469544047193, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -49,12 +77,28 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: _weaponMover
+      value: 
+      objectReference: {fileID: 1308965456330269285}
+    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: _accuracyRange
       value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: _accuracyRadius
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: _bulletSpawnMover
+      value: 
+      objectReference: {fileID: 1356382621982082354}
+    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: _recoilKickback.z
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: _mouseSensitivityModifier
+      value: 0.35
       objectReference: {fileID: 0}
     - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: _onWeaponFired.m_PersistentCalls.m_Calls.Array.size
@@ -79,6 +123,18 @@ PrefabInstance:
     - target: {fileID: 5211272621445442719, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: _onWeaponFired.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_LocalPosition.x
@@ -120,12 +176,51 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -180
       objectReference: {fileID: 0}
+    - target: {fileID: 8042500572934283740, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      propertyPath: _moveDistance
+      value: -0.15
+      objectReference: {fileID: 0}
     - target: {fileID: 8453933904731248803, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
       propertyPath: m_Name
       value: PenLauncher
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 859704824868229792, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+    - {fileID: 4055812469544047193, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5596078140349675692, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1356382621982082354}
   m_SourcePrefab: {fileID: 100100000, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+--- !u!114 &1308965456330269285 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8042500572934283740, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+  m_PrefabInstance: {fileID: 9058659204814668729}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6036fce6aa0859e1ab64c00ed598af0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.WeaponMover
+--- !u!1 &3467650655505873685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5596078140349675692, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}
+  m_PrefabInstance: {fileID: 9058659204814668729}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1356382621982082354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3467650655505873685}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6036fce6aa0859e1ab64c00ed598af0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.WeaponMover
+  _moveDistance: 0.4
+  _moveInstantly: 1

@@ -1,4 +1,13 @@
-# Enemies
+# Enemies - new README
+![](../Images/enemies/screenshot1.png)
+
+![](../Images/enemies/screenshot2.png)
+
+![](../Images/enemies/screenshot3.png)
+
+![](../Images/enemies/screenshot4.png)
+
+# Enemies - old README
 This branch introduces two enemy prefabs (`Chimp` and `Gorilla`) with navigation, health, and attack setups.
 
 Following files are added/used:

@@ -170,7 +170,7 @@ namespace MonkeyBusiness.Enemies.Navigation
                 if(followController != null)
                 {
                     followController.CurrentZone = this;
-                    Debug.Log("Enemy entered zone " + ID);
+                    //Debug.Log("Enemy entered zone " + ID);
                 }
                 else
                 {
@@ -180,7 +180,7 @@ namespace MonkeyBusiness.Enemies.Navigation
             else if(tag == "Player")
             {
                 TrafficManager.Instance.PlayerZone = this;
-                Debug.Log("Player entered zone " + ID);
+                //Debug.Log("Player entered zone " + ID);
             }           
         }
 

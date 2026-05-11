@@ -8,13 +8,13 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Misc;
 using DG.Tweening;
 using UnityEngine.UI;
+using Ami.BroAudio;
 
 
 namespace MonkeyBusiness.Combat.Weapons
 {
     public class PlayerMeleeWeapon : MonoBehaviour
     {
-
         [SerializeField]
         [BoxGroup("Melee stats")]
         float _meleeDamage = 10f;
@@ -55,12 +55,17 @@ namespace MonkeyBusiness.Combat.Weapons
         [RequiredIn(PrefabKind.InstanceInScene)]
         ParticleSystem _attackEffect;
 
+        [SerializeField]
+        SoundSource _meleeAttackSound;
 
         InputAction _meleeAttackAction;
 
         [SerializeField]
         [RequiredIn(PrefabKind.InstanceInScene)]
         Image _chargeImage;
+
+        [SerializeField]
+        string _enemyTag = "Enemy";
 
         void Awake()
         {
@@ -74,43 +79,47 @@ namespace MonkeyBusiness.Combat.Weapons
         void OnEnemyHit(HealthController enemy)
         {
             var knockbackController = enemy.GetComponent<KnockbackController>();
+            Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
 
             if(knockbackController != null)
             {
-                Vector3 knockbackDirection = (enemy.transform.position - transform.position).normalized;
-                knockbackController.Knockback(knockbackDirection * _knockbackForce, _knockbackDuration);
+                knockbackController.Knockback(knockbackDirection * _knockbackForce, _knockbackDuration, 0.95f);
             }
             else
             {
                 Debug.LogWarning("Enemy " + enemy.name + " hit by melee weapon but has no KnockbackController.");
             }            
 
-            enemy.TakeDamage(_meleeDamage);
+            enemy.TakeDamage(_meleeDamage, knockbackDirection);
         }
 
         IEnumerator MeleeAttackCoroutine()
         {
-                _onCooldown = true;
-                _attackHitbox.enabled = true;
-                _attackHitbox.gameObject.SetActive(true);
+            _onCooldown = true;
+            _attackHitbox.enabled = true;
+            _attackHitbox.gameObject.SetActive(true);
 
-                _attackEffect.Play();
-                _animationTf.localRotation = Quaternion.Euler(0, 90f, 0f); // Rotate the weapon downwards for the attack animation
-                _animationTf.gameObject.SetActive(true);
-                var tween = _animationTf.DOLocalRotate(new Vector3(0, -90f, 0f), 0.2f).SetEase(Ease.Linear); // TODO: Make editable
-                // Tween charge image to 0 with quadratic ease in-and-out
-                DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 0f, 0.5f).SetEase(Ease.InOutCubic)
-                .OnComplete(() => DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 1f, _attackCooldown - 0.5f).SetEase(Ease.Linear));
+            _attackEffect.Play();
 
-                yield return new WaitForSeconds(_attackDuration); // Duration of the attack hitbox being active
-                _animationTf.gameObject.SetActive(false);
+            _animationTf.localRotation = Quaternion.Euler(0, 90f, 0f); // Rotate the weapon downwards for the attack animation
+            _animationTf.gameObject.SetActive(true);
+            _meleeAttackSound.Play();
+            var tween = _animationTf.DOLocalRotate(new Vector3(0, -90f, 0f), 0.2f).SetEase(Ease.Linear); // TODO: Make editable
+            // Tween charge image to 0 with quadratic ease in-and-out
+            DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 0f, 0.5f).SetEase(Ease.InOutCubic)
+            .OnComplete(() => DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 1f, _attackCooldown - 0.5f).SetEase(Ease.Linear));
 
-                _attackHitbox.gameObject.SetActive(false);
-                _attackHitbox.enabled = false;
+            yield return new WaitForFixedUpdate();
+            _attackHitbox.gameObject.SetActive(false);
+            _attackHitbox.enabled = false;
+            yield return new WaitForSeconds(0.2f - Time.fixedDeltaTime); // Wait for the rest of the attack animation to finish, minus the fixed update wait at the start
 
-                yield return new WaitForSeconds(_attackCooldown - _attackDuration); // Cooldown duration
-    
-                _onCooldown = false;
+            //yield return new WaitForSeconds(_attackDuration); // Duration of the attack hitbox being active
+            _animationTf.gameObject.SetActive(false);
+
+            yield return new WaitForSeconds(_attackCooldown - 0.2f + Time.fixedDeltaTime); // Cooldown duration
+
+            _onCooldown = false;
         }
 
         void Update()
