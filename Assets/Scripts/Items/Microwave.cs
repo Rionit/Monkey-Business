@@ -72,7 +72,7 @@ namespace MonkeyBusiness.Items
                 explosionDamageFactor = Mathf.Min(2 * explosionDamageFactor, 1.0f);
 
                 Debug.Log($"Dealing {_explosionDamage * explosionDamageFactor} damage");
-                healthController.TakeDamage(_explosionDamage * explosionDamageFactor);
+                healthController.TakeDamage(_explosionDamage * explosionDamageFactor, (collider.transform.position - transform.position).normalized);
                 // prevent damaging the same enemy multiple times by hitting more than one of their hitboxes
                 hitEnemies.Add(collider.transform.root);
 

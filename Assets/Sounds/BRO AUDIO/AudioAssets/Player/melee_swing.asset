@@ -13,21 +13,13 @@ MonoBehaviour:
   m_Name: melee_swing
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
   <ID>k__BackingField: 0
-  MulticlipsPlayMode: 2
+  MulticlipsPlayMode: 0
   _group: {fileID: 0}
   Clips:
-  - AudioClip: {fileID: 8300000, guid: 71dbe5737ec54de4ab651bf228db7930, type: 3}
+  - AudioClip: {fileID: 8300000, guid: d705b57870abede45a96aa3d2837ccdc, type: 3}
     Volume: 1
     Delay: 0
-    StartPosition: 0.068
-    EndPosition: 0
-    FadeIn: 0
-    FadeOut: 0
-    Weight: 0
-  - AudioClip: {fileID: 8300000, guid: b8336d8cec5567f468de3ee1e6246063, type: 3}
-    Volume: 1
-    Delay: 0
-    StartPosition: 0.018
+    StartPosition: 0
     EndPosition: 0
     FadeIn: 0
     FadeOut: 0
@@ -40,10 +32,10 @@ MonoBehaviour:
   <TransitionTime>k__BackingField: 0
   <SpatialSetting>k__BackingField: {fileID: 0}
   <Priority>k__BackingField: 128
-  <Pitch>k__BackingField: 1
-  <PitchRandomRange>k__BackingField: 0.20000005
+  <Pitch>k__BackingField: 2
+  <PitchRandomRange>k__BackingField: -0.7
   <VolumeRandomRange>k__BackingField: 0
-  <RandomFlags>k__BackingField: 1
+  <RandomFlags>k__BackingField: 0
   SeamlessTransitionType: 0
   TransitionTempo:
     BPM: 0

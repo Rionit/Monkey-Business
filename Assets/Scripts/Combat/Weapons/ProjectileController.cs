@@ -170,7 +170,7 @@ namespace MonkeyBusiness.Combat.Weapons
                     Debug.LogError("Target does not have a HealthController component!");
                     return;
                 }
-                targetHealth.TakeDamage(Damage * DamageMultiplier);
+                targetHealth.TakeDamage(Damage * DamageMultiplier, Vector3.zero);
             }
 
             if((_destroyedBy.value & (1 << other.gameObject.layer)) != 0)

@@ -212,6 +212,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Scope",
+                    "type": "Button",
+                    "id": "070af884-9f48-46c1-8bb3-b6dafe01c53d",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -734,8 +743,8 @@
                 },
                 {
                     "name": "",
-                    "id": "b9ab34fd-3255-4966-b28b-78e6447fd0ba",
-                    "path": "<Mouse>/rightButton",
+                    "id": "e18ab3f6-f5ff-4b6f-8293-153e046006a3",
+                    "path": "<Keyboard>/leftShift",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -751,6 +760,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "Pause",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b530ca12-3b83-4166-84b0-b1be04241e6b",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Scope",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

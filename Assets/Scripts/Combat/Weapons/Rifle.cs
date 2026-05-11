@@ -4,11 +4,14 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.Collections;
 using MonkeyBusiness.Misc;
-using System.Diagnostics.CodeAnalysis;
 using MonkeyBusiness.Managers;
-using Sirenix.Utilities;
 using System.Collections.Generic;
+
+using UnityEngine.InputSystem;
 using DG.Tweening;
+using DG.Tweening.Core;
+using DG.Tweening.Plugins.Options;
+using MonkeyBusiness.Player;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -22,7 +25,7 @@ namespace MonkeyBusiness.Combat.Weapons
     /// </summary>
     public class Rifle : MonoBehaviour, IWeapon
     {    
-        static Tween _scopeTween;
+        static Sequence _scopeTween;
 
         [SerializeField]
         [Tooltip("Stats of the weapon used")]
@@ -78,7 +81,6 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         int _projectilesPerShot = 1;
 
-
         [BoxGroup("Scope")]
         [SerializeField]
         [Tooltip("Number of projectiles fired per shot.")]
@@ -132,19 +134,42 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         [Tooltip("Accuracy range of the aim circle at the given length.")]
         float _accuracyRange; 
+        
+        [SerializeField]
+        [Tooltip("Direction and strength of the recoil kickback applied to the shotgun when firing.")]
+        Vector3 _recoilKickback = new Vector3(0f, 0f, -0.7f);
+
+        [SerializeField]
+        WeaponMover _weaponMover;
+
+        [SerializeField]
+        WeaponMover _bulletSpawnMover;
+
+        InputAction _scopeAction;
+
+        InputAction _moveAction;
+
+        TweenerCore<Vector3, Vector3, VectorOptions> _recoilTween;
+
+        float _defaultSensitivity; // Default mouse sensitivity (for non-scope)
+
+        [SerializeField]
+        [BoxGroup("Scope")]
+        float _mouseSensitivityModifier = 0.65f; // Multiplier applied to mouse sensitivity when aiming down sights
+
+        bool _isScoped = false;
+
+        Vector3 _defaultMeshPosition;
+        Vector3 _defaultBulletSpawnPosition;
+
+        Vector3 _scopePosition; 
+
+        [SerializeField]
+        [BoxGroup("Scope")]
+        PlayerCamera _playerCamera;
 
         public void Equip()
         {
-            if(_usesScope)
-            {
-                if(_scopeTween != null)
-                {
-                    _scopeTween.Kill();
-                    _scopeTween = null;
-                }
-                Scope();
-            }
-        
             Debug.Log($"Equipped item {gameObject.name}");
             gameObject.SetActive(true);
 
@@ -155,15 +180,18 @@ namespace MonkeyBusiness.Combat.Weapons
 
         public void Unequip()
         {
-            if(_usesScope)
+            if(_usesScope && _isScoped)
             {
                 if(_scopeTween != null)
                 {
                     _scopeTween.Kill();
                     _scopeTween = null;
                 }
+                transform.localPosition = _defaultMeshPosition; 
                 Unscope();
             }
+
+            _isScoped = false;
 
             Debug.Log($"Unequipped item {gameObject.name}");
             gameObject.SetActive(false);
@@ -199,38 +227,61 @@ namespace MonkeyBusiness.Combat.Weapons
             OnAmmoChanged.Invoke(this);
         }
 
-        /// <summary>
-        /// Randomizes the aim direction within the accuracy radius and range, based on the selected accuracy distribution.
-        /// </summary>
-        Vector3 RandomAimPos()
-        {
-            // Takes random radius
-            float radius = Random.Range(0, _accuracyRadius);
-            float radius2 = radius * radius;
-
-            Vector2 displacement = Random.insideUnitCircle * radius2;
-            Vector3 displacement3D = new Vector3(displacement.x, displacement.y);
-
-            Vector3 transformedDisplacement = Camera.main.transform.TransformDirection(displacement3D);
-
-            Transform cameraTf = Camera.main.transform;
-            return cameraTf.position + cameraTf.forward * _accuracyRange + transformedDisplacement;
-        }
-
         void Scope()
         {
+            Debug.Log("Scoping on " + gameObject.name);
+            _playerCamera.sensitivity = _defaultSensitivity;
             Camera.main.fieldOfView = 60f;
-            _scopeTween = Camera.main.DOFieldOfView(_scopedFOV, _scopeTransitionTime);
+            _scopeTween = DOTween.Sequence();
+
+            _scopeTween.Join(Camera.main.DOFieldOfView(_scopedFOV, _scopeTransitionTime));
+            _scopeTween.Join(DOTween.To(() => _playerCamera.sensitivity, x => _playerCamera.sensitivity = x, _defaultSensitivity * _mouseSensitivityModifier, _scopeTransitionTime));
+            
+            _weaponMover.enabled = false;
+            _weaponMover.MoveTo(_scopePosition, _scopeTransitionTime, Ease.InOutQuad);
+
+            //_bulletSpawnMover.enabled = false;
+            _bulletSpawnMover.MoveTo(_scopePosition + (_defaultMeshPosition - _defaultBulletSpawnPosition), _scopeTransitionTime, Ease.InOutQuad);
+
             _scopeTween.OnComplete(() => _scopeTween = null);
         }
 
         void Unscope()
         {
+            _playerCamera.sensitivity = _defaultSensitivity * _mouseSensitivityModifier;
             Camera.main.fieldOfView = _scopedFOV;
-            _scopeTween = Camera.main.DOFieldOfView(60f, _scopeTransitionTime);
-            _scopeTween.OnComplete(() => _scopeTween = null);
+            _scopeTween = DOTween.Sequence();
+            
+            _scopeTween.Join(Camera.main.DOFieldOfView(60f, _scopeTransitionTime));
+            _scopeTween.Join(DOTween.To(() => _playerCamera.sensitivity, x => _playerCamera.sensitivity = x, _defaultSensitivity, _scopeTransitionTime));
+            _weaponMover.MoveTo(_defaultMeshPosition, _scopeTransitionTime, Ease.InOutQuad);
+            _bulletSpawnMover.MoveTo(_bulletSpawnPoint.localPosition, _scopeTransitionTime, Ease.InOutQuad);
+            _scopeTween.OnComplete(() => 
+            {
+                _scopeTween = null;
+                _weaponMover.enabled = true;
+                _bulletSpawnMover.enabled = true;
+            });
         }
         
+        void Update()
+        {
+            if(_usesScope && _scopeAction.WasPressedThisFrame())
+            {
+                Debug.Log("Scope action triggered for " + gameObject.name);
+                if(_scopeTween != null)
+                {
+                    _scopeTween.Kill();
+                    _scopeTween = null;
+                }
+                if(_isScoped)  
+                    Unscope();
+                else    
+                    Scope();
+
+                _isScoped = !_isScoped;
+            }
+        }
 
         /// <summary>
         /// Fires upon target, then waits for the shooting interval before allowing to fire again.
@@ -258,32 +309,16 @@ namespace MonkeyBusiness.Combat.Weapons
                     //yield return new WaitForSeconds(_shootingInterval/_projectilesPerShot);
                 }
             }
+            var recoilTime = Mathf.Min(Mathf.Max (_shootingInterval / 3f, 0.025f), 0.1f);
+            var recoilReturnTime = Mathf.Max(Mathf.Min(_shootingInterval - recoilTime, 0.5f),0f);
 
-           /* float waitTime = _shootingInterval / _projectilesPerShot;
-
-            if(_projectilesPerShot % 2 == 1)
+            _recoilTween = transform.DOLocalMove(transform.localPosition + _recoilKickback, recoilTime).SetEase(Ease.OutQuad)
+            .OnComplete(() =>
             {
-                FireProjectile(Camera.main.transform.forward);
-                yield return new WaitForSeconds(waitTime);
-            }
-            float angleStep = _shootingAngle / (2*(_projectilesPerShot - 1));
-            for(int i = 0; i < _projectilesPerShot/2; i++)
-            {
-                float currentAngle = angleStep * (i + 1);
-                Vector3 directionRight = Quaternion.Euler(0, currentAngle, 0) * Camera.main.transform.forward;
-                Vector3 directionLeft = Quaternion.Euler(0, -currentAngle, 0) * Camera.main.transform.forward;
-                FireProjectile(directionRight);
-                FireProjectile(directionLeft);
+                _recoilTween = transform.DOLocalMove(_defaultMeshPosition, recoilReturnTime).SetEase(Ease.InQuad)
+                .OnComplete(() => _recoilTween = null);
+            });
 
-                yield return new WaitForSeconds(waitTime);
-
-                //yield return new WaitForSeconds(_shootingInterval/_projectilesPerShot);
-            }*/
-
-
-
-
-            
             yield return new WaitForSeconds(_shootingInterval);
             _isLoading = false;
         }
@@ -322,16 +357,29 @@ namespace MonkeyBusiness.Combat.Weapons
                 QueryTriggerInteraction.Collide);
 
             bool hitDefault = false;
+            bool hitStatic = false;
             var listOfTargets = new SortedSet<ProjectileHitInfo> (new ProjectileHitInfoComparer());
+
+            Vector3 stickPos = Vector3.positiveInfinity;
+            bool hitPlayer = false;
             if(hitsSomething)
             {
                 var objectHit = hit.collider.gameObject;
                 var hitPos = hit.point;
+                hitPlayer = objectHit.CompareTag("Player");
+                hitStatic = objectHit.isStatic;
+                stickPos = hit.point;
 
-                var hitDist = Vector3.Distance(cameraPos, hitPos);
-                maxRange = hitDist;
-                deathTime = hitDist / projectileController.Speed;
-                hitDefault = objectHit.layer == LayerMask.NameToLayer("Default");
+                if(!hitPlayer)
+                { 
+                    Debug.Log("Didn't hit player  - hit " + objectHit.name + " instead");
+                    var hitDist = Vector3.Distance(cameraPos, hitPos);
+                    maxRange = hitDist;
+                    deathTime = hitDist / projectileController.Speed;
+            
+                    hitDefault = objectHit.layer == LayerMask.NameToLayer("Default");
+                }            
+                Debug.Log("Hit player?  " + hitPlayer);
             }   
             if(!destroyedByDefault || !hitDefault)
             {
@@ -342,14 +390,36 @@ namespace MonkeyBusiness.Combat.Weapons
                     maxRange + 1f,
                     LayerMask.GetMask("Default"), QueryTriggerInteraction.Collide);
 
+                var minDist = float.MaxValue;
                 foreach(var target in targetsHit)
                 {
+                    var distance = Vector3.Distance(cameraPos, target.point);
+                    if(destroyedByDefault && hitPlayer && !target.collider.CompareTag("Player") && distance < minDist)
+                    {
+                        minDist = distance;
+                        maxRange = distance;
+                        deathTime = distance / projectileController.Speed;
+                        stickPos = target.point;
+                        Debug.Log("Found new destruction point at distance " + distance);
+                        hitStatic = target.collider.gameObject.isStatic;
+                    }
+
                     if(target.collider.isTrigger && target.collider.CompareTag("Enemy"))
                     {
-                        var distance = Vector3.Distance(cameraPos, target.point);
                         var hitTime = distance / projectileController.Speed;
                         listOfTargets.Add(new ProjectileHitInfo(target.collider.gameObject, hitTime));
                     }
+                }
+
+                
+                for(int i = 0; i < listOfTargets.Count; i++)
+                {
+                    var target = listOfTargets.Max;
+                    if(target.HitTime > deathTime)
+                    {
+                        listOfTargets.Remove(target);
+                    }
+
                 }
             }
             else if(hit.collider.isTrigger && hit.collider.CompareTag("Enemy"))
@@ -359,7 +429,7 @@ namespace MonkeyBusiness.Combat.Weapons
                 listOfTargets.Add(new ProjectileHitInfo(hit.collider.gameObject, hitTime));
             }
             Debug.Log("Has targets? " + (listOfTargets.Count > 0));
-            projectileController.Initialize(GetAimDirection(testDir), deathTime, listOfTargets);
+            projectileController.Initialize(GetAimDirection(testDir), deathTime, listOfTargets, hitStatic, stickPos);
 
             _isLoading = true;
 
@@ -368,14 +438,20 @@ namespace MonkeyBusiness.Combat.Weapons
             
         }
 
-
         void Awake()
         {
+            _moveAction = InputSystem.actions.FindAction("Move");
+            
+            _defaultSensitivity = _playerCamera.sensitivity;
             //_transforms = GetComponentsInChildren<Transform>();
             MaxAmmo = _data.MaxAmmo;
             CurrentAmmo = MaxAmmo;
-            
+            _defaultMeshPosition = transform.localPosition;
+            _defaultBulletSpawnPosition = _bulletSpawnPoint.localPosition;
             _shootingInterval = 1f / _data.RateOfFire;
+            _scopeAction = InputSystem.actions.FindAction("Scope");
+            //_scopeAction.performed += ScopeOrUnscope;
+            _scopeAction.Enable();
 
             if(_coroutineRunner == null)
             {
@@ -387,6 +463,13 @@ namespace MonkeyBusiness.Combat.Weapons
             }
         }
 
+        void Start()
+        {
+            if(_usesScope)
+            {
+                _scopePosition = transform.InverseTransformPoint(Camera.main.transform.position + new Vector3(0.25f, -0.35f, 0.9f)); 
+            }
+        }
         /// <summary>
         /// Calculates the aim direction based on the camera's forward direction and what it hits.
         /// </summary>

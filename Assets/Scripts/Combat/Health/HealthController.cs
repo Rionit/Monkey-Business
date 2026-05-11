@@ -4,6 +4,8 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
 using MonkeyBusiness.Misc;
+using System;
+using Ami.BroAudio;
 
 namespace MonkeyBusiness.Combat.Health
 {
@@ -30,6 +32,11 @@ namespace MonkeyBusiness.Combat.Health
         /// Event invoked when health changes, with the new health value as a parameter.
         /// </summary>
         public UnityEvent<float> OnHealthChanged = new();
+
+        /// <summary> 
+        /// Same as OnHealthChanged, just returns the ratio of max and current health.
+        /// </summary>
+        public UnityEvent<float> OnHealthRatioChanged = new();
         
         /// <summary>
         /// Event invoked when the entity takes damage.
@@ -59,12 +66,21 @@ namespace MonkeyBusiness.Combat.Health
         [ShowIf(nameof(_hasPoisonEffect))]
         Renderer _poisonEffectRenderer;
 
+        [SerializeField]
+        [HideInInspector]
+        EnemyTextureAnimator _damageAnimator;
+
         bool _killed = false;
 
         Coroutine _poisonCoroutine;
 
         public void Start()
         {
+            _damageAnimator = GetComponentInChildren<EnemyTextureAnimator>();
+            if(_damageAnimator == null && !CompareTag("Player"))
+            {
+                Debug.LogError("No EnemyTextureAnimator found for damage animation on " + gameObject.name);
+            }
             CurrentHealth = MaxHealth;
             OnTakenDamage.AddListener(arg0 =>
             {
@@ -80,6 +96,7 @@ namespace MonkeyBusiness.Combat.Health
         {
             CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
             OnHealthChanged.Invoke(CurrentHealth);
+            OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
         }
 
         /// <summary>
@@ -91,15 +108,42 @@ namespace MonkeyBusiness.Combat.Health
         /// - OnHealthChanged (if still alive)
         /// - OnDeath (if killed)
         /// </remarks>
-        public void TakeDamage(float damage)
+        public void TakeDamage(float damage, Vector3 direction)
         {
             OnTakenDamage?.Invoke(damage);
             CurrentHealth -= damage;
+
+            if(_damageAnimator != null)
+                _damageAnimator.StartCoroutine(_damageAnimator.AnimateDamage(damage / MaxHealth));
+            _damageAnimator?.AnimateDamage(damage / MaxHealth);
             if (CurrentHealth <= 0f && !_killed && !GodMode)
             {
-                Die();
+                Die(direction);
             }
-            else OnHealthChanged.Invoke(CurrentHealth);
+            else
+            {
+                OnHealthChanged.Invoke(CurrentHealth);
+                OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
+            }
+
+            Debug.Log("Current health " + CurrentHealth);
+        }
+
+        public void TakeDamage(float damage, Vector3 direction, Vector3 impactForce)
+        {
+            OnTakenDamage?.Invoke(damage);
+            CurrentHealth -= damage;
+            if(_damageAnimator != null)
+                _damageAnimator.StartCoroutine(_damageAnimator.AnimateDamage(damage / MaxHealth));
+            if (CurrentHealth <= 0f && !_killed && !GodMode)
+            {
+                Die(direction, impactForce);
+            }
+            else
+            {
+                OnHealthChanged.Invoke(CurrentHealth);
+                OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
+            }
 
             Debug.Log("Current health " + CurrentHealth);
         }
@@ -110,6 +154,8 @@ namespace MonkeyBusiness.Combat.Health
             _poisonCoroutine = StartCoroutine(PoisonCoroutine(damagePerTick, tickInterval, numTicks));
         }
 
+
+        [Obsolete("POISON NOT USED ANYMORE")]
         IEnumerator PoisonCoroutine(float damagePerTick, float tickInterval, int numTicks)
         {
             if(_hasPoisonEffect)
@@ -124,7 +170,7 @@ namespace MonkeyBusiness.Combat.Health
             Debug.Log("Starting the poison coroutine - Number of health " + CurrentHealth);
             for(int i = 0; i < numTicks; i++)
             {
-                TakeDamage(damagePerTick);
+                TakeDamage(damagePerTick, Vector3.left);
                 yield return new WaitForSeconds(tickInterval);
             }
 
@@ -136,16 +182,49 @@ namespace MonkeyBusiness.Combat.Health
             Debug.Log("Finished the poison coroutine - Number of health " + CurrentHealth);
         }
 
-        private void Die()
+        private void Die(Vector3 direction)
         {
             _killed = true; // Prevents this method to be called multiple times
             OnDeath.Invoke(gameObject);
 
             if(!CompareTag("Player"))
             {
-                Destroy(gameObject);
+                var deathFadeout = GetComponentInChildren<EnemyDeathController>();
+                if(deathFadeout != null)
+                {
+                    deathFadeout.StartDeathFadeout(direction);
+                }
+                else
+                {
+                    Debug.LogError("No death fadeout component found on " + gameObject.name);
+                    Destroy(gameObject);
+                }
+                //Destroy(gameObject);
             }
         }
+
+        private void Die(Vector3 direction, Vector3 impactForce)
+        {
+            _killed = true; // Prevents this method to be called multiple times
+            OnDeath.Invoke(gameObject);
+
+            if(!CompareTag("Player"))
+            {
+                var deathFadeout = GetComponentInChildren<EnemyDeathController>();
+                if(deathFadeout != null)
+                {
+                    deathFadeout.StartDeathFadeout(direction,impactForce);
+                }
+                else
+                {
+                    Debug.LogError("No death fadeout component found on " + gameObject.name);
+                    Destroy(gameObject);
+                }
+                //Destroy(gameObject);
+            }
+        }
+
+
         
         /// <summary>
         /// Changes the current MaxHealth value to a new <paramref name="amount"/>.
@@ -156,6 +235,7 @@ namespace MonkeyBusiness.Combat.Health
             MaxHealth = Mathf.Max(1f, amount);
             CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
             OnHealthChanged.Invoke(CurrentHealth);
+            OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
         }
     }
 }
