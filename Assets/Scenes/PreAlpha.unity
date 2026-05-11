@@ -2183,6 +2183,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf551f1cc02d2bea7aad5650b9ef092b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Enemies.Navigation::MonkeyBusiness.Enemies.Navigation.TrafficZone
+--- !u!1 &357393992 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1706581682253900784, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
+  m_PrefabInstance: {fileID: 549107358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &357393996
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 357393992}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8712302457799060011, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
 --- !u!136 &362441580
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3864,6 +3891,15 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7456705604073241335, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 416031720}
+    - targetCorrespondingSourceObject: {fileID: -233598012075104408, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1420316331}
+    - targetCorrespondingSourceObject: {fileID: 9162628224951942621, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1827386087}
+    - targetCorrespondingSourceObject: {fileID: 1706581682253900784, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 357393996}
     - targetCorrespondingSourceObject: {fileID: 5542730742121030932, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1356439312}
@@ -8399,6 +8435,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf551f1cc02d2bea7aad5650b9ef092b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Enemies.Navigation::MonkeyBusiness.Enemies.Navigation.TrafficZone
+--- !u!1 &1420316327 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -233598012075104408, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
+  m_PrefabInstance: {fileID: 549107358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1420316331
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1420316327}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 8362213387507325659, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
 --- !u!1001 &1448678210
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10714,6 +10777,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8211693197114897220, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4259873353088571684, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
     m_RemovedGameObjects: []
@@ -10731,6 +10798,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739280d27b8c4d94daa6b0ac92d47096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!1 &1827386083 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9162628224951942621, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
+  m_PrefabInstance: {fileID: 549107358}
+  m_PrefabAsset: {fileID: 0}
+--- !u!64 &1827386087
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1827386083}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 0
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5027181963333927796, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
 --- !u!1001 &1833250322
 PrefabInstance:
   m_ObjectHideFlags: 0
