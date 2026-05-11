@@ -11,6 +11,8 @@ namespace MonkeyBusiness.Managers
     {
         public static StatsManager Instance { get; private set; }
 
+        public UnityEvent<bool> onNonChimpCanPoop;
+        
         [ShowInInspector] public float PlayerMaxHealth
         {
             // Null check is only to avoid error in the Editor

@@ -6,6 +6,7 @@ using MonkeyBusiness.Enemies.Navigation;
 using System.Collections.Generic;
 using System;
 using System.Collections;
+using MonkeyBusiness.Managers;
 
 
 namespace MonkeyBusiness.Enemies.Behavior
@@ -32,7 +33,13 @@ namespace MonkeyBusiness.Enemies.Behavior
         [Required]
         [Tooltip("Melee attack controller used for the rage effect")]
         MeleeAttackController _attackController;
-
+        
+        [BoxGroup("Components")]
+        [SerializeField]
+        [Required]
+        [Tooltip("Poop attack collider used for the shitfest perk effect")]
+        Collider _poopCollider;
+        
         [BoxGroup("Components")]
         [SerializeField]
         [Required]
@@ -88,6 +95,17 @@ namespace MonkeyBusiness.Enemies.Behavior
         void Awake()
         {
             _health.OnHealthChanged.AddListener(EnrageIfLow);
+            StatsManager.Instance.onNonChimpCanPoop.AddListener(OnCanPoop);
+        }
+
+        void OnCanPoop(bool status)
+        {
+            _poopCollider.enabled = status;
+        }
+
+        private void OnDestroy()
+        {
+            StatsManager.Instance.onNonChimpCanPoop.RemoveListener(OnCanPoop);
         }
 
         /// <summary>
