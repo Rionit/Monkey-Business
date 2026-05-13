@@ -190,7 +190,7 @@ namespace MonkeyBusiness.Managers
             StartCoroutine(PreparationPhase());
 
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
-            
+            _scoreText.text = Score.ToString();
             BroAudio.SetVolume(BroAudioType.All, PlayerPrefs.GetFloat("MasterVolume", 1f));
         }
 
