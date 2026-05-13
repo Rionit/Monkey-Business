@@ -204,12 +204,8 @@ MonoBehaviour:
   - {fileID: 1158444943826890477}
   - {fileID: 629078932287645410}
   _vfxType: 0
-  _stunVFX: {fileID: 7873799340488684052}
-  _stunVFXFadeDuration: 0.3
-  _stunStarRenderers:
-  - {fileID: 364384961907912876}
-  - {fileID: 2708206833243902143}
-  - {fileID: 1113849254459157650}
+  _stunVFXDuration: 0.3
+  _stunAnimController: {fileID: 3606996859385415019}
 --- !u!54 &576045929676939833
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -279,6 +275,7 @@ MonoBehaviour:
   _body: {fileID: 576045929676939833}
   _minimumVelocity: 0.1
   _defaultDamping: 1
+  _stunAnimController: {fileID: 3606996859385415019}
 --- !u!114 &8010626351993888703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +288,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8ec5d84d6391212a4851a71b751241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Health::MonkeyBusiness.Combat.Health.DeathFadeout
-  _preFadeoutDuration: 1
+  _preFadeoutDuration: 40
   _fadeoutDuration: 2
   _componentsToDelete:
   - {fileID: 1388641176820628042}
@@ -305,6 +302,7 @@ MonoBehaviour:
   - {fileID: 958387551056947484}
   - {fileID: 1135910716422682449}
   - {fileID: 5758220776333362340}
+  - {fileID: 7873799340488684052}
   _deathImpulseForce: 200
   _deathTextureAnimator: {fileID: 0}
   _rigParent: {fileID: 7073559108503258269}
@@ -1429,26 +1427,22 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 2614759286270212144}
   m_SourcePrefab: {fileID: 100100000, guid: 7268e40c415497f448e025ea90a56b82, type: 3}
---- !u!23 &364384961907912876 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 2098694427333440355, guid: 7268e40c415497f448e025ea90a56b82, type: 3}
-  m_PrefabInstance: {fileID: 1742472249414173647}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &1113849254459157650 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 1683130998433378141, guid: 7268e40c415497f448e025ea90a56b82, type: 3}
-  m_PrefabInstance: {fileID: 1742472249414173647}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2636251509319370849 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4376189872950430638, guid: 7268e40c415497f448e025ea90a56b82, type: 3}
   m_PrefabInstance: {fileID: 1742472249414173647}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &2708206833243902143 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 4448424498588750704, guid: 7268e40c415497f448e025ea90a56b82, type: 3}
+--- !u!114 &3606996859385415019 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3035463322004670116, guid: 7268e40c415497f448e025ea90a56b82, type: 3}
   m_PrefabInstance: {fileID: 1742472249414173647}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7873799340488684052}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 032114a4b71ec9e28aa7b6eced336304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.StunAnimController
 --- !u!1 &7873799340488684052 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8461097732504203739, guid: 7268e40c415497f448e025ea90a56b82, type: 3}

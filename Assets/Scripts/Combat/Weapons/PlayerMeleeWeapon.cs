@@ -50,6 +50,8 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         Transform _animationTf;
 
+        [SerializeField]
+        TrailRenderer _attackTrail;
 
         [SerializeField]
         [RequiredIn(PrefabKind.InstanceInScene)]
@@ -101,10 +103,11 @@ namespace MonkeyBusiness.Combat.Weapons
 
             _attackEffect.Play();
 
-            _animationTf.localRotation = Quaternion.Euler(0, 90f, 0f); // Rotate the weapon downwards for the attack animation
-            _animationTf.gameObject.SetActive(true);
+            //_animationTf.localRotation = Quaternion.Euler(0, 90f, 0f); // Rotate the weapon downwards for the attack animation
+            _attackTrail.emitting = true;
+            //_animationTf.gameObject.SetActive(true);
             _meleeAttackSound.Play();
-            var tween = _animationTf.DOLocalRotate(new Vector3(0, -90f, 0f), 0.2f).SetEase(Ease.Linear); // TODO: Make editable
+            var tween = _animationTf.DOLocalRotate(new Vector3(0, -90f, 0f), 0.2f).From(new Vector3(0,90f,0)).SetEase(Ease.Linear); // TODO: Make editable
             // Tween charge image to 0 with quadratic ease in-and-out
             DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 0f, 0.5f).SetEase(Ease.InOutCubic)
             .OnComplete(() => DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 1f, _attackCooldown - 0.5f).SetEase(Ease.Linear));
@@ -115,7 +118,8 @@ namespace MonkeyBusiness.Combat.Weapons
             yield return new WaitForSeconds(0.2f - Time.fixedDeltaTime); // Wait for the rest of the attack animation to finish, minus the fixed update wait at the start
 
             //yield return new WaitForSeconds(_attackDuration); // Duration of the attack hitbox being active
-            _animationTf.gameObject.SetActive(false);
+            //_animationTf.gameObject.SetActive(false);
+            _attackTrail.emitting = false;
 
             yield return new WaitForSeconds(_attackCooldown - 0.2f + Time.fixedDeltaTime); // Cooldown duration
 

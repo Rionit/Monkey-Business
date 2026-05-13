@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4376189872950430638}
   - component: {fileID: 8449672478462933827}
+  - component: {fileID: 3035463322004670116}
   m_Layer: 0
   m_Name: RotatingStars
   m_TagString: Untagged
@@ -52,6 +53,24 @@ Animation:
   m_AnimatePhysics: 0
   m_UpdateMode: 0
   m_CullingType: 0
+--- !u!114 &3035463322004670116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461097732504203739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 032114a4b71ec9e28aa7b6eced336304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Misc::MonkeyBusiness.Misc.StunAnimController
+  _stunVFX: {fileID: 8461097732504203739}
+  _stunVFXFadeDuration: 0.3
+  _stunStarRenderers:
+  - {fileID: 2098694427333440355}
+  - {fileID: 4448424498588750704}
+  - {fileID: 1683130998433378141}
 --- !u!1001 &5955284247522118904
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -112,6 +131,11 @@ PrefabInstance:
 --- !u!4 &2954487551112171194 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8909555742987764290, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
+  m_PrefabInstance: {fileID: 5955284247522118904}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &4448424498588750704 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8006997695783640968, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
   m_PrefabInstance: {fileID: 5955284247522118904}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8232191499048266987
@@ -184,6 +208,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8909555742987764290, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
   m_PrefabInstance: {fileID: 8232191499048266987}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &2098694427333440355 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8006997695783640968, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
+  m_PrefabInstance: {fileID: 8232191499048266987}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8666402612903407829
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -244,5 +273,10 @@ PrefabInstance:
 --- !u!4 &279266044056187543 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8909555742987764290, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
+  m_PrefabInstance: {fileID: 8666402612903407829}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &1683130998433378141 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 8006997695783640968, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
   m_PrefabInstance: {fileID: 8666402612903407829}
   m_PrefabAsset: {fileID: 0}
