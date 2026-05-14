@@ -3,14 +3,16 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Combat.Attack;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Enemies.Navigation;
-using System.Collections.Generic;
 using System;
-using System.Collections;
 using MonkeyBusiness.Managers;
+using System.Collections.Generic;
+using MonkeyBusiness.Enemies.Visuals;
 
 
 namespace MonkeyBusiness.Enemies.Behavior
 {
+    using Random = UnityEngine.Random;
+
     /// <summary>
     /// Controls special behavior of the gorilla enemy
     /// </summary>
@@ -46,54 +48,59 @@ namespace MonkeyBusiness.Enemies.Behavior
         [Tooltip("Renderer used to change the gorilla's material when enraged")]
         Renderer _renderer;
 
-        [BoxGroup("Rage/Materials")]
+        [BoxGroup("Components")]
+        [SerializeField]
+        EnemyMaterialController _materialController;
+
+        [FoldoutGroup("Rage")]
         [SerializeField]
         [PreviewField(100, ObjectFieldAlignment.Right)]
         Material _enragedMaterial;
 
-        [BoxGroup("Rage")]
+        [FoldoutGroup("Rage")]
         [SerializeField]
         [Tooltip("Health percentage threshold for the rage effect to trigger")]
         [Range(0f, 100f)]
         float _rageHealthThreshold = 50f;
 
-        [BoxGroup("Rage")]
+        [FoldoutGroup("Rage")]
         [SerializeField]
         [Tooltip("Multiplier for the enemy's speed when enraged")]
         [Range(1f, 3f)]
         float _speedMultiplier = 1.5f;
 
-        [BoxGroup("Rage")]
+        [FoldoutGroup("Rage")]
         [SerializeField]
         [Tooltip("Multiplier for the enemy's damage when enraged")]
         [Range(1f, 5f)]
         float _damageMultiplier = 1.5f;
 
-        [BoxGroup("Rage")]
+        [FoldoutGroup("Rage")]
         [SerializeField]
         [Tooltip("Multiplier for the enemy's charge time when enraged")]
         [Range(0.1f, 1f)]
         float _chargeTimeMultiplier = 0.75f; // Faster charge time for more challenge
         
-        [BoxGroup("Rage")]
+        [FoldoutGroup("Rage")]
         [ShowInInspector]
         [ReadOnly]
         [Tooltip("Whether the gorilla has already enraged (to prevent multiple enrages)")]
         bool _hasRaged = false;
 
         [ShowInInspector]
-        [BoxGroup("Rage")]
+        [FoldoutGroup("Rage")]
         [ReadOnly]
         public float AbsoluteHealthThreshold => _health.MaxHealth * (_rageHealthThreshold / 100f);
 
 
         [SerializeField]
         [Tooltip("Index of the material to change when enraged (if the renderer has multiple materials)")]
-        [BoxGroup("Rage")]
+        [FoldoutGroup("Rage")]
         int _enragedMaterialIndex = 0;
 
         void Awake()
         {
+            _enragedMaterialIndex = _materialController.Order == EnemyMaterialController.MaterialOrder.SKIN_CLOTHING ? 0 : 1;
             _health.OnHealthChanged.AddListener(EnrageIfLow);
             StatsManager.Instance.onNonChimpCanPoop.AddListener(OnCanPoop);
             OnCanPoop(StatsManager.Instance.canNonChimpPoop);
@@ -106,6 +113,8 @@ namespace MonkeyBusiness.Enemies.Behavior
 
         private void OnDestroy()
         {
+            _health.OnHealthChanged.RemoveListener(EnrageIfLow);
+            SetEnragedMaterital(false);
             StatsManager.Instance.onNonChimpCanPoop.RemoveListener(OnCanPoop);
         }
 
@@ -122,14 +131,19 @@ namespace MonkeyBusiness.Enemies.Behavior
                 _attackController.ChargeTime *= _chargeTimeMultiplier; // Decrease charge time for more challenge
 
 
-                var materials = new Material[_renderer.materials.Length];
-                Array.Copy(_renderer.materials, materials, materials.Length);
-
-                materials[_enragedMaterialIndex] = _enragedMaterial;
-                _renderer.materials = materials;
-
-                Debug.Log("Changing enraged material to " + _enragedMaterial.name);
+                SetEnragedMaterital(true);
             }
+        }
+
+        void SetEnragedMaterital(bool enraged)
+        {
+            var materials = new Material[_renderer.materials.Length];
+            Array.Copy(_renderer.materials, materials, materials.Length);
+
+            materials[_enragedMaterialIndex] = enraged ? _enragedMaterial : _materialController.UsedSkinMaterial;
+            _renderer.materials = materials;
+
+            Debug.Log("Changing material to " + (enraged ? _enragedMaterial.name : _materialController.UsedSkinMaterial.name));
         }
     }
 }
