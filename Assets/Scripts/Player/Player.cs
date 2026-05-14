@@ -8,10 +8,11 @@ using UnityEngine.Rendering.Universal;
 using UnityEngine.TextCore.Text;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Camera;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.Player
 {
-    public class Player : MonoBehaviour
+    public class Player : MonoBehaviour, IInputReceiver
     {
         [SerializeField] private PlayerCharacter playerCharacter;
         [SerializeField] private PlayerCamera playerCamera;
