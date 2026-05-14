@@ -20,7 +20,7 @@ namespace MonkeyBusiness.Perks
         [BoxGroup("UI"), Required]
         [SerializeField] private GameObject confirmLabel;
 
-        [SerializeField] private PerkSO perkSO;
+        [SerializeField] public PerkSO perkSO;
         private bool isSelected;
 
         public void Setup(PerkSO perk)
