@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: GorillaDither
+  m_Name: GorillaDither 2
   m_Shader: {fileID: -6465566751694194690, guid: b2baf77fd8f4121a49e8926041235caa, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -42,7 +42,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: d9018dab02f1c4248ad617c7a0fbbb8b, type: 3}
+        m_Texture: {fileID: 2800000, guid: 137c3ed20172647418ba1425771ba082, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
