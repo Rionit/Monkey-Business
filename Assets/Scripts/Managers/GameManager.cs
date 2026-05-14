@@ -164,6 +164,12 @@ namespace MonkeyBusiness.Managers
 
         bool _canPause = true;
 
+
+        [SerializeField]
+        private GameObject _itemsRoot;
+        
+        private ItemSpawner[] _itemSpawners;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
@@ -192,6 +198,8 @@ namespace MonkeyBusiness.Managers
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
             _scoreText.text = Score.ToString();
             BroAudio.SetVolume(BroAudioType.All, PlayerPrefs.GetFloat("MasterVolume", 1f));
+
+            _itemSpawners = _itemsRoot.GetComponentsInChildren<ItemSpawner>();
         }
 
         public void PauseOrUnpause()
@@ -349,6 +357,12 @@ namespace MonkeyBusiness.Managers
 
             _enemiesRemaining = waveInfo.gorillas + waveInfo.chimps;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
+
+            // Make the player drop his held item at the end of the wave in the GUI so we don't destroy something the EquipmentManager has a reference to. Very icky, no good.
+            foreach(ItemSpawner itemSpawner in _itemSpawners)
+            {
+                itemSpawner.SpawnItem();
+            }
 
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)

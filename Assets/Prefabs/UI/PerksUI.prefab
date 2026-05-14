@@ -1540,6 +1540,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 97f52a2fb4255ed40a01fee55e1b3e8c, type: 2}
   - {fileID: 11400000, guid: d0b99e98acd8a7343b81cd980bf8a7a3, type: 2}
   - {fileID: 11400000, guid: 5734b0980843e5040a5e5e999e2b27da, type: 2}
-  - {fileID: 11400000, guid: 104014cee27489e4391a723e0fbc3078, type: 2}
   permanentPerks: []
   temporaryPerks: []
