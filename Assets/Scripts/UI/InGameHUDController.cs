@@ -5,9 +5,11 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
+using System.Collections;
 using MonkeyBusiness.Combat.Weapons;
 using MonkeyBusiness.Managers;
 using MonkeyBusiness.Misc;
+using DG.Tweening;
 
 namespace MonkeyBusiness.UI
 {
@@ -29,6 +31,13 @@ namespace MonkeyBusiness.UI
         
         [BoxGroup("Ammo", centerLabel: true), Required]
         [SerializeField] private TextMeshProUGUI ammoText;
+
+        [SerializeField] private TextMeshProUGUI wavesCompletedText;
+
+        void Start()
+        {
+            GameManager.Instance.CountdownCoroutine = AnimateCountdown;
+        }
 
         void OnValidate()
         {
@@ -68,6 +77,16 @@ namespace MonkeyBusiness.UI
             ammoText.text = $"{value}";
         }
         
+        public void SetWavesCompleted(int value)
+        {
+            if (value < 0)
+            {
+                Debug.LogError($"{value} is not a valid wave count!");
+                return;
+            }
+            wavesCompletedText.text = value.ToString();
+        }
+
         public void OnAmmoChanged(IWeapon weapon){
             SetAmmo(weapon.CurrentAmmo);
         }
@@ -83,6 +102,32 @@ namespace MonkeyBusiness.UI
         {
             var weapon = weaponEquippable as IWeapon;
             weapon.OnAmmoChanged.RemoveListener(OnAmmoChanged);
+        }
+
+        public IEnumerator AnimateCountdown()
+        {
+
+            var sequence = DOTween.Sequence();
+            // 3 ...
+            sequence.Append(wavesCompletedText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
+            sequence.Join(DOTween.To(() => wavesCompletedText.alpha, x => wavesCompletedText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
+            sequence.Join(DOTween.To(() => wavesCompletedText.text, x => wavesCompletedText.text = x, "2", 1f).From("3").SetEase(Ease.InFlash));
+            
+            // 2 ...
+            sequence.Append(wavesCompletedText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
+            sequence.Join(DOTween.To(() => wavesCompletedText.alpha, x => wavesCompletedText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
+            sequence.Join(DOTween.To(() => wavesCompletedText.text, x => wavesCompletedText.text = x, "1", 1f).From("2").SetEase(Ease.OutFlash));
+            
+            // 1 ...
+            sequence.Append(wavesCompletedText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
+            sequence.Join(DOTween.To(() => wavesCompletedText.alpha, x => wavesCompletedText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
+            sequence.Join(DOTween.To(() => wavesCompletedText.text, x => wavesCompletedText.text = x, "GO!", 1f).From("1").SetEase(Ease.OutFlash));
+            
+            sequence.Append(wavesCompletedText.transform.DOScale(1f, 1f).SetEase(Ease.OutQuad));
+            sequence.Join(DOTween.To(() => wavesCompletedText.alpha, x => wavesCompletedText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
+            sequence.Join(DOTween.To(() => wavesCompletedText.text, x => wavesCompletedText.text = x, string.Empty, 1f).From("GO!").SetEase(Ease.OutFlash));
+
+            yield return sequence.WaitForCompletion(); 
         }
     }
 }

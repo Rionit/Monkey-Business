@@ -164,6 +164,8 @@ namespace MonkeyBusiness.Managers
 
         bool _canPause = true;
 
+        public Func<IEnumerator> CountdownCoroutine { set; private get; } 
+
 
         [SerializeField]
         private GameObject _itemsRoot;
@@ -349,6 +351,8 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator CombatPhase()
         {
+            yield return CountdownCoroutine(); // Waits for countdown coroutine
+
             OnWaveStarted?.Invoke();
             var waveInfo = _waveDefinitions[Mathf.Min(_currentWave, _waveDefinitions.Count - 1)];
             _typesToSpawn = new();
