@@ -2649,6 +2649,9 @@ MonoBehaviour:
   <Order>k__BackingField: 0
   _skinMaterials:
   - {fileID: 2100000, guid: 5f8cc09389d92454fab4d0b2340e2e3a, type: 2}
+  - {fileID: 2100000, guid: f2e6a40dc6cdf6b44bb80eb758f6db62, type: 2}
+  - {fileID: 2100000, guid: b61d34b8b04a4474d838eb5cd1239c5e, type: 2}
+  - {fileID: 2100000, guid: 11f976a39d00a5747ac05e5a5340ac7c, type: 2}
   _clothingMaterials: []
   _renderer: {fileID: 1649599884402343348}
 --- !u!1 &5444636693828534869
