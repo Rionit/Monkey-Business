@@ -88,6 +88,7 @@ namespace MonkeyBusiness.Perks
 
         public void ApplyEffect()
         {
+            return;
             Debug.Log("Applying effect " + this.name);
             perkSO.effect?.Apply();
         }
