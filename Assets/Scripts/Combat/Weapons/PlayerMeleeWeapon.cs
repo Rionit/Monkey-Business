@@ -13,7 +13,7 @@ using Ami.BroAudio;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
-    public class PlayerMeleeWeapon : MonoBehaviour
+    public class PlayerMeleeWeapon : MonoBehaviour, IInputReceiver
     {
         [SerializeField]
         [BoxGroup("Melee stats")]
@@ -46,6 +46,10 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         [RequiredIn(PrefabKind.InstanceInScene)]
         ProximityWeaponZone _attackHitbox;
+
+
+        [ShowInInspector]
+        public bool CanReceiveInput { get; set; } = true;
 
         [SerializeField]
         Transform _animationTf;
@@ -128,7 +132,7 @@ namespace MonkeyBusiness.Combat.Weapons
 
         void Update()
         {
-            if(!_onCooldown && _meleeAttackAction.WasPressedThisFrame())
+            if(CanReceiveInput && !_onCooldown && _meleeAttackAction.WasPressedThisFrame())
             {
                 Debug.Log("Melee attack triggered");
                 StartCoroutine(MeleeAttackCoroutine());

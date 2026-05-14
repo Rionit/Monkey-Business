@@ -167,6 +167,9 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         Coroutine _slowdownCoroutine;
 
+        [SerializeField]
+        private Animator _animator;
+
         void Awake()
         {
             _navMeshAgent.avoidancePriority = Random.Range(_avoidancePriorityRange.x, _avoidancePriorityRange.y);
@@ -421,6 +424,11 @@ namespace MonkeyBusiness.Enemies.Navigation
                         MoveToKeypoint();
                     }
                 }
+            }
+
+            if (_animator)
+            {
+                _animator.SetBool("Walking", _navMeshAgent.velocity.magnitude > 0.1f);
             }
         }
 

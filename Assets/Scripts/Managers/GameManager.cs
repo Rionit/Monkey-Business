@@ -12,6 +12,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 using TMPro;
+using System.Linq;
 
 namespace MonkeyBusiness.Managers
 {
@@ -139,6 +140,7 @@ namespace MonkeyBusiness.Managers
         /// </summary>
         public GameObject PlayerCharacter => _playerCharacter;
 
+        IInputReceiver[] _inputReceivers;
 
         Player _playerScript;
 
@@ -182,6 +184,8 @@ namespace MonkeyBusiness.Managers
             Instance = this;
             _canPause = true;
             Score = 0;
+
+            _inputReceivers = _playerCharacter.transform.parent.GetComponentsInChildren<IInputReceiver>();
         }
 
         void Start()
@@ -193,6 +197,7 @@ namespace MonkeyBusiness.Managers
             _restartAction.performed += _ => Restart();
 
             _pauseAction = InputSystem.actions.FindAction("Pause");
+            _canPause = true;
             _pauseAction.performed += PauseOrUnpause;
             _playerScript = _playerCharacter.GetComponentInParent<Player>();
             StartCoroutine(PreparationPhase());
@@ -211,8 +216,10 @@ namespace MonkeyBusiness.Managers
             _pauseMenu.SetActive(Time.timeScale == 0f);
             Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
 
-            _equipmentManager.CanReceiveInput = Time.timeScale != 0f;
-            _playerScript.CanReceiveInput = Time.timeScale != 0f;
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = Time.timeScale != 0f;
+            }
         }
 
         public void PauseOrUnpause(InputAction.CallbackContext context)
@@ -222,8 +229,10 @@ namespace MonkeyBusiness.Managers
             _pauseMenu.SetActive(Time.timeScale == 0f);
             Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
 
-            _equipmentManager.CanReceiveInput = Time.timeScale != 0f;
-            _playerScript.CanReceiveInput = Time.timeScale != 0f;
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = Time.timeScale != 0f;
+            }
         }
 
         /// <summary>
@@ -327,18 +336,22 @@ namespace MonkeyBusiness.Managers
         {
             Debug.Log("Perk selection started");
             _hud.SetActive(false);
-            _playerScript.CanReceiveInput = false;
-            _equipmentManager.CanReceiveInput = false;
-
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = false;
+            }
             Cursor.lockState = CursorLockMode.Confined;
             yield return new WaitUntil(() => _perkSelected);
             Cursor.lockState = CursorLockMode.Locked;
             _hud.SetActive(true);
             _perkSelected = false;
 
-            _playerScript.CanReceiveInput = true;
-            _equipmentManager.CanReceiveInput = true;
-            
+
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = true;
+            }
+
             Debug.Log("Preparation phase started");
             yield return new WaitForSeconds(_preparationPhaseDuration);
             
@@ -415,9 +428,12 @@ namespace MonkeyBusiness.Managers
             Time.timeScale = 0f; // Freezes the game
             _hud.SetActive(false);
             _deathScreen.SetActive(true);
-            _equipmentManager.CanReceiveInput = false;
-            _playerScript.CanReceiveInput = false;
 
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = false;
+            }
+            
             Cursor.lockState = CursorLockMode.Confined;
         }
 
@@ -431,6 +447,8 @@ namespace MonkeyBusiness.Managers
         void OnDestroy()
         {
             PlayerPrefs.SetInt(HIGH_SCORE_KEY, HighScore);
+
+            _pauseAction.performed -= PauseOrUnpause;
         }
     }
 }

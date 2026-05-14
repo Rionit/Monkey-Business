@@ -2381,6 +2381,7 @@ MonoBehaviour:
   - {fileID: 737587157540475112}
   - {fileID: 3228501438830795751}
   - {fileID: 6077220870287532502}
+  _animator: {fileID: 1829468246747796485}
 --- !u!114 &5915573425450991541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2466,6 +2467,7 @@ MonoBehaviour:
   _vfxType: 0
   _stunVFXDuration: 0.3
   _stunAnimController: {fileID: 6140820934624333478}
+  _animator: {fileID: 1829468246747796485}
 --- !u!54 &6570454771081550698
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2644,8 +2646,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63176a2ca58cc01e9b395994e41f2d50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Enemies.Visuals::MonkeyBusiness.Enemies.Visuals.EnemyMaterialController
+  <Order>k__BackingField: 0
   _skinMaterials:
   - {fileID: 2100000, guid: 5f8cc09389d92454fab4d0b2340e2e3a, type: 2}
+  - {fileID: 2100000, guid: f2e6a40dc6cdf6b44bb80eb758f6db62, type: 2}
+  - {fileID: 2100000, guid: b61d34b8b04a4474d838eb5cd1239c5e, type: 2}
+  - {fileID: 2100000, guid: 11f976a39d00a5747ac05e5a5340ac7c, type: 2}
   _clothingMaterials: []
   _renderer: {fileID: 1649599884402343348}
 --- !u!1 &5444636693828534869
@@ -3476,7 +3482,31 @@ MonoBehaviour:
   _debugGizmoColor: {r: 0.5, g: 0.5, b: 0.8, a: 0.35}
   OnAttackInvoked:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1829468246747796485}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Attack
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 4956334352428422341}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6375938424328389646
 MonoBehaviour:
   m_ObjectHideFlags: 0
