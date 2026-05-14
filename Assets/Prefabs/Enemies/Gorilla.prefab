@@ -181,6 +181,7 @@ MonoBehaviour:
   _attackController: {fileID: 8160779452035621708}
   _poopCollider: {fileID: 2879694326325379403}
   _renderer: {fileID: 5061553580921696482}
+  _normalMaterial: {fileID: 2100000, guid: 429d6772843bef22aa351ebb59247b2f, type: 2}
   _enragedMaterial: {fileID: 2100000, guid: d62a9777a63ac5c40b9d46d7587e12af, type: 2}
   _rageHealthThreshold: 50
   _speedMultiplier: 2

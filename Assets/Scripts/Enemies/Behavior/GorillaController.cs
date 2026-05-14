@@ -46,10 +46,17 @@ namespace MonkeyBusiness.Enemies.Behavior
         [Tooltip("Renderer used to change the gorilla's material when enraged")]
         Renderer _renderer;
 
+
+        [BoxGroup("Rage/Materials")]
+        [SerializeField]
+        [PreviewField(100, ObjectFieldAlignment.Right)]
+        Material _normalMaterial;
+
         [BoxGroup("Rage/Materials")]
         [SerializeField]
         [PreviewField(100, ObjectFieldAlignment.Right)]
         Material _enragedMaterial;
+
 
         [BoxGroup("Rage")]
         [SerializeField]
@@ -106,6 +113,8 @@ namespace MonkeyBusiness.Enemies.Behavior
 
         private void OnDestroy()
         {
+            _health.OnHealthChanged.RemoveListener(EnrageIfLow);
+            SetEnragedMaterital(false);
             StatsManager.Instance.onNonChimpCanPoop.RemoveListener(OnCanPoop);
         }
 
@@ -122,14 +131,19 @@ namespace MonkeyBusiness.Enemies.Behavior
                 _attackController.ChargeTime *= _chargeTimeMultiplier; // Decrease charge time for more challenge
 
 
-                var materials = new Material[_renderer.materials.Length];
-                Array.Copy(_renderer.materials, materials, materials.Length);
-
-                materials[_enragedMaterialIndex] = _enragedMaterial;
-                _renderer.materials = materials;
-
-                Debug.Log("Changing enraged material to " + _enragedMaterial.name);
+                SetEnragedMaterital(true);
             }
+        }
+
+        void SetEnragedMaterital(bool enraged)
+        {
+            var materials = new Material[_renderer.materials.Length];
+            Array.Copy(_renderer.materials, materials, materials.Length);
+
+            materials[_enragedMaterialIndex] = enraged ? _enragedMaterial : _normalMaterial;
+            _renderer.materials = materials;
+
+            Debug.Log("Changing material to " + (enraged ? _enragedMaterial.name : _normalMaterial.name));
         }
     }
 }
