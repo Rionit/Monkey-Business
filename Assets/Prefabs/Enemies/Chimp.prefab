@@ -2298,6 +2298,7 @@ GameObject:
   - component: {fileID: 8463347221130141577}
   - component: {fileID: 6661360428635629066}
   - component: {fileID: 7255525761278444101}
+  - component: {fileID: 3303650648694175190}
   m_Layer: 0
   m_Name: Chimp
   m_TagString: Enemy
@@ -2631,6 +2632,22 @@ MonoBehaviour:
   _overrideGroup: {fileID: 0}
   _positionMode: 0
   _delay: 0
+--- !u!114 &3303650648694175190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5194882674798657818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63176a2ca58cc01e9b395994e41f2d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Enemies.Visuals::MonkeyBusiness.Enemies.Visuals.EnemyMaterialController
+  _skinMaterials:
+  - {fileID: 2100000, guid: 5f8cc09389d92454fab4d0b2340e2e3a, type: 2}
+  _clothingMaterials: []
+  _renderer: {fileID: 1649599884402343348}
 --- !u!1 &5444636693828534869
 GameObject:
   m_ObjectHideFlags: 0

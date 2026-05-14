@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 576045929676939833}
   - component: {fileID: 3034770040131255743}
   - component: {fileID: 4718435182437767580}
+  - component: {fileID: 2618472062697946555}
   - component: {fileID: 8010626351993888703}
   - component: {fileID: 4080515330019193813}
   - component: {fileID: 8574191826965996193}
@@ -181,7 +182,7 @@ MonoBehaviour:
   _attackController: {fileID: 8160779452035621708}
   _poopCollider: {fileID: 2879694326325379403}
   _renderer: {fileID: 5061553580921696482}
-  _normalMaterial: {fileID: 2100000, guid: 429d6772843bef22aa351ebb59247b2f, type: 2}
+  _materialController: {fileID: 2618472062697946555}
   _enragedMaterial: {fileID: 2100000, guid: d62a9777a63ac5c40b9d46d7587e12af, type: 2}
   _rageHealthThreshold: 50
   _speedMultiplier: 2
@@ -277,6 +278,24 @@ MonoBehaviour:
   _minimumVelocity: 0.1
   _defaultDamping: 1
   _stunAnimController: {fileID: 3606996859385415019}
+--- !u!114 &2618472062697946555
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 651408346807706418}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 63176a2ca58cc01e9b395994e41f2d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Enemies.Visuals::MonkeyBusiness.Enemies.Visuals.EnemyMaterialController
+  <Order>k__BackingField: 0
+  _skinMaterials:
+  - {fileID: 2100000, guid: 429d6772843bef22aa351ebb59247b2f, type: 2}
+  - {fileID: 2100000, guid: 5f8cc09389d92454fab4d0b2340e2e3a, type: 2}
+  _clothingMaterials: []
+  _renderer: {fileID: 5061553580921696482}
 --- !u!114 &8010626351993888703
 MonoBehaviour:
   m_ObjectHideFlags: 0
