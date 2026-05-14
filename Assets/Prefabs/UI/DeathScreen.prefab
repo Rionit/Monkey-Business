@@ -204,8 +204,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SCORE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7419d62131f6e644db7bbddbc3bcbf9b, type: 2}
-  m_sharedMaterial: {fileID: 7735930522049411911, guid: 7419d62131f6e644db7bbddbc3bcbf9b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ff3455213c91bfda7a43f6aff5c4745b, type: 2}
+  m_sharedMaterial: {fileID: 2460951739224439369, guid: ff3455213c91bfda7a43f6aff5c4745b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -608,8 +608,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 400, y: 0}
-  m_SizeDelta: {x: 600, y: 600}
+  m_AnchoredPosition: {x: 600, y: 0}
+  m_SizeDelta: {x: 950, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &3629216729611235447
 MonoBehaviour:
@@ -762,7 +762,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 600, y: 100}
+  m_SizeDelta: {x: 0, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &893336997366594919
 CanvasRenderer:
@@ -792,10 +792,10 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: <color=orange>new high score!</color>
+  m_text: <color=orange>NEW HIGH SCORE!</color>
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7419d62131f6e644db7bbddbc3bcbf9b, type: 2}
-  m_sharedMaterial: {fileID: 7735930522049411911, guid: 7419d62131f6e644db7bbddbc3bcbf9b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ff3455213c91bfda7a43f6aff5c4745b, type: 2}
+  m_sharedMaterial: {fileID: 2460951739224439369, guid: ff3455213c91bfda7a43f6aff5c4745b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -825,7 +825,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1492,8 +1492,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: HIGH SCORE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 7419d62131f6e644db7bbddbc3bcbf9b, type: 2}
-  m_sharedMaterial: {fileID: 7735930522049411911, guid: 7419d62131f6e644db7bbddbc3bcbf9b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: ff3455213c91bfda7a43f6aff5c4745b, type: 2}
+  m_sharedMaterial: {fileID: 2460951739224439369, guid: ff3455213c91bfda7a43f6aff5c4745b, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1903,7 +1903,7 @@ MonoBehaviour:
   m_Spacing: 0
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 0
+  m_ChildControlWidth: 1
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
