@@ -10,7 +10,7 @@ namespace MonkeyBusiness.Managers
     /// <summary>
     /// Manages the player's inventory, switching weapons, picking up items off the ground, and shooting.
     /// </summary>
-    public class EquipmentManager : MonoBehaviour
+    public class EquipmentManager : MonoBehaviour, IInputReceiver
     {
         InputAction _scrollWheel;
 
@@ -122,15 +122,19 @@ namespace MonkeyBusiness.Managers
         /// <param name="context"></param>
         private void OnScroll(InputAction.CallbackContext context)
         {
+            if(!CanReceiveInput)
+            {
+                return;
+            }
+
             float scroll = context.ReadValue<Vector2>().y;
             if(scroll != 0)
             {
                 // Scroll up for previous, scroll down for next
                 EquipNext(scroll > 0);
             }
-
         }
-
+          
         /// <summary>
         /// Handle event fired by pressing buttons 1-9.
         /// Checks if we have enough items in inventory and then calls EquipSlot()
@@ -138,6 +142,11 @@ namespace MonkeyBusiness.Managers
         /// <param name="itemSlot"> Number pressed </param>
         void OnItem(int itemSlot)
         {
+            if(!CanReceiveInput)
+            {
+                return;
+            }
+
             Debug.Log($"Trying to equip item {itemSlot}");
             if (itemSlot >= Items.Count)
             {
@@ -257,6 +266,10 @@ namespace MonkeyBusiness.Managers
         ///</summary>        
         void OnAttack(InputAction.CallbackContext context)
         {
+            if(!CanReceiveInput)
+            {
+                return;
+            }
             if (_heldItem)
             {
                 ThrowHeldItem();

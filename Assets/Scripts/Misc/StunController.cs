@@ -23,8 +23,7 @@ namespace MonkeyBusiness.Misc
         [BoxGroup("Stun VFX")]
         [EnumButtons]
         [SerializeField]
-        VFXType _vfxType = VFXType.ENEMY;
-
+        VFXType _vfxType;
 
         [SerializeField]
         [BoxGroup("Stun VFX")]
