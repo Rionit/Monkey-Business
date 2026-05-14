@@ -100,6 +100,7 @@ MonoBehaviour:
   - {fileID: 5117439330949372020}
   - {fileID: 7058641028128330619}
   - {fileID: 1832406802312636746}
+  _animator: {fileID: 3314778719585868149}
 --- !u!114 &4361588836593131136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +184,7 @@ MonoBehaviour:
   _poopCollider: {fileID: 2879694326325379403}
   _renderer: {fileID: 305509339239555203}
   _materialController: {fileID: 2618472062697946555}
-  _enragedMaterial: {fileID: 2100000, guid: d62a9777a63ac5c40b9d46d7587e12af, type: 2}
+  _enragedMaterial: {fileID: 2100000, guid: 57925ad1aa1a6054696192f11e8ebc52, type: 2}
   _rageHealthThreshold: 50
   _speedMultiplier: 2
   _damageMultiplier: 3
@@ -208,6 +209,7 @@ MonoBehaviour:
   _vfxType: 0
   _stunVFXDuration: 0.3
   _stunAnimController: {fileID: 3606996859385415019}
+  _animator: {fileID: 3314778719585868149}
 --- !u!54 &576045929676939833
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -828,7 +830,19 @@ MonoBehaviour:
   _debugGizmoColor: {r: 0.5, g: 0.5, b: 0.8, a: 0.35}
   OnAttackInvoked:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 3314778719585868149}
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Attack
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8160779452035621708
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2317,6 +2331,11 @@ CharacterJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
+--- !u!95 &3314778719585868149 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 5866666021909216657, guid: 02166c92f79b3c5458d3b0148f729201, type: 3}
+  m_PrefabInstance: {fileID: 9181397111591150820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &4374615948028561836 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4332706925441422008, guid: 02166c92f79b3c5458d3b0148f729201, type: 3}

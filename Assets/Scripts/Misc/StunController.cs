@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -32,6 +33,9 @@ namespace MonkeyBusiness.Misc
         [SerializeField]
         StunAnimController _stunAnimController;
 
+        [SerializeField]
+        Animator _animator;
+
         /// <summary>
         /// Stuns the components for the specified duration.
         /// </summary>
@@ -50,6 +54,11 @@ namespace MonkeyBusiness.Misc
             {
                 Debug.Log("Animating " + gameObject.name + " stun animation for " + duration + " seconds.");
                 _stunAnimController.Animate(_stunVFXDuration);
+            }
+
+            if (_animator)
+            {
+                _animator.SetTrigger("Stun");
             }
 
             Debug.Log("Stunned for " + duration + " seconds!");
