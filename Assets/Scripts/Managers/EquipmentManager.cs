@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using MonkeyBusiness.Misc;
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Managers
 {
@@ -18,6 +19,8 @@ namespace MonkeyBusiness.Managers
 
         private InputAction _interactAction;
         private InputAction _attackAction;
+
+        public UnityEvent<int> OnItemEquipped = new();
 
         /// <summary>
         /// Currently held item
@@ -169,6 +172,7 @@ namespace MonkeyBusiness.Managers
             }
 
             var item = Items[itemSlot];
+            OnItemEquipped.Invoke(itemSlot);
 
             if(item == null)
             {

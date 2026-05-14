@@ -71,6 +71,8 @@ namespace MonkeyBusiness.Managers
         //private GameState _currentGameState;
         
         public UnityEvent OnWaveDefeated = new();
+        public UnityEvent<int> OnWaveDefeatedNum = new();
+
         public UnityEvent OnWaveStarted = new();
         public UnityEvent<int> OnEnemyCountChanged = new();
 
@@ -78,10 +80,6 @@ namespace MonkeyBusiness.Managers
 
         [SerializeField]
         GameObject _deathScreen;
-
-
-        [SerializeField]
-        TMP_Text _scoreText;
 
         [SerializeField]
         [RequiredIn(PrefabKind.InstanceInScene)]
@@ -203,7 +201,6 @@ namespace MonkeyBusiness.Managers
             StartCoroutine(PreparationPhase());
 
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
-            _scoreText.text = Score.ToString();
             BroAudio.SetVolume(BroAudioType.All, PlayerPrefs.GetFloat("MasterVolume", 1f));
 
             _itemSpawners = _itemsRoot.GetComponentsInChildren<ItemSpawner>();
@@ -258,7 +255,6 @@ namespace MonkeyBusiness.Managers
                 healthController.OnTakenDamage.AddListener(damage =>
                 {
                     AddScore(Mathf.RoundToInt(damage));
-                    _scoreText.text = Score.ToString();
                 });
             }
             else
@@ -272,12 +268,14 @@ namespace MonkeyBusiness.Managers
         public static void AddKillScore()
         {
             Score += KILL_SCORE;
+            OnScoreChanged.Invoke(Score);
 
         }
 
         public static void AddScore(int score)
         {
             Score += score;
+            OnScoreChanged.Invoke(Score);
         }
 
 
@@ -289,7 +287,6 @@ namespace MonkeyBusiness.Managers
         void OnEnemyDestroyed(GameObject gameObject)
         {
             AddKillScore();
-            _scoreText.text = Score.ToString();
             Debug.Log($"Enemy {gameObject.name} died :D");
             _enemiesRemaining--;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
@@ -310,6 +307,7 @@ namespace MonkeyBusiness.Managers
                 Debug.Log("Wave defeated!");
                 _currentWave++;
                 OnWaveDefeated.Invoke();
+                OnWaveDefeatedNum.Invoke(_currentWave);
                 StartCoroutine(PreparationPhase());
             }
             if(_enemiesRemaining < 0)
@@ -352,8 +350,8 @@ namespace MonkeyBusiness.Managers
                 receiver.CanReceiveInput = true;
             }
 
-            Debug.Log("Preparation phase started");
-            yield return new WaitForSeconds(_preparationPhaseDuration);
+            //Debug.Log("Preparation phase started");
+            //yield return new WaitForSeconds(_preparationPhaseDuration);
             
             StartCoroutine(CombatPhase());
         }

@@ -172,8 +172,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6176943201396351488}
-  - {fileID: 531774328080636471}
   - {fileID: 1039972640719630528}
+  - {fileID: 531774328080636471}
   m_Father: {fileID: 1042423681157048141}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1327886353562767839
@@ -722,6 +722,7 @@ MonoBehaviour:
   _vfxType: 0
   _stunVFXDuration: 0.3
   _stunAnimController: {fileID: 0}
+  _animator: {fileID: 0}
 --- !u!1 &1644833479611325685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1128,6 +1129,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 739280d27b8c4d94daa6b0ac92d47096, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  OnItemEquipped:
+    m_PersistentCalls:
+      m_Calls: []
   itemAttachPoint: {fileID: 5173201346127674885}
   _cameraTransform: {fileID: 1042423681157048141}
   _maxPickupDistance: 3

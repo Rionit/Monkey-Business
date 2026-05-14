@@ -13,6 +13,10 @@ namespace MonkeyBusiness.Perks
     {
         public UnityEvent OnPerkSelected = new();
 
+        public UnityEvent<string, bool> OnPerkAdded = new();
+
+        public UnityEvent OnNegativePerkRemoved = new();
+
         [BoxGroup("Setup")]
         [SerializeField] private GameObject perkPrefab;
 
@@ -186,6 +190,7 @@ namespace MonkeyBusiness.Perks
 
             // Positive perks stay forever
             permanentPerks.Add(selectedPerk);
+            OnPerkAdded.Invoke(selectedPerk.perkSO.effect.GetDescription(), true);
 
             StartCoroutine(HandlePositiveConfirmed());
         }
@@ -233,6 +238,7 @@ namespace MonkeyBusiness.Perks
 
                     negativePerk.ApplyEffect();
 
+                    OnPerkAdded.Invoke(negativePerk.perkSO.effect.GetDescription(), false);
                     // Negative perks are temporary
                     temporaryPerks.Add(negativePerk);
 
@@ -406,6 +412,7 @@ namespace MonkeyBusiness.Perks
                 {
                     perk.Reset();
                 }
+                OnNegativePerkRemoved.Invoke();
             }
 
             temporaryPerks.Clear();
@@ -477,11 +484,13 @@ namespace MonkeyBusiness.Perks
             {
                 // Permanent perk
                 permanentPerks.Add(perk);
+
             }
             else
             {
                 // Temporary perk
                 temporaryPerks.Add(perk);
+                OnPerkAdded.Invoke(perkSO.effectName, false);
             }
         }
     }
