@@ -362,7 +362,9 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator CombatPhase()
         {
-            yield return CountdownCoroutine(); // Waits for countdown coroutine
+            yield return new WaitForSeconds(2f);
+            if (CountdownCoroutine != null)
+                yield return CountdownCoroutine(); // Waits for countdown coroutine
 
             OnWaveStarted?.Invoke();
             var waveInfo = _waveDefinitions[Mathf.Min(_currentWave, _waveDefinitions.Count - 1)];

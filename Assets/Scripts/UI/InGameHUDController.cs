@@ -66,8 +66,7 @@ namespace MonkeyBusiness.UI
         int previousChangeIndex = -1;
 
         
-
-        void Awake()
+        void Start()
         {
             GameManager.Instance.CountdownCoroutine = AnimateCountdown;
             GameManager.OnScoreChanged.AddListener(SetScore);
