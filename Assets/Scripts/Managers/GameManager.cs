@@ -171,6 +171,12 @@ namespace MonkeyBusiness.Managers
         private GameObject _itemsRoot;
         
         private ItemSpawner[] _itemSpawners;
+        
+        /// <summary>
+        /// Currently spawned items
+        /// </summary>
+        private List<GameObject> _items = new();
+
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -184,6 +190,9 @@ namespace MonkeyBusiness.Managers
             Score = 0;
 
             _inputReceivers = _playerCharacter.transform.parent.GetComponentsInChildren<IInputReceiver>();
+            
+            StaticEvents.OnItemRegistered += AddItem;
+            StaticEvents.OnItemUnregistered += RemoveItem;
         }
 
         void Start()
@@ -229,6 +238,33 @@ namespace MonkeyBusiness.Managers
             foreach(var receiver in _inputReceivers)
             {
                 receiver.CanReceiveInput = Time.timeScale != 0f;
+            }
+        }
+        
+        
+        public List<GameObject> GetItems()
+        {
+            return _items;
+        }
+
+        public void SetItems(List<GameObject> items)
+        {
+            _items = items;
+        }
+
+        public void AddItem(GameObject item)
+        {
+            if (item != null)
+            {
+                _items.Add(item);
+            }
+        }
+
+        public void RemoveItem(GameObject item)
+        {
+            if (item != null)
+            {
+                _items.Remove(item);
             }
         }
 

@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using MonkeyBusiness.Misc;
@@ -63,11 +64,13 @@ namespace MonkeyBusiness.Items
             {
                 _collider = GetComponent<Collider>();
             }
+            
+            StaticEvents.OnItemRegistered?.Invoke(gameObject);
         }
-
-        // Update is called once per frame
-        void Update()
+        
+        void OnDestroy()
         {
+            StaticEvents.OnItemUnregistered?.Invoke(gameObject);
         }
 
         /// <summary>
