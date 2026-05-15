@@ -432,6 +432,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20d1570da9a9ede4498a51cf2b9fe436, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Items::MonkeyBusiness.Items.Item
+  type: 1
   isBeingHeld: 0
   throwForce: 60
   IsBeingThrown: 0

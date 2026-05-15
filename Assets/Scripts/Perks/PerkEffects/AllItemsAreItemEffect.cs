@@ -45,6 +45,8 @@ namespace MonkeyBusiness.Perks.PerkEffects
                 gameManager.RemoveItem(oldItem);
                 GameObject.Destroy(oldItem);
             }
+
+            GameManager.Instance.StopItemSpawnThisWave();
         }
 
         public override void Update()

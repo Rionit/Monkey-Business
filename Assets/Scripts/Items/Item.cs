@@ -2,6 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Events;
 using MonkeyBusiness.Misc;
+using Sirenix.OdinInspector;
 
 namespace MonkeyBusiness.Items
 {
@@ -12,6 +13,10 @@ namespace MonkeyBusiness.Items
     /// </summary>
     public class Item : MonoBehaviour
     {
+        public enum ItemType { Mug, Banana, Chair, Microwave, Rake, Basketball }
+
+        [Required] public ItemType type;
+
         private Rigidbody _rigidbody;
         private Outline _outline;
         public bool isBeingHeld = false;
