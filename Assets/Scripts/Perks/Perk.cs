@@ -86,9 +86,12 @@ namespace MonkeyBusiness.Perks
                 btn.interactable = value;
         }
 
+        /*
+         TODO: CHECK IF I (F.D.) ACCIDENTALLY DIDN'T LEAVE
+         return; LINE IN THIS FUNCTION XD
+        */
         public void ApplyEffect()
         {
-            return;
             Debug.Log("Applying effect " + this.name);
             perkSO.effect?.Apply();
         }

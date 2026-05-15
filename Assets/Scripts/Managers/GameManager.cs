@@ -171,6 +171,14 @@ namespace MonkeyBusiness.Managers
         private GameObject _itemsRoot;
         
         private ItemSpawner[] _itemSpawners;
+        
+        /// <summary>
+        /// Currently spawned items
+        /// </summary>
+        private List<GameObject> _items = new();
+        
+        private bool canSpawnItems = true;
+
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -184,6 +192,9 @@ namespace MonkeyBusiness.Managers
             Score = 0;
 
             _inputReceivers = _playerCharacter.transform.parent.GetComponentsInChildren<IInputReceiver>();
+            
+            StaticEvents.OnItemRegistered += AddItem;
+            StaticEvents.OnItemUnregistered += RemoveItem;
         }
 
         void Start()
@@ -229,6 +240,33 @@ namespace MonkeyBusiness.Managers
             foreach(var receiver in _inputReceivers)
             {
                 receiver.CanReceiveInput = Time.timeScale != 0f;
+            }
+        }
+        
+        
+        public List<GameObject> GetItems()
+        {
+            return _items;
+        }
+
+        public void SetItems(List<GameObject> items)
+        {
+            _items = items;
+        }
+
+        public void AddItem(GameObject item)
+        {
+            if (item != null)
+            {
+                _items.Add(item);
+            }
+        }
+
+        public void RemoveItem(GameObject item)
+        {
+            if (item != null)
+            {
+                _items.Remove(item);
             }
         }
 
@@ -316,6 +354,11 @@ namespace MonkeyBusiness.Managers
             }
         }
 
+        public void StopItemSpawnThisWave()
+        {
+            canSpawnItems = false;
+        }
+
         public void PerkSelected()
         {
             _perkSelected = true;
@@ -375,11 +418,15 @@ namespace MonkeyBusiness.Managers
             _enemiesRemaining = waveInfo.gorillas + waveInfo.chimps;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
 
-            // Make the player drop his held item at the end of the wave in the GUI so we don't destroy something the EquipmentManager has a reference to. Very icky, no good.
-            foreach(ItemSpawner itemSpawner in _itemSpawners)
+            if (canSpawnItems)
             {
-                itemSpawner.SpawnItem();
+                // Make the player drop his held item at the end of the wave in the GUI so we don't destroy something the EquipmentManager has a reference to. Very icky, no good.
+                foreach(ItemSpawner itemSpawner in _itemSpawners)
+                {
+                    itemSpawner.SpawnItem();
+                }
             }
+            canSpawnItems = true; // reset back
 
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)

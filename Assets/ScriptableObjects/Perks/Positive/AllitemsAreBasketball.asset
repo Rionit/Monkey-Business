@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
+  m_Name: AllitemsAreBasketball
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSO
+  nftImage: {fileID: 21300000, guid: 0ccf3dbf84be347408c1aeb19252306c, type: 3}
+  perkAlignment: 0
+  effect:
+    rid: 5385079549030301779
+  effectName: Haramball
+  isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 5385079549030301779
+      type: {class: AllItemsAreItemEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: 'All items are now: <item>'
+        itemToChangeTo: {fileID: 4347215530056963882, guid: 794e37fa4d171384c99a3cb349e2d4e7, type: 3}
