@@ -7,6 +7,7 @@ using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Sirenix.OdinInspector;
+using UnityEngine.Serialization;
 
 namespace MonkeyBusiness.Player
 {
@@ -147,9 +148,15 @@ namespace MonkeyBusiness.Player
         [field: Required]
         public GameObject Target { get; private set; }
 
+        [SerializeField] private bool canUseRope = true;
+
         [Header("Swinging")]
         [Tooltip("Whether rope can currently be used.")]
-        public bool canUseRope { get; set; } = true;
+        public bool CanUseRope
+        {
+            get => canUseRope;
+            set => canUseRope = value;
+        }
 
         [Tooltip("Force applied while swinging and pressing WASD keys.")]
         [SerializeField] private float swingForce = 30f;

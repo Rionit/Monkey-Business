@@ -23,9 +23,6 @@ namespace MonkeyBusiness.Misc
         [ReadOnly]
         bool _isKnockedback;
 
-
-
-
         [SerializeField]
         [HideInInspector]
 
@@ -45,6 +42,9 @@ namespace MonkeyBusiness.Misc
             }
         }
 
+        [SerializeField]
+        StunAnimController _stunAnimController;
+
         public void Start()
         {
             _body.isKinematic = true;
@@ -55,7 +55,12 @@ namespace MonkeyBusiness.Misc
         {
             if(_isKnockedback)
             {
-                _body.linearVelocity *= _currentDamping;
+                var linearVelocity = _body.linearVelocity;
+                linearVelocity.x *= _currentDamping;
+                linearVelocity.y += Physics.gravity.y * Time.fixedDeltaTime;
+                linearVelocity.z *= _currentDamping;
+
+                _body.linearVelocity = linearVelocity;
             }
         }
 
@@ -107,6 +112,12 @@ namespace MonkeyBusiness.Misc
 
         IEnumerator KnockbackCoroutine(float duration)
         {
+            if(_stunAnimController != null)
+            {
+                Debug.Log("Animating " + gameObject.name + " stun animation for " + duration + " seconds.");
+                _stunAnimController.Animate(duration);
+            }
+
             yield return new WaitForSeconds(duration);
             
             _body.linearVelocity = Vector3.zero;

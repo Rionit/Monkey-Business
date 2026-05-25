@@ -11,7 +11,7 @@ namespace MonkeyBusiness.Perks.PerkEffects
         
         public override void Apply()
         {
-            StatsManager.Instance.canUseRope = canUse;
+            StatsManager.Instance.CanUseRope = canUse;
         }
 
         public override void Update()
@@ -21,7 +21,7 @@ namespace MonkeyBusiness.Perks.PerkEffects
 
         public override void Reset()
         {
-            return;
+            StatsManager.Instance.CanUseRope = !canUse;
         }
         
          

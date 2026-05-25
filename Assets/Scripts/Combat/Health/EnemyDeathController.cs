@@ -38,7 +38,10 @@ namespace MonkeyBusiness.Combat.Health
         [Tooltip("Parent of the object's rig to be turned on")]
         GameObject _rigParent;
 
-        Rigidbody _rigRB;
+        Rigidbody[] _rigRBs;
+        private Rigidbody _rigRootRB;
+
+        private Animator _animator;
 
         void Awake()
         {
@@ -53,11 +56,19 @@ namespace MonkeyBusiness.Combat.Health
                 Debug.LogError("No rig parent assigned for death fadeout on " + gameObject.name);
             }
 
-            _rigRB = _rigParent.GetComponentInChildren<Rigidbody>();
-            if(_rigRB == null)
+            _rigRootRB = _rigParent.GetComponentInChildren<Rigidbody>();
+            _rigRBs = _rigParent.GetComponentsInChildren<Rigidbody>();
+            if(_rigRBs == null)
             {
                 Debug.LogError("No rigidbody found for death fadeout on " + gameObject.name);
             }
+
+            foreach (Rigidbody rigidbody in _rigRBs)
+            {
+                rigidbody.isKinematic = true;
+            }
+            
+            _animator = _rigParent.GetComponent<Animator>();
 
             _deathTextureAnimator = GetComponentInChildren<EnemyTextureAnimator>();
             if(_deathTextureAnimator == null)
@@ -96,19 +107,26 @@ namespace MonkeyBusiness.Combat.Health
             _aliveCollider.enabled = false;
 
             ChangeLayerRecursively(transform, LayerMask.NameToLayer("DeadBody"));
-        
-            _rigRB.isKinematic = false;
-            _rigRB.freezeRotation = false;
 
-            _rigRB.maxLinearVelocity = _deathImpulseForce * 2f;
-            _rigParent.SetActive(true);
+            if (_animator)
+            {
+                _animator.enabled = false;
+            }
+            
+            foreach (Rigidbody rigidbody in _rigRBs)
+            {
+                rigidbody.isKinematic = false;
+            }
+
+            _rigRootRB.maxLinearVelocity = _deathImpulseForce * 2f;
+            //_rigParent.SetActive(true);
 
             Debug.Log("Is the rig parent active? " + _rigParent.activeSelf);
 
-            _rigRB.AddForce(deathImpulse + Vector3.up * 2f, ForceMode.Impulse);
+            _rigRootRB.AddForce(deathImpulse + Vector3.up * 2f, ForceMode.Impulse);
 
             var modifiedDir = new Vector3(direction.z, 0f, -direction.x).normalized;
-            _rigRB.AddTorque(modifiedDir * _deathImpulseForce / 4f, ForceMode.Impulse);
+            _rigRootRB.AddTorque(modifiedDir * _deathImpulseForce / 4f, ForceMode.Impulse);
 
             StartCoroutine(FadeoutDestroyCoroutine());
         }
@@ -135,13 +153,20 @@ namespace MonkeyBusiness.Combat.Health
 
             ChangeLayerRecursively(transform, LayerMask.NameToLayer("DeadBody"));
 
-            _rigRB.isKinematic = false;
-            _rigRB.freezeRotation = false;
+            if (_animator)
+            {
+                _animator.enabled = false;
+            }
 
-            _rigRB.maxLinearVelocity = _deathImpulseForce * 2f;
+            foreach (Rigidbody rigidbody in _rigRBs)
+            {
+                rigidbody.isKinematic = false;
+            }
 
-            _rigRB.linearVelocity = Vector3.zero;
-            _rigRB.angularVelocity = Vector3.zero;
+            _rigRootRB.maxLinearVelocity = _deathImpulseForce * 2f;
+
+            _rigRootRB.linearVelocity = Vector3.zero;
+            _rigRootRB.angularVelocity = Vector3.zero;
 
             _rigParent.SetActive(true);
 
@@ -150,10 +175,10 @@ namespace MonkeyBusiness.Combat.Health
             var randAngle = Random.Range(0f, Mathf.PI * 2f);
             var randDirection = new Vector3(Mathf.Cos(randAngle), 0.3f, Mathf.Sin(randAngle)).normalized;
 
-            _rigRB.AddForce(randDirection * _deathImpulseForce, ForceMode.Impulse);
+            _rigRootRB.AddForce(randDirection * _deathImpulseForce, ForceMode.Impulse);
 
             var modifiedDir = new Vector3(direction.z, 0f, -direction.x).normalized;
-            _rigRB.AddTorque(modifiedDir * _deathImpulseForce / 4f, ForceMode.Impulse);
+            _rigRootRB.AddTorque(modifiedDir * _deathImpulseForce / 4f, ForceMode.Impulse);
             //_rb.AddTorque(Random.insideUnitSphere * _deathImpulseForce, ForceMode.Impulse);
             //_rb.AddTorque(direction * _deathImpulseForce, ForceMode.Impulse);
             StartCoroutine(FadeoutDestroyCoroutine());

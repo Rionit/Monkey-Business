@@ -13,6 +13,10 @@ namespace MonkeyBusiness.Perks
     {
         public UnityEvent OnPerkSelected = new();
 
+        public UnityEvent<string, bool> OnPerkAdded = new();
+
+        public UnityEvent OnNegativePerkRemoved = new();
+
         [BoxGroup("Setup")]
         [SerializeField] private GameObject perkPrefab;
 
@@ -31,7 +35,16 @@ namespace MonkeyBusiness.Perks
         [BoxGroup("Perk Pools")]
         [SerializeField] private List<PerkSO> negativePerks = new();
 
+        // those which are shown while selecting
         private readonly List<GameObject> activePerks = new();
+
+        // Positive perks stay forever
+        [SerializeField] private List<Perk> permanentPerks = new();
+        // Negative perks reset after wave
+        [SerializeField] private List<Perk> temporaryPerks = new();
+        
+        [SerializeField] private List<PerkSO> availableNegativePerks = new();
+        [SerializeField] private List<PerkSO> usedNegativePerks = new();
 
         private Perk selectedPerk;
         private Perk negativePerk;
@@ -39,15 +52,57 @@ namespace MonkeyBusiness.Perks
         private bool waitingForPositiveConfirm;
         private bool waitingForNegativeConfirm;
 
+        private void OnEnable()
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnWaveDefeated.AddListener(
+                    ResetTemporaryPerks
+                );
+            }
+
+            InitNegativePool();
+        }
+        
+        private void InitNegativePool()
+        {
+            availableNegativePerks.Clear();
+            usedNegativePerks.Clear();
+
+            availableNegativePerks.AddRange(negativePerks);
+        }
+
+        private void OnDisable()
+        {
+            if (GameManager.Instance != null)
+            {
+                GameManager.Instance.OnWaveDefeated.RemoveListener(
+                    ResetTemporaryPerks
+                );
+            }
+        }
+
         [Button]
         public void RandomizeNewPerks()
         {
             ClearPerks();
 
-            for (int i = 0; i < 3; i++)
+            List<PerkSO> selectedPerks = new();
+
+            while (selectedPerks.Count < 3 && selectedPerks.Count < positivePerks.Count)
+            {
+                var perk = GetRandomPositivePerk();
+
+                if (!selectedPerks.Contains(perk))
+                {
+                    selectedPerks.Add(perk);
+                }
+            }
+
+            foreach (var perk in selectedPerks)
             {
                 activePerks.Add(
-                    InstantiatePerk(GetRandomPositivePerk())
+                    InstantiatePerk(perk)
                 );
             }
         }
@@ -133,6 +188,10 @@ namespace MonkeyBusiness.Perks
 
             selectedPerk.ApplyEffect();
 
+            // Positive perks stay forever
+            permanentPerks.Add(selectedPerk);
+            OnPerkAdded.Invoke(selectedPerk.perkSO.effect.GetDescription(), true);
+
             StartCoroutine(HandlePositiveConfirmed());
         }
 
@@ -159,7 +218,7 @@ namespace MonkeyBusiness.Perks
 
             negativePerk = go.GetComponent<Perk>();
 
-            negativePerk.Setup(GetRandomNegativePerk());
+            negativePerk.Setup(negativePerks[Random.Range(0, negativePerks.Count)]);
             negativePerk.SetNeutral();
 
             negativePerk.SetInteractable(false);
@@ -178,6 +237,10 @@ namespace MonkeyBusiness.Perks
                         return;
 
                     negativePerk.ApplyEffect();
+
+                    OnPerkAdded.Invoke(negativePerk.perkSO.effect.GetDescription(), false);
+                    // Negative perks are temporary
+                    temporaryPerks.Add(negativePerk);
 
                     negativePerk.SetInteractable(false);
 
@@ -204,7 +267,7 @@ namespace MonkeyBusiness.Perks
 
             while (elapsed < duration)
             {
-                var random = GetRandomNegativePerk();
+                var random = negativePerks[Random.Range(0, negativePerks.Count)];
 
                 perk.Setup(random);
                 perk.SetNeutral();
@@ -221,7 +284,6 @@ namespace MonkeyBusiness.Perks
             }
 
             perk.Setup(GetRandomNegativePerk());
-
             perk.ForceSelect();
 
             waitingForNegativeConfirm = true;
@@ -342,6 +404,20 @@ namespace MonkeyBusiness.Perks
             waitingForNegativeConfirm = false;
         }
 
+        private void ResetTemporaryPerks()
+        {
+            foreach (var perk in temporaryPerks)
+            {
+                if (perk != null)
+                {
+                    perk.Reset();
+                }
+                OnNegativePerkRemoved.Invoke();
+            }
+
+            temporaryPerks.Clear();
+        }
+
         private PerkSO GetRandomPositivePerk()
         {
             if (positivePerks.Count == 0)
@@ -363,9 +439,59 @@ namespace MonkeyBusiness.Perks
                 return null;
             }
 
-            return negativePerks[
-                Random.Range(0, negativePerks.Count)
-            ];
+            if (availableNegativePerks.Count == 0)
+            {
+                availableNegativePerks.AddRange(negativePerks);
+                usedNegativePerks.Clear();
+            }
+
+            int index = Random.Range(0, availableNegativePerks.Count);
+
+            var perk = availableNegativePerks[index];
+
+            availableNegativePerks.RemoveAt(index);
+            usedNegativePerks.Add(perk);
+
+            return perk;
+        }
+
+        [BoxGroup("Debug")]
+        [Button]
+        private void ApplyPerk(PerkSO perkSO)
+        {
+            if (perkSO == null)
+            {
+                Debug.LogWarning("Perk is null.");
+                return;
+            }
+
+            var go = Instantiate(perkPrefab, transform);
+
+            go.SetActive(false);
+
+            var perk = go.GetComponent<Perk>();
+
+            if (perk == null)
+            {
+                Debug.LogError("Perk component missing on prefab.");
+                return;
+            }
+
+            perk.Setup(perkSO);
+            perk.ApplyEffect();
+
+            if (perkSO.perkAlignment == PerkAlignment.Positive)
+            {
+                // Permanent perk
+                permanentPerks.Add(perk);
+
+            }
+            else
+            {
+                // Temporary perk
+                temporaryPerks.Add(perk);
+                OnPerkAdded.Invoke(perkSO.effectName, false);
+            }
         }
     }
 }

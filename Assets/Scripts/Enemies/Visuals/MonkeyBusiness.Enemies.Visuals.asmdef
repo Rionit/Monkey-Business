@@ -1,0 +1,14 @@
+{
+    "name": "MonkeyBusiness.Enemies.Visuals",
+    "rootNamespace": "MonkeyBusiness.Enemies.Visuals",
+    "references": [],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

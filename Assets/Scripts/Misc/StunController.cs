@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
@@ -22,63 +23,17 @@ namespace MonkeyBusiness.Misc
         [BoxGroup("Stun VFX")]
         [EnumButtons]
         [SerializeField]
-        VFXType _vfxType = VFXType.ENEMY;
+        VFXType _vfxType;
 
-        [ShowIf("@_vfxType == VFXType.ENEMY")]
-        [BoxGroup("Stun VFX/Enemy")]
         [SerializeField]
-        GameObject _stunVFX;
-
-        [ShowIf("@_vfxType == VFXType.ENEMY")]
         [BoxGroup("Stun VFX")]
+        float _stunVFXDuration = 0.3f;
+
         [SerializeField]
-        float _stunVFXFadeDuration = 0.3f;
+        StunAnimController _stunAnimController;
 
-        [ShowIf("@_vfxType == VFXType.ENEMY")]
-        [BoxGroup("Stun VFX/Enemy")]
         [SerializeField]
-        List<Renderer> _stunStarRenderers;
-
-        Tween _stunVFXFadeTween;
-
-        float _stunVFXAlpha = 0f;
-
-        float GetStunVFXAlpha() => _stunVFXAlpha;
-
-        void SetStunVFXAlpha(float value)
-        {
-            _stunVFXAlpha = value;
-            foreach(var renderer in _stunStarRenderers)
-            {
-                if (renderer != null)
-                {
-                    renderer.material.SetFloat("_DeathProgress", 1f - _stunVFXAlpha);
-                }
-            }
-        }
-
-        void FadeInOrOut(bool fadeIn, float duration)
-        {
-            if(_stunVFXFadeTween != null && _stunVFXFadeTween.IsActive())
-            {
-                _stunVFXFadeTween.Kill();
-            }
-
-            float startValue = fadeIn ? 0f : 1f;
-            float endValue = fadeIn ? 1f : 0f;
-
-            Debug.Log("Fading " + (fadeIn ? "in" : "out") + " stun VFX over " + duration + " seconds.");
-            _stunVFXFadeTween = DOTween.To(GetStunVFXAlpha, SetStunVFXAlpha, endValue, duration).From(startValue);
-
-            if(fadeIn)
-            {
-                _stunVFX.SetActive(true);
-            }
-            else
-            {
-                _stunVFXFadeTween.OnComplete(() => _stunVFX.SetActive(false));
-            }
-        }
+        Animator _animator;
 
         /// <summary>
         /// Stuns the components for the specified duration.
@@ -91,11 +46,18 @@ namespace MonkeyBusiness.Misc
             StartCoroutine(StunEnemyCoroutine(duration));
         }
 
+
         IEnumerator StunEnemyCoroutine(float duration)
         {
             if(_vfxType == VFXType.ENEMY)
             {
-                FadeInOrOut(true, _stunVFXFadeDuration);
+                Debug.Log("Animating " + gameObject.name + " stun animation for " + duration + " seconds.");
+                _stunAnimController.Animate(_stunVFXDuration);
+            }
+
+            if (_animator)
+            {
+                _animator.SetTrigger("Stun");
             }
 
             Debug.Log("Stunned for " + duration + " seconds!");
@@ -112,11 +74,7 @@ namespace MonkeyBusiness.Misc
                 if (component != null)
                     component.enabled = true;
             }
-
-            if(_vfxType == VFXType.ENEMY)
-            {
-                FadeInOrOut(false, _stunVFXFadeDuration);
-            }
         }
+
     }
 }

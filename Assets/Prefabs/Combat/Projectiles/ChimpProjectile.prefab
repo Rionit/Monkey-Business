@@ -63,5 +63,36 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5856281644080234995, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6610434037763846479}
   m_SourcePrefab: {fileID: 100100000, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+--- !u!1 &2408574045857668683 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5856281644080234995, guid: f2430cb905287ec8fbb0d7b114353087, type: 3}
+  m_PrefabInstance: {fileID: 8082070677912903608}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6610434037763846479
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2408574045857668683}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 1
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 71aad4d1af690b1ce8f57b2464660220, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 2408574045857668683}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0

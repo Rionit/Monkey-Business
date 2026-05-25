@@ -11,6 +11,8 @@ using Ami.BroAudio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
+using TMPro;
+using System.Linq;
 
 namespace MonkeyBusiness.Managers
 {
@@ -30,6 +32,16 @@ namespace MonkeyBusiness.Managers
     /// </summary>
     public class GameManager : MonoBehaviour, ITargetable
     {
+        public static int Score = 0;
+
+        public static int HighScore = 0;
+
+        public static UnityEvent<int> OnScoreChanged = new();
+
+        const string HIGH_SCORE_KEY = "HighScore";
+
+        const int KILL_SCORE = 100;
+
         [Serializable]
         class SpawnInformation
         {
@@ -59,6 +71,8 @@ namespace MonkeyBusiness.Managers
         //private GameState _currentGameState;
         
         public UnityEvent OnWaveDefeated = new();
+        public UnityEvent<int> OnWaveDefeatedNum = new();
+
         public UnityEvent OnWaveStarted = new();
         public UnityEvent<int> OnEnemyCountChanged = new();
 
@@ -107,7 +121,6 @@ namespace MonkeyBusiness.Managers
         /// </summary>
         public GameObject Target => _playerCharacter;
 
-
         /// <summary>
         /// List of all enemy spawn points
         /// </summary>
@@ -124,6 +137,8 @@ namespace MonkeyBusiness.Managers
         /// Player's character object, used for enemy targeting
         /// </summary>
         public GameObject PlayerCharacter => _playerCharacter;
+
+        IInputReceiver[] _inputReceivers;
 
         Player _playerScript;
 
@@ -149,6 +164,14 @@ namespace MonkeyBusiness.Managers
 
         bool _canPause = true;
 
+        public Func<IEnumerator> CountdownCoroutine { set; private get; } 
+
+
+        [SerializeField]
+        private GameObject _itemsRoot;
+        
+        private ItemSpawner[] _itemSpawners;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
         {
@@ -158,6 +181,9 @@ namespace MonkeyBusiness.Managers
             }
             Instance = this;
             _canPause = true;
+            Score = 0;
+
+            _inputReceivers = _playerCharacter.transform.parent.GetComponentsInChildren<IInputReceiver>();
         }
 
         void Start()
@@ -169,13 +195,28 @@ namespace MonkeyBusiness.Managers
             _restartAction.performed += _ => Restart();
 
             _pauseAction = InputSystem.actions.FindAction("Pause");
+            _canPause = true;
             _pauseAction.performed += PauseOrUnpause;
             _playerScript = _playerCharacter.GetComponentInParent<Player>();
             StartCoroutine(PreparationPhase());
 
             _playerCharacter.GetComponentInParent<HealthController>().OnDeath.AddListener(OnPlayerDeath);
-            
             BroAudio.SetVolume(BroAudioType.All, PlayerPrefs.GetFloat("MasterVolume", 1f));
+
+            _itemSpawners = _itemsRoot.GetComponentsInChildren<ItemSpawner>();
+        }
+
+        public void PauseOrUnpause()
+        {
+            if(!_canPause) return;
+            Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
+            _pauseMenu.SetActive(Time.timeScale == 0f);
+            Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
+
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = Time.timeScale != 0f;
+            }
         }
 
         public void PauseOrUnpause(InputAction.CallbackContext context)
@@ -185,8 +226,10 @@ namespace MonkeyBusiness.Managers
             _pauseMenu.SetActive(Time.timeScale == 0f);
             Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
 
-            _equipmentManager.CanReceiveInput = Time.timeScale != 0f;
-            _playerScript.CanReceiveInput = Time.timeScale != 0f;
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = Time.timeScale != 0f;
+            }
         }
 
         /// <summary>
@@ -209,6 +252,10 @@ namespace MonkeyBusiness.Managers
             if(enemyObject.TryGetComponent<HealthController>(out HealthController healthController))
             {
                 healthController.OnDeath.AddListener(OnEnemyDestroyed);
+                healthController.OnTakenDamage.AddListener(damage =>
+                {
+                    AddScore(Mathf.RoundToInt(damage));
+                });
             }
             else
             {
@@ -218,12 +265,28 @@ namespace MonkeyBusiness.Managers
             _enemies.Add(enemyObject);
         }
 
+        public static void AddKillScore()
+        {
+            Score += KILL_SCORE;
+            OnScoreChanged.Invoke(Score);
+
+        }
+
+        public static void AddScore(int score)
+        {
+            Score += score;
+            OnScoreChanged.Invoke(Score);
+        }
+
+
+
         /// <summary>
         /// Callback when an enemy is defeated
         /// </summary>
         /// <param name="gameObject">the defeated enemy</param>
         void OnEnemyDestroyed(GameObject gameObject)
         {
+            AddKillScore();
             Debug.Log($"Enemy {gameObject.name} died :D");
             _enemiesRemaining--;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
@@ -244,6 +307,7 @@ namespace MonkeyBusiness.Managers
                 Debug.Log("Wave defeated!");
                 _currentWave++;
                 OnWaveDefeated.Invoke();
+                OnWaveDefeatedNum.Invoke(_currentWave);
                 StartCoroutine(PreparationPhase());
             }
             if(_enemiesRemaining < 0)
@@ -270,20 +334,24 @@ namespace MonkeyBusiness.Managers
         {
             Debug.Log("Perk selection started");
             _hud.SetActive(false);
-            _playerScript.CanReceiveInput = false;
-            _equipmentManager.CanReceiveInput = false;
-
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = false;
+            }
             Cursor.lockState = CursorLockMode.Confined;
             yield return new WaitUntil(() => _perkSelected);
             Cursor.lockState = CursorLockMode.Locked;
             _hud.SetActive(true);
             _perkSelected = false;
 
-            _playerScript.CanReceiveInput = true;
-            _equipmentManager.CanReceiveInput = true;
-            
-            Debug.Log("Preparation phase started");
-            yield return new WaitForSeconds(_preparationPhaseDuration);
+
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = true;
+            }
+
+            //Debug.Log("Preparation phase started");
+            //yield return new WaitForSeconds(_preparationPhaseDuration);
             
             StartCoroutine(CombatPhase());
         }
@@ -294,6 +362,10 @@ namespace MonkeyBusiness.Managers
         /// <returns></returns>
         private IEnumerator CombatPhase()
         {
+            yield return new WaitForSeconds(2f);
+            if (CountdownCoroutine != null)
+                yield return CountdownCoroutine(); // Waits for countdown coroutine
+
             OnWaveStarted?.Invoke();
             var waveInfo = _waveDefinitions[Mathf.Min(_currentWave, _waveDefinitions.Count - 1)];
             _typesToSpawn = new();
@@ -302,6 +374,12 @@ namespace MonkeyBusiness.Managers
 
             _enemiesRemaining = waveInfo.gorillas + waveInfo.chimps;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
+
+            // Make the player drop his held item at the end of the wave in the GUI so we don't destroy something the EquipmentManager has a reference to. Very icky, no good.
+            foreach(ItemSpawner itemSpawner in _itemSpawners)
+            {
+                itemSpawner.SpawnItem();
+            }
 
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)
@@ -350,15 +428,27 @@ namespace MonkeyBusiness.Managers
             Time.timeScale = 0f; // Freezes the game
             _hud.SetActive(false);
             _deathScreen.SetActive(true);
-            _equipmentManager.CanReceiveInput = false;
-            _playerScript.CanReceiveInput = false;
 
+            foreach(var receiver in _inputReceivers)
+            {
+                receiver.CanReceiveInput = false;
+            }
+            
             Cursor.lockState = CursorLockMode.Confined;
         }
+
+
 
         void Restart()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+
+        void OnDestroy()
+        {
+            PlayerPrefs.SetInt(HIGH_SCORE_KEY, HighScore);
+
+            _pauseAction.performed -= PauseOrUnpause;
         }
     }
 }
