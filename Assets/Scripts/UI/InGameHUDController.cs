@@ -20,8 +20,8 @@ namespace MonkeyBusiness.UI
         [Serializable]
         private class WeaponIcon
         {
-            public Image foreground;
-            public Image background;
+            public WeaponIconSelector iconSelector;
+            public AmmoBarController ammoBar;
         }
 
         [Required, BoxGroup("Crosshair", centerLabel: true)]
@@ -47,8 +47,11 @@ namespace MonkeyBusiness.UI
 
         [SerializeField] private TextMeshProUGUI countdownText;
 
+        /*[SerializeField]
+        List<WeaponIcon> selectedWeaponIcons = new List<WeaponIcon>();*/
+
         [SerializeField]
-        List<WeaponIcon> selectedWeaponIcons = new List<WeaponIcon>();
+        List<WeaponIconSelector> selectedWeaponIcons = new List<WeaponIconSelector>();
 
         [SerializeField]
         Color selectedColor = Color.white;
@@ -143,7 +146,7 @@ namespace MonkeyBusiness.UI
             var weaponIcon = selectedWeaponIcons[index];
             var previousWeaponIcon = previousChangeIndex >= 0 ? selectedWeaponIcons[previousChangeIndex] : null;
 
-            changeWeaponSequence = DOTween.Sequence();
+            /*changeWeaponSequence = DOTween.Sequence();
             changeWeaponSequence.Append(DOTween.To(() => weaponIcon.background.color, x => weaponIcon.background.color = x, selectedColor, 0.3f).From(unselectedColor).SetEase(Ease.OutQuad));
             changeWeaponSequence.Join(DOTween.To(() => weaponIcon.foreground.color, x => weaponIcon.foreground.color = x, selectedColor, 0.3f).From(unselectedColor).SetEase(Ease.OutQuad));
             
@@ -165,6 +168,11 @@ namespace MonkeyBusiness.UI
                 }
             });
 
+            previousChangeIndex = index;*/
+
+            if(previousWeaponIcon != null)
+                previousWeaponIcon.OnDeselected();
+            weaponIcon.OnSelected();
             previousChangeIndex = index;
         }   
 

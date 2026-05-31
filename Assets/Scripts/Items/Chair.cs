@@ -24,7 +24,6 @@ namespace MonkeyBusiness.Items
         [SerializeField]
         private int _impactDamage = 25;
 
-
         /// <summary>
         /// Number of times the item can be thrown before breaking. Each throw removes 1 durability
         /// </summary>
