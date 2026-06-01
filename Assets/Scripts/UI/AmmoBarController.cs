@@ -18,9 +18,11 @@ namespace MonkeyBusiness.UI
         /// </summary>
         private enum AmmoState { LOW, MEDIUM, HIGH }
 
+        [SerializeField]
         private float startOffset = 0f;
 
-        private float endOffset = 100f;
+        [SerializeField]
+        private float endOffset = 90f;
         
         [BoxGroup("Ammo Bar Settings", centerLabel: true)]
         [ReadOnly, SerializeField, Tooltip("Current evaluated ammo state based on value.")]

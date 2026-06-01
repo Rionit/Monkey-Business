@@ -20,7 +20,7 @@ namespace MonkeyBusiness.UI
         [Serializable]
         private class WeaponIcon
         {
-            public WeaponIconSelector iconSelector;
+            public IconSelector iconSelector;
             public AmmoBarController ammoBar;
         }
 
@@ -51,7 +51,7 @@ namespace MonkeyBusiness.UI
         List<WeaponIcon> selectedWeaponIcons = new List<WeaponIcon>();*/
 
         [SerializeField]
-        List<WeaponIconSelector> selectedWeaponIcons = new List<WeaponIconSelector>();
+        List<IconSelector> selectedWeaponIcons = new List<IconSelector>();
 
         [SerializeField]
         Color selectedColor = Color.white;
@@ -83,6 +83,7 @@ namespace MonkeyBusiness.UI
 
         public void AddPerk(string perkText, bool isPermanent)
         {
+
             if(currentPerkIndex >= perkTexts.Count)
             {
                 Debug.LogWarning("Not enough perk text fields to display all perks!");
