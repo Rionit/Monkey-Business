@@ -8,6 +8,7 @@ using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
 using Sirenix.OdinInspector;
 using UnityEngine.Serialization;
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Player
 {
@@ -177,6 +178,24 @@ namespace MonkeyBusiness.Player
         [Tooltip("Velocity retained after bouncing during swing.")]
         [SerializeField] private float swingBounceRetention = 0.9f;
 
+        public UnityEvent OnSwingInvoked;
+
+        public bool IsSwingReady()
+        {
+            Debug.Log("Swing max distance: " + _swingMaxDistance);
+            bool hitSwingableSurface = Physics.Raycast(
+                UnityEngine.Camera.main.transform.position,
+                UnityEngine.Camera.main.transform.forward,
+                out RaycastHit hit,
+                _swingMaxDistance,
+                whatIsSwingable
+            );
+
+            Debug.Log("Swing ready check: canUseRope=" + canUseRope + " swingCooldownRemaining=" + _swingCooldownRemaining + " swingTimeRemaining=" + _swingTimeRemaining + " hitSwingableSurface=" + hitSwingableSurface);
+
+            return canUseRope && _swingTimeRemaining <= 0f && _swingCooldownRemaining <= 0f && hitSwingableSurface;
+        }
+
         // Swing internals
         private Vector3 _swingVelocity;
         private Vector3 _swingAnchor;
@@ -287,7 +306,6 @@ namespace MonkeyBusiness.Player
         {
             if (!canUseRope || _swingCooldownRemaining > 0f)
                 return;
-
             var cam = UnityEngine.Camera.main;
             var origin = cam.transform.position;
             var dir = cam.transform.forward;
@@ -295,6 +313,8 @@ namespace MonkeyBusiness.Player
             // Raycast to find swing anchor
             if (!Physics.Raycast(origin, dir, out RaycastHit hit, _swingMaxDistance, whatIsSwingable))
                 return;
+
+            OnSwingInvoked?.Invoke();
 
             _lineRenderer.enabled = true;
             _state.Stance = Stance.Swing;
