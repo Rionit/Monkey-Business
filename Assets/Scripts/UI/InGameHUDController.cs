@@ -1,12 +1,9 @@
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
 // Do NOT use UIElements, that is UI Toolkit
 using TMPro;
-using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 using System.Collections;
-using MonkeyBusiness.Combat.Weapons;
 using System.Collections.Generic;
 using MonkeyBusiness.Managers;
 using MonkeyBusiness.Misc;
@@ -20,8 +17,8 @@ namespace MonkeyBusiness.UI
         [Serializable]
         private class WeaponIcon
         {
-            public Image foreground;
-            public Image background;
+            public IconSelector iconSelector;
+            public AmmoBarController ammoBar;
         }
 
         [Required, BoxGroup("Crosshair", centerLabel: true)]
@@ -44,11 +41,18 @@ namespace MonkeyBusiness.UI
         [SerializeField] private TextMeshProUGUI wavesCompletedText;
 
         [SerializeField] private TextMeshProUGUI scoreText;
+        
+        [SerializeField] private Color defaultScoreColor;
+        
+        [SerializeField] private float scoreRecoverySpeed = 8f;
 
         [SerializeField] private TextMeshProUGUI countdownText;
 
+        /*[SerializeField]
+        List<WeaponIcon> selectedWeaponIcons = new List<WeaponIcon>();*/
+
         [SerializeField]
-        List<WeaponIcon> selectedWeaponIcons = new List<WeaponIcon>();
+        List<IconSelector> selectedWeaponIcons = new List<IconSelector>();
 
         [SerializeField]
         Color selectedColor = Color.white;
@@ -64,12 +68,42 @@ namespace MonkeyBusiness.UI
         Sequence changeWeaponSequence;
 
         int previousChangeIndex = -1;
+        
+        private Tween scoreTween;
+        private Sequence scorePopSequence;
+        private int displayedScore;
 
         
         void Start()
         {
             GameManager.Instance.CountdownCoroutine = AnimateCountdown;
             GameManager.OnScoreChanged.AddListener(SetScore);
+            
+            defaultScoreColor = scoreText.color;
+
+            if (int.TryParse(scoreText.text, out var initialScore))
+                displayedScore = initialScore;
+
+            GameManager.Instance.CountdownCoroutine = AnimateCountdown;
+            GameManager.OnScoreChanged.AddListener(SetScore);
+        }
+        
+        private void Update()
+        {
+            if (scoreText == null)
+                return;
+
+            var tr = scoreText.rectTransform;
+
+            tr.localScale = Vector3.Lerp(
+                tr.localScale,
+                Vector3.one,
+                scoreRecoverySpeed * Time.unscaledDeltaTime);
+
+            tr.localRotation = Quaternion.Slerp(
+                tr.localRotation,
+                Quaternion.identity,
+                scoreRecoverySpeed * Time.unscaledDeltaTime);
         }
 
         void OnDestroy()
@@ -80,6 +114,7 @@ namespace MonkeyBusiness.UI
 
         public void AddPerk(string perkText, bool isPermanent)
         {
+
             if(currentPerkIndex >= perkTexts.Count)
             {
                 Debug.LogWarning("Not enough perk text fields to display all perks!");
@@ -124,7 +159,66 @@ namespace MonkeyBusiness.UI
                 Debug.LogError($"{value} is not a valid score!");
                 return;
             }
-            scoreText.text = value.ToString();
+
+            scoreTween?.Kill();
+            scorePopSequence?.Kill();
+
+            int startValue = displayedScore;
+            displayedScore = value;
+
+            // Smooth number tween
+            scoreTween = DOTween.To(
+                    () => startValue,
+                    x =>
+                    {
+                        startValue = x;
+                        scoreText.text = x.ToString("N0");
+                    },
+                    value,
+                    0.45f)
+                .SetEase(Ease.OutCubic);
+
+            var tr = scoreText.rectTransform;
+
+            // Dopamine pop sequence
+            scorePopSequence = DOTween.Sequence();
+
+            scorePopSequence.Append(tr.DOShakeScale(
+                0.25f,
+                strength: 0.5f,
+                vibrato: 20,
+                randomness: 90f,
+                fadeOut: true));
+
+            scorePopSequence.Join(tr.DOShakeRotation(
+                0.25f,
+                strength: new Vector3(0f, 0f, 12f),
+                vibrato: 20,
+                randomness: 90f,
+                fadeOut: true));
+
+            scorePopSequence.Join(
+                DOTween.To(
+                    () => scoreText.color,
+                    x => scoreText.color = x,
+                    new Color(1f, 0.92f, 0.2f),
+                    0.12f));
+
+            scorePopSequence.Join(tr.DOScale(
+                1.35f,
+                0.12f).SetEase(Ease.OutBack));
+
+            scorePopSequence.Append(
+                DOTween.To(
+                        () => scoreText.color,
+                        x => scoreText.color = x,
+                        defaultScoreColor,
+                        0.35f)
+                    .SetEase(Ease.OutQuad));
+
+            scorePopSequence.Join(tr.DOScale(
+                1f,
+                0.35f).SetEase(Ease.OutElastic));
         }
 
         public void SetSelectedWeapon(int index)
@@ -143,7 +237,7 @@ namespace MonkeyBusiness.UI
             var weaponIcon = selectedWeaponIcons[index];
             var previousWeaponIcon = previousChangeIndex >= 0 ? selectedWeaponIcons[previousChangeIndex] : null;
 
-            changeWeaponSequence = DOTween.Sequence();
+            /*changeWeaponSequence = DOTween.Sequence();
             changeWeaponSequence.Append(DOTween.To(() => weaponIcon.background.color, x => weaponIcon.background.color = x, selectedColor, 0.3f).From(unselectedColor).SetEase(Ease.OutQuad));
             changeWeaponSequence.Join(DOTween.To(() => weaponIcon.foreground.color, x => weaponIcon.foreground.color = x, selectedColor, 0.3f).From(unselectedColor).SetEase(Ease.OutQuad));
             
@@ -165,13 +259,18 @@ namespace MonkeyBusiness.UI
                 }
             });
 
+            previousChangeIndex = index;*/
+
+            if(previousWeaponIcon != null)
+                previousWeaponIcon.OnDeselected();
+            weaponIcon.OnSelected();
             previousChangeIndex = index;
         }   
 
         [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Enemy Count")]
         public void SetEnemyCount(int value)
         {
-            enemyCountText.text = value == 1 ? $"{value} Enemy Left!" : $"{value} Enemies Left!";
+            enemyCountText.text = $"{value}";
         }
 
         [Button(ButtonSizes.Large, ButtonStyle.Box, Expanded = true), BoxGroup("Health Bar")]

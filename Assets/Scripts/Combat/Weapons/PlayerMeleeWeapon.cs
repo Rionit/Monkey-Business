@@ -9,7 +9,7 @@ using MonkeyBusiness.Misc;
 using DG.Tweening;
 using UnityEngine.UI;
 using Ami.BroAudio;
-
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -66,12 +66,15 @@ namespace MonkeyBusiness.Combat.Weapons
 
         InputAction _meleeAttackAction;
 
-        [SerializeField]
+        /*[SerializeField]
         [RequiredIn(PrefabKind.InstanceInScene)]
-        Image _chargeImage;
-
+        Image _chargeImage;*/
         [SerializeField]
         string _enemyTag = "Enemy";
+
+        public UnityEvent OnAttackInvoked;
+
+        public UnityEvent OnAttackCooldownEnded;
 
         void Awake()
         {
@@ -106,6 +109,7 @@ namespace MonkeyBusiness.Combat.Weapons
             _attackHitbox.gameObject.SetActive(true);
 
             _attackEffect.Play();
+            OnAttackInvoked?.Invoke();
 
             //_animationTf.localRotation = Quaternion.Euler(0, 90f, 0f); // Rotate the weapon downwards for the attack animation
             _attackTrail.emitting = true;
@@ -113,8 +117,8 @@ namespace MonkeyBusiness.Combat.Weapons
             _meleeAttackSound.Play();
             var tween = _animationTf.DOLocalRotate(new Vector3(0, -90f, 0f), 0.2f).From(new Vector3(0,90f,0)).SetEase(Ease.Linear); // TODO: Make editable
             // Tween charge image to 0 with quadratic ease in-and-out
-            DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 0f, 0.5f).SetEase(Ease.InOutCubic)
-            .OnComplete(() => DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 1f, _attackCooldown - 0.5f).SetEase(Ease.Linear));
+            /*DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 0f, 0.5f).SetEase(Ease.InOutCubic)
+            .OnComplete(() => DOTween.To(() => _chargeImage.fillAmount, x => _chargeImage.fillAmount = x, 1f, _attackCooldown - 0.5f).SetEase(Ease.Linear));*/
 
             yield return new WaitForFixedUpdate();
             _attackHitbox.gameObject.SetActive(false);
@@ -128,6 +132,7 @@ namespace MonkeyBusiness.Combat.Weapons
             yield return new WaitForSeconds(_attackCooldown - 0.2f + Time.fixedDeltaTime); // Cooldown duration
 
             _onCooldown = false;
+            OnAttackCooldownEnded?.Invoke();
         }
 
         void Update()
