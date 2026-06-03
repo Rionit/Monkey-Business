@@ -240,7 +240,7 @@ namespace MonkeyBusiness.UI
             var weaponIcon = selectedWeaponIcons[index];
             var previousWeaponIcon = previousChangeIndex >= 0 ? selectedWeaponIcons[previousChangeIndex] : null;
             if(previousWeaponIcon != null)
-                ammoBubble.transform.DOMove(weaponIcon.gameObject.transform.Find("BubblePivotPoint").position, 0.25f);
+                ammoBubble.transform.DOMove(weaponIcon.gameObject.transform.Find("BubblePivotPoint").position, 0.25f).SetEase(Ease.InOutCubic);
 
             /*changeWeaponSequence = DOTween.Sequence();
             changeWeaponSequence.Append(DOTween.To(() => weaponIcon.background.color, x => weaponIcon.background.color = x, selectedColor, 0.3f).From(unselectedColor).SetEase(Ease.OutQuad));
