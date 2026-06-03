@@ -84,6 +84,8 @@ namespace MonkeyBusiness.Managers
         
         [ShowInInspector] private Dictionary<GameObject, float> _damageMultipliers = new();
         
+        [ShowInInspector] public Dictionary<ScriptableObject, bool> _perksUsage = new();
+        
         private HealthController _healthController;
         private EquipmentManager _equipmentManager;
         private PlayerCharacter _characterController;

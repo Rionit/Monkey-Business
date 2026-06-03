@@ -1,4 +1,5 @@
 using System;
+using MonkeyBusiness.Managers;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -93,6 +94,7 @@ namespace MonkeyBusiness.Perks
         public void ApplyEffect()
         {
             Debug.Log("Applying effect " + this.name);
+            StatsManager.Instance._perksUsage[perkSO] = true;
             perkSO.effect?.Apply();
         }
 

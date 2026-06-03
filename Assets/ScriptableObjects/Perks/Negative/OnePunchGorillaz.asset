@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb05e5b9e313e694ba5d48dd5d45814f, type: 3}
+  m_Name: OnePunchGorillaz
+  m_EditorClassIdentifier: Assembly-CSharp::PerkSO
+  nftImage: {fileID: 21300000, guid: 16a2a7ccfe0e6db4896de2d059781264, type: 3}
+  perkAlignment: 1
+  effect:
+    rid: 6771810829099597941
+  effectName: One Punch Gorillaz??
+  isUnique: 0
+  references:
+    version: 2
+    RefIds:
+    - rid: 6771810829099597941
+      type: {class: OnePunchMonkeyEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
+      data:
+        description: Gorilla melee attacks create an explosion
+        explosionPrefab: {fileID: 4045664842276614417, guid: 2b1553d8a1be34b418fef3d07c814498, type: 3}
+        targetEntityType: 0

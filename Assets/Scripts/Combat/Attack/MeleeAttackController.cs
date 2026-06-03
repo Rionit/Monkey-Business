@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using MonkeyBusiness.Combat.Health;
 using DG.Tweening;
 using Ami.BroAudio;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.Combat.Attack
 {
@@ -57,6 +58,7 @@ namespace MonkeyBusiness.Combat.Attack
 
         public void ExecuteAttack(GameObject target)
         {
+            StaticEvents.OnEnemyMeleeAttackUsed.Invoke(gameObject);
             StartCoroutine(MeleeAttackCoroutine(target));
         }
 
