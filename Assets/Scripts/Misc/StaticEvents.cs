@@ -7,5 +7,6 @@ namespace MonkeyBusiness.Misc
     {
         public static Action<GameObject> OnItemRegistered;
         public static Action<GameObject> OnItemUnregistered;
+        public static Action OnEnemyHit;
     }
 }
