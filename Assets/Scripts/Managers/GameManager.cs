@@ -7,12 +7,14 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Enemies.Navigation;
 using MonkeyBusiness.Misc;
 using System;
-using Ami.BroAudio;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 using TMPro;
 using System.Linq;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using Ami.BroAudio;
 
 namespace MonkeyBusiness.Managers
 {
@@ -162,6 +164,10 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         GameObject _pauseMenu;
 
+
+        [SerializeField]
+        UnityEngine.Rendering.Volume _volume;
+
         bool _canPause = true;
 
         public Func<IEnumerator> CountdownCoroutine { set; private get; } 
@@ -171,6 +177,14 @@ namespace MonkeyBusiness.Managers
         private GameObject _itemsRoot;
         
         private ItemSpawner[] _itemSpawners;
+        
+        /// <summary>
+        /// Currently spawned items
+        /// </summary>
+        private List<GameObject> _items = new();
+        
+        private bool canSpawnItems = true;
+
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -184,6 +198,9 @@ namespace MonkeyBusiness.Managers
             Score = 0;
 
             _inputReceivers = _playerCharacter.transform.parent.GetComponentsInChildren<IInputReceiver>();
+            
+            StaticEvents.OnItemRegistered += AddItem;
+            StaticEvents.OnItemUnregistered += RemoveItem;
         }
 
         void Start()
@@ -213,10 +230,27 @@ namespace MonkeyBusiness.Managers
             _pauseMenu.SetActive(Time.timeScale == 0f);
             Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
 
+            BlurBackground(Time.timeScale == 0f);
+
+            EnableHUD(Time.timeScale != 0f);
+
             foreach(var receiver in _inputReceivers)
             {
                 receiver.CanReceiveInput = Time.timeScale != 0f;
             }
+        }
+
+        void BlurBackground(bool shouldBlur)
+        {
+            if(_volume.profile.TryGet(out DepthOfField depthOfField))
+            {
+                depthOfField.focusDistance.value = shouldBlur ? 0f : 10f;
+            }
+        }
+
+        void EnableHUD(bool enabled)
+        {
+            _hud.SetActive(enabled);
         }
 
         public void PauseOrUnpause(InputAction.CallbackContext context)
@@ -226,9 +260,39 @@ namespace MonkeyBusiness.Managers
             _pauseMenu.SetActive(Time.timeScale == 0f);
             Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
 
+            BlurBackground(Time.timeScale == 0f);
+            EnableHUD(Time.timeScale != 0f);
+
             foreach(var receiver in _inputReceivers)
             {
                 receiver.CanReceiveInput = Time.timeScale != 0f;
+            }
+        }
+        
+        
+        public List<GameObject> GetItems()
+        {
+            return _items;
+        }
+
+        public void SetItems(List<GameObject> items)
+        {
+            _items = items;
+        }
+
+        public void AddItem(GameObject item)
+        {
+            if (item != null)
+            {
+                _items.Add(item);
+            }
+        }
+
+        public void RemoveItem(GameObject item)
+        {
+            if (item != null)
+            {
+                _items.Remove(item);
             }
         }
 
@@ -316,6 +380,11 @@ namespace MonkeyBusiness.Managers
             }
         }
 
+        public void StopItemSpawnThisWave()
+        {
+            canSpawnItems = false;
+        }
+
         public void PerkSelected()
         {
             _perkSelected = true;
@@ -375,11 +444,15 @@ namespace MonkeyBusiness.Managers
             _enemiesRemaining = waveInfo.gorillas + waveInfo.chimps;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
 
-            // Make the player drop his held item at the end of the wave in the GUI so we don't destroy something the EquipmentManager has a reference to. Very icky, no good.
-            foreach(ItemSpawner itemSpawner in _itemSpawners)
+            if (canSpawnItems)
             {
-                itemSpawner.SpawnItem();
+                // Make the player drop his held item at the end of the wave in the GUI so we don't destroy something the EquipmentManager has a reference to. Very icky, no good.
+                foreach(ItemSpawner itemSpawner in _itemSpawners)
+                {
+                    itemSpawner.SpawnItem();
+                }
             }
+            canSpawnItems = true; // reset back
 
             Debug.Log("Combat phase started");
             while (_enemies.Count < _enemiesRemaining)

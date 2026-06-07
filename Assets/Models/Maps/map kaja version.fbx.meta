@@ -7,8 +7,18 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Metal
+    second: {fileID: 2100000, guid: e001c70900aface248003edee59c1ebc, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: tree leaf mat.003
     second: {fileID: 2100000, guid: a5eb86fd94a7c0c45b63107be3c80653, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: windows
+    second: {fileID: 2100000, guid: 79bf4ded2ffb3584980f823903c61730, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
