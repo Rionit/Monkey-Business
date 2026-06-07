@@ -98,7 +98,7 @@ namespace MonkeyBusiness.Perks
             while (selectedPerks.Count < 3 && selectedPerks.Count < positivePerks.Count)
             {
                 var perk = GetRandomPositivePerk();
-                if (!selectedPerks.Contains(perk))
+                if (!selectedPerks.Contains(perk) && !(perk.isUnique && StatsManager.Instance._perksUsage[perk]))
                     selectedPerks.Add(perk);
             }
 

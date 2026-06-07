@@ -36,7 +36,6 @@ namespace MonkeyBusiness.Perks
         [LabelText("Is Unique")]
         [Tooltip("If true, this perk will not appear again after being picked")]
         public bool isUnique;
-
     }
 
     public enum PerkAlignment
