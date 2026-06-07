@@ -16,7 +16,7 @@ namespace MonkeyBusiness.UI
         void Awake()
         {
             Time.timeScale = 1f;
-            GameManager.HighScore = PlayerPrefs.GetInt("HighScore", 0);
+            GameManager.SetupScoreboard();
             _highScoreText.text = $"High Score: {GameManager.HighScore}";
         }
 
