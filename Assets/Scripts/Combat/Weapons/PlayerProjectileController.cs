@@ -4,6 +4,7 @@ using UnityEngine.Events;
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
 using System.Linq;
+using MonkeyBusiness.Misc;
 using UnityEngine.AI;
 
 namespace MonkeyBusiness.Combat.Weapons
@@ -125,6 +126,8 @@ namespace MonkeyBusiness.Combat.Weapons
             _trailRenderer = GetComponentInChildren<TrailRenderer>();
             _renderer = GetComponentInChildren<MeshRenderer>();
             _renderer.enabled = false;
+            
+            OnTargetHit.AddListener(_ => StaticEvents.OnEnemyHit?.Invoke());
         }
 
         public void Initialize(Vector3 firePointDirection, float deathTime, SortedSet<ProjectileHitInfo> targetsByTime, bool sticks, Vector3 stickPosition)  

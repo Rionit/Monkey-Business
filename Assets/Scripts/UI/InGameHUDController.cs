@@ -9,6 +9,7 @@ using MonkeyBusiness.Managers;
 using MonkeyBusiness.Misc;
 using DG.Tweening;
 using System;
+using Ami.BroAudio;
 
 namespace MonkeyBusiness.UI
 {
@@ -37,6 +38,13 @@ namespace MonkeyBusiness.UI
         
         [BoxGroup("Ammo", centerLabel: true), Required]
         [SerializeField] private TextMeshProUGUI ammoText;
+        
+        [BoxGroup("Ammo", centerLabel: true), Required]
+        [SerializeField] private GameObject ammoBubble;
+        
+        [SerializeField] private GameObject hitmarker;
+        
+        [SerializeField] private SoundSource hitmarkerSoundSource;
 
         [SerializeField] private TextMeshProUGUI wavesCompletedText;
 
@@ -86,6 +94,8 @@ namespace MonkeyBusiness.UI
 
             GameManager.Instance.CountdownCoroutine = AnimateCountdown;
             GameManager.OnScoreChanged.AddListener(SetScore);
+
+            StaticEvents.OnEnemyHit += OnEnemyHit;
         }
         
         private void Update()
@@ -236,6 +246,8 @@ namespace MonkeyBusiness.UI
 
             var weaponIcon = selectedWeaponIcons[index];
             var previousWeaponIcon = previousChangeIndex >= 0 ? selectedWeaponIcons[previousChangeIndex] : null;
+            if(previousWeaponIcon != null)
+                ammoBubble.transform.DOMove(weaponIcon.gameObject.transform.Find("BubblePivotPoint").position, 0.25f).SetEase(Ease.InOutCubic);
 
             /*changeWeaponSequence = DOTween.Sequence();
             changeWeaponSequence.Append(DOTween.To(() => weaponIcon.background.color, x => weaponIcon.background.color = x, selectedColor, 0.3f).From(unselectedColor).SetEase(Ease.OutQuad));
@@ -294,6 +306,22 @@ namespace MonkeyBusiness.UI
                 return;
             }
             ammoText.text = $"{value}";
+        }
+
+        void OnEnemyHit()
+        {
+            if (gameObject.activeSelf)
+            {
+                hitmarkerSoundSource.Play();
+                StartCoroutine(ShowHitmarker());
+            }
+        }
+
+        private IEnumerator ShowHitmarker()
+        {
+            hitmarker.SetActive(true);
+            yield return new WaitForSeconds(0.1f);
+            hitmarker.SetActive(false);
         }
         
         public void SetWavesCompleted(int value)
