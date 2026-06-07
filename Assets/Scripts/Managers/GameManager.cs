@@ -10,9 +10,6 @@ using System;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
-using TMPro;
-using System.Linq;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Ami.BroAudio;
 
@@ -51,7 +48,7 @@ namespace MonkeyBusiness.Managers
 
         public static int HighScore = 0;
 
-        public static SortedDictionary<int,  List<ScoreEntry>> Scoreboard = new SortedDictionary<int,List<ScoreEntry>>();
+        public static SortedDictionary<int,  List<ScoreEntry>> Scoreboard = new ();
 
         public static int LevelReached = 0;
 
@@ -202,7 +199,7 @@ namespace MonkeyBusiness.Managers
         private List<GameObject> _items = new();
         
         private bool canSpawnItems = true;
-
+        
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -217,8 +214,8 @@ namespace MonkeyBusiness.Managers
 
             _inputReceivers = _playerCharacter.transform.parent.GetComponentsInChildren<IInputReceiver>();
             
-            StaticEvents.OnItemRegistered += AddItem;
-            StaticEvents.OnItemUnregistered += RemoveItem;
+            StaticEvents.OnItemRegistered.AddListener(AddItem);
+            StaticEvents.OnItemUnregistered.AddListener(RemoveItem);
         }
 
         void Start()
@@ -538,9 +535,9 @@ namespace MonkeyBusiness.Managers
         {
             SaveScoreboard();
 
+            StaticEvents.ClearAllEvents();
             _pauseAction.performed -= PauseOrUnpause;
         }
-
 
         public static SortedDictionary<int, List<string>> SetupScoreboard()
         {

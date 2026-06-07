@@ -16,9 +16,9 @@ namespace MonkeyBusiness.Perks.PerkEffects
         public override void Apply()
         {
             if (targetEntityType == EntityTypes.PLAYER)
-                StaticEvents.OnEnemyMeleeAttackUsed += Explode;
+                StaticEvents.OnEnemyMeleeAttackUsed.AddListener(Explode);
             else if (targetEntityType == EntityTypes.ENEMY)
-                StaticEvents.OnPlayerMeleeAttackUsed += Explode;
+                StaticEvents.OnPlayerMeleeAttackUsed.AddListener(Explode);
         }
 
         void Explode()
@@ -41,9 +41,9 @@ namespace MonkeyBusiness.Perks.PerkEffects
         public override void Reset()
         {
             if (targetEntityType == EntityTypes.PLAYER)
-                StaticEvents.OnEnemyMeleeAttackUsed -= Explode;
+                StaticEvents.OnEnemyMeleeAttackUsed.RemoveListener(Explode);
             else if (targetEntityType == EntityTypes.ENEMY)
-                StaticEvents.OnPlayerMeleeAttackUsed -= Explode;
+                StaticEvents.OnPlayerMeleeAttackUsed.RemoveListener(Explode);
         }
         /*
          
