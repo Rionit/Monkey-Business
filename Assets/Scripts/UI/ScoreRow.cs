@@ -30,13 +30,14 @@ namespace MonkeyBusiness.UI
 
         void OnEnable()
         {
-            transform.localScale = Vector3.zero;
+            //transform.localScale = Vector3.zero;
         }
 
         [Button("Animate")]
         public void Animate()
         {
-            transform.DOScale(1, 1f).From(0).SetEase(Ease.OutBack).SetUpdate(true);
+            Debug.Log("Animating!");
+            transform.DOScale(Vector3.one, 1f).From(Vector3.zero).SetEase(Ease.OutBack).SetUpdate(true).OnComplete(() => Debug.Log("Finished animating!"));
             //StartCoroutine(AnimateCoroutine());
         }
 

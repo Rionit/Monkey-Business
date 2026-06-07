@@ -5,6 +5,7 @@ using System.Collections;
 using System.Linq;
 using Sirenix.OdinInspector;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace MonkeyBusiness.UI
 {
@@ -47,6 +48,7 @@ namespace MonkeyBusiness.UI
                     if(i >= _scoreRows.Count) AddNewRow();
                     Debug.Log("Setting data for row " + i + ": " + data.Name + " - score: " + entry.Key + " - level " + data.Level );
                     _scoreRows[i].SetData(i + 1, data.Name, entry.Key, data.Level);
+                    i++;
                 }
             }
 
@@ -57,6 +59,22 @@ namespace MonkeyBusiness.UI
         public void AnimateRows()
         {
             StartCoroutine(AnimateRowsCoroutine());
+
+            /*Sequence sequence = DOTween.Sequence();
+            sequence.SetUpdate(true);
+
+            RectTransform rt;
+
+
+            for(int i = 0; i < _scoreRows.Count; i++)
+            {
+                Debug.Log("Animating row " + i);
+                RectTransform rowRT = _scoreRows[i].transform as RectTransform;
+                sequence.Join(rowRT.DOScale(Vector3.one, 1f).From(Vector3.zero).SetEase(Ease.OutBack));
+                sequence.AppendInterval(0.1f);
+                //Debug.Log("Animating row " + i);
+                //_scoreRows[i].Animate();
+            }*/
         }
 
         IEnumerator AnimateRowsCoroutine()

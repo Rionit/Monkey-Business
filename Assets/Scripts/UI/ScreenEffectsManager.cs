@@ -15,7 +15,13 @@ namespace MonkeyBusiness.UI
         [Tooltip("Image component used for the poop splash screen effect.")]
         Image _poopSplashScreen;
 
+        [SerializeField]
+        [Tooltip("Image component used for the hit screen effect.")]
+        Image _hitScreen;
+
         Coroutine _poopEffectCoroutine;
+
+        Coroutine _hitEffectCoroutine;
 
         void Awake()
         {
@@ -38,16 +44,34 @@ namespace MonkeyBusiness.UI
             _poopEffectCoroutine = StartCoroutine(PoopSplashScreenRoutine(duration));
         }
 
+        public void ShowHitScreen(float duration)
+        {
+            if(_hitEffectCoroutine != null)
+            {
+                StopCoroutine(_hitEffectCoroutine);
+            }
+            _hitEffectCoroutine = StartCoroutine(HitScreenCoroutine(duration));
+        }
+
         IEnumerator PoopSplashScreenRoutine(float duration)
         {
             _poopSplashScreen.gameObject.SetActive(true);
             _poopSplashScreen.color = new Color(_poopSplashScreen.color.r, _poopSplashScreen.color.g, _poopSplashScreen.color.b, 1f);   
-            var tween = DOTween.ToAlpha(() => _poopSplashScreen.color, x => _poopSplashScreen.color = x, 0f, duration).SetEase(Ease.InQuart);
+            var tween = DOTween.ToAlpha(() => _poopSplashScreen.color, x => _poopSplashScreen.color = x, 0f, duration).SetEase(Ease.Linear);
             yield return tween.WaitForCompletion();
             _poopSplashScreen.gameObject.SetActive(false);
             _poopEffectCoroutine = null;
         }
 
-                
+        IEnumerator HitScreenCoroutine(float duration)
+        {
+            _hitScreen.gameObject.SetActive(true);
+            _hitScreen.color = new Color(_hitScreen.color.r, _hitScreen.color.g, _hitScreen.color.b, 1f);
+            var tween = DOTween.ToAlpha(() => _hitScreen.color, x => _hitScreen.color = x, 0f, duration).SetEase(Ease.InQuart);
+            yield return tween.WaitForCompletion();
+            _hitScreen.gameObject.SetActive(false);
+            _hitEffectCoroutine = null;
+        }
+
     }
 }
