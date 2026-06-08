@@ -5,35 +5,43 @@ using UnityEngine.UI;
 public class SoundSettingsUI : MonoBehaviour
 {
     [Header("UI")]
-    [SerializeField] private Slider volumeSlider;
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
     [SerializeField] private Toggle muteToggle;
 
     [Header("Settings")]
     [Range(0f, 1f)] public float defaultVolume = 1f;
 
-    private const string VolumeKey = "MasterVolume";
+    private const string MusicVolumeKey = "MusicVolume";
+    private const string SfxVolumeKey = "SfxVolume";
     private const string MuteKey = "MasterMute";
 
-    private float lastVolume = 1f;
+    private float lastMusicVolume = 1f;
+    private float lastSfxVolume = 1f;
     private bool isMuted = false;
 
     private void Awake()
     {
-        float savedVolume = PlayerPrefs.GetFloat(VolumeKey, defaultVolume);
+        float savedMusic = PlayerPrefs.GetFloat(MusicVolumeKey, defaultVolume);
+        float savedSfx = PlayerPrefs.GetFloat(SfxVolumeKey, defaultVolume);
+
         isMuted = PlayerPrefs.GetInt(MuteKey, 0) == 1;
 
-        lastVolume = savedVolume;
+        lastMusicVolume = savedMusic;
+        lastSfxVolume = savedSfx;
 
-        volumeSlider.value = isMuted ? 0f : savedVolume;
+        musicSlider.value = isMuted ? 0f : savedMusic;
+        sfxSlider.value = isMuted ? 0f : savedSfx;
         muteToggle.isOn = isMuted;
 
-        ApplyVolume(isMuted ? 0f : savedVolume);
+        ApplyVolume(isMuted ? 0f : savedMusic, isMuted ? 0f : savedSfx);
 
-        volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+        musicSlider.onValueChanged.AddListener(OnMusicChanged);
+        sfxSlider.onValueChanged.AddListener(OnSfxChanged);
         muteToggle.onValueChanged.AddListener(OnMuteToggleChanged);
     }
 
-    private void OnVolumeChanged(float value)
+    private void OnMusicChanged(float value)
     {
         if (isMuted && value > 0f)
         {
@@ -42,9 +50,23 @@ public class SoundSettingsUI : MonoBehaviour
             PlayerPrefs.SetInt(MuteKey, 0);
         }
 
-        lastVolume = value;
-        ApplyVolume(value);
-        PlayerPrefs.SetFloat(VolumeKey, value);
+        lastMusicVolume = value;
+        ApplyVolume(musicSlider.value, sfxSlider.value);
+        PlayerPrefs.SetFloat(MusicVolumeKey, value);
+    }
+
+    private void OnSfxChanged(float value)
+    {
+        if (isMuted && value > 0f)
+        {
+            isMuted = false;
+            muteToggle.SetIsOnWithoutNotify(false);
+            PlayerPrefs.SetInt(MuteKey, 0);
+        }
+
+        lastSfxVolume = value;
+        ApplyVolume(musicSlider.value, sfxSlider.value);
+        PlayerPrefs.SetFloat(SfxVolumeKey, value);
     }
 
     private void OnMuteToggleChanged(bool mute)
@@ -53,20 +75,25 @@ public class SoundSettingsUI : MonoBehaviour
 
         if (isMuted)
         {
-            ApplyVolume(0f);
-            volumeSlider.SetValueWithoutNotify(0f);
+            ApplyVolume(0f, 0f);
+            musicSlider.SetValueWithoutNotify(0f);
+            sfxSlider.SetValueWithoutNotify(0f);
         }
         else
         {
-            ApplyVolume(lastVolume);
-            volumeSlider.SetValueWithoutNotify(lastVolume);
+            musicSlider.SetValueWithoutNotify(lastMusicVolume);
+            sfxSlider.SetValueWithoutNotify(lastSfxVolume);
+            ApplyVolume(lastMusicVolume, lastSfxVolume);
         }
 
         PlayerPrefs.SetInt(MuteKey, isMuted ? 1 : 0);
     }
-    private void ApplyVolume(float volume)
+
+    private void ApplyVolume(float musicVolume, float sfxVolume)
     {
-        // BroAudio master volume control
-        BroAudio.SetVolume(BroAudioType.All, volume);
+        BroAudio.SetVolume(BroAudioType.Music, musicVolume);
+        BroAudio.SetVolume(BroAudioType.SFX, sfxVolume);
+        BroAudio.SetVolume(BroAudioType.Ambience, sfxVolume);
+        BroAudio.SetVolume(BroAudioType.UI, sfxVolume);
     }
 }
