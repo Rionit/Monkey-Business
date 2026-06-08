@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 493b046156777124f9c9b286a3906123
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293931
+  packageName: Simple building pack
+  packageVersion: 1.0
+  assetPath: Assets/Polyeler/SimpleBuildingPack/Materials/Building/ReddishBrown.mat
+  uploadId: 686998

@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 7c06f53eb4995f8488dc93b7dc2d482a
+NativeFormatImporter:
+  externalObjects: {}
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 293931
+  packageName: Simple building pack
+  packageVersion: 1.0
+  assetPath: Assets/Polyeler/SimpleBuildingPack/Materials/Building/Gray.mat
+  uploadId: 686998
