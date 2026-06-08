@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Ami.BroAudio;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Events;
@@ -16,6 +17,8 @@ namespace MonkeyBusiness.Perks
         public UnityEvent<string, bool> OnPerkAdded = new();
         public UnityEvent OnNegativePerkRemoved = new();
 
+        [SerializeField] private SoundSource rollingSound;
+        
         [BoxGroup("Setup")]
         [SerializeField] private GameObject perkPrefab;
 
@@ -353,6 +356,8 @@ namespace MonkeyBusiness.Perks
 
             float duration = 1.2f;
             float elapsed = 0f;
+            
+            rollingSound.Play();
 
             while (elapsed < duration)
             {
