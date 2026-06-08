@@ -1,8 +1,11 @@
+using Ami.BroAudio;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class HoverScale : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private SoundSource hoverSoundSource;
+    
     private Vector3 originalScale;
     private Vector3 targetScale;
 
@@ -23,6 +26,7 @@ public class HoverScale : MonoBehaviour, IPointerEnterHandler, IPointerExitHandl
     public void OnPointerEnter(PointerEventData eventData)
     {
         targetScale = originalScale * scaleMultiplier;
+        hoverSoundSource?.Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)

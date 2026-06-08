@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using Ami.BroAudio;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIHoverShineReset : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private SoundSource hoverSoundSource;
+    
     private Material runtimeMat;
     private Image img;
 
@@ -50,6 +53,8 @@ public class UIHoverShineReset : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         runtimeMat.SetFloat("_Hover", 1);
         runtimeMat.SetFloat("_ShineTime", 0);
+        
+        hoverSoundSource?.Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)

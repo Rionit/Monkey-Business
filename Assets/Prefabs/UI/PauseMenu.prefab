@@ -946,7 +946,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
+  m_fontSize: 79.05
   m_fontSizeBase: 40.67
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -1484,6 +1484,8 @@ GameObject:
   - component: {fileID: 4041282107852500597}
   - component: {fileID: 2657189563779676968}
   - component: {fileID: 7301057822778673329}
+  - component: {fileID: 4966336779938102039}
+  - component: {fileID: 937784655582804265}
   m_Layer: 5
   m_Name: CONTROLS
   m_TagString: Untagged
@@ -1606,6 +1608,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 4966336779938102039}
+        m_TargetAssemblyTypeName: Ami.BroAudio.SoundSource, BroAudio
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &7301057822778673329
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1618,8 +1632,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26f7dae6438e52459727e263bf6be4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.UI::HoverScale
+  hoverSoundSource: {fileID: 937784655582804265}
   scaleMultiplier: 1.05
   speed: 10
+--- !u!114 &4966336779938102039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646376811189239299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 9aac3adb9c8dae246b4a0fb9328ccb7a, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 3646376811189239299}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
+--- !u!114 &937784655582804265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3646376811189239299}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 4eb8b191ce45f8047ad61ea5f1e02779, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 3646376811189239299}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1 &3881634570300532678
 GameObject:
   m_ObjectHideFlags: 0
@@ -1633,6 +1694,8 @@ GameObject:
   - component: {fileID: 781457594156927786}
   - component: {fileID: 57130712780687221}
   - component: {fileID: 7584709134683128540}
+  - component: {fileID: 3956093306679234727}
+  - component: {fileID: 4819132885702681067}
   m_Layer: 5
   m_Name: exit button
   m_TagString: Untagged
@@ -1755,6 +1818,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4966336779938102039}
+        m_TargetAssemblyTypeName: Ami.BroAudio.SoundSource, BroAudio
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7584709134683128540
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1767,8 +1842,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26f7dae6438e52459727e263bf6be4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.UI::HoverScale
+  hoverSoundSource: {fileID: 937784655582804265}
   scaleMultiplier: 1.05
   speed: 10
+--- !u!114 &3956093306679234727
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3881634570300532678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 9aac3adb9c8dae246b4a0fb9328ccb7a, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 3881634570300532678}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
+--- !u!114 &4819132885702681067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3881634570300532678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 4eb8b191ce45f8047ad61ea5f1e02779, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 3646376811189239299}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1 &4147937791776291428
 GameObject:
   m_ObjectHideFlags: 0
@@ -1975,6 +2097,9 @@ GameObject:
   - component: {fileID: 2876657291545769155}
   - component: {fileID: 2875660746592609587}
   - component: {fileID: 8626903704718094446}
+  - component: {fileID: 4428138399785805950}
+  - component: {fileID: 7135663889450227845}
+  - component: {fileID: 1553132504822308685}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -2096,6 +2221,79 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 4428138399785805950}
+        m_TargetAssemblyTypeName: Ami.BroAudio.SoundSource, BroAudio
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &4428138399785805950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4676577922567729326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 9aac3adb9c8dae246b4a0fb9328ccb7a, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 4676577922567729326}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
+--- !u!114 &7135663889450227845
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4676577922567729326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 4eb8b191ce45f8047ad61ea5f1e02779, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 4676577922567729326}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
+--- !u!114 &1553132504822308685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4676577922567729326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a26f7dae6438e52459727e263bf6be4c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.UI::HoverScale
+  hoverSoundSource: {fileID: 7135663889450227845}
+  scaleMultiplier: 1.05
+  speed: 10
 --- !u!1 &5381309615943402871
 GameObject:
   m_ObjectHideFlags: 0
@@ -2916,6 +3114,8 @@ GameObject:
   - component: {fileID: 858948888659001162}
   - component: {fileID: 6840695413097320194}
   - component: {fileID: 5023840240150853062}
+  - component: {fileID: 8806041181294490959}
+  - component: {fileID: 7098492130996800700}
   m_Layer: 5
   m_Name: play button
   m_TagString: Untagged
@@ -3038,6 +3238,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 7098492130996800700}
+        m_TargetAssemblyTypeName: Ami.BroAudio.SoundSource, BroAudio
+        m_MethodName: Play
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &5023840240150853062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3050,8 +3262,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26f7dae6438e52459727e263bf6be4c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.UI::HoverScale
+  hoverSoundSource: {fileID: 8806041181294490959}
   scaleMultiplier: 1.05
   speed: 10
+--- !u!114 &8806041181294490959
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8734545400602696218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 4eb8b191ce45f8047ad61ea5f1e02779, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 8734545400602696218}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
+--- !u!114 &7098492130996800700
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8734545400602696218}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 9aac3adb9c8dae246b4a0fb9328ccb7a, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 8734545400602696218}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1001 &4824996386535722014
 PrefabInstance:
   m_ObjectHideFlags: 0
