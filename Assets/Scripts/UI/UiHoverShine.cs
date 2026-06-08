@@ -36,13 +36,13 @@ public class UIHoverShineReset : MonoBehaviour, IPointerEnterHandler, IPointerEx
         // shine animation
         if (hovering)
         {
-            shineTime += Time.deltaTime;
+            shineTime += Time.unscaledDeltaTime;
             runtimeMat.SetFloat("_ShineTime", shineTime);
         }
 
         // scale animation (smooth)
         Vector3 target = hovering ? originalScale * hoverScale : originalScale;
-        transform.localScale = Vector3.Lerp(transform.localScale, target, Time.deltaTime * scaleSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, target, Time.unscaledDeltaTime * scaleSpeed);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
