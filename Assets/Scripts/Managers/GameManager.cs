@@ -29,6 +29,8 @@ namespace MonkeyBusiness.Managers
     /// </summary>
     public class GameManager : MonoBehaviour, ITargetable
     {
+
+        #region Score 
         /// <summary>
         /// Note: Score itself is stored inthe Scoreboard dictionary as a key
         /// </summary>
@@ -60,6 +62,44 @@ namespace MonkeyBusiness.Managers
 
         const int KILL_SCORE = 100;
 
+        [HideInInspector]
+        public float[] multipliers = new float[] { 1.0f, 1.1f, 1.2f, 1.3f, 1.4f, 1.5f };
+
+        float _currentMultiplier = 1f;
+
+        const float SCORE_CHECK_INTERVAL = 0.1f;
+
+        float _timeSinceLastScoreCheck = 0f;
+
+        float _timeSinceLastDamage = 0f;
+
+        float _cumulativeDamage = 0;
+
+        float _damageAddition = 0;
+
+        float _timeUntilFalloff = 5f;
+
+        float _timeForFullFalloff = 5f;
+
+        int _currentMultiplierIndex = 0;
+
+        float[] _multiplierThresholds = new float[] { 1000f, 1500f, 2000f, 2500f, 3000f, 3500f };
+        
+        /// <summary>
+        /// How fast the falloff happens, in %/100 per second. 
+        /// </summary>
+        Vector2 _falloffRange = new Vector2(0.3f, 1f);
+
+        /// <summary>
+        /// Used to notify the UI about the new multiplier and whether it's an increase or decrease (true for increase, false for decrease)
+        /// </summary>
+        public Action<float, bool> ChangeCumulativeCallback;
+
+        public Action<float, bool> ChangeMultiplerCallback; // float is the multiplier, bool is whether it's an increase (true) or decrease (false)
+
+        #endregion
+
+        #region Spawning
         [Serializable]
         class SpawnInformation
         {
@@ -83,38 +123,6 @@ namespace MonkeyBusiness.Managers
             /// </summary>
             public int enemiesAtOnce; 
         }
-
-        public static GameManager Instance { get; private set; }
-        
-        //private GameState _currentGameState;
-        
-        public UnityEvent OnWaveDefeated = new();
-        public UnityEvent<int> OnWaveDefeatedNum = new();
-
-        public UnityEvent OnWaveStarted = new();
-        public UnityEvent<int> OnEnemyCountChanged = new();
-
-        [SerializeField] private GameObject _hud;
-
-        [SerializeField]
-        GameObject _deathScreen;
-
-        [SerializeField]
-        [RequiredIn(PrefabKind.InstanceInScene)]
-        EquipmentManager _equipmentManager;
-
-        private bool _perkSelected = true;
-
-        /// <summary>
-        /// How many enemies remain until the wave ends
-        /// </summary>
-        private int _enemiesRemaining;
-
-        /// <summary>
-        /// How long the preparation phase lasts in seconds
-        /// </summary>
-        [SerializeField]
-        private float _preparationPhaseDuration = 20;
 
         /// <summary>
         /// Delay between individual enemy spawns in seconds
@@ -155,6 +163,46 @@ namespace MonkeyBusiness.Managers
         /// Player's character object, used for enemy targeting
         /// </summary>
         public GameObject PlayerCharacter => _playerCharacter;
+
+        #endregion
+
+        public static GameManager Instance { get; private set; }
+        
+        //private GameState _currentGameState;
+        
+        #region Events
+
+        public UnityEvent OnWaveDefeated = new();
+        public UnityEvent<int> OnWaveDefeatedNum = new();
+
+        public UnityEvent OnWaveStarted = new();
+        public UnityEvent<int> OnEnemyCountChanged = new();
+
+        #endregion
+
+        [SerializeField] private GameObject _hud;
+
+        [SerializeField]
+        GameObject _deathScreen;
+
+        [SerializeField]
+        [RequiredIn(PrefabKind.InstanceInScene)]
+        EquipmentManager _equipmentManager;
+
+        private bool _perkSelected = true;
+
+        /// <summary>
+        /// How many enemies remain until the wave ends
+        /// </summary>
+        private int _enemiesRemaining;
+
+        /// <summary>
+        /// How long the preparation phase lasts in seconds
+        /// </summary>
+        [SerializeField]
+        private float _preparationPhaseDuration = 20;
+
+        
 
         IInputReceiver[] _inputReceivers;
 
@@ -329,11 +377,9 @@ namespace MonkeyBusiness.Managers
 
             if(enemyObject.TryGetComponent<HealthController>(out HealthController healthController))
             {
+
                 healthController.OnDeath.AddListener(OnEnemyDestroyed);
-                healthController.OnTakenDamage.AddListener(damage =>
-                {
-                    AddScore(Mathf.RoundToInt(damage));
-                });
+                healthController.OnTakenDamage.AddListener(EnemyDamagedCallback);
             }
             else
             {
@@ -343,20 +389,23 @@ namespace MonkeyBusiness.Managers
             _enemies.Add(enemyObject);
         }
 
+        void EnemyDamagedCallback(float damage)
+        {
+            AddScore(Mathf.RoundToInt(damage));
+            AddDamage(damage);
+        }
+
         public static void AddKillScore()
         {
-            Score += KILL_SCORE;
+            Score += Mathf.RoundToInt(KILL_SCORE * Instance._currentMultiplier);
             OnScoreChanged.Invoke(Score);
-
         }
 
         public static void AddScore(int score)
         {
-            Score += score;
+            Score += Mathf.RoundToInt(score * Instance._currentMultiplier);
             OnScoreChanged.Invoke(Score);
         }
-
-
 
         /// <summary>
         /// Callback when an enemy is defeated
@@ -426,7 +475,6 @@ namespace MonkeyBusiness.Managers
             Cursor.lockState = CursorLockMode.Locked;
             _hud.SetActive(true);
             _perkSelected = false;
-
 
             foreach(var receiver in _inputReceivers)
             {
@@ -573,6 +621,92 @@ namespace MonkeyBusiness.Managers
                     PlayerPrefs.SetInt($"Scoreboard_{index}_Level", data.Level);
 
                     index++;
+                }
+            }
+        }
+
+
+        void AddDamage(float damage)
+        {
+            Debug.Log("Adding " + damage + " to damage addition");
+            _damageAddition += damage;
+        }
+
+        void Update()
+        {
+            var dt = Time.deltaTime;
+            _timeSinceLastDamage += dt;
+            _timeSinceLastScoreCheck += dt;
+
+            // Cumulative damage increase
+            if(_timeSinceLastScoreCheck >= SCORE_CHECK_INTERVAL)
+            {
+                if(_damageAddition > 0)
+                {
+                    _cumulativeDamage += _damageAddition;
+                    _damageAddition = 0;
+                    _timeSinceLastDamage = 0f;
+
+                    Debug.Log("Damage added to cumulative damage, now " + _cumulativeDamage);
+                
+                    // Check for multiplier increase
+                    if(_cumulativeDamage >= _multiplierThresholds[_currentMultiplierIndex])
+                    {
+                        bool increased = _currentMultiplierIndex < _multiplierThresholds.Length - 1;
+                        // We can increase the modifier
+                        if(increased)
+                        {
+                            _cumulativeDamage -= _multiplierThresholds[_currentMultiplierIndex];
+
+                            _currentMultiplierIndex++;
+                            _currentMultiplier = multipliers[_currentMultiplierIndex];
+                        
+                            ChangeMultiplerCallback(_currentMultiplier, true);
+                        }
+                        else // We cannot increase the modifier (we're already at max modifier)
+                        {
+                            _cumulativeDamage = _multiplierThresholds[_currentMultiplierIndex] - 1; // Just cap it at the max multiplier threshold
+                        }
+
+                        Debug.Log("Changing cumulative to " + (_cumulativeDamage / _multiplierThresholds[_currentMultiplierIndex]) + " for multiplier index " + _currentMultiplierIndex);
+                    }
+                    ChangeCumulativeCallback(_cumulativeDamage / _multiplierThresholds[_currentMultiplierIndex], true);
+                }
+                _timeSinceLastScoreCheck = 0f;
+            }
+
+            // Damage falloff
+            else if(_timeSinceLastDamage >= _timeUntilFalloff)
+            {
+                // Only happens when the multiplier is not at the base level
+                if(_currentMultiplierIndex > 0 || _cumulativeDamage > 0)
+                {
+                    Debug.Log("Falloff happening");
+                    float falloffMultiplier = Mathf.Lerp(_falloffRange.x, _falloffRange.y, (_timeSinceLastDamage - _timeUntilFalloff) / _timeForFullFalloff);
+                    float falloffValue = falloffMultiplier * _multiplierThresholds[_currentMultiplierIndex] * dt;
+                
+                    _cumulativeDamage -= falloffValue;
+
+                    // Underflow to the previous multiplier
+                    if(_cumulativeDamage < 0)
+                    {
+                        bool decreases = _currentMultiplierIndex > 0;
+                        if(decreases)
+                        {
+                            _currentMultiplierIndex--;
+                            _currentMultiplier = multipliers[_currentMultiplierIndex];
+                            ChangeMultiplerCallback(_currentMultiplier, false);
+
+                            _cumulativeDamage = _multiplierThresholds[_currentMultiplierIndex];
+                        }
+                        else
+                        {
+                            _cumulativeDamage = 0;
+                        }
+                    }
+
+
+                    ChangeCumulativeCallback(_cumulativeDamage / _multiplierThresholds[_currentMultiplierIndex], false);
                 }
             }
         }
