@@ -721,17 +721,6 @@
                 },
                 {
                     "name": "",
-                    "id": "6622b6b1-f540-40af-b79f-79b56f4b4bb2",
-                    "path": "<Keyboard>/backspace",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Restart",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "1a87d39e-ad46-4455-8cdd-2abd9e575cce",
                     "path": "<Keyboard>/f",
                     "interactions": "",

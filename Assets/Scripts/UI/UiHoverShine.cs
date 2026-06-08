@@ -1,9 +1,12 @@
-﻿using UnityEngine;
+﻿using Ami.BroAudio;
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UIHoverShineReset : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
+    [SerializeField] private SoundSource hoverSoundSource;
+    
     private Material runtimeMat;
     private Image img;
 
@@ -33,13 +36,13 @@ public class UIHoverShineReset : MonoBehaviour, IPointerEnterHandler, IPointerEx
         // shine animation
         if (hovering)
         {
-            shineTime += Time.deltaTime;
+            shineTime += Time.unscaledDeltaTime;
             runtimeMat.SetFloat("_ShineTime", shineTime);
         }
 
         // scale animation (smooth)
         Vector3 target = hovering ? originalScale * hoverScale : originalScale;
-        transform.localScale = Vector3.Lerp(transform.localScale, target, Time.deltaTime * scaleSpeed);
+        transform.localScale = Vector3.Lerp(transform.localScale, target, Time.unscaledDeltaTime * scaleSpeed);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -50,6 +53,8 @@ public class UIHoverShineReset : MonoBehaviour, IPointerEnterHandler, IPointerEx
 
         runtimeMat.SetFloat("_Hover", 1);
         runtimeMat.SetFloat("_ShineTime", 0);
+        
+        hoverSoundSource?.Play();
     }
 
     public void OnPointerExit(PointerEventData eventData)

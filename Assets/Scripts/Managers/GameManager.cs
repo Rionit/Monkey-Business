@@ -10,9 +10,6 @@ using System;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
-using TMPro;
-using System.Linq;
-using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using Ami.BroAudio;
 
@@ -28,15 +25,34 @@ namespace MonkeyBusiness.Managers
 
     /// <summary>
     /// Manages the game and the game phases
-    /// 
-    /// 
     /// TODO spawn new items at the start of each round
     /// </summary>
     public class GameManager : MonoBehaviour, ITargetable
     {
+        /// <summary>
+        /// Note: Score itself is stored inthe Scoreboard dictionary as a key
+        /// </summary>
+        public struct ScoreEntry
+        {
+            public string Name;
+            public int Level;
+        
+            public ScoreEntry(string name, int level)
+            {
+                Name = name;
+                Level = level;
+            }
+        }
+
         public static int Score = 0;
 
         public static int HighScore = 0;
+
+        public static SortedDictionary<int,  List<ScoreEntry>> Scoreboard = new ();
+
+        public static int LevelReached = 0;
+
+        const int MAX_SCOREBOARD_ENTRIES = 10;
 
         public static UnityEvent<int> OnScoreChanged = new();
 
@@ -172,7 +188,6 @@ namespace MonkeyBusiness.Managers
 
         public Func<IEnumerator> CountdownCoroutine { set; private get; } 
 
-
         [SerializeField]
         private GameObject _itemsRoot;
         
@@ -184,7 +199,7 @@ namespace MonkeyBusiness.Managers
         private List<GameObject> _items = new();
         
         private bool canSpawnItems = true;
-
+        
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -199,8 +214,8 @@ namespace MonkeyBusiness.Managers
 
             _inputReceivers = _playerCharacter.transform.parent.GetComponentsInChildren<IInputReceiver>();
             
-            StaticEvents.OnItemRegistered += AddItem;
-            StaticEvents.OnItemUnregistered += RemoveItem;
+            StaticEvents.OnItemRegistered.AddListener(AddItem);
+            StaticEvents.OnItemUnregistered.AddListener(RemoveItem);
         }
 
         void Start()
@@ -268,7 +283,6 @@ namespace MonkeyBusiness.Managers
                 receiver.CanReceiveInput = Time.timeScale != 0f;
             }
         }
-        
         
         public List<GameObject> GetItems()
         {
@@ -502,6 +516,8 @@ namespace MonkeyBusiness.Managers
             _hud.SetActive(false);
             _deathScreen.SetActive(true);
 
+
+            LevelReached = _currentWave;
             foreach(var receiver in _inputReceivers)
             {
                 receiver.CanReceiveInput = false;
@@ -510,8 +526,6 @@ namespace MonkeyBusiness.Managers
             Cursor.lockState = CursorLockMode.Confined;
         }
 
-
-
         void Restart()
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -519,9 +533,48 @@ namespace MonkeyBusiness.Managers
 
         void OnDestroy()
         {
-            PlayerPrefs.SetInt(HIGH_SCORE_KEY, HighScore);
+            SaveScoreboard();
 
+            StaticEvents.ClearAllEvents();
             _pauseAction.performed -= PauseOrUnpause;
+        }
+
+        public static SortedDictionary<int, List<string>> SetupScoreboard()
+        {
+            SortedDictionary<int, List<string>> scoreboard = new SortedDictionary<int,List<string>>();
+            for(int i = 0; i < MAX_SCOREBOARD_ENTRIES; i++)
+            {
+                int score = PlayerPrefs.GetInt($"Scoreboard_{i}_Score", int.MinValue);
+                string name = PlayerPrefs.GetString($"Scoreboard_{i}_Name");
+
+                if(score > 0)
+                {
+                    if(!scoreboard.ContainsKey(score))
+                    {
+                        scoreboard[score] = new List<string>();
+                    }
+                    scoreboard[score].Add(name);
+                }
+            }
+            return scoreboard;
+        }
+
+        static void SaveScoreboard()
+        {
+            int index = 0;
+            foreach(var entry in Scoreboard)
+            {
+                if(entry.Key <= 0) continue; // Don't save non-positive scores
+                foreach(var data in entry.Value)
+                {
+                    if(index >= MAX_SCOREBOARD_ENTRIES) return; // Only save top entries
+                    PlayerPrefs.SetInt($"Scoreboard_{index}_Score", entry.Key);
+                    PlayerPrefs.SetString($"Scoreboard_{index}_Name", data.Name);
+                    PlayerPrefs.SetInt($"Scoreboard_{index}_Level", data.Level);
+
+                    index++;
+                }
+            }
         }
     }
 }

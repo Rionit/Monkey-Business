@@ -113,11 +113,13 @@ namespace MonkeyBusiness.Combat.Weapons
             {
                 Debug.LogWarning("Target " + target.name + " hit by shotgun but has no KnockbackController.");
             }  
-
+    
             var direction = (target.transform.position - transform.position).normalized;
             Debug.Log("Calculated damage:" + _damage * distanceModifier + " with distance: " + distance);
             //target.TakeDamage(_damage * distanceModifier);
             target.TakeDamage(_damage, direction);
+            
+            StaticEvents.OnEnemyHit.Invoke();
         }
 
         protected override IEnumerator FireCoroutine()

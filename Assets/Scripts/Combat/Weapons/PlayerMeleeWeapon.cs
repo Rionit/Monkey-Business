@@ -140,6 +140,7 @@ namespace MonkeyBusiness.Combat.Weapons
             if(CanReceiveInput && !_onCooldown && _meleeAttackAction.WasPressedThisFrame())
             {
                 Debug.Log("Melee attack triggered");
+                StaticEvents.OnPlayerMeleeAttackUsed?.Invoke();
                 StartCoroutine(MeleeAttackCoroutine());
             }
         }

@@ -4,6 +4,7 @@ using Sirenix.OdinInspector;
 using MonkeyBusiness.Combat.Health;
 using DG.Tweening;
 using Ami.BroAudio;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.Combat.Attack
 {
@@ -76,6 +77,8 @@ namespace MonkeyBusiness.Combat.Attack
             Debug.Log("Started animating");
             yield return new WaitForSeconds(ChargeTime); // Waits for the charge
 
+
+            StaticEvents.OnEnemyMeleeAttackUsed?.Invoke(gameObject);
             _animToggle.SetActive(true);
             _attackVFX.SetActive(true);
             _attackSFX.Play();
