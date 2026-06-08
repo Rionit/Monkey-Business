@@ -115,7 +115,7 @@ namespace MonkeyBusiness.Enemies.Behavior
         {
             _health.OnHealthChanged.RemoveListener(EnrageIfLow);
             SetEnragedMaterital(false);
-            StatsManager.Instance.onNonChimpCanPoop.RemoveListener(OnCanPoop);
+            StatsManager.Instance.onNonChimpCanPoop?.RemoveListener(OnCanPoop);
         }
 
         /// <summary>

@@ -95,7 +95,7 @@ namespace MonkeyBusiness.UI
             GameManager.Instance.CountdownCoroutine = AnimateCountdown;
             GameManager.OnScoreChanged.AddListener(SetScore);
 
-            StaticEvents.OnEnemyHit += OnEnemyHit;
+            StaticEvents.OnEnemyHit.AddListener(OnEnemyHit);
         }
         
         private void Update()

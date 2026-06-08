@@ -58,7 +58,6 @@ namespace MonkeyBusiness.Combat.Attack
 
         public void ExecuteAttack(GameObject target)
         {
-            StaticEvents.OnEnemyMeleeAttackUsed.Invoke(gameObject);
             StartCoroutine(MeleeAttackCoroutine(target));
         }
 
@@ -78,6 +77,8 @@ namespace MonkeyBusiness.Combat.Attack
             Debug.Log("Started animating");
             yield return new WaitForSeconds(ChargeTime); // Waits for the charge
 
+
+            StaticEvents.OnEnemyMeleeAttackUsed?.Invoke(gameObject);
             _animToggle.SetActive(true);
             _attackVFX.SetActive(true);
             _attackSFX.Play();
