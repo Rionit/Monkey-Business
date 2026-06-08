@@ -416,7 +416,7 @@ AudioMixerGroupController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Track1
+  m_Name: Music
   m_AudioMixer: {fileID: 24100000}
   m_GroupID: 9db894f76a7d0d84d9d9808dc13b237e
   m_Children: []
@@ -426,7 +426,7 @@ AudioMixerGroupController:
   m_Effects:
   - {fileID: -8221788538949681110}
   - {fileID: -1310008082572322394}
-  m_UserColorIndex: 0
+  m_UserColorIndex: 6
   m_Mute: 0
   m_Solo: 0
   m_BypassEffects: 0
