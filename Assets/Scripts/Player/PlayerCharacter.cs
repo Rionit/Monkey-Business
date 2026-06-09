@@ -52,7 +52,8 @@ namespace MonkeyBusiness.Player
     {
         public Quaternion Rotation; // Camera rotation
         public Vector2 Move;        // Movement input (WASD / stick)
-        public bool Swing;          // Swing input
+        public bool Swing;          // Swing pressed
+        public bool SwingSustain;      // Swing held
         public bool Jump;           // Jump pressed
         public bool JumpSustain;    // Jump held
         public CrouchInput Crouch;  // Crouch input
@@ -262,10 +263,10 @@ namespace MonkeyBusiness.Player
         public void UpdateInput(CharacterInput input)
         {
             // Handle swing input
-            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f && !motor.GroundingStatus.IsStableOnGround)
+            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f) // && !motor.GroundingStatus.IsStableOnGround)
                 StartSwing();
 
-            if (!input.Swing && _state.Stance == Stance.Swing)
+            if (!input.SwingSustain && _state.Stance == Stance.Swing)
                 StopSwing();
 
             // Movement direction (camera-relative)
