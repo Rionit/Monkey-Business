@@ -17,7 +17,7 @@ namespace MonkeyBusiness.UI
         {
             Time.timeScale = 1f;
             GameManager.SetupScoreboard();
-            _highScoreText.text = $"High Score: {GameManager.HighScore}";
+            //_highScoreText.text = $"High Score: {GameManager.HighScore}";
         }
 
         public void StartGame()

@@ -313,7 +313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a8ec5d84d6391212a4851a71b751241, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Health::MonkeyBusiness.Combat.Health.DeathFadeout
-  _preFadeoutDuration: 40
+  _preFadeoutDuration: 240
   _fadeoutDuration: 2
   _componentsToDelete:
   - {fileID: 1388641176820628042}

@@ -36,8 +36,7 @@ namespace MonkeyBusiness.UI
         [Button("Animate")]
         public void Animate()
         {
-            Debug.Log("Animating!");
-            transform.DOScale(Vector3.one, 1f).From(Vector3.zero).SetEase(Ease.OutBack).SetUpdate(true).OnComplete(() => Debug.Log("Finished animating!"));
+            transform.DOScale(Vector3.one, 1f).From(Vector3.zero).SetEase(Ease.OutBack).SetUpdate(true);
             //StartCoroutine(AnimateCoroutine());
         }
 
