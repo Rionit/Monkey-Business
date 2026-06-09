@@ -98,162 +98,167 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: GOODBAD_texture
-    second: {fileID: 2800000, guid: 68fa11de5332e974cb4b574efafb2df6, type: 3}
+    second: {fileID: 2800000, guid: 0f06b087b23228546ae86961f35ac6f2, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: HRannouncement_texture
-    second: {fileID: 2800000, guid: 06c77d8992efa3d4a955a6d2b7e581c1, type: 3}
+    second: {fileID: 2800000, guid: fdab056531a879b409b51902d47be8c8, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: Texture
-    second: {fileID: 2800000, guid: 092913abde8acb249bfc68d9fbd42fee, type: 3}
+    second: {fileID: 2800000, guid: 90674794bd69a4141bcc0caf40b8b11d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: box_texture
-    second: {fileID: 2800000, guid: 9a04e2ba6b80f914b9a9d4743443b1cf, type: 3}
+    second: {fileID: 2800000, guid: 8d785b3e7c6df2040b8b509bab57b060, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: building_texture
-    second: {fileID: 2800000, guid: 31f2cac1382a3954eac40c4ff2044c35, type: 3}
+    second: {fileID: 2800000, guid: b362ad4cb82d6ea4f84022bf8222f485, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: ceiling
+    second: {fileID: 2800000, guid: b38708ed02a920644844539e17edb909, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: dispenser_texture
-    second: {fileID: 2800000, guid: 70b18f4db4dfc4d4f9cab260a8dc4c92, type: 3}
+    second: {fileID: 2800000, guid: e60a9ab6c30586d43b4f13a8d11f2610, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: frame_texture
-    second: {fileID: 2800000, guid: 6fefbac064596b842bb08e74083a04bb, type: 3}
+    second: {fileID: 2800000, guid: f4008d673ef289e4aa65318d78151d0f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: grass_texture
-    second: {fileID: 2800000, guid: ffd1a6ce421790546b3a86b761b9dcf4, type: 3}
+    second: {fileID: 2800000, guid: ff2af6e5c358eaf4197edbe74bf62db1, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: ground_walls_texture
-    second: {fileID: 2800000, guid: 01fc56bfb6aed3041845a066b354d8b0, type: 3}
+    second: {fileID: 2800000, guid: 9b981a81edc3c6d4e8533be9dfbbeeb1, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: lockers_texture
-    second: {fileID: 2800000, guid: 3501ec677ddc9c440ad873f91f9ec64f, type: 3}
+    second: {fileID: 2800000, guid: 26ab841e1e50b224fb0f6844ef9673b4, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: mossybark02
-    second: {fileID: 2800000, guid: 9936e3d4477d0304c982fea8da6fa132, type: 3}
+    second: {fileID: 2800000, guid: 1b4ba21acdd04cd44a5d5cd031711cfe, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: oak leaf
-    second: {fileID: 2800000, guid: b7633e83ee4e8d149ababe8a786b8441, type: 3}
+    second: {fileID: 2800000, guid: e2a14dfcc316dd04ebde89fcbe94cda4, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: pinboard_texture
-    second: {fileID: 2800000, guid: bcccd3672afe7a24d9688289edd99afa, type: 3}
+    second: {fileID: 2800000, guid: 6d22cef4684587e448dbfa73a027ccbb, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: platform_texture
-    second: {fileID: 2800000, guid: 96aade012aa139a42b6af301aa37fcd8, type: 3}
+    second: {fileID: 2800000, guid: cfb2441a2dcc51542bc2828c663a988f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: poster1_texture
-    second: {fileID: 2800000, guid: 29b9efaff33c43746ae78deb4fda4d71, type: 3}
+    second: {fileID: 2800000, guid: 0a7eed34b1f7e5843bc89d2345633aac, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: shelf_texture
-    second: {fileID: 2800000, guid: 29ddd41bca6d5824c96ddb3da576aad4, type: 3}
+    second: {fileID: 2800000, guid: 7eb1ab27c36c6ae44a67ea45f825edf1, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: sign_texture
-    second: {fileID: 2800000, guid: c146dd0bc6236df42b27684bbfc7ba2a, type: 3}
+    second: {fileID: 2800000, guid: af789ed2422afe24982c9cb3b0470161, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: stairs_texture
-    second: {fileID: 2800000, guid: fecf1302bb9b18a4ab3d11c6d232b5ad, type: 3}
+    second: {fileID: 2800000, guid: ee91dd886a845844db70f5b8292db2b2, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: stone_texture
-    second: {fileID: 2800000, guid: f75fd954356755344a470a326b7631c7, type: 3}
+    second: {fileID: 2800000, guid: b15de4c58112c844e9bd7214fcfe6ca3, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: stump03
-    second: {fileID: 2800000, guid: 5ba24f02fecf25c418d333420989b0e2, type: 3}
+    second: {fileID: 2800000, guid: 5da41bf834815594eb7b7dea9b4babe9, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_binder_blue
-    second: {fileID: 2800000, guid: 4a861a1335524b04b9a2e8957fe24b84, type: 3}
+    second: {fileID: 2800000, guid: d726e0a330ea0964593e236b66d99a59, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_binder_green
-    second: {fileID: 2800000, guid: b0e95a4e18ca7e54d822fab992946e47, type: 3}
+    second: {fileID: 2800000, guid: 630bfb725ac68f44584dc18fd6893127, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_binder_orange
-    second: {fileID: 2800000, guid: f60bcef459fea06408541e4c4316a040, type: 3}
+    second: {fileID: 2800000, guid: abf8cb5723eae8d429551cd5a01c1edb, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_binder_pink
-    second: {fileID: 2800000, guid: af71e24924823b54b85693b62ec90df7, type: 3}
+    second: {fileID: 2800000, guid: 83bec7069b2b68e4889246cf4dc0a13f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_cactus
-    second: {fileID: 2800000, guid: 4fed3fb945135ba42a9be748de80d1e6, type: 3}
+    second: {fileID: 2800000, guid: 23ce7c50bc3e0b94889ae6ccd77a2d31, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_calendar
-    second: {fileID: 2800000, guid: 1e0ee481e3710a94594b971e43106f30, type: 3}
+    second: {fileID: 2800000, guid: 77a3673671d60c14583f6c141fa48c1b, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_coffee_cup_white
-    second: {fileID: 2800000, guid: ad4ca5a3b48dee4458c1ab49d4136664, type: 3}
+    second: {fileID: 2800000, guid: ec66465a566fe6a49a9fd810bf35298f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_computer_keyboard
-    second: {fileID: 2800000, guid: e4d90e18faff69b4a9fcbde6afccf14f, type: 3}
+    second: {fileID: 2800000, guid: 6af93a2df525b2246984ddc9b5b5ad3d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_computer_monitor
-    second: {fileID: 2800000, guid: 2163a6ff5b704f347ade2deec59115bb, type: 3}
+    second: {fileID: 2800000, guid: 2e596608092f42f44ae71eb361624c25, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_computer_mouse
-    second: {fileID: 2800000, guid: 7be5b12035412414482021838d1a91f1, type: 3}
+    second: {fileID: 2800000, guid: fd4d9419055d2c24f86b7fa3af7e5fcc, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_computer_mousepad
-    second: {fileID: 2800000, guid: 3df3a7a7d5fde1c42a5b1ea306210b87, type: 3}
+    second: {fileID: 2800000, guid: 312c05c3a325cfd408815656848bec07, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_computer_tower
-    second: {fileID: 2800000, guid: d3a745c9b2e085640b9e88ccd63e7d14, type: 3}
+    second: {fileID: 2800000, guid: 7b9adb7adfafc594581eab6b14809560, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
@@ -263,12 +268,12 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_phone
-    second: {fileID: 2800000, guid: bdd6c23b4acab3e42810fdf5f88f0e3a, type: 3}
+    second: {fileID: 2800000, guid: 3a0a52a7993d48f4aab494feca7736df, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: texture_trashbin
-    second: {fileID: 2800000, guid: 0a4490dbdab1c5d4dbd49cf54c76a274, type: 3}
+    second: {fileID: 2800000, guid: a7fa26fa0994d8444931623f21e4580d, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
@@ -278,27 +283,27 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: trapezoidecosystem_texture
-    second: {fileID: 2800000, guid: ccc5cde1ff993934bbb8feff5be6d4db, type: 3}
+    second: {fileID: 2800000, guid: 1dbede7e99ca80f429b5e8505a759882, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: uniquebananas_texture
-    second: {fileID: 2800000, guid: 6a877e48e91ef0d419db851bfd88f95a, type: 3}
+    second: {fileID: 2800000, guid: 3b1071e91ef5bf84cb9a5563066596ad, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: urgent_texture
-    second: {fileID: 2800000, guid: 80f033d2c6a1c9549a062e9709229133, type: 3}
+    second: {fileID: 2800000, guid: 5011445c59760244996fc3f0ab45a75f, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: wooden_pole_texture
-    second: {fileID: 2800000, guid: 512ee3791aa46b6419571ad232931418, type: 3}
+    second: {fileID: 2800000, guid: 09b297c53ad907043beccbc03e07cb6c, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: zed_texture
-    second: {fileID: 2800000, guid: 1c520891ae359cf4b8af09590ed0026c, type: 3}
+    second: {fileID: 2800000, guid: 3007ebaca44c9b5498d609ac38771af3, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0
