@@ -1,5 +1,27 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8490884822071753604
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70afe9e12c7a7ed47911bb608a23a8ff, type: 3}
+  m_Name: SplitToning
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.SplitToning
+  active: 1
+  shadows:
+    m_OverrideState: 1
+    m_Value: {r: 0.509434, g: 0.39505163, b: 0.42763782, a: 1}
+  highlights:
+    m_OverrideState: 1
+    m_Value: {r: 0.6377357, g: 0.6299607, b: 0.49454597, a: 1}
+  balance:
+    m_OverrideState: 1
+    m_Value: 43
 --- !u!114 &-7893295128165547882
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -162,6 +184,8 @@ MonoBehaviour:
   - {fileID: -3357603926938260329}
   - {fileID: -1524349594493152165}
   - {fileID: -592058995538207169}
+  - {fileID: 9101047839074842262}
+  - {fileID: -8490884822071753604}
 --- !u!114 &849379129802519247
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -227,3 +251,31 @@ MonoBehaviour:
   clamp:
     m_OverrideState: 0
     m_Value: 0.05
+--- !u!114 &9101047839074842262
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66f335fb1ffd8684294ad653bf1c7564, type: 3}
+  m_Name: ColorAdjustments
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.ColorAdjustments
+  active: 1
+  postExposure:
+    m_OverrideState: 0
+    m_Value: -0.11
+  contrast:
+    m_OverrideState: 1
+    m_Value: 10
+  colorFilter:
+    m_OverrideState: 0
+    m_Value: {r: 0.97735846, g: 0.97735846, b: 0.97735846, a: 1}
+  hueShift:
+    m_OverrideState: 0
+    m_Value: 0
+  saturation:
+    m_OverrideState: 1
+    m_Value: 15
