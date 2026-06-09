@@ -138123,7 +138123,7 @@ PrefabInstance:
     - target: {fileID: 1553534874283328405, guid: 37c8c60b02084f1a18b7ebfc15ccac13, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
-      objectReference: {fileID: 6292265703686634470}
+      objectReference: {fileID: 6498466463744510190}
     - target: {fileID: 1553534874283328405, guid: 37c8c60b02084f1a18b7ebfc15ccac13, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
       value: 2
@@ -196129,14 +196129,14 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1670417136}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 2, y: 424}
   m_SizeDelta: {x: 250, y: 45}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &6498466463744510190
+--- !u!114 &6498466463744510190 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7492512815539673305, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
   m_PrefabInstance: {fileID: 6292265703686634469}
@@ -196146,25 +196146,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7c33f111b3329784aa6343e3694ea7eb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
-  m_Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_EditorClassIdentifier: MonkeyBusiness.Managers::MonkeyBusiness.Managers.DeadBodiesManager
 --- !u!222 &7269973412878585776
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -196199,7 +196181,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7753004187467046514}
   - component: {fileID: 7269973412878585776}
-  - component: {fileID: 6498466463744510190}
   m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
@@ -196322,3 +196303,4 @@ SceneRoots:
   - {fileID: 510831019}
   - {fileID: 1477642270}
   - {fileID: 657400753}
+  - {fileID: 6356911771908124061}
