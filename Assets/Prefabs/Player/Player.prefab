@@ -6759,7 +6759,7 @@ PrefabInstance:
       objectReference: {fileID: 2211465859848255771}
     - target: {fileID: 7024514931988538529, guid: 14eeb7aec888fce4cb7d945840c1be37, type: 3}
       propertyPath: _minimalDistanceToPlayer
-      value: 3
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 8634272603849787556, guid: 14eeb7aec888fce4cb7d945840c1be37, type: 3}
       propertyPath: m_Name
