@@ -24,5 +24,5 @@ MonoBehaviour:
     - rid: 5385079549030301779
       type: {class: AllItemsAreItemEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: 'All items are now: <item>'
+        description: All items are now <item>s
         itemToChangeTo: {fileID: 1320323228889223238, guid: 9d9e0e136f543d744a3c8b073dc0e0d6, type: 3}

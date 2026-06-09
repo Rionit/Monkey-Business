@@ -26,6 +26,6 @@ MonoBehaviour:
       data:
         description: If you do not hit an enemy every <time> s, you will lose <heal>
           health.
-        healthPerTick: 1
+        healthPerTick: -1
         tickInterval: 1
         maxNoHitTime: 1
