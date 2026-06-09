@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using MonkeyBusiness.Misc;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
 
 namespace MonkeyBusiness.Items
 {
@@ -58,9 +59,21 @@ namespace MonkeyBusiness.Items
         /// </summary>
         public Collider ignoreCollision = null;
 
+        [SerializeField]
+        private List<GameObject> _meshes;
+
+        [SerializeField]
+        private Vector3 _heldRotation = Vector3.zero;
+
+        private int _startingLayer;
+        private int _viewmodelLayer;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
+            _startingLayer = gameObject.layer;
+            _viewmodelLayer = LayerMask.NameToLayer("Player");
+
             _rigidbody = GetComponent<Rigidbody>();
             //_rigidbody.useGravity = false;
             _outline = GetComponent<Outline>();
@@ -86,11 +99,22 @@ namespace MonkeyBusiness.Items
         {
             transform.parent = parent;
             transform.position = parent.position;
+            transform.rotation = parent.rotation;
+
+            // apply viewmodel rotation
+            transform.Rotate(_heldRotation);
+
+
             _rigidbody.isKinematic = true;
             _rigidbody.detectCollisions = false;
             isBeingHeld = true;
             IsBeingThrown = false;
             _outline.enabled = false;
+
+            foreach(GameObject mesh in _meshes)
+            {
+                mesh.layer = _viewmodelLayer;
+            }
 
             OnPickup.Invoke(parent);
         }
@@ -105,6 +129,11 @@ namespace MonkeyBusiness.Items
             _rigidbody.detectCollisions = true;
             isBeingHeld = false;
             _outline.enabled = !IsBeingThrown;
+
+            foreach(GameObject mesh in _meshes)
+            {
+                mesh.layer = _startingLayer;
+            }
 
             OnDrop.Invoke();
         }

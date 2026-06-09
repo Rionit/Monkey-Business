@@ -9,6 +9,8 @@ using Vector3 = UnityEngine.Vector3;
 using Sirenix.OdinInspector;
 using UnityEngine.Serialization;
 using UnityEngine.Events;
+using System.Collections.Generic;
+using System.Collections;
 
 namespace MonkeyBusiness.Player
 {
@@ -52,7 +54,8 @@ namespace MonkeyBusiness.Player
     {
         public Quaternion Rotation; // Camera rotation
         public Vector2 Move;        // Movement input (WASD / stick)
-        public bool Swing;          // Swing input
+        public bool Swing;          // Swing pressed
+        public bool SwingSustain;      // Swing held
         public bool Jump;           // Jump pressed
         public bool JumpSustain;    // Jump held
         public CrouchInput Crouch;  // Crouch input
@@ -75,6 +78,9 @@ namespace MonkeyBusiness.Player
 
         [Tooltip("Layers that can be used for swinging.")]
         [SerializeField] private LayerMask whatIsSwingable;
+
+        [SerializeField]
+        private LayerMask _swingRaycastLayerMask;
 
         [Header("Ground Movement")]
         [field: SerializeField, Tooltip("Maximum walking speed.")]
@@ -228,18 +234,24 @@ namespace MonkeyBusiness.Player
         // Swing components
         private SpringJoint _swingJoint;
         private Rigidbody _rb;
+
+        [SerializeField]
         private LineRenderer _lineRenderer;
         private Vector3 _ropeEnd;
 
         // Collision buffer for uncrouch checks
         private Collider[] _uncrouchOverlapResults;
 
+        // Swing animation
+        [SerializeField]
+        private float _ropeAnimDuration = 0.33f;
+        private Coroutine _ropeAnimCoroutine;
+
         /// <summary>
         /// Initialize required components.
         /// </summary>
         private void Awake()
         {
-            _lineRenderer = GetComponent<LineRenderer>();
             _lineRenderer.enabled = false;
         }
 
@@ -262,10 +274,10 @@ namespace MonkeyBusiness.Player
         public void UpdateInput(CharacterInput input)
         {
             // Handle swing input
-            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f && !motor.GroundingStatus.IsStableOnGround)
+            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f) // && !motor.GroundingStatus.IsStableOnGround)
                 StartSwing();
 
-            if (!input.Swing && _state.Stance == Stance.Swing)
+            if (!input.SwingSustain && _state.Stance == Stance.Swing)
                 StopSwing();
 
             // Movement direction (camera-relative)
@@ -311,61 +323,93 @@ namespace MonkeyBusiness.Player
             var dir = cam.transform.forward;
 
             // Raycast to find swing anchor
-            if (!Physics.Raycast(origin, dir, out RaycastHit hit, _swingMaxDistance, whatIsSwingable))
+            if (!Physics.Raycast(origin, dir, out RaycastHit hit, _swingMaxDistance, _swingRaycastLayerMask))
+            {
+                // hit nothing
+                if(_ropeAnimCoroutine is not null)
+                {
+                    StopCoroutine(_ropeAnimCoroutine);
+                }
+
+                _ropeAnimCoroutine = StartCoroutine(FailHook(origin + _swingMaxDistance * dir, _ropeAnimDuration));
                 return;
-
-            OnSwingInvoked?.Invoke();
-
-            _lineRenderer.enabled = true;
-            _state.Stance = Stance.Swing;
-
-            _rb = GetComponent<Rigidbody>();
-            if (_rb != null)
-            {
-                _rb.freezeRotation = true;
-                _rb.linearVelocity = motor.Velocity;
-                _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
             }
 
-            if (motor != null)
-                motor.enabled = false;
+            if((whatIsSwingable & (1 << hit.transform.gameObject.layer)) != 0){
+                // hit swingable
+                OnSwingInvoked?.Invoke();
 
-            _swingAnchor = hit.point;
-            _swingRopeLength = Vector3.Distance(transform.position, hit.point);
-            _swingTimeRemaining = Mathf.Lerp(swingMinDuraion, swingDuration, _swingRopeLength / _swingMaxDistance);
+                _state.Stance = Stance.Swing;
 
-            _ropeEnd = hit.point;
+                _rb = GetComponent<Rigidbody>();
+                if (_rb != null)
+                {
+                    _rb.freezeRotation = true;
+                    _rb.linearVelocity = motor.Velocity;
+                    _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                }
+                if (motor != null)
+                    motor.enabled = false;
+
+                _swingAnchor = hit.point;
+                _swingRopeLength = Vector3.Distance(transform.position, hit.point);
+                _swingTimeRemaining = Mathf.Lerp(swingMinDuraion, swingDuration, _swingRopeLength / _swingMaxDistance);
+
+                if (_ropeAnimCoroutine is not null)
+                {
+                    StopCoroutine(_ropeAnimCoroutine);
+                }
+
+                _ropeAnimCoroutine = StartCoroutine(ShootHook(_swingAnchor, _ropeAnimDuration * (_swingRopeLength / _swingMaxDistance)));
+                //_ropeEnd = hit.point;
+            }
+            else
+            {
+                // hit environment
+                if(_ropeAnimCoroutine is not null)
+                {
+                    StopCoroutine(_ropeAnimCoroutine);
+                }
+
+                var distance = Vector3.Distance(transform.position, hit.point);
+                _ropeAnimCoroutine = StartCoroutine(FailHook(hit.point, _ropeAnimDuration * (distance / _swingMaxDistance)));
+            }
         }
 
-        /// <summary>
-        /// Stops swinging and restores motor control.
-        /// </summary>
-        void StopSwing()
-        {
-            _state.Stance = Stance.Stand;
-
-            Vector3 currentPos = transform.position;
-            Vector3 exitVelocity = _rb != null ? _rb.linearVelocity : Vector3.zero;
-
-            _swingTimeRemaining = 0f;
-            _swingCooldownRemaining = swingCooldown;
-
-            if (_swingJoint != null)
-                Destroy(_swingJoint);
-
-            if (_rb != null)
-                _rb.freezeRotation = false;
-
-            if (motor != null)
+            /// <summary>
+            /// Stops swinging and restores motor control.
+            /// </summary>
+            void StopSwing()
             {
-                motor.enabled = true;
-                motor.SetPosition(currentPos);
-                motor.BaseVelocity = exitVelocity;
+                _state.Stance = Stance.Stand;
+
+                Vector3 currentPos = transform.position;
+                Vector3 exitVelocity = _rb != null ? _rb.linearVelocity : Vector3.zero;
+
+                _swingTimeRemaining = 0f;
+                _swingCooldownRemaining = swingCooldown;
+
+                if (_swingJoint != null)
+                    Destroy(_swingJoint);
+
+                if (_rb != null)
+                    _rb.freezeRotation = false;
+
+                if (motor != null)
+                {
+                    motor.enabled = true;
+                    motor.SetPosition(currentPos);
+                    motor.BaseVelocity = exitVelocity;
+                }
+
+                if(_ropeAnimCoroutine is not null)
+                {
+                    StopCoroutine(_ropeAnimCoroutine);
+                }
+
+                _ropeAnimCoroutine = StartCoroutine(RetractHook(_ropeAnimDuration));
             }
 
-            _lineRenderer.enabled = false;
-        }
-        
         void FixedUpdate()
         {
             if (_swingCooldownRemaining > 0f)
@@ -828,6 +872,82 @@ namespace MonkeyBusiness.Player
             motor.SetPosition(position);
             if(killVelocity)
                 motor.BaseVelocity = Vector3.zero;
+        }
+
+
+        /// <summary>
+        /// Animates the rope end going out from the player towards a target. Enables the line renderer
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="duration"></param>
+        /// <returns></returns>
+        IEnumerator ShootHook(Vector3 target, float duration)
+        {
+            float elapsedTime = 0f;
+            
+            _lineRenderer.enabled = true;
+            while(elapsedTime <= duration)
+            {
+                _ropeEnd = Vector3.Lerp(transform.position, target, elapsedTime / duration);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+        }
+
+        /// <summary>
+        /// Animates the rope end returning towards the player. Disables the line renderer when it ends.
+        /// </summary>
+        /// <param name="duration"></param>
+        /// <returns></returns>
+        IEnumerator RetractHook(float duration)
+        {
+            float elapsedTime = 0f;
+            Vector3 startingPosition = _ropeEnd;
+
+            while(elapsedTime <= duration)
+            {
+                _ropeEnd = Vector3.Lerp(startingPosition, transform.position, elapsedTime / duration);
+
+                elapsedTime += Time.deltaTime;
+                yield return null;
+            }
+
+            _lineRenderer.enabled = false;
+        }
+
+        /// <summary>
+        /// Plays the ShootHook and RetractHook coroutines in sequence, making the hook shoot out to the target position and instantly come back after reaching it.
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="duration"></param>
+        /// <returns></returns>
+        IEnumerator FailHook(Vector3 target, float duration)
+        {
+            yield return ShootHook(target, duration);
+            yield return RetractHook(duration);
+        }
+
+        public Vector3? HookScan()
+        {
+            var cam = UnityEngine.Camera.main;
+            var origin = cam.transform.position;
+            var dir = cam.transform.forward;
+
+            if(Physics.Raycast(
+                origin,
+                dir,
+                out RaycastHit hit,
+                _swingMaxDistance,
+                whatIsSwingable
+            ))
+            {
+                return hit.point;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

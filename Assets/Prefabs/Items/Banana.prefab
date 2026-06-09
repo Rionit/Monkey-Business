@@ -365,7 +365,7 @@ CapsuleCollider:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 768
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
@@ -500,6 +500,10 @@ MonoBehaviour:
   _collider: {fileID: 0}
   KeepAfterThrowing: 0
   ignoreCollision: {fileID: 0}
+  _meshes:
+  - {fileID: 7781527812404658655}
+  - {fileID: 8997658669051571902}
+  _heldRotation: {x: -37, y: 90, z: 0}
 --- !u!114 &-1512895433561322951
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -537,7 +541,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.5
+  m_Radius: 2
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &5394439074929564271
 PrefabInstance:
