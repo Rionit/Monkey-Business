@@ -128,7 +128,7 @@ namespace MonkeyBusiness.Combat.Health
             var modifiedDir = new Vector3(direction.z, 0f, -direction.x).normalized;
             _rigRootRB.AddTorque(modifiedDir * _deathImpulseForce / 4f, ForceMode.Impulse);
 
-            StartCoroutine(FadeoutDestroyCoroutine());
+            //StartCoroutine(FadeoutDestroyCoroutine());
         }
 
         public void StartDeathFadeout(Vector3 direction)
@@ -181,11 +181,25 @@ namespace MonkeyBusiness.Combat.Health
             _rigRootRB.AddTorque(modifiedDir * _deathImpulseForce / 4f, ForceMode.Impulse);
             //_rb.AddTorque(Random.insideUnitSphere * _deathImpulseForce, ForceMode.Impulse);
             //_rb.AddTorque(direction * _deathImpulseForce, ForceMode.Impulse);
-            StartCoroutine(FadeoutDestroyCoroutine());
+            //StartCoroutine(FadeoutDestroyCoroutine());
+        }
+
+        public void DestroyBody()
+        {
+            StartCoroutine(DestroyCoroutine());
+        }
+
+        IEnumerator DestroyCoroutine()
+        {
+            yield return _deathTextureAnimator.AnimateDeath();
+
+            Destroy(gameObject);
         }
 
         IEnumerator FadeoutDestroyCoroutine()
         {
+            yield return new WaitForSeconds(_preFadeoutDuration);
+
             yield return _deathTextureAnimator.AnimateDeath();
             
             Destroy(gameObject);

@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a5f85ee051f5b2469422ce06aed287f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
+  <ViewmodelCamera>k__BackingField: {fileID: 1498725380706066021}
   sensitivity: 0.1
   _pitchLimits: {x: -69.010605, y: 69.0106}
 --- !u!1 &754302598161200952

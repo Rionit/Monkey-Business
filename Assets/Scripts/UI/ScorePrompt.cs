@@ -82,7 +82,7 @@ namespace MonkeyBusiness.UI
 
         public void StoreScore()
         {
-
+            if(_promptInput.text == string.Empty) return; // Score is not stored for empty names
             Debug.Log("Storing score for " + _promptInput.text + ": " + GameManager.Score + " ... level = " + GameManager.LevelReached);
             if(GameManager.Scoreboard.ContainsKey(GameManager.Score))
             {

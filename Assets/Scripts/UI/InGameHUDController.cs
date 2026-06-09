@@ -93,9 +93,10 @@ namespace MonkeyBusiness.UI
                 displayedScore = initialScore;
 
             GameManager.Instance.CountdownCoroutine = AnimateCountdown;
+            GameManager.Instance.externalOnKillCallback = HitmarkerEffect;
             GameManager.OnScoreChanged.AddListener(SetScore);
 
-            StaticEvents.OnEnemyHit.AddListener(OnEnemyHit);
+            //StaticEvents.OnEnemyHit.AddListener(HitmarkerEffect);
         }
         
         private void Update()
@@ -308,7 +309,7 @@ namespace MonkeyBusiness.UI
             ammoText.text = $"{value}";
         }
 
-        void OnEnemyHit()
+        void HitmarkerEffect()
         {
             if (gameObject.activeSelf)
             {
