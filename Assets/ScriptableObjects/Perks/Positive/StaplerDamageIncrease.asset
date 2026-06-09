@@ -16,7 +16,7 @@ MonoBehaviour:
   perkAlignment: 0
   effect:
     rid: 915476820060012735
-  effectName: Sharper staples!
+  effectName: Titanium staples!
   isUnique: 0
   references:
     version: 2
@@ -24,7 +24,7 @@ MonoBehaviour:
     - rid: 915476820060012735
       type: {class: WeaponDamageEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: 'Your weapons damage have increased: <data>'
+        description: 'Increased damage of projectile: <data>'
         _projectiles:
         - ProjectilePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
           Multiplier: 3.5
