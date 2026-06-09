@@ -24,5 +24,5 @@ MonoBehaviour:
     - rid: 5385079549030301799
       type: {class: ThereAreNoItemsEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: There are no items of type <item> for this wave!
+        description: There are no <item>s for this wave!
         itemToRemove: 4

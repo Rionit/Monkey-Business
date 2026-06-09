@@ -62,7 +62,7 @@ namespace MonkeyBusiness.Perks.PerkEffects
         // You can also override this function to return text with your values
         public override string GetDescription()
         {
-            return description.Replace("<item>", itemToChangeTo.ToString());
+            return description.Replace("<item>", itemToChangeTo.name);
         }
         
         // Don't forget to tell the designers what <placeholder> types they can use!

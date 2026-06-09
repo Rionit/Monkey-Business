@@ -25,4 +25,4 @@ MonoBehaviour:
       type: {class: MaxHealthEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
         description: Your health is decreased by <value>
-        value: 20
+        value: -20
