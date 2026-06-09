@@ -7,7 +7,7 @@ namespace MonkeyBusiness.Managers
 {
     public class DeadBodiesManager : MonoBehaviour
     {
-        public static int MaxDeadBodies = 500;
+        public static int MaxDeadBodies = 200;
 
         public static DeadBodiesManager Instance { get; private set; }
 
@@ -15,7 +15,7 @@ namespace MonkeyBusiness.Managers
 
         int _currentBodyIndex = 0;
 
-        public void Awake()
+        public void Start()
         {
             Instance = this;
 
@@ -24,6 +24,13 @@ namespace MonkeyBusiness.Managers
                 GameManager.Instance.OnPausedOrUnpaused.AddListener(UpdateDeadBodies);
             }
             _deadBodies = new List<EnemyDeathController>(MaxDeadBodies);
+
+            for(int i = 0; i < MaxDeadBodies; i++)
+            {
+                _deadBodies.Add(null);
+            }
+
+            Debug.Log("Setting up dead bodies to count " + MaxDeadBodies + " ... actual count: " + _deadBodies.Count);
         }
 
         void OnDestroy()
@@ -41,15 +48,15 @@ namespace MonkeyBusiness.Managers
 
         public void UpdateDeadBodies(bool paused)
         {
-            Debug.Log("Updating dead bodies... paused: " + paused + " ... current count: " + _deadBodies.Count + " ... max allowed: " + MaxDeadBodies);
             if(!paused)
             {
-
+                if(_deadBodies.Count != MaxDeadBodies) Debug.Log("Changing max dead bodies to " + MaxDeadBodies + " ... actual count: " + _deadBodies.Count);
                 if(_deadBodies.Count > MaxDeadBodies)
                 {
                     for(int i = _deadBodies.Count -1; i >= 0 && _deadBodies.Count > MaxDeadBodies; i--)
                     {
-                        _deadBodies[i].DestroyBody();
+                        Debug.Log("Destroying body");
+                        if(_deadBodies[i] != null) _deadBodies[i].DestroyBody();
                         _deadBodies.RemoveAt(i);
                     }
 
