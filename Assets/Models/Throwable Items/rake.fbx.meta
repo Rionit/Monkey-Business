@@ -1,29 +1,9 @@
 fileFormatVersion: 2
-guid: 02d1914c60edaa047aeeff7c0af35878
+guid: 9fd06f011087eb5429938bac08d1e2aa
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects:
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Crossbow
-    second: {fileID: 2100000, guid: e97d7b3237107db428799c95e1cdac9f, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Crossbow_string
-    second: {fileID: 2100000, guid: 7c17976f9f5515345b50fc7d1844df12, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: Pencil
-    second: {fileID: 2100000, guid: 73bc910770e038546a0354b6dadce747, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: chimp mat
-    second: {fileID: 2100000, guid: b71bebff0aacfd9419e74a633573e0e7, type: 2}
+  externalObjects: {}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -50,7 +30,7 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 0
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: 1
