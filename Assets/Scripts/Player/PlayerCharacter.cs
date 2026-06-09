@@ -927,5 +927,27 @@ namespace MonkeyBusiness.Player
             yield return ShootHook(target, duration);
             yield return RetractHook(duration);
         }
+
+        public Vector3? HookScan()
+        {
+            var cam = UnityEngine.Camera.main;
+            var origin = cam.transform.position;
+            var dir = cam.transform.forward;
+
+            if(Physics.Raycast(
+                origin,
+                dir,
+                out RaycastHit hit,
+                _swingMaxDistance,
+                whatIsSwingable
+            ))
+            {
+                return hit.point;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }
