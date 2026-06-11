@@ -164,6 +164,8 @@ namespace MonkeyBusiness.Managers
         /// </summary>
         public GameObject PlayerCharacter => _playerCharacter;
 
+        public Action externalOnKillCallback;
+
         #endregion
 
         public static GameManager Instance { get; private set; }
@@ -177,6 +179,8 @@ namespace MonkeyBusiness.Managers
 
         public UnityEvent OnWaveStarted = new();
         public UnityEvent<int> OnEnemyCountChanged = new();
+
+        public UnityEvent<bool> OnPausedOrUnpaused = new();
 
         #endregion
 
@@ -319,17 +323,22 @@ namespace MonkeyBusiness.Managers
         public void PauseOrUnpause(InputAction.CallbackContext context)
         {
             if(!_canPause) return;
+            
             Time.timeScale = Time.timeScale == 0f ? 1f : 0f;
-            _pauseMenu.SetActive(Time.timeScale == 0f);
-            Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
+            bool isPaused = Time.timeScale == 0f;
+            
+            _pauseMenu.SetActive(isPaused);
+            Cursor.lockState = isPaused ? CursorLockMode.Confined : CursorLockMode.Locked;
 
-            BlurBackground(Time.timeScale == 0f);
-            EnableHUD(Time.timeScale != 0f);
+            BlurBackground(isPaused);
+            EnableHUD(!isPaused);
 
             foreach(var receiver in _inputReceivers)
             {
-                receiver.CanReceiveInput = Time.timeScale != 0f;
+                receiver.CanReceiveInput = !isPaused;
             }
+
+            OnPausedOrUnpaused?.Invoke(isPaused);
         }
         
         public List<GameObject> GetItems()
@@ -413,7 +422,14 @@ namespace MonkeyBusiness.Managers
         /// <param name="gameObject">the defeated enemy</param>
         void OnEnemyDestroyed(GameObject gameObject)
         {
+
             AddKillScore();
+
+            EnemyDeathController deathController = gameObject.GetComponentInChildren<EnemyDeathController>();
+            DeadBodiesManager.Instance.AddDeadBody(deathController);
+
+
+            externalOnKillCallback?.Invoke();
             Debug.Log($"Enemy {gameObject.name} died :D");
             _enemiesRemaining--;
             OnEnemyCountChanged.Invoke(_enemiesRemaining);
@@ -564,7 +580,7 @@ namespace MonkeyBusiness.Managers
             _hud.SetActive(false);
             _deathScreen.SetActive(true);
 
-
+            _canPause = false; // Can't pause when dead, obviously
             LevelReached = _currentWave;
             foreach(var receiver in _inputReceivers)
             {

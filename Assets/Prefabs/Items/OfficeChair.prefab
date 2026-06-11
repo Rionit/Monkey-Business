@@ -279,6 +279,8 @@ MonoBehaviour:
   _collider: {fileID: 0}
   KeepAfterThrowing: 0
   ignoreCollision: {fileID: 0}
+  _meshes:
+  - {fileID: 3731860325527012140}
 --- !u!114 &8403763093265858544
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -512,6 +514,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: eafbed40fa1c2ea42aa2da038531a200, type: 3}
+--- !u!1 &3731860325527012140 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: eafbed40fa1c2ea42aa2da038531a200, type: 3}
+  m_PrefabInstance: {fileID: 4542815773212835453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4071794597743368598 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: eafbed40fa1c2ea42aa2da038531a200, type: 3}

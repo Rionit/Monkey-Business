@@ -8,6 +8,12 @@ public struct CameraInput
 
 public class PlayerCamera : MonoBehaviour
 {
+    [field:SerializeField] 
+    public Camera ViewmodelCamera { get; private set; }
+
+    public static PlayerCamera Instance { get; private set; }
+
+
     [SerializeField] public float sensitivity = 0.1f;
     private Vector3 _eulerAngles;
 
@@ -20,6 +26,7 @@ public class PlayerCamera : MonoBehaviour
     {
         transform.position = target.position;
         transform.eulerAngles = _eulerAngles = target.eulerAngles;
+        Instance = this;
     }
 
     public void UpdateRotation(CameraInput input)

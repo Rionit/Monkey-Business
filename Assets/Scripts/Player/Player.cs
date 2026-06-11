@@ -70,7 +70,8 @@ namespace MonkeyBusiness.Player
                     Rotation     = playerCamera.transform.rotation,
                     Move         = input.Move.ReadValue<Vector2>(),
                     Jump         = input.Jump.WasPressedThisFrame(),
-                    Swing        = input.Swing.IsPressed(),
+                    Swing        = input.Swing.WasPressedThisFrame(),
+                    SwingSustain = input.Swing.IsPressed(),
                     JumpSustain  = input.Jump.IsPressed(),
                     // Press to toggle crouch, TODO: Maybe add to settings as an option?
                     //Crouch      = input.Crouch.WasPressedThisFrame() ? CrouchInput.Toggle : CrouchInput.None 

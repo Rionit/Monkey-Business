@@ -568,6 +568,9 @@ MonoBehaviour:
   _collider: {fileID: 0}
   KeepAfterThrowing: 0
   ignoreCollision: {fileID: 0}
+  _meshes:
+  - {fileID: 4045664842276614417}
+  _heldRotation: {x: 0, y: 275, z: 0}
 --- !u!1001 &6461530766599271431
 PrefabInstance:
   m_ObjectHideFlags: 0

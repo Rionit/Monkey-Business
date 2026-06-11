@@ -125,7 +125,7 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             _trailRenderer = GetComponentInChildren<TrailRenderer>();
             _renderer = GetComponentInChildren<MeshRenderer>();
-            _renderer.enabled = false;
+            //_renderer.enabled = false;
             
             OnTargetHit.AddListener(_ => StaticEvents.OnEnemyHit?.Invoke());
         }
