@@ -1,5 +1,6 @@
 using UnityEngine;
 using MonkeyBusiness.Player;
+using UnityEditor.WebGL;
 
 namespace MonkeyBusiness.UI
 {
@@ -15,11 +16,20 @@ namespace MonkeyBusiness.UI
         float _checkInterval = 0.25f;
 
         [SerializeField]
+        Color _cooldownReadyColor = Color.white;
+
+        [SerializeField]
+        Color _canUseRolor = Color.lightGreen;
+
+        [SerializeField]
         float _afterEnableCooldown = 0.75f;
 
         float _currentCheckTime = 0f;
 
         float _currentCooldownTime = 0f;
+
+        bool _wasOnCooldown = true;
+        bool _wasAbleToUse = false;
 
 
         bool active = true;
@@ -57,23 +67,36 @@ namespace MonkeyBusiness.UI
 
         void CheckRope()
         {
+            bool onCooldown = _player.IsSwingOnCooldown();
+            bool canUse = _player.AimingAtSwingable();
 
-            var activeNow = _player.IsSwingReady();
-            if(activeNow != active && _currentCooldownTime <= 0f)
+            if(onCooldown)
             {
-                active = activeNow;
-
-                if(active)
+                if(!_wasOnCooldown)
+                {
+                    _currentCooldownTime = 0;
+                    _ropeIcon.OnDeselected();
+                }
+            }
+            else if(canUse)
+            {
+                if(!_wasAbleToUse || _wasOnCooldown)
                 {
                     _currentCooldownTime = _afterEnableCooldown;
                     _ropeIcon.OnSelected();
                 }
-                else
+            }      
+            else
+            {
+                if(_wasAbleToUse || _wasOnCooldown)
                 {
-                    _currentCooldownTime = 0f;
-                    _ropeIcon.OnDeselected();
+                    _currentCooldownTime = 0;
+                    _ropeIcon.OnCooldownReady();
                 }
             }
+
+            _wasOnCooldown = onCooldown;
+            _wasAbleToUse = canUse;
         }
     }
 }

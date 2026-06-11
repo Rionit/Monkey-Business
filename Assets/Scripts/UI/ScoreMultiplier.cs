@@ -46,7 +46,9 @@ namespace MonkeyBusiness.UI
                 var cappedFill = _currentFill - _currentFillFloor;
                 var halfDistance = Mathf.Clamp(_currentFill*2f, 0,1);
 
-                _multiplierFill.rectTransform.anchorMax = new Vector2(cappedFill, _multiplierFill.rectTransform.anchorMax.y);
+                _multiplierFill.fillAmount = cappedFill;
+
+                //_multiplierFill.rectTransform.anchorMax = new Vector2(cappedFill, _multiplierFill.rectTransform.anchorMax.y);
                 //_multiplierFill.rectTransform.sizeDelta = new Vector2(cappedFill * _maxFillSize, _multiplierFill.rectTransform.sizeDelta.y);
                 _multiplierFill.color = new Color(Mathf.Clamp((1f - cappedFill) * 2f, 0,1), Mathf.Clamp(cappedFill*2f, 0f, 1f), 0);
             }
@@ -70,9 +72,10 @@ namespace MonkeyBusiness.UI
             GameManager.Instance.ChangeMultiplerCallback = UpdateMultiplier;
             GameManager.Instance.ChangeCumulativeCallback = UpdateFill;
 
-            _maxFillSize = _multiplierFill.rectTransform.sizeDelta.x;
+            _multiplierFill.fillAmount = 0;
+            // _maxFillSize = _multiplierFill.rectTransform.sizeDelta.x;
             //_multiplierFill.rectTransform.sizeDelta = new Vector2(0, _multiplierFill.rectTransform.sizeDelta.y);
-            _multiplierFill.rectTransform.anchorMax = new Vector2(0, _multiplierFill.rectTransform.anchorMax.y);
+            //_multiplierFill.rectTransform.anchorMax = new Vector2(0, _multiplierFill.rectTransform.anchorMax.y);
         }
 
         void UpdateFill(float value, bool increase)

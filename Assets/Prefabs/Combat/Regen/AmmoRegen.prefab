@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9110287608949290941}
   - component: {fileID: 523776702490205740}
   - component: {fileID: 5340737632553662261}
+  - component: {fileID: 1574840585591997012}
   m_Layer: 1
   m_Name: AmmoRegen
   m_TagString: Untagged
@@ -131,3 +132,15 @@ MonoBehaviour:
   _cooldown: 10
   _ammoRegenMesh: {fileID: 9110287608949290941}
   _collider: {fileID: 523776702490205740}
+--- !u!114 &1574840585591997012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3287872068051561479}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2412dbbf4dcf42ac09511c51c152efd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.UI::MonkeyBusiness.UI.AmmoRegenBinder

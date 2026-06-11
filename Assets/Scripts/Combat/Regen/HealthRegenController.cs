@@ -2,13 +2,15 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using System.Collections;
 using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Combat.Regen;
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Combat
 {
     /// <summary>
     /// Restores some health to the player after stepping on the regeneration pad.
     /// </summary>
-    public class HealthRegenController : MonoBehaviour
+    public class HealthRegenController : MonoBehaviour, IHealthRegen
     {
         [SerializeField]
         [Required]
@@ -30,6 +32,9 @@ namespace MonkeyBusiness.Combat
 
         bool _canHeal = true;
 
+
+        public UnityEvent OnCollected {get; private set; } = new UnityEvent();
+
         void OnTriggerEnter(Collider other)
         {
             Debug.Log("Collided with " + other.name);   
@@ -48,7 +53,7 @@ namespace MonkeyBusiness.Combat
             Debug.Log("Healing player for " + _healthRestored + " health.");
             _healMesh.enabled =false;
             _canHeal = false;
-            healthController.Heal(_healthRestored);
+            (this as IHealthRegen).RestoreHealth(healthController, _healthRestored);
             yield return new WaitForSeconds(_cooldown);
 
             Debug.Log("Health regen pad is ready to use again.");
