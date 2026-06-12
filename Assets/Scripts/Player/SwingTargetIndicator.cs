@@ -25,7 +25,7 @@ namespace MonkeyBusiness.Player
         // Update is called once per frame
         void Update()
         {
-            if (!_playerCharacter.IsSwingReady())
+            if (_playerCharacter.IsSwingOnCooldown())
             {
                 _meshRenderer.enabled = false;
                 return;

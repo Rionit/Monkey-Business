@@ -276,7 +276,7 @@ namespace MonkeyBusiness.UI
 
             if(previousWeaponIcon != null)
                 previousWeaponIcon.OnDeselected();
-            weaponIcon.OnSelected();
+            weaponIcon.OnCooldownReady();
             previousChangeIndex = index;
         }   
 

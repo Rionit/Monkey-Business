@@ -3,10 +3,11 @@ using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Combat.Weapons;
 using MonkeyBusiness.Managers;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Combat.Regen
 {
-    public class SmallAmmoPickup : MonoBehaviour
+    public class SmallAmmoPickup : MonoBehaviour, IAmmoRegen
     {
         /// <summary>
         /// How much ammo to restore
@@ -20,16 +21,13 @@ namespace MonkeyBusiness.Combat.Regen
         private float _lifeTime = 10f;
         
         private Coroutine _lifetimeCoroutine;
+
+        public UnityEvent OnCollected { get; private set; } = new UnityEvent();
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
             _lifetimeCoroutine = StartCoroutine(StartLifetime(_lifeTime));
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
         
         private IEnumerator StartLifetime(float lifetime)
@@ -44,13 +42,7 @@ namespace MonkeyBusiness.Combat.Regen
             if (other.gameObject.CompareTag("Player"))
             {
                 var equipManager = other.GetComponentInParent<EquipmentManager>();
-                foreach(var item in equipManager.Items)
-                {
-                    if(item is IWeapon weapon)
-                    {
-                        weapon.ReloadPercent(_replenishmentPercentage);
-                    }
-                }
+                (this as IAmmoRegen).RestoreAmmo(equipManager, _replenishmentPercentage);
                 
                 StopCoroutine(_lifetimeCoroutine);
                 Destroy(gameObject);
