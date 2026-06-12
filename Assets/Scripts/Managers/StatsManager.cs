@@ -87,7 +87,7 @@ namespace MonkeyBusiness.Managers
         [ShowInInspector] public Dictionary<ScriptableObject, bool> _perksUsage = new();
         
         private HealthController _healthController;
-        private EquipmentManager _equipmentManager;
+        public EquipmentManager _equipmentManager {get; private set;}
         private PlayerCharacter _characterController;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created

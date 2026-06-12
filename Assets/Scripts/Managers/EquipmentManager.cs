@@ -205,6 +205,23 @@ namespace MonkeyBusiness.Managers
             _previousItemSlot = _currentItemSlot;
             _currentItemSlot = -1;
         }
+        
+        /// <summary>
+        /// Hides/unhides the currently equipped item.
+        /// </summary>
+        /// <param name="hide">True = hide, False = unhide</param>
+        public void SetCurrentItemHidden(bool hide)
+        {
+            if (_currentItemSlot < 0 || _currentItemSlot >= Items.Count)
+            {
+                return;
+            }
+
+            if (Items[_currentItemSlot] is MonoBehaviour itemBehaviour)
+            {
+                itemBehaviour.gameObject.SetActive(!hide);
+            }
+        }
 
         /// <summary>
         /// Equips the next item in inventory
