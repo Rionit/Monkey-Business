@@ -19,9 +19,19 @@ namespace MonkeyBusiness.UI
         [Tooltip("Image component used for the hit screen effect.")]
         Image _hitScreen;
 
+        [SerializeField]
+        Image _healScreen;
+
+        [SerializeField]
+        Image _reloadScreen;
+
         Coroutine _poopEffectCoroutine;
 
         Coroutine _hitEffectCoroutine;
+
+        Coroutine _healEffectCoroutine;
+
+        Coroutine _reloadEffectCoroutine;
 
         void Awake()
         {
@@ -44,13 +54,31 @@ namespace MonkeyBusiness.UI
             _poopEffectCoroutine = StartCoroutine(PoopSplashScreenRoutine(duration));
         }
 
-        public void ShowHitScreen(float duration)
+        public void ShowHitScreen()
         {
             if(_hitEffectCoroutine != null)
             {
                 StopCoroutine(_hitEffectCoroutine);
             }
-            _hitEffectCoroutine = StartCoroutine(HitScreenCoroutine(duration));
+            _hitEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_hitScreen));
+        }
+
+        public void ShowHealScreen()
+        {
+            if(_healEffectCoroutine != null)
+            {
+                StopCoroutine(_healEffectCoroutine);
+            }
+            _healEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_healScreen));
+        }
+
+        public void ShowReloadScreen()
+        {
+            if(_reloadEffectCoroutine != null)
+            {
+                StopCoroutine(_reloadEffectCoroutine);
+            }
+            _reloadEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_reloadScreen));
         }
 
         IEnumerator PoopSplashScreenRoutine(float duration)
@@ -63,14 +91,18 @@ namespace MonkeyBusiness.UI
             _poopEffectCoroutine = null;
         }
 
-        IEnumerator HitScreenCoroutine(float duration)
+        IEnumerator DamageHealAmmoCoroutine(Image screen)
         {
-            _hitScreen.gameObject.SetActive(true);
-            _hitScreen.color = new Color(_hitScreen.color.r, _hitScreen.color.g, _hitScreen.color.b, 1f);
-            var tween = DOTween.ToAlpha(() => _hitScreen.color, x => _hitScreen.color = x, 0f, duration).SetEase(Ease.InQuart);
-            yield return tween.WaitForCompletion();
-            _hitScreen.gameObject.SetActive(false);
-            _hitEffectCoroutine = null;
+            screen.gameObject.SetActive(true);
+            screen.color = new Color(screen.color.r, screen.color.g, screen.color.b, 0f);
+
+            var sequence = DOTween.Sequence();
+
+            sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 1f, 0.3f).SetEase(Ease.OutQuart));
+            sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 0f, .6f).SetEase(Ease.InQuart));
+
+            yield return sequence.WaitForCompletion();
+            screen.gameObject.SetActive(false);
         }
 
     }

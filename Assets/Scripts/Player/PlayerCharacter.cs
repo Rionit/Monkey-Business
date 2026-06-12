@@ -186,7 +186,12 @@ namespace MonkeyBusiness.Player
 
         public UnityEvent OnSwingInvoked;
 
-        public bool IsSwingReady()
+        public bool IsSwingOnCooldown()
+        {
+            return !(canUseRope && _swingTimeRemaining <= 0f && _swingCooldownRemaining <= 0f);
+        }
+
+        public bool AimingAtSwingable()
         {
             Debug.Log("Swing max distance: " + _swingMaxDistance);
             bool hitSwingableSurface = Physics.Raycast(
@@ -199,7 +204,7 @@ namespace MonkeyBusiness.Player
 
             Debug.Log("Swing ready check: canUseRope=" + canUseRope + " swingCooldownRemaining=" + _swingCooldownRemaining + " swingTimeRemaining=" + _swingTimeRemaining + " hitSwingableSurface=" + hitSwingableSurface);
 
-            return canUseRope && _swingTimeRemaining <= 0f && _swingCooldownRemaining <= 0f && hitSwingableSurface;
+            return hitSwingableSurface;
         }
 
         // Swing internals

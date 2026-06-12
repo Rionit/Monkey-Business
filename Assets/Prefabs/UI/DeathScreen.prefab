@@ -204,8 +204,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: SCORE
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: ff3455213c91bfda7a43f6aff5c4745b, type: 2}
-  m_sharedMaterial: {fileID: 2460951739224439369, guid: ff3455213c91bfda7a43f6aff5c4745b, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6d4fcded535e72f6d99b92957c4f84ff, type: 2}
+  m_sharedMaterial: {fileID: 2300478960088558665, guid: 6d4fcded535e72f6d99b92957c4f84ff, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -229,8 +229,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 80
-  m_fontSizeBase: 80
+  m_fontSize: 120
+  m_fontSizeBase: 120
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1672,8 +1672,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Enter name: '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7edeb401f9a658a5af2f6be6c831889, type: 2}
-  m_sharedMaterial: {fileID: 2300478960088558665, guid: a7edeb401f9a658a5af2f6be6c831889, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6d4fcded535e72f6d99b92957c4f84ff, type: 2}
+  m_sharedMaterial: {fileID: 2300478960088558665, guid: 6d4fcded535e72f6d99b92957c4f84ff, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2149,7 +2149,7 @@ RectTransform:
   m_GameObject: {fileID: 4754251984164677677}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 3932801798815408025}
@@ -3484,8 +3484,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: (keep blank to not save the result)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7edeb401f9a658a5af2f6be6c831889, type: 2}
-  m_sharedMaterial: {fileID: 2300478960088558665, guid: a7edeb401f9a658a5af2f6be6c831889, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6d4fcded535e72f6d99b92957c4f84ff, type: 2}
+  m_sharedMaterial: {fileID: 2300478960088558665, guid: 6d4fcded535e72f6d99b92957c4f84ff, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3732,8 +3732,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "Harambe\u200B"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: a7edeb401f9a658a5af2f6be6c831889, type: 2}
-  m_sharedMaterial: {fileID: 2300478960088558665, guid: a7edeb401f9a658a5af2f6be6c831889, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 6d4fcded535e72f6d99b92957c4f84ff, type: 2}
+  m_sharedMaterial: {fileID: 2300478960088558665, guid: 6d4fcded535e72f6d99b92957c4f84ff, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

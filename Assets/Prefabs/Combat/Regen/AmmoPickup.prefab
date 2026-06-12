@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6795087944850076800}
   - component: {fileID: 9035216442115021525}
   - component: {fileID: 8318241796546775501}
+  - component: {fileID: 5207529217261365022}
   m_Layer: 0
   m_Name: AmmoPickup
   m_TagString: Untagged
@@ -128,6 +129,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Regen::MonkeyBusiness.Combat.Regen.SmallAmmoPickup
   _replenishmentPercentage: 20
   _lifeTime: 10
+--- !u!114 &5207529217261365022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477180092756245541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2412dbbf4dcf42ac09511c51c152efd5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.UI::MonkeyBusiness.UI.AmmoRegenBinder
 --- !u!1 &4832663754482347589
 GameObject:
   m_ObjectHideFlags: 0
