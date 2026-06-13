@@ -179422,6 +179422,7 @@ GameObject:
   - component: {fileID: 1905914849}
   - component: {fileID: 1905914852}
   - component: {fileID: 1905914851}
+  - component: {fileID: 1905914853}
   m_Layer: 0
   m_Name: Monkster
   m_TagString: Untagged
@@ -179523,6 +179524,18 @@ MeshRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1905914853
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905914848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b45df6803553424f9b88596ddfb252e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Perks.CollectiblePerks::MonkeyBusiness.Items.MonksterPickup
 --- !u!1001 &1908691968
 PrefabInstance:
   m_ObjectHideFlags: 0

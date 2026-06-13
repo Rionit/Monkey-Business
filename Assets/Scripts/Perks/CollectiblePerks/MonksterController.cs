@@ -25,12 +25,10 @@ namespace MonkeyBusiness.Items
 
         private IEnumerator UnhideAfterAnimation(string stateName)
         {
-            yield return null; // wait for animator to enter the state
-
             while (!animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
                 yield return null;
 
-            while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+            while (animator.GetCurrentAnimatorStateInfo(0).IsName(stateName))
                 yield return null;
 
             StatsManager.Instance._equipmentManager.SetCurrentItemHidden(false);
