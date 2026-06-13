@@ -96,6 +96,7 @@ namespace MonkeyBusiness.Combat.Health
             CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
             OnHealthChanged.Invoke(CurrentHealth);
             OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
+            StaticEvents.OnPlayerHeal.Invoke(CurrentHealth);
         }
 
         /// <summary>
