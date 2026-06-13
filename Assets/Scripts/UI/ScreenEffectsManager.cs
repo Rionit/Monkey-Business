@@ -1,7 +1,9 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
+using MonkeyBusiness.Misc;
 
 namespace MonkeyBusiness.UI
 {
@@ -40,6 +42,11 @@ namespace MonkeyBusiness.UI
                 Debug.LogWarning("Multiple instances of ScreenEffectsManager detected! Replacing the old one.");
             }
             Instance = this;
+        }
+
+        private void Start()
+        {
+            StaticEvents.OnPlayerHeal.AddListener(_ => ShowHealScreen());
         }
 
         /// <summary>

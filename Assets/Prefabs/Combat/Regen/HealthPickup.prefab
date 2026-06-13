@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 5405575139451206019}
   - component: {fileID: 9169899621505922668}
   - component: {fileID: 8474142589978389272}
-  - component: {fileID: 746139638643120263}
   m_Layer: 0
   m_Name: HealthPickup
   m_TagString: Untagged
@@ -129,18 +128,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Regen::MonkeyBusiness.Combat.Regen.SmallHealthPickup
   _healthRestored: 20
   _lifeTime: 10
---- !u!114 &746139638643120263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3878638373698229944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5a1ee951bad51d8ca036a2269438c7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: MonkeyBusiness.UI::MonkeyBusiness.UI.HealthRegenBinder
 --- !u!1001 &2955798274885026581
 PrefabInstance:
   m_ObjectHideFlags: 0
