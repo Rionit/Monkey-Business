@@ -61,6 +61,22 @@ namespace MonkeyBusiness.Combat.Weapons
         /// </summary>
         public bool IsEquipped { get; private set; } = false;
 
+        private bool _canScope = true;
+        
+        /// <summary>
+        /// Whether the weapon can use scope
+        /// </summary>
+        public bool CanScope
+        {
+            get => _canScope;
+            set
+            {
+                _canScope = value;
+                if (!value && _usesScope)
+                    Unscope();
+            }
+        }
+
         [SerializeField]
         UnityEvent<IWeapon> _onAmmoChanged = new();
         
@@ -230,7 +246,8 @@ namespace MonkeyBusiness.Combat.Weapons
 
         void Scope()
         {
-            Debug.Log("Scoping on " + gameObject.name);
+            if (!CanScope) return;
+            
             _playerCamera.sensitivity = _defaultSensitivity;
             Camera.main.fieldOfView = 60f;
             PlayerCamera.Instance.ViewmodelCamera.fieldOfView = 60f;
@@ -249,6 +266,8 @@ namespace MonkeyBusiness.Combat.Weapons
             _bulletSpawnMover.MoveTo(_scopePosition + (_defaultMeshPosition - _defaultBulletSpawnPosition), _scopeTransitionTime, Ease.InOutQuad);
 
             _scopeTween.OnComplete(() => _scopeTween = null);
+            
+            _isScoped = true;
         }
 
         void Unscope()
@@ -276,6 +295,8 @@ namespace MonkeyBusiness.Combat.Weapons
                 }
                 _bulletSpawnMover.enabled = true;
             });
+            
+            _isScoped = false;
         }
         
         void Update()
@@ -288,12 +309,14 @@ namespace MonkeyBusiness.Combat.Weapons
                     _scopeTween.Kill();
                     _scopeTween = null;
                 }
-                if(_isScoped)  
-                    Unscope();
-                else    
-                    Scope();
 
-                _isScoped = !_isScoped;
+                if (CanScope)
+                {
+                    if(_isScoped)  
+                        Unscope();
+                    else    
+                        Scope();
+                }
             }
         }
 

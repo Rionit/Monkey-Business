@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 5475140256332682396}
   - component: {fileID: 1823545088804983919}
   - component: {fileID: 929260096485611907}
+  - component: {fileID: 760533583214611598}
   m_Layer: 11
   m_Name: Monkster
   m_TagString: Player
@@ -64,11 +65,35 @@ MonoBehaviour:
   staplePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
   penPrefab: {fileID: 7513838708788746097, guid: fab08d98d5f9fe162bb6ec4f80b97c8b, type: 3}
   explosionPrefab: {fileID: 4045664842276614417, guid: 2b1553d8a1be34b418fef3d07c814498, type: 3}
+  volume: {fileID: 0}
   frenzyDuration: 30
   bonusMaxHealth: 200
   bonusWalkSpeed: 10
   penDamageMultiplier: 5
   stapleDamageMultiplier: 5
+--- !u!114 &760533583214611598
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6191973497591963341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 20c59fefc69bf544ea5d0cd37f793bb5, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 6191973497591963341}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1001 &2745521668361414139
 PrefabInstance:
   m_ObjectHideFlags: 0
