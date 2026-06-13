@@ -40,6 +40,7 @@ namespace MonkeyBusiness.Items
 
         private void OnMonksterPicked()
         {
+            StatsManager.Instance._equipmentManager.CanReceiveInput = false;
             StatsManager.Instance._equipmentManager.SetCurrentItemHidden(true);
             animator.SetTrigger("MonksterPicked");
 
@@ -50,6 +51,7 @@ namespace MonkeyBusiness.Items
         private IEnumerator MonksterFrenzy()
         {
             GetComponent<SoundSource>().Play();
+            BroAudio.SetEffect(Effect.LowPass(500, 0.5f), BroAudioType.Music); 
             
             StatsManager.Instance.PlayerMaxHealth += bonusMaxHealth;
             StatsManager.Instance.PlayerWalkSpeed += bonusWalkSpeed;
@@ -99,9 +101,12 @@ namespace MonkeyBusiness.Items
             }
 
             Camera.main.DOFieldOfView(150f, 0.5f);
+            
 
             // =============================================
             // =============================================
+            yield return new WaitForSeconds(0.5f);
+            BroAudio.SetEffect(Effect.ResetLowPass(5f), BroAudioType.Music); 
             yield return new WaitForSeconds(frenzyDuration);
             // =============================================
             // =============================================
@@ -170,6 +175,7 @@ namespace MonkeyBusiness.Items
                 yield return null;
 
             StatsManager.Instance._equipmentManager.SetCurrentItemHidden(false);
+            StatsManager.Instance._equipmentManager.CanReceiveInput = true;
         }
     }
 }

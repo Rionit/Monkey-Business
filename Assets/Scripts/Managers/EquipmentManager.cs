@@ -212,14 +212,19 @@ namespace MonkeyBusiness.Managers
         /// <param name="hide">True = hide, False = unhide</param>
         public void SetCurrentItemHidden(bool hide)
         {
-            if (_currentItemSlot < 0 || _currentItemSlot >= Items.Count)
+            // Hide equipped weapon/tool
+            if (_currentItemSlot >= 0 && _currentItemSlot < Items.Count)
             {
-                return;
+                if (Items[_currentItemSlot] is MonoBehaviour itemBehaviour)
+                {
+                    itemBehaviour.gameObject.SetActive(!hide);
+                }
             }
 
-            if (Items[_currentItemSlot] is MonoBehaviour itemBehaviour)
+            // Hide currently held pickup item
+            if (_heldItem != null)
             {
-                itemBehaviour.gameObject.SetActive(!hide);
+                _heldItem.gameObject.SetActive(!hide);
             }
         }
 
