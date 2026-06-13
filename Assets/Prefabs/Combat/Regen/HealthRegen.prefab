@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 6153803295035562568}
   - component: {fileID: 3813620914497315054}
   - component: {fileID: 4163479858100878671}
-  - component: {fileID: 7051800105737526699}
   m_Layer: 1
   m_Name: HealthRegen
   m_TagString: Untagged
@@ -74,18 +73,6 @@ MonoBehaviour:
   _healthRestored: 33
   _cooldown: 10
   _healMesh: {fileID: 5492829448148666478}
---- !u!114 &7051800105737526699
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2626448919093502389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5a1ee951bad51d8ca036a2269438c7c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: MonkeyBusiness.UI::MonkeyBusiness.UI.HealthRegenBinder
 --- !u!1 &3073618382283356539
 GameObject:
   m_ObjectHideFlags: 0
