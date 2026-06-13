@@ -61,6 +61,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   animator: {fileID: 888053804125670010}
+  staplePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
+  penPrefab: {fileID: 7513838708788746097, guid: fab08d98d5f9fe162bb6ec4f80b97c8b, type: 3}
+  explosionPrefab: {fileID: 4045664842276614417, guid: 2b1553d8a1be34b418fef3d07c814498, type: 3}
+  frenzyDuration: 30
+  bonusMaxHealth: 200
+  bonusWalkSpeed: 10
+  penDamageMultiplier: 5
+  stapleDamageMultiplier: 5
 --- !u!1001 &2745521668361414139
 PrefabInstance:
   m_ObjectHideFlags: 0

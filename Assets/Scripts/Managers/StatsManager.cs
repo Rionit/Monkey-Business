@@ -69,20 +69,57 @@ namespace MonkeyBusiness.Managers
             }
         }
         
-        [ShowInInspector] public float GetDamageMultiplier(GameObject prefab)
+        [ShowInInspector]
+        public float GetDamageMultiplier(GameObject prefab)
         {
-            if (_damageMultipliers.TryGetValue(prefab, out var value))
-                return value;
+            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers) || multipliers.Count == 0)
+                return 1f;
 
-            return 1f; // default multiplier
+            float positiveBonus = 0f;
+            float negativeMultiplier = 1f;
+
+            foreach (var multiplier in multipliers)
+            {
+                if (multiplier > 1f)
+                {
+                    positiveBonus += multiplier;
+                }
+                else
+                {
+                    negativeMultiplier *= multiplier;
+                }
+            }
+
+            return (1f + positiveBonus) * negativeMultiplier;
         }
-        
-        [ShowInInspector] public void SetDamageMultiplier(GameObject prefab, float amount)
+
+        [ShowInInspector]
+        public void AddDamageMultiplier(GameObject prefab, float amount)
         {
-            _damageMultipliers[prefab] = amount;
+            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers))
+            {
+                multipliers = new List<float>();
+                _damageMultipliers[prefab] = multipliers;
+            }
+
+            multipliers.Add(amount);
         }
         
-        [ShowInInspector] private Dictionary<GameObject, float> _damageMultipliers = new();
+        [ShowInInspector]
+        public bool RemoveDamageMultiplier(GameObject prefab, float amount)
+        {
+            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers))
+                return false;
+
+            bool removed = multipliers.Remove(amount);
+
+            if (multipliers.Count == 0)
+                _damageMultipliers.Remove(prefab);
+
+            return removed;
+        }
+        
+        [ShowInInspector] private Dictionary<GameObject, List<float>> _damageMultipliers = new();
         
         [ShowInInspector] public Dictionary<ScriptableObject, bool> _perksUsage = new();
         
