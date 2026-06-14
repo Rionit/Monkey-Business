@@ -661,6 +661,7 @@ MonoBehaviour:
   ammoText: {fileID: 4444384507273328690}
   ammoBubble: {fileID: 1362390302803844139}
   hitmarker: {fileID: 3378324134703026329}
+  hitmarkerColor: {fileID: 6346586065192597846}
   hitmarkerSoundSource: {fileID: 1123310193313405313}
   wavesCompletedText: {fileID: 6188768436545212332}
   scoreText: {fileID: 5908620511171918063}

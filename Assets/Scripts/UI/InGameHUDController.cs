@@ -11,6 +11,7 @@ using DG.Tweening;
 using System;
 using Ami.BroAudio;
 using UnityEditor.Graphs;
+using MonkeyBusiness.Player;
 
 namespace MonkeyBusiness.UI
 {
@@ -44,7 +45,7 @@ namespace MonkeyBusiness.UI
         [SerializeField] private GameObject ammoBubble;
         
         [SerializeField] private GameObject hitmarker;
-        
+
         [SerializeField] private SoundSource hitmarkerSoundSource;
 
         [SerializeField] private TextMeshProUGUI wavesCompletedText;
@@ -118,6 +119,8 @@ namespace MonkeyBusiness.UI
                 tr.localRotation,
                 Quaternion.identity,
                 scoreRecoverySpeed * Time.unscaledDeltaTime);
+
+            crosshair.color = PlayerCharacter.failedSwing ? Color.softRed : Color.white;
         }
 
         void OnDestroy()

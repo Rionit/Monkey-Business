@@ -14,6 +14,27 @@ namespace MonkeyBusiness.Player
 {
     public class Player : MonoBehaviour, IInputReceiver
     {
+        public enum SwingMode
+        {
+            HOLD,
+            TOGGLE
+        }
+
+        [SerializeField]
+        [HideInInspector]
+        private SwingMode swingMode;
+
+        [ShowInInspector]
+        SwingMode _SwingMode 
+        {
+            get => swingMode;
+            set
+            {
+                swingMode = value;
+                playerCharacter.swingMode = value;
+            }
+        }
+
         [SerializeField] private PlayerCharacter playerCharacter;
         [SerializeField] private PlayerCamera playerCamera;
         [Space]
@@ -70,7 +91,7 @@ namespace MonkeyBusiness.Player
                     Rotation     = playerCamera.transform.rotation,
                     Move         = input.Move.ReadValue<Vector2>(),
                     Jump         = input.Jump.WasPressedThisFrame(),
-                    Swing        = input.Swing.WasPressedThisFrame(),
+                    Swing        = swingMode == SwingMode.HOLD ? input.Swing.IsPressed() : input.Swing.WasPressedThisFrame(),
                     SwingSustain = input.Swing.IsPressed(),
                     JumpSustain  = input.Jump.IsPressed(),
                     // Press to toggle crouch, TODO: Maybe add to settings as an option?
