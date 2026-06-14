@@ -216,6 +216,8 @@ namespace MonkeyBusiness.Managers
         /// Currently alive enemies
         /// </summary>
         private List<GameObject> _enemies = new();
+        
+        public float AliveEnemies => _enemies.Count;
 
         private InputAction _pauseAction;
 
@@ -226,6 +228,8 @@ namespace MonkeyBusiness.Managers
         List<SpawnInformation> _waveDefinitions = new();
 
         int _currentWave = 0;
+        
+        public int CurrentWave => _currentWave;
 
         Dictionary<GameObject, int> _typesToSpawn = new();
 

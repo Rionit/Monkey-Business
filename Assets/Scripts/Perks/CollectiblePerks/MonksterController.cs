@@ -14,6 +14,8 @@ namespace MonkeyBusiness.Items
 {
     public class MonksterController : MonoBehaviour
     {
+        public static bool isActive = false;
+        
         [SerializeField] private Animator animator;
 
         // TODO: add shotgun projectile
@@ -50,17 +52,26 @@ namespace MonkeyBusiness.Items
 
         private IEnumerator MonksterFrenzy()
         {
+            isActive = true;
+            
             GetComponent<SoundSource>().Play();
             BroAudio.SetEffect(Effect.LowPass(500, 0.5f), BroAudioType.Music); 
             
             StatsManager.Instance.PlayerMaxHealth += bonusMaxHealth;
             StatsManager.Instance.PlayerWalkSpeed += bonusWalkSpeed;
             StatsManager.Instance.PlayerHealth = StatsManager.Instance.PlayerMaxHealth;
+            
+            StatsManager.Instance._equipmentManager.Items.ForEach(item =>
+            {
+                if(item is IWeapon weapon) weapon.Reload(weapon.MaxAmmo);
+            });
+
+            StaticEvents.OnPlayerMeleeAttackUsed.AddListener(Explode);
+            PlayerMeleeWeapon meleeWeapon = GameManager.Instance.PlayerCharacter.GetComponent<PlayerMeleeWeapon>();
+            meleeWeapon.AddBuff(2f, 0.5f);
 
             StatsManager.Instance.AddDamageMultiplier(penPrefab, penDamageMultiplier);
             StatsManager.Instance.AddDamageMultiplier(staplePrefab, stapleDamageMultiplier);
-            
-            StaticEvents.OnPlayerMeleeAttackUsed.AddListener(Explode);
 
             foreach (var item in StatsManager.Instance._equipmentManager.Items)
             {
@@ -144,6 +155,7 @@ namespace MonkeyBusiness.Items
             Camera.main.DOFieldOfView(60f, 0.5f);
             
             StaticEvents.OnPlayerMeleeAttackUsed.RemoveListener(Explode);
+            meleeWeapon.RemoveBuff(2f, 0.5f);
             
             foreach (var item in StatsManager.Instance._equipmentManager.Items)
             {
@@ -158,6 +170,9 @@ namespace MonkeyBusiness.Items
 
             StatsManager.Instance.RemoveDamageMultiplier(penPrefab, penDamageMultiplier);
             StatsManager.Instance.RemoveDamageMultiplier(staplePrefab, stapleDamageMultiplier);
+
+            isActive = false;
+            StaticEvents.OnMonksterStopped?.Invoke();
         }
 
         void Explode()

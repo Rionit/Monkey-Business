@@ -14,7 +14,7 @@ namespace MonkeyBusiness.Managers
         public UnityEvent<bool> onNonChimpCanPoop;
 
         public bool canNonChimpPoop = false;
-        
+
         [ShowInInspector] public float PlayerMaxHealth
         {
             // Null check is only to avoid error in the Editor
