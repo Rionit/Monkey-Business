@@ -170,6 +170,7 @@ GameObject:
   - component: {fileID: 1083196947981140784}
   - component: {fileID: 8961619586941697689}
   - component: {fileID: 7492512815539673305}
+  - component: {fileID: 1055059926324265701}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -497,6 +498,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c33f111b3329784aa6343e3694ea7eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Managers::MonkeyBusiness.Managers.DeadBodiesManager
+--- !u!114 &1055059926324265701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677739966933632926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7fae7129e4ca3c47b918b69a87c567c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Perks.CollectiblePerks::MonkeyBusiness.Perks.MonksterManager
+  pressureThreshold: 100
+  timeFactor: 0.2
+  spawnersRoot: {fileID: 0}
 --- !u!1 &6484089724411520133
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ using MonkeyBusiness.Misc;
 using DG.Tweening;
 using System;
 using Ami.BroAudio;
+using UnityEditor.Graphs;
 
 namespace MonkeyBusiness.UI
 {
@@ -86,6 +87,8 @@ namespace MonkeyBusiness.UI
         {
             GameManager.Instance.CountdownCoroutine = AnimateCountdown;
             GameManager.OnScoreChanged.AddListener(SetScore);
+            StaticEvents.OnMonksterPicked.AddListener(() => healthBar.OverrideColor(Color.cyan));
+            StaticEvents.OnMonksterStopped.AddListener(healthBar.ResetOverrideColor);
             
             defaultScoreColor = scoreText.color;
 
@@ -121,6 +124,7 @@ namespace MonkeyBusiness.UI
         {
             GameManager.Instance.CountdownCoroutine = null;
             GameManager.OnScoreChanged.RemoveListener(SetScore);
+            StaticEvents.OnMonksterStopped.RemoveListener(healthBar.ResetOverrideColor);
         }
 
         public void AddPerk(string perkText, bool isPermanent)

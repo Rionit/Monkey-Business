@@ -10,24 +10,33 @@ using DG.Tweening;
 using UnityEngine.UI;
 using Ami.BroAudio;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
     public class PlayerMeleeWeapon : MonoBehaviour, IInputReceiver
     {
+        float _damageMultiplier = 1f;
+        float _cooldownMultiplier = 1f;
+
+        public float MeleeDamage => _baseMeleeDamage * _damageMultiplier;
+        public float AttackCooldown => _baseAttackCooldown * _cooldownMultiplier;
+        
+        [FormerlySerializedAs("_meleeDamage")]
         [SerializeField]
         [BoxGroup("Melee stats")]
-        float _meleeDamage = 10f;
+        float _baseMeleeDamage = 10f;
 
         [SerializeField]
         [BoxGroup("Melee stats")]
         [Tooltip("For how long the attack hitbox is active")]
         float _attackDuration = 0.3f;
 
+        [FormerlySerializedAs("_attackCooldown")]
         [SerializeField]
         [BoxGroup("Melee stats")]
         [Tooltip("Cooldown time between attacks, in seconds")]
-        float _attackCooldown = 5f;
+        float _baseAttackCooldown = 5f;
 
         [SerializeField]
         [BoxGroup("Melee stats")]
@@ -99,7 +108,19 @@ namespace MonkeyBusiness.Combat.Weapons
                 Debug.LogWarning("Enemy " + enemy.name + " hit by melee weapon but has no KnockbackController.");
             }            
 
-            enemy.TakeDamage(_meleeDamage, knockbackDirection);
+            enemy.TakeDamage(MeleeDamage, knockbackDirection);
+        }
+        
+        public void AddBuff(float damageMultiplier, float cooldownMultiplier)
+        {
+            _damageMultiplier *= damageMultiplier;
+            _cooldownMultiplier *= cooldownMultiplier;
+        }
+
+        public void RemoveBuff(float damageMultiplier, float cooldownMultiplier)
+        {
+            _damageMultiplier /= damageMultiplier;
+            _cooldownMultiplier /= cooldownMultiplier;
         }
 
         IEnumerator MeleeAttackCoroutine()
@@ -129,7 +150,7 @@ namespace MonkeyBusiness.Combat.Weapons
             //_animationTf.gameObject.SetActive(false);
             _attackTrail.emitting = false;
 
-            yield return new WaitForSeconds(_attackCooldown - 0.2f + Time.fixedDeltaTime); // Cooldown duration
+            yield return new WaitForSeconds(AttackCooldown - 0.2f + Time.fixedDeltaTime); // Cooldown duration
 
             _onCooldown = false;
             OnAttackCooldownEnded?.Invoke();
