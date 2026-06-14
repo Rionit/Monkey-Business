@@ -93,10 +93,12 @@ namespace MonkeyBusiness.Combat.Health
         /// </summary>
         public void Heal(float amount)
         {
+            if(CurrentHealth < MaxHealth)
+                StaticEvents.OnPlayerHeal.Invoke(CurrentHealth);
+            
             CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
             OnHealthChanged.Invoke(CurrentHealth);
             OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
-            StaticEvents.OnPlayerHeal.Invoke(CurrentHealth);
         }
 
         /// <summary>

@@ -27,6 +27,9 @@ namespace MonkeyBusiness.UI
         [SerializeField]
         Image _reloadScreen;
 
+        [SerializeField]
+        Image _monksterScreen;
+        
         Coroutine _poopEffectCoroutine;
 
         Coroutine _hitEffectCoroutine;
@@ -34,6 +37,8 @@ namespace MonkeyBusiness.UI
         Coroutine _healEffectCoroutine;
 
         Coroutine _reloadEffectCoroutine;
+        
+        Coroutine _monksterEffectCoroutine;
 
         void Awake()
         {
@@ -47,6 +52,7 @@ namespace MonkeyBusiness.UI
         private void Start()
         {
             StaticEvents.OnPlayerHeal.AddListener(_ => ShowHealScreen());
+            StaticEvents.OnMonksterPicked.AddListener(() => ShowMonksterScreen());
         }
 
         /// <summary>
@@ -77,6 +83,15 @@ namespace MonkeyBusiness.UI
                 StopCoroutine(_healEffectCoroutine);
             }
             _healEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_healScreen));
+        }
+        
+        public void ShowMonksterScreen()
+        {
+            if(_monksterEffectCoroutine != null)
+            {
+                StopCoroutine(_monksterEffectCoroutine);
+            }
+            _monksterEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_monksterScreen));
         }
 
         public void ShowReloadScreen()

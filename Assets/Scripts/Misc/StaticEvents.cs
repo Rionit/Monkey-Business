@@ -12,6 +12,8 @@ namespace MonkeyBusiness.Misc
         public static UnityEvent<GameObject> OnEnemyMeleeAttackUsed = new(); // gameobject is enemy using that attack
         public static UnityEvent OnEnemyHit = new();
         public static UnityEvent<float> OnPlayerHeal = new();
+        public static UnityEvent OnMonksterPicked = new();
+        public static UnityEvent OnMonksterStopped = new();
 
         public static void ClearAllEvents()
         {
@@ -20,6 +22,8 @@ namespace MonkeyBusiness.Misc
             OnPlayerMeleeAttackUsed?.RemoveAllListeners();
             OnEnemyMeleeAttackUsed?.RemoveAllListeners();
             OnEnemyHit?.RemoveAllListeners();
+            OnMonksterPicked?.RemoveAllListeners();
+            OnMonksterStopped?.RemoveAllListeners();
             OnPlayerHeal?.RemoveAllListeners();
         }
     }
