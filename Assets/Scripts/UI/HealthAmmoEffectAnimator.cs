@@ -75,7 +75,7 @@ namespace MonkeyBusiness.UI
             _sequence.AppendInterval(_randomDelay);
             _sequence.Append(DOTween.To(() => (transform as RectTransform).anchoredPosition.y, x => (transform as RectTransform).anchoredPosition = new Vector2((transform as RectTransform).anchoredPosition.x, x), _originalPosition.y + _actualHeight, .9f)
                 .From(_originalPosition.y)
-                .SetEase(Ease.InOutQuad));
+                .SetEase(Ease.OutQuad));
             _sequence.Join(colorSequence);
             _sequence.Join(scaleSequence);  
         }
