@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 using MonkeyBusiness.Misc;
+using Sirenix.OdinInspector;
 
 namespace MonkeyBusiness.UI
 {
@@ -11,7 +12,6 @@ namespace MonkeyBusiness.UI
     {
         
         public static ScreenEffectsManager Instance { get; private set; }
-
 
         [SerializeField]
         [Tooltip("Image component used for the poop splash screen effect.")]
@@ -21,15 +21,31 @@ namespace MonkeyBusiness.UI
         [Tooltip("Image component used for the hit screen effect.")]
         Image _hitScreen;
 
+        [BoxGroup("HealScreen")]
         [SerializeField]
         Image _healScreen;
 
+        [BoxGroup("HealScreen")]
+        [SerializeField]
+        GameObject _healScreenAnimations;
+
+
+        [BoxGroup("ReloadScreen")]
         [SerializeField]
         Image _reloadScreen;
 
+        [BoxGroup("ReloadScreen")]
+        [SerializeField]
+        GameObject _reloadScreenAnimations;
+
+        [BoxGroup("MonksterScreen")]
         [SerializeField]
         Image _monksterScreen;
-        
+
+        [BoxGroup("MonksterScreen")]
+        [SerializeField]
+        GameObject _monksterScreenAnimations;
+
         Coroutine _poopEffectCoroutine;
 
         Coroutine _hitEffectCoroutine;
@@ -39,6 +55,9 @@ namespace MonkeyBusiness.UI
         Coroutine _reloadEffectCoroutine;
         
         Coroutine _monksterEffectCoroutine;
+
+        Sequence _healSequence;
+        Sequence _reloadSequence;
 
         void Awake()
         {
@@ -73,7 +92,7 @@ namespace MonkeyBusiness.UI
             {
                 StopCoroutine(_hitEffectCoroutine);
             }
-            _hitEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_hitScreen));
+            _hitEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_hitScreen, null));
         }
 
         public void ShowHealScreen()
@@ -81,8 +100,11 @@ namespace MonkeyBusiness.UI
             if(_healEffectCoroutine != null)
             {
                 StopCoroutine(_healEffectCoroutine);
+                _healScreenAnimations.SetActive(false);
             }
-            _healEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_healScreen));
+
+            _healScreenAnimations.SetActive(true);
+            _healEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_healScreen, _healSequence));
         }
         
         public void ShowMonksterScreen()
@@ -90,8 +112,10 @@ namespace MonkeyBusiness.UI
             if(_monksterEffectCoroutine != null)
             {
                 StopCoroutine(_monksterEffectCoroutine);
+                _monksterScreenAnimations.SetActive(false);
             }
-            _monksterEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_monksterScreen));
+            _monksterScreenAnimations.SetActive(true);
+            _monksterEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_monksterScreen, null));
         }
 
         public void ShowReloadScreen()
@@ -99,8 +123,10 @@ namespace MonkeyBusiness.UI
             if(_reloadEffectCoroutine != null)
             {
                 StopCoroutine(_reloadEffectCoroutine);
+                _reloadScreenAnimations.SetActive(false);
             }
-            _reloadEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_reloadScreen));
+            _reloadScreenAnimations.SetActive(true);
+            _reloadEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_reloadScreen, _reloadSequence));
         }
 
         IEnumerator PoopSplashScreenRoutine(float duration)
@@ -113,12 +139,16 @@ namespace MonkeyBusiness.UI
             _poopEffectCoroutine = null;
         }
 
-        IEnumerator DamageHealAmmoCoroutine(Image screen)
+        IEnumerator DamageHealAmmoCoroutine(Image screen, Sequence sequence)
         {
             screen.gameObject.SetActive(true);
             screen.color = new Color(screen.color.r, screen.color.g, screen.color.b, 0f);
 
-            var sequence = DOTween.Sequence();
+            if(sequence != null && sequence.IsActive())
+            {
+                sequence.Kill();
+            }
+            sequence = DOTween.Sequence();
 
             sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 1f, 0.3f).SetEase(Ease.OutQuart));
             sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 0f, .6f).SetEase(Ease.InQuart));

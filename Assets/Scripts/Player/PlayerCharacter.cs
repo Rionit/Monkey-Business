@@ -66,6 +66,10 @@ namespace MonkeyBusiness.Player
     /// </summary>
     public class PlayerCharacter : MonoBehaviour, ICharacterController, ITargetable
     {
+        [SerializeField]
+        [HideInInspector]
+        public Player.SwingMode swingMode;
+
         [Header("Core References")]
         [Tooltip("Kinematic motor responsible for movement and collisions.")]
         [SerializeField] private KinematicCharacterMotor motor;
@@ -186,6 +190,8 @@ namespace MonkeyBusiness.Player
 
         public UnityEvent OnSwingInvoked;
 
+        public static bool failedSwing = false;
+
         public bool IsSwingOnCooldown()
         {
             return !(canUseRope && _swingTimeRemaining <= 0f && _swingCooldownRemaining <= 0f);
@@ -278,6 +284,9 @@ namespace MonkeyBusiness.Player
         /// </summary>
         public void UpdateInput(CharacterInput input)
         {
+            if(!input.Swing)
+                failedSwing = false;
+
             // Handle swing input
             if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f) // && !motor.GroundingStatus.IsStableOnGround)
                 StartSwing();
@@ -316,6 +325,7 @@ namespace MonkeyBusiness.Player
                 _requestedCrouchInAir = false;
         }
 
+        // TODO: When implementing the alternative toggle swing, execute all code ONLY WHEN swingMode == Player.SwingMode.TOGGLE
         /// <summary>
         /// Starts rope swing if a valid surface is hit.
         /// </summary>
@@ -330,19 +340,29 @@ namespace MonkeyBusiness.Player
             // Raycast to find swing anchor
             if (!Physics.Raycast(origin, dir, out RaycastHit hit, _swingMaxDistance, _swingRaycastLayerMask))
             {
-                // hit nothing
-                if(_ropeAnimCoroutine is not null)
+                
+                switch(swingMode)
                 {
-                    StopCoroutine(_ropeAnimCoroutine);
+                    case Player.SwingMode.HOLD:
+                        failedSwing =true;
+                        break;
+
+                    case Player.SwingMode.TOGGLE:  
+                        
+                        // hit nothing
+                        if(_ropeAnimCoroutine is not null)
+                        {
+                            StopCoroutine(_ropeAnimCoroutine);
+                        }
+
+                        _ropeAnimCoroutine = StartCoroutine(FailHook(origin + _swingMaxDistance * dir, _ropeAnimDuration));
+                        return;
                 }
-
-                _ropeAnimCoroutine = StartCoroutine(FailHook(origin + _swingMaxDistance * dir, _ropeAnimDuration));
-                return;
             }
-
-            if((whatIsSwingable & (1 << hit.transform.gameObject.layer)) != 0){
+            else if((whatIsSwingable & (1 << hit.transform.gameObject.layer)) != 0){
                 // hit swingable
                 OnSwingInvoked?.Invoke();
+                failedSwing = false;
 
                 _state.Stance = Stance.Swing;
 
@@ -368,16 +388,25 @@ namespace MonkeyBusiness.Player
                 _ropeAnimCoroutine = StartCoroutine(ShootHook(_swingAnchor, _ropeAnimDuration * (_swingRopeLength / _swingMaxDistance)));
                 //_ropeEnd = hit.point;
             }
-            else
+            else 
             {
                 // hit environment
-                if(_ropeAnimCoroutine is not null)
-                {
-                    StopCoroutine(_ropeAnimCoroutine);
-                }
 
-                var distance = Vector3.Distance(transform.position, hit.point);
-                _ropeAnimCoroutine = StartCoroutine(FailHook(hit.point, _ropeAnimDuration * (distance / _swingMaxDistance)));
+                switch(swingMode)
+                {
+                    case Player.SwingMode.HOLD:
+                        failedSwing = true;
+                        break;
+                    case Player.SwingMode.TOGGLE:
+                        if(_ropeAnimCoroutine is not null)
+                        {
+                            StopCoroutine(_ropeAnimCoroutine);
+                        }
+
+                        var distance = Vector3.Distance(transform.position, hit.point);
+                        _ropeAnimCoroutine = StartCoroutine(FailHook(hit.point, _ropeAnimDuration * (distance / _swingMaxDistance)));
+                        break;
+                }
             }
         }
 
@@ -387,6 +416,7 @@ namespace MonkeyBusiness.Player
             void StopSwing()
             {
                 _state.Stance = Stance.Stand;
+                failedSwing = false;
 
                 Vector3 currentPos = transform.position;
                 Vector3 exitVelocity = _rb != null ? _rb.linearVelocity : Vector3.zero;
