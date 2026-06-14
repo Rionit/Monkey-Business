@@ -267,7 +267,7 @@ namespace MonkeyBusiness.Player
         private float _swingHoldDurationRemaining = 0.0f;
 
         [SerializeField]
-        private float _lastAtimedAtGrapplePointLinger = 0.15f;
+        private float _lastAimedAtGrapplePointLinger = 0.15f;
         private float _lastAimedAtGrapplePointLingerRemaining = 0.0f;
 
 
@@ -516,7 +516,7 @@ namespace MonkeyBusiness.Player
                         {
                             // hit swingable
                             _lastAimedAtGrapplePoint = hit.point;
-                            _lastAimedAtGrapplePointLingerRemaining = _lastAtimedAtGrapplePointLinger;
+                            _lastAimedAtGrapplePointLingerRemaining = _lastAimedAtGrapplePointLinger;
                         }
                         else
                         {
