@@ -2364,6 +2364,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: MonkeyBusiness.Enemies::MonkeyBusiness.Enemies.EnemyFollowController
   _navMeshAgent: {fileID: 8553173932619770032}
   <ChaseObject>k__BackingField: {fileID: 0}
+  _speedMultiplierRange: {x: 0.5, y: 1.7}
   _defaultMaxSpeed: 0
   _defaultMaxAngularSpeed: 0
   _defaultAcceleration: 0
@@ -2610,7 +2611,7 @@ MonoBehaviour:
   - {fileID: 3862481161860564861}
   - {fileID: 4842979744175480717}
   - {fileID: 1649599884402343348}
-  _damageAnimDuration: {x: 0.047430832, y: 0.45059288}
+  _damageAnimDuration: {x: 0.055555556, y: 0.43464053}
 --- !u!114 &7255525761278444101
 MonoBehaviour:
   m_ObjectHideFlags: 0
