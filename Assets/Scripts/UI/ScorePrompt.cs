@@ -117,7 +117,7 @@ namespace MonkeyBusiness.UI
             animSequence.Append(_scoreHeader.transform.DOScale(1, _headerAnimationDuration).From(0).SetEase(Ease.OutCubic));
             animSequence.AppendInterval(_headerScoreDelay);
             animSequence.Append(_scoreTextTransform.DOScale(1, _scoreTextAnimationDuration).From(0).SetEase(Ease.OutBack));
-            animSequence.Join(DOTween.To(() => _CurrentShownScore, x => _CurrentShownScore = x, GameManager.Score, 2f).SetEase(Ease.InOutCubic));
+            animSequence.Join(DOTween.To(() => _CurrentShownScore, x => _CurrentShownScore = x, GameManager.Score, _scoreTextAnimationDuration).SetEase(Ease.InOutCubic));
             animSequence.AppendInterval(_scorePromptDelay);
             animSequence.Append(_scorePrompt.DOScale(1, _promptAnimationDuration).From(0).SetEase(Ease.OutCubic));
             animSequence.onComplete += () => _confirmButton.interactable = true;

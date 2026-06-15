@@ -305,6 +305,11 @@ namespace MonkeyBusiness.Managers
             Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
 
             BlurBackground(Time.timeScale == 0f);
+            
+            if (Time.timeScale == 0f)
+                BroAudio.SetEffect(Effect.LowPass(500), BroAudioType.Music); 
+            else
+                BroAudio.SetEffect(Effect.ResetLowPass(), BroAudioType.Music);
 
             EnableHUD(Time.timeScale != 0f);
 
@@ -591,8 +596,6 @@ namespace MonkeyBusiness.Managers
             Time.timeScale = 0f; // Freezes the game
             _hud.SetActive(false);
             _deathScreen.SetActive(true);
-            
-            musicController.StopMusic(3f);
 
             _canPause = false; // Can't pause when dead, obviously
             LevelReached = _currentWave;

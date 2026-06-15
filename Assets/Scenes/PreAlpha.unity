@@ -23572,6 +23572,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -300
       objectReference: {fileID: 0}
+    - target: {fileID: 3825397374662574612, guid: bf500110cff3dc211926ba846df45284, type: 3}
+      propertyPath: _scoreTextAnimationDuration
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3932801798815408025, guid: bf500110cff3dc211926ba846df45284, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -160748,7 +160752,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
   _onlyPlayOnce: 0
-  _playOnEnable: 1
+  _playOnEnable: 0
   _stopOnDisable: 0
   _overrideFadeOut: -1
   _sound:
@@ -204255,6 +204259,10 @@ PrefabInstance:
       propertyPath: _enemiesPerWave
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7623826512875064706, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     - target: {fileID: 7623826512875064706, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: _playerCharacter
       value: 

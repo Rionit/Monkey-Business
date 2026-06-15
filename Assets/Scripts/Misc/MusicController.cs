@@ -79,6 +79,7 @@ namespace MonkeyBusiness.Misc
             perkLoopMusic.Stop(fadeTime);
             monksterMusic.Stop(fadeTime);
             currentState = MusicState.None;
+            transitioning = false;
         }
         
         public void PlayMonkster()
