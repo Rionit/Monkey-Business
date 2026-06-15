@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: monkster
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
   <ID>k__BackingField: 0
-  MulticlipsPlayMode: 2
+  MulticlipsPlayMode: 3
   _group: {fileID: 0}
   Clips:
   - AudioClip: {fileID: 8300000, guid: 3ae4ceedcafad2b48ae767a59f3dadeb, type: 3}
