@@ -10,7 +10,6 @@ using MonkeyBusiness.Misc;
 using DG.Tweening;
 using System;
 using Ami.BroAudio;
-using UnityEditor.Graphs;
 using MonkeyBusiness.Player;
 
 namespace MonkeyBusiness.UI
@@ -47,6 +46,8 @@ namespace MonkeyBusiness.UI
         [SerializeField] private GameObject hitmarker;
 
         [SerializeField] private SoundSource hitmarkerSoundSource;
+        
+        [SerializeField] private SoundSource countdownSoundSource;
 
         [SerializeField] private TextMeshProUGUI wavesCompletedText;
 
@@ -73,6 +74,12 @@ namespace MonkeyBusiness.UI
         [SerializeField]
         List<TextMeshProUGUI> perkTexts = new List<TextMeshProUGUI>();
 
+        [SerializeField]
+        RectTransform _perkContainer;
+
+        [SerializeField]
+        GameObject _perkPrefab;
+
         int currentPerkIndex = 0;
 
         Sequence changeWeaponSequence;
@@ -83,10 +90,12 @@ namespace MonkeyBusiness.UI
         private Sequence scorePopSequence;
         private int displayedScore;
 
+        const int PERK_CONTAINER_NUM_PERKS = 5;
         
         void Start()
         {
             GameManager.Instance.CountdownCoroutine = AnimateCountdown;
+            GameManager.Instance.OnWaveDefeated.AddListener(ResetHitmarker);
             GameManager.OnScoreChanged.AddListener(SetScore);
             StaticEvents.OnMonksterPicked.AddListener(() => healthBar.OverrideColor(Color.cyan));
             StaticEvents.OnMonksterStopped.AddListener(healthBar.ResetOverrideColor);
@@ -132,11 +141,17 @@ namespace MonkeyBusiness.UI
 
         public void AddPerk(string perkText, bool isPermanent)
         {
-
             if(currentPerkIndex >= perkTexts.Count)
             {
-                Debug.LogWarning("Not enough perk text fields to display all perks!");
-                return;
+                var newPerkTextObj = Instantiate(_perkPrefab, _perkContainer);
+                (newPerkTextObj.transform as RectTransform).sizeDelta = new Vector2(_perkContainer.rect.width, 100f);
+                var newPerkText = newPerkTextObj.GetComponent<TextMeshProUGUI>();
+
+                if(currentPerkIndex >= PERK_CONTAINER_NUM_PERKS)
+                {
+                    _perkContainer.offsetMin += new Vector2(0, -100f);
+                }
+                perkTexts.Add(newPerkText);
             }
             var text = perkTexts[currentPerkIndex++];
             if(text != null)
@@ -325,6 +340,11 @@ namespace MonkeyBusiness.UI
             }
         }
 
+        void ResetHitmarker()
+        {
+            hitmarker.SetActive(false);
+        }   
+
         private IEnumerator ShowHitmarker()
         {
             hitmarker.SetActive(true);
@@ -363,20 +383,24 @@ namespace MonkeyBusiness.UI
         {
             var sequence = DOTween.Sequence();
             // 3 ...
+            sequence.AppendCallback(() => countdownSoundSource.Play());
             sequence.Append(countdownText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
             sequence.Join(DOTween.To(() => countdownText.alpha, x => countdownText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
             sequence.Join(DOTween.To(() => countdownText.text, x => countdownText.text = x, "3", 1f).From("3").SetEase(Ease.InFlash));
             
             // 2 ...
+            sequence.AppendCallback(() => countdownSoundSource.Play());
             sequence.Append(countdownText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
             sequence.Join(DOTween.To(() => countdownText.alpha, x => countdownText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
             sequence.Join(DOTween.To(() => countdownText.text, x => countdownText.text = x, "2", 1f).From("2").SetEase(Ease.InFlash));
             
             // 1 ...
+            sequence.AppendCallback(() => countdownSoundSource.Play());
             sequence.Append(countdownText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
             sequence.Join(DOTween.To(() => countdownText.alpha, x => countdownText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
             sequence.Join(DOTween.To(() => countdownText.text, x => countdownText.text = x, "1", 1f).From("1").SetEase(Ease.InFlash));
             
+            sequence.AppendCallback(() => countdownSoundSource.Play());
             sequence.Append(countdownText.transform.DOScale(1f, 1f).SetEase(Ease.OutQuad));
             sequence.Join(DOTween.To(() => countdownText.alpha, x => countdownText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
             sequence.Join(DOTween.To(() => countdownText.text, x => countdownText.text = x, "GO!", 1f).From("GO!").SetEase(Ease.OutFlash));

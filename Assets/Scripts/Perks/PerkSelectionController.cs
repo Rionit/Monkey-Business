@@ -18,6 +18,8 @@ namespace MonkeyBusiness.Perks
         public UnityEvent OnNegativePerkRemoved = new();
 
         [SerializeField] private SoundSource rollingSound;
+        [SerializeField] private SoundSource buffFanfare;
+        [SerializeField] private SoundSource debbuffFanfare;
         
         [BoxGroup("Setup")]
         [SerializeField] private GameObject perkPrefab;
@@ -204,6 +206,8 @@ namespace MonkeyBusiness.Perks
             StopCoroutine(nameof(FadeArrows));
             StopCoroutine(nameof(FadeBackground));
             
+            buffFanfare.Play();
+            
             // show ONLY positive text
             positivePerkText.gameObject.SetActive(true);
             negativePerkText.gameObject.SetActive(false);
@@ -227,6 +231,8 @@ namespace MonkeyBusiness.Perks
             StopCoroutine(nameof(FadeArrows));
             StopCoroutine(nameof(FadeBackground));
 
+            debbuffFanfare.Play();
+            
             // show ONLY negative text
             negativePerkText.gameObject.SetActive(true);
             positivePerkText.gameObject.SetActive(false);

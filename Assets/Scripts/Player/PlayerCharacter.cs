@@ -487,8 +487,6 @@ namespace MonkeyBusiness.Player
 
             if(swingMode == Player.SwingMode.TOGGLE)
             {
-                Debug.Log(_swingHoldDurationRemaining);
-
                 if(_lastAimedAtGrapplePointLingerRemaining > 0f)
                 {
                     _lastAimedAtGrapplePointLingerRemaining = Mathf.Max(_lastAimedAtGrapplePointLingerRemaining - Time.deltaTime, 0f);
