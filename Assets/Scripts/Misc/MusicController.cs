@@ -14,11 +14,13 @@ namespace MonkeyBusiness.Misc
         {
             None,
             Main,
-            Perk
+            Perk,
+            Monkster
         }
 
         [Header("Music")]
         [SerializeField] private SoundSource mainMusic;
+        [SerializeField] private SoundSource monksterMusic;
         [SerializeField] private SoundSource perkLoopMusic;
         [SerializeField] private SoundSource perkTransitionSound;
 
@@ -50,6 +52,11 @@ namespace MonkeyBusiness.Misc
             }
         }
 
+        public float GetMonksterSongLength()
+        {
+            return monksterMusic.CurrentPlayer.AudioSource.clip.length;
+        }
+
         public void PlayMain()
         {
             if (transitioning || currentState == MusicState.Main)
@@ -64,6 +71,35 @@ namespace MonkeyBusiness.Misc
                 return;
 
             StartCoroutine(PlayPerkRoutine());
+        }
+
+        public void StopMusic(float fadeTime = 0f)
+        {
+            mainMusic.Stop(fadeTime);
+            perkLoopMusic.Stop(fadeTime);
+            monksterMusic.Stop(fadeTime);
+            currentState = MusicState.None;
+            transitioning = false;
+        }
+        
+        public void PlayMonkster()
+        {
+            StartCoroutine(PlayMonksterRoutine());
+        }
+        
+        private IEnumerator PlayMonksterRoutine()
+        {
+            transitioning = true;
+
+            mainMusic.Stop();
+            perkLoopMusic.Stop();
+            currentState = MusicState.Monkster;
+
+            monksterMusic.Play();
+
+            transitioning = false;
+
+            yield break;
         }
 
         private IEnumerator PlayMainRoutine()

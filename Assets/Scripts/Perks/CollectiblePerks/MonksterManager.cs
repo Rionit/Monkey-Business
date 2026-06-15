@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using MonkeyBusiness.Managers;
+using MonkeyBusiness.Misc;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -25,6 +26,12 @@ namespace MonkeyBusiness.Perks
         private void Start()
         {
             _spawners = spawnersRoot.GetComponentsInChildren<MonksterSpawner>();
+            _spawners[Random.Range(0, _spawners.Length)].SpawnItem();
+        }
+
+        [Button("Spawn Monkster")]
+        public void SpawnMonkster()
+        {
             _spawners[Random.Range(0, _spawners.Length)].SpawnItem();
         }
 

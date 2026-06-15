@@ -12,9 +12,13 @@ namespace MonkeyBusiness.Managers
         public static StatsManager Instance { get; private set; }
 
         public UnityEvent<bool> onNonChimpCanPoop;
-
+        
         public bool canNonChimpPoop = false;
 
+        public float RateOfFireMultiplier = 1f;
+        
+        
+        
         [ShowInInspector] public float PlayerMaxHealth
         {
             // Null check is only to avoid error in the Editor
@@ -126,6 +130,8 @@ namespace MonkeyBusiness.Managers
         private HealthController _healthController;
         public EquipmentManager _equipmentManager {get; private set;}
         private PlayerCharacter _characterController;
+        private PlayerCamera _camera;
+        private Player.Player _player;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -139,28 +145,39 @@ namespace MonkeyBusiness.Managers
 
             GameManager gameManager = GetComponent<GameManager>();
 
+            
             if (gameManager == null)
             {
                 Debug.LogError("StatsManager requires GameManager on the same object.");
                 return;
             }
 
-            GameObject player = gameManager.PlayerCharacter;
+            GameObject playerCharacter = gameManager.PlayerCharacter;
 
-            if (player == null)
+            if (playerCharacter == null)
             {
                 Debug.LogError("GameManager PlayerCharacter is null.");
                 return;
             }
 
-            _characterController = player.GetComponent<PlayerCharacter>();
-            _healthController = player.GetComponentInParent<HealthController>();
-            _equipmentManager = player.GetComponentInParent<EquipmentManager>();
+            _player = playerCharacter.GetComponentInParent<Player.Player>();
+            _camera = _player.GetComponentInChildren<PlayerCamera>();
+            _characterController = playerCharacter.GetComponent<PlayerCharacter>();
+            _healthController = playerCharacter.GetComponentInParent<HealthController>();
+            _equipmentManager = playerCharacter.GetComponentInParent<EquipmentManager>();
 
             if (_characterController != null)
             {
                 _characterController.CanUseRope = canUseRope;
             }
+        }
+
+        public void SetCameraSensitivity(float sensitivity)
+        {
+            if(_camera != null)
+                _camera.sensitivity = sensitivity;
+            else
+                Debug.LogError("Camera is null.");
         }
     }
 }

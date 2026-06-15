@@ -161,6 +161,9 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         private GameObject _playerCharacter;
 
+        [SerializeField]
+        private  MusicController musicController;
+        
         /// <summary>
         /// Player's character object, used for enemy targeting
         /// </summary>
@@ -304,6 +307,11 @@ namespace MonkeyBusiness.Managers
             Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
 
             BlurBackground(Time.timeScale == 0f);
+            
+            if (Time.timeScale == 0f)
+                BroAudio.SetEffect(Effect.LowPass(500), BroAudioType.Music); 
+            else
+                BroAudio.SetEffect(Effect.ResetLowPass(), BroAudioType.Music);
 
             EnableHUD(Time.timeScale != 0f);
 
@@ -338,6 +346,11 @@ namespace MonkeyBusiness.Managers
 
             BlurBackground(isPaused);
             EnableHUD(!isPaused);
+            
+            if (isPaused)
+                BroAudio.SetEffect(Effect.LowPass(500), BroAudioType.Music); 
+            else
+                BroAudio.SetEffect(Effect.ResetLowPass(), BroAudioType.Music);
 
             foreach(var receiver in _inputReceivers)
             {
@@ -454,6 +467,9 @@ namespace MonkeyBusiness.Managers
             if(_enemiesRemaining == 0)
             {
                 Debug.Log("Wave defeated!");
+                StatsManager.Instance.PlayerHealth = StatsManager.Instance.PlayerMaxHealth;
+                StatsManager.Instance._equipmentManager.ReloadAllWeapons();
+                
                 _currentWave++;
                 OnWaveDefeated.Invoke();
                 OnWaveDefeatedNum.Invoke(_currentWave);
