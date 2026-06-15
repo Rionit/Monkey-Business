@@ -73,6 +73,12 @@ namespace MonkeyBusiness.UI
         [SerializeField]
         List<TextMeshProUGUI> perkTexts = new List<TextMeshProUGUI>();
 
+        [SerializeField]
+        RectTransform _perkContainer;
+
+        [SerializeField]
+        GameObject _perkPrefab;
+
         int currentPerkIndex = 0;
 
         Sequence changeWeaponSequence;
@@ -83,10 +89,12 @@ namespace MonkeyBusiness.UI
         private Sequence scorePopSequence;
         private int displayedScore;
 
+        const int PERK_CONTAINER_NUM_PERKS = 5;
         
         void Start()
         {
             GameManager.Instance.CountdownCoroutine = AnimateCountdown;
+            GameManager.Instance.OnWaveDefeated.AddListener(ResetHitmarker);
             GameManager.OnScoreChanged.AddListener(SetScore);
             StaticEvents.OnMonksterPicked.AddListener(() => healthBar.OverrideColor(Color.cyan));
             StaticEvents.OnMonksterStopped.AddListener(healthBar.ResetOverrideColor);
@@ -132,11 +140,17 @@ namespace MonkeyBusiness.UI
 
         public void AddPerk(string perkText, bool isPermanent)
         {
-
             if(currentPerkIndex >= perkTexts.Count)
             {
-                Debug.LogWarning("Not enough perk text fields to display all perks!");
-                return;
+                var newPerkTextObj = Instantiate(_perkPrefab, _perkContainer);
+                (newPerkTextObj.transform as RectTransform).sizeDelta = new Vector2(_perkContainer.rect.width, 100f);
+                var newPerkText = newPerkTextObj.GetComponent<TextMeshProUGUI>();
+
+                if(currentPerkIndex >= PERK_CONTAINER_NUM_PERKS)
+                {
+                    _perkContainer.offsetMin += new Vector2(0, -100f);
+                }
+                perkTexts.Add(newPerkText);
             }
             var text = perkTexts[currentPerkIndex++];
             if(text != null)
@@ -324,6 +338,11 @@ namespace MonkeyBusiness.UI
                 StartCoroutine(ShowHitmarker());
             }
         }
+
+        void ResetHitmarker()
+        {
+            hitmarker.SetActive(false);
+        }   
 
         private IEnumerator ShowHitmarker()
         {
