@@ -356,7 +356,7 @@ namespace MonkeyBusiness.Combat.Weapons
                 .OnComplete(() => _recoilTween = null);
             });
 
-            yield return new WaitForSeconds(_shootingInterval);
+            yield return new WaitForSeconds(_shootingInterval / StatsManager.Instance.RateOfFireMultiplier);
             _isLoading = false;
         }
 
@@ -485,7 +485,13 @@ namespace MonkeyBusiness.Combat.Weapons
             CurrentAmmo = MaxAmmo;
             _defaultMeshPosition = transform.localPosition;
             _defaultBulletSpawnPosition = _bulletSpawnPoint.localPosition;
-            _shootingInterval = 1f / _data.RateOfFire;
+
+            float _rofMultiplier = 1f;
+
+            if (StatsManager.Instance != null)
+                _rofMultiplier = StatsManager.Instance.RateOfFireMultiplier;
+            
+            _shootingInterval = 1f / (_data.RateOfFire * _rofMultiplier);
             _scopeAction = InputSystem.actions.FindAction("Scope");
             //_scopeAction.performed += ScopeOrUnscope;
             _scopeAction.Enable();

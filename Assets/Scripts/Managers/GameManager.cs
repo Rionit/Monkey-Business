@@ -336,6 +336,11 @@ namespace MonkeyBusiness.Managers
 
             BlurBackground(isPaused);
             EnableHUD(!isPaused);
+            
+            if (isPaused)
+                BroAudio.SetEffect(Effect.LowPass(500), BroAudioType.Music); 
+            else
+                BroAudio.SetEffect(Effect.ResetLowPass(), BroAudioType.Music);
 
             foreach(var receiver in _inputReceivers)
             {

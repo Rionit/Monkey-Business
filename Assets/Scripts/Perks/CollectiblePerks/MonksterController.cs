@@ -15,6 +15,10 @@ namespace MonkeyBusiness.Items
     public class MonksterController : MonoBehaviour
     {
         public static bool isActive = false;
+
+        public static float frenzyDurationOverride = 0f;
+        
+        public MusicController musicController;
         
         [SerializeField] private Animator animator;
 
@@ -34,6 +38,10 @@ namespace MonkeyBusiness.Items
         private PaniniProjection paniniProjection;
         private DepthOfField depthOfField;
         private FilmGrain filmGrain;
+        
+        private float originalMouseSensitivity;
+        private const float FrenzySensitivityMultiplier = 0.8f; // 20% lower
+
         
         private void Start()
         {
@@ -70,6 +78,8 @@ namespace MonkeyBusiness.Items
             PlayerMeleeWeapon meleeWeapon = GameManager.Instance.PlayerCharacter.GetComponent<PlayerMeleeWeapon>();
             meleeWeapon.AddBuff(2f, 0.5f);
 
+            StatsManager.Instance.SetCameraSensitivity(0.05f);
+            StatsManager.Instance.RateOfFireMultiplier = 2f;
             StatsManager.Instance.AddDamageMultiplier(penPrefab, penDamageMultiplier);
             StatsManager.Instance.AddDamageMultiplier(staplePrefab, stapleDamageMultiplier);
 
@@ -117,10 +127,14 @@ namespace MonkeyBusiness.Items
             // =============================================
             // =============================================
             yield return new WaitForSeconds(0.5f);
-            BroAudio.SetEffect(Effect.ResetLowPass(5f), BroAudioType.Music); 
-            yield return new WaitForSeconds(frenzyDuration);
+            musicController.PlayMonkster();
+            BroAudio.SetEffect(Effect.LowPass(500), BroAudioType.Music); 
+            yield return new WaitForSeconds(0.2f);
+            BroAudio.SetEffect(Effect.ResetLowPass(5f), BroAudioType.Music);
+            yield return new WaitForSeconds(frenzyDurationOverride > frenzyDuration ? frenzyDurationOverride : frenzyDuration);
             // =============================================
             // =============================================
+            musicController.StopMusic(1f);
             
             if (volume.profile.TryGet(out paniniProjection))
             { 
@@ -168,11 +182,16 @@ namespace MonkeyBusiness.Items
             StatsManager.Instance.PlayerMaxHealth -= bonusMaxHealth;
             StatsManager.Instance.PlayerWalkSpeed -= bonusWalkSpeed;
 
+            StatsManager.Instance.SetCameraSensitivity(0.1f);
+            StatsManager.Instance.RateOfFireMultiplier = 1f;
             StatsManager.Instance.RemoveDamageMultiplier(penPrefab, penDamageMultiplier);
             StatsManager.Instance.RemoveDamageMultiplier(staplePrefab, stapleDamageMultiplier);
 
             isActive = false;
             StaticEvents.OnMonksterStopped?.Invoke();
+            
+            yield return new WaitForSeconds(1.0f);
+            musicController.PlayMain();
         }
 
         void Explode()

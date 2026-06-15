@@ -1,3 +1,5 @@
+using MonkeyBusiness.Items;
+using MonkeyBusiness.Misc;
 using UnityEngine;
 
 namespace MonkeyBusiness.Perks

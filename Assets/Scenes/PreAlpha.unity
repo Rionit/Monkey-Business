@@ -9923,6 +9923,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12905,6 +12909,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -15265,6 +15273,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -18594,6 +18606,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -71436,6 +71452,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -78184,6 +78204,11 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6473694054362495177, guid: 679d87e5054da96449b9a6ee885a0380, type: 3}
   m_PrefabInstance: {fileID: 798601009}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &800344533 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7414099156124772107, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
+  m_PrefabInstance: {fileID: 5132319732331417533}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &804515377
 GameObject:
@@ -91111,6 +91136,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -96616,9 +96645,9 @@ MeshCollider:
   m_LayerOverridePriority: 0
   m_IsTrigger: 0
   m_ProvidesContacts: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4793427112461190819, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
 --- !u!1001 &985306915
@@ -101587,12 +101616,35 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4205851760336660705, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
   m_PrefabInstance: {fileID: 5132319732331417533}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 800344533}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5f67669a9e87a5347a2e65da000541be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+--- !u!114 &1033046003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800344533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 45d720f7c4c5bea438f7bfa726a90967, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 800344533}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1001 &1033076936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -104471,6 +104523,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -111182,6 +111238,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -112734,7 +112794,7 @@ MeshCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 5
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 4291355945593494054, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
 --- !u!1001 &1150916262
@@ -122896,6 +122956,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -129059,6 +129123,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -141038,6 +141106,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -144032,6 +144104,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -150374,6 +150450,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -152848,6 +152928,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -157787,6 +157871,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -162399,6 +162487,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -173005,6 +173097,10 @@ PrefabInstance:
       propertyPath: volume
       value: 
       objectReference: {fileID: 491849205}
+    - target: {fileID: 5584866119323709083, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     - target: {fileID: 6151647374474603472, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -33.48
@@ -177496,6 +177592,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -179684,6 +179784,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -182830,6 +182934,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -194617,6 +194725,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -201544,6 +201656,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4205851760336660705, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
+      propertyPath: monksterMusic
+      value: 
+      objectReference: {fileID: 1033046003}
     - target: {fileID: 7414099156124772107, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
       propertyPath: m_Name
       value: Music
@@ -201551,7 +201667,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7414099156124772107, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1033046003}
   m_SourcePrefab: {fileID: 100100000, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
 --- !u!114 &5176473502407450525
 MonoBehaviour:
@@ -201634,6 +201753,10 @@ PrefabInstance:
       propertyPath: spawnersRoot
       value: 
       objectReference: {fileID: 1031204853}
+    - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: musicController
+      value: 
+      objectReference: {fileID: 1033046002}
     - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: pressureThreshold
       value: 100
