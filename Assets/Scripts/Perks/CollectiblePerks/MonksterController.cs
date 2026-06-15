@@ -161,7 +161,7 @@ namespace MonkeyBusiness.Items
                 DOTween.To(
                     () => filmGrain.intensity.value,
                     x => filmGrain.intensity.value = x,
-                    0.3f,
+                    0.0f,
                     0.5f
                 );
             }

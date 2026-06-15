@@ -1,6 +1,5 @@
 using UnityEngine;
 using MonkeyBusiness.Player;
-using UnityEditor.WebGL;
 
 namespace MonkeyBusiness.UI
 {
