@@ -467,6 +467,9 @@ namespace MonkeyBusiness.Managers
             if(_enemiesRemaining == 0)
             {
                 Debug.Log("Wave defeated!");
+                StatsManager.Instance.PlayerHealth = StatsManager.Instance.PlayerMaxHealth;
+                StatsManager.Instance._equipmentManager.ReloadAllWeapons();
+                
                 _currentWave++;
                 OnWaveDefeated.Invoke();
                 OnWaveDefeatedNum.Invoke(_currentWave);

@@ -159,6 +159,14 @@ namespace MonkeyBusiness.Managers
             
             EquipSlot(itemSlot);
         }
+
+        public void ReloadAllWeapons()
+        {
+            Items.ForEach(item =>
+            {
+                if(item is IWeapon weapon) weapon.Reload(weapon.MaxAmmo);
+            });
+        }
         
         /// <summary>
         /// Equips the item in the provided slot. If we're holding an item already, unequip/drop it
