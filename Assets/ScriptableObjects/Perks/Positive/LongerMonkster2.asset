@@ -24,5 +24,5 @@ MonoBehaviour:
     - rid: 6771811101677453442
       type: {class: LongerMonksterEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
-        description: Monkster frenzy is now <len> s long.
+        description: Monkster frenzy is now <len>s long.
         frenzyDurationBoost: 15

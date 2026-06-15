@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: monkster
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
   <ID>k__BackingField: 0
-  MulticlipsPlayMode: 3
+  MulticlipsPlayMode: 2
   _group: {fileID: 0}
   Clips:
   - AudioClip: {fileID: 8300000, guid: 3ae4ceedcafad2b48ae767a59f3dadeb, type: 3}
@@ -41,7 +41,7 @@ MonoBehaviour:
     FadeOut: 0
     Weight: 0
   - AudioClip: {fileID: 8300000, guid: 09bfd0d8b80ef0640b2a260afb3e1e7e, type: 3}
-    Volume: 1
+    Volume: 1.3440168
     Delay: 0
     StartPosition: 275.439
     EndPosition: 11.679
