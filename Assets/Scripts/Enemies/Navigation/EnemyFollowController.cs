@@ -24,6 +24,10 @@ namespace MonkeyBusiness.Enemies.Navigation
         public GameObject ChaseObject { get; set; } 
 
         [SerializeField]
+        [MinMaxSlider(0f, 3f)]
+        Vector2 _speedMultiplierRange = new Vector2(0.5f, 1.7f);
+
+        [SerializeField]
         [ReadOnly]
         [Tooltip("Default speed obtained from the NavMeshAgent at Awake.")]
         [BoxGroup("Debug/Speed")]
@@ -165,6 +169,8 @@ namespace MonkeyBusiness.Enemies.Navigation
 
         float _timeTillPathUpdate = 0f;
 
+        float _originalMaxSpeed = 0f;
+
         Coroutine _slowdownCoroutine;
 
         [SerializeField]
@@ -202,6 +208,7 @@ namespace MonkeyBusiness.Enemies.Navigation
             _defaultMaxSpeed = _navMeshAgent.speed;
             _defaultMaxAngularSpeed = _navMeshAgent.angularSpeed;
             _defaultAcceleration = _navMeshAgent.acceleration;
+            _originalMaxSpeed = _defaultMaxSpeed;
             _defaultStoppingDistance = _navMeshAgent.stoppingDistance;
         }
 
@@ -306,19 +313,27 @@ namespace MonkeyBusiness.Enemies.Navigation
             //var flankingPos = _flankingController.GetMovementTarget(this);
 
             var distance = Vector3.Distance(transform.position, ChaseObject.transform.position);
-            if (_runningAway && distance >= _chaseDistance * 1.1f)
+            if (_runningAway && distance >= _chaseDistance * 1.15f)
             {
                 _runningAway = false;
             }
-            else if (!_runningAway && distance <= _chaseDistance * 0.9f)
+            else if (!_runningAway && distance <= _chaseDistance * 0.85f)
             {
                 _runningAway = true;
             }
+
 
             _currentTargetPos = _runningAway ? GetRunawayPosition() : ChaseObject.transform.position;
             if(_navMeshAgent.enabled)
                 _navMeshAgent.SetDestination(_currentTargetPos);
         }
+
+        /*Vector3 GetAdjacentPosition()
+        {
+            Vector3 directionToTarget = (ChaseObject.transform.position - transform.position).normalized;
+            Vector3 perpendicularDirection = Vector3.Cross(directionToTarget, Vector3.up);
+            return transform.position + perpendicularDirection * _navMeshAgent.stoppingDistance * 1.1f;
+        }*/
 
         void GetAlteringPath()
         {
@@ -428,7 +443,11 @@ namespace MonkeyBusiness.Enemies.Navigation
 
             if (_animator)
             {
-                _animator.SetBool("Walking", _navMeshAgent.velocity.magnitude > 0.1f);
+                var currentSpeed = _navMeshAgent.velocity.magnitude;
+                _animator.SetBool("Walking", currentSpeed > 0.1f);
+
+                float speedMultiplier = (_speedMultiplierRange.y - _speedMultiplierRange.x) * (currentSpeed / _originalMaxSpeed) + _speedMultiplierRange.x;
+                _animator.SetFloat("MoveSpeed", speedMultiplier);
             }
         }
 

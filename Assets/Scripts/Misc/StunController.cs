@@ -52,7 +52,7 @@ namespace MonkeyBusiness.Misc
             if(_vfxType == VFXType.ENEMY)
             {
                 Debug.Log("Animating " + gameObject.name + " stun animation for " + duration + " seconds.");
-                if (_stunAnimController)
+                if (_stunAnimController != null)
                 {
                     _stunAnimController.Animate(_stunVFXDuration);
                 } 

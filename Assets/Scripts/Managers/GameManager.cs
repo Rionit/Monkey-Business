@@ -52,6 +52,8 @@ namespace MonkeyBusiness.Managers
 
         public static SortedDictionary<int,  List<ScoreEntry>> Scoreboard = new ();
 
+        public static Dictionary<string, int> ScoreboardNamesToScore = new();
+
         public static int LevelReached = 0;
 
         const int MAX_SCOREBOARD_ENTRIES = 10;
@@ -504,10 +506,12 @@ namespace MonkeyBusiness.Managers
                 receiver.CanReceiveInput = false;
             }
             Cursor.lockState = CursorLockMode.Confined;
+            _canPause = false;
             yield return new WaitUntil(() => _perkSelected);
             Cursor.lockState = CursorLockMode.Locked;
             _hud.SetActive(true);
             _perkSelected = false;
+            _canPause = true;
 
             foreach(var receiver in _inputReceivers)
             {
@@ -627,9 +631,9 @@ namespace MonkeyBusiness.Managers
             {
                 int score = PlayerPrefs.GetInt($"Scoreboard_{i}_Score", int.MinValue);
                 string name = PlayerPrefs.GetString($"Scoreboard_{i}_Name");
-
                 if(score > 0)
                 {
+                    ScoreboardNamesToScore[name] = score;
                     if(!scoreboard.ContainsKey(score))
                     {
                         scoreboard[score] = new List<string>();
