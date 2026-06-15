@@ -69,10 +69,7 @@ namespace MonkeyBusiness.Items
             StatsManager.Instance.PlayerWalkSpeed += bonusWalkSpeed;
             StatsManager.Instance.PlayerHealth = StatsManager.Instance.PlayerMaxHealth;
             
-            StatsManager.Instance._equipmentManager.Items.ForEach(item =>
-            {
-                if(item is IWeapon weapon) weapon.Reload(weapon.MaxAmmo);
-            });
+            StatsManager.Instance._equipmentManager.ReloadAllWeapons();
 
             StaticEvents.OnPlayerMeleeAttackUsed.AddListener(Explode);
             PlayerMeleeWeapon meleeWeapon = GameManager.Instance.PlayerCharacter.GetComponent<PlayerMeleeWeapon>();
