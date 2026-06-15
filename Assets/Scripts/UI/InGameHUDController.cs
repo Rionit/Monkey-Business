@@ -47,6 +47,8 @@ namespace MonkeyBusiness.UI
         [SerializeField] private GameObject hitmarker;
 
         [SerializeField] private SoundSource hitmarkerSoundSource;
+        
+        [SerializeField] private SoundSource countdownSoundSource;
 
         [SerializeField] private TextMeshProUGUI wavesCompletedText;
 
@@ -363,20 +365,24 @@ namespace MonkeyBusiness.UI
         {
             var sequence = DOTween.Sequence();
             // 3 ...
+            sequence.AppendCallback(() => countdownSoundSource.Play());
             sequence.Append(countdownText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
             sequence.Join(DOTween.To(() => countdownText.alpha, x => countdownText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
             sequence.Join(DOTween.To(() => countdownText.text, x => countdownText.text = x, "3", 1f).From("3").SetEase(Ease.InFlash));
             
             // 2 ...
+            sequence.AppendCallback(() => countdownSoundSource.Play());
             sequence.Append(countdownText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
             sequence.Join(DOTween.To(() => countdownText.alpha, x => countdownText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
             sequence.Join(DOTween.To(() => countdownText.text, x => countdownText.text = x, "2", 1f).From("2").SetEase(Ease.InFlash));
             
             // 1 ...
+            sequence.AppendCallback(() => countdownSoundSource.Play());
             sequence.Append(countdownText.transform.DOScale(1.5f, 1f).SetEase(Ease.OutQuad).From(0f));
             sequence.Join(DOTween.To(() => countdownText.alpha, x => countdownText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
             sequence.Join(DOTween.To(() => countdownText.text, x => countdownText.text = x, "1", 1f).From("1").SetEase(Ease.InFlash));
             
+            sequence.AppendCallback(() => countdownSoundSource.Play());
             sequence.Append(countdownText.transform.DOScale(1f, 1f).SetEase(Ease.OutQuad));
             sequence.Join(DOTween.To(() => countdownText.alpha, x => countdownText.alpha = x, 0f, 1f).From(1f).SetEase(Ease.InOutQuad));
             sequence.Join(DOTween.To(() => countdownText.text, x => countdownText.text = x, "GO!", 1f).From("GO!").SetEase(Ease.OutFlash));

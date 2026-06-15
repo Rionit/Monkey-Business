@@ -160278,6 +160278,10 @@ PrefabInstance:
       value: 0.5019608
       objectReference: {fileID: 0}
     - target: {fileID: 4423644452575038040, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      propertyPath: countdownSoundSource
+      value: 
+      objectReference: {fileID: 1670417141}
+    - target: {fileID: 4423644452575038040, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
       propertyPath: perkTexts.Array.size
       value: 6
       objectReference: {fileID: 0}
@@ -160710,7 +160714,10 @@ PrefabInstance:
     - {fileID: 7672968736916654792, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
     - {fileID: 7963309356153437588, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2423622686988326603, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1670417141}
   m_SourcePrefab: {fileID: 100100000, guid: 3c141165099468a41b8f7a703c783a5d, type: 3}
 --- !u!224 &1670417136 stripped
 RectTransform:
@@ -160728,6 +160735,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a33a74645471e26d3ac61c92ab71e81c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.UI::MonkeyBusiness.InGameHUD
+--- !u!114 &1670417141
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 110642860}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 1
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 7fa6586521a166e4fb16bb39c46348a1, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 110642860}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1001 &1672948675
 PrefabInstance:
   m_ObjectHideFlags: 0

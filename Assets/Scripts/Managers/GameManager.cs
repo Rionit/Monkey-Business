@@ -159,6 +159,9 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         private GameObject _playerCharacter;
 
+        [SerializeField]
+        private  MusicController musicController;
+        
         /// <summary>
         /// Player's character object, used for enemy targeting
         /// </summary>
@@ -588,6 +591,8 @@ namespace MonkeyBusiness.Managers
             Time.timeScale = 0f; // Freezes the game
             _hud.SetActive(false);
             _deathScreen.SetActive(true);
+            
+            musicController.StopMusic(3f);
 
             _canPause = false; // Can't pause when dead, obviously
             LevelReached = _currentWave;
