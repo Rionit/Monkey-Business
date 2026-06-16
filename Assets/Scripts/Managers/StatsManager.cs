@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Combat.Weapons;
 using MonkeyBusiness.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,8 +17,10 @@ namespace MonkeyBusiness.Managers
         public bool canNonChimpPoop = false;
 
         public float RateOfFireMultiplier = 1f;
-        
-        
+
+        public float MonksterFrenzyDuration = 30f;
+
+        public bool IsChimpexActive = false;
         
         [ShowInInspector] public float PlayerMaxHealth
         {
@@ -74,9 +77,9 @@ namespace MonkeyBusiness.Managers
         }
         
         [ShowInInspector]
-        public float GetDamageMultiplier(GameObject prefab)
+        public float GetWeaponDamageMultiplier(GameObject prefab)
         {
-            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers) || multipliers.Count == 0)
+            if (!_weaponDamageMultipliers.TryGetValue(prefab, out var multipliers) || multipliers.Count == 0)
                 return 1f;
 
             float positiveBonus = 0f;
@@ -98,32 +101,32 @@ namespace MonkeyBusiness.Managers
         }
 
         [ShowInInspector]
-        public void AddDamageMultiplier(GameObject prefab, float amount)
+        public void AddWeaponDamageMultiplier(GameObject prefab, float amount)
         {
-            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers))
+            if (!_weaponDamageMultipliers.TryGetValue(prefab, out var multipliers))
             {
                 multipliers = new List<float>();
-                _damageMultipliers[prefab] = multipliers;
+                _weaponDamageMultipliers[prefab] = multipliers;
             }
 
             multipliers.Add(amount);
         }
         
         [ShowInInspector]
-        public bool RemoveDamageMultiplier(GameObject prefab, float amount)
+        public bool RemoveWeaponDamageMultiplier(GameObject prefab, float amount)
         {
-            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers))
+            if (!_weaponDamageMultipliers.TryGetValue(prefab, out var multipliers))
                 return false;
 
             bool removed = multipliers.Remove(amount);
 
             if (multipliers.Count == 0)
-                _damageMultipliers.Remove(prefab);
+                _weaponDamageMultipliers.Remove(prefab);
 
             return removed;
         }
         
-        [ShowInInspector] private Dictionary<GameObject, List<float>> _damageMultipliers = new();
+        [ShowInInspector] private Dictionary<GameObject, List<float>> _weaponDamageMultipliers = new();
         
         [ShowInInspector] public Dictionary<ScriptableObject, bool> _perksUsage = new();
         

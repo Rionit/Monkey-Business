@@ -11,6 +11,9 @@ GameObject:
   - component: {fileID: 5475140256332682396}
   - component: {fileID: 1823545088804983919}
   - component: {fileID: 929260096485611907}
+  - component: {fileID: 3676932817981617338}
+  - component: {fileID: 7579236609735752893}
+  - component: {fileID: 6201292949091116201}
   - component: {fileID: 760533583214611598}
   m_Layer: 11
   m_Name: Monkster
@@ -61,7 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 533f41b385a7dbf478f0314c752ad95d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  animator: {fileID: 888053804125670010}
+  perkType: 0
+  drinkCan: {fileID: 8423215438493359418}
+  musicController: {fileID: 0}
   staplePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
   penPrefab: {fileID: 7513838708788746097, guid: fab08d98d5f9fe162bb6ec4f80b97c8b, type: 3}
   explosionPrefab: {fileID: 4045664842276614417, guid: 2b1553d8a1be34b418fef3d07c814498, type: 3}
@@ -71,6 +76,48 @@ MonoBehaviour:
   bonusWalkSpeed: 10
   penDamageMultiplier: 5
   stapleDamageMultiplier: 5
+--- !u!114 &3676932817981617338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6191973497591963341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ec8ef9dd31d83241ae1609bfd60c090, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Perks.CollectiblePerks::MonkeyBusiness.Items.ChimpexController
+  perkType: 1
+  drinkCan: {fileID: 6122038884777384472}
+--- !u!114 &7579236609735752893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6191973497591963341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10f39c443d82ce4d827929f561d8b74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Perks.CollectiblePerks::MonkeyBusiness.Items.GorillaDrinkController
+  perkType: 3
+  drinkCan: {fileID: 229610936222671801}
+--- !u!114 &6201292949091116201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6191973497591963341}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 368e392e331ace04b89e4008209a2739, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Perks.CollectiblePerks::MonkeyBusiness.Items.CrazyapeController
+  perkType: 2
+  drinkCan: {fileID: 4275674074259400755}
 --- !u!114 &760533583214611598
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,9 +205,17 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: -7112253069659353656, guid: bd42874c40be0d141a27894100aef289, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -6566366508670914794, guid: bd42874c40be0d141a27894100aef289, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: -6542128789151218110, guid: bd42874c40be0d141a27894100aef289, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -6344552807973256337, guid: bd42874c40be0d141a27894100aef289, type: 3}
       propertyPath: m_Layer
@@ -330,6 +385,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 5980578789982894273, guid: bd42874c40be0d141a27894100aef289, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6000640311557494351, guid: bd42874c40be0d141a27894100aef289, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -354,6 +413,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 8282071916875431907, guid: bd42874c40be0d141a27894100aef289, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8559825434773779847, guid: bd42874c40be0d141a27894100aef289, type: 3}
       propertyPath: m_Layer
       value: 11
@@ -371,6 +434,11 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 888053804125670010}
   m_SourcePrefab: {fileID: 100100000, guid: bd42874c40be0d141a27894100aef289, type: 3}
+--- !u!1 &229610936222671801 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6542128789151218110, guid: bd42874c40be0d141a27894100aef289, type: 3}
+  m_PrefabInstance: {fileID: 2745521668361414139}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2418630999155704336 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: bd42874c40be0d141a27894100aef289, type: 3}
@@ -403,3 +471,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!1 &4275674074259400755 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -7112253069659353656, guid: bd42874c40be0d141a27894100aef289, type: 3}
+  m_PrefabInstance: {fileID: 2745521668361414139}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6122038884777384472 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8282071916875431907, guid: bd42874c40be0d141a27894100aef289, type: 3}
+  m_PrefabInstance: {fileID: 2745521668361414139}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8423215438493359418 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5980578789982894273, guid: bd42874c40be0d141a27894100aef289, type: 3}
+  m_PrefabInstance: {fileID: 2745521668361414139}
+  m_PrefabAsset: {fileID: 0}

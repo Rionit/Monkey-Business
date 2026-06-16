@@ -9924,6 +9924,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -12392,6 +12404,11 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.792401, y: 2.5888364, z: 0.7779856}
   m_Center: {x: -3.0903444, y: -0.000002907406, z: 0.07017172}
+--- !u!1 &117237128 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3855449441454828066, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+  m_PrefabInstance: {fileID: 1825895345}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &117709389
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12886,6 +12903,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -15239,6 +15268,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -18572,6 +18613,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -71780,6 +71833,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -91784,6 +91849,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -105171,6 +105248,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -112096,6 +112185,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -124014,6 +124115,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -130274,6 +130387,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -142373,6 +142498,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -145369,6 +145506,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -151718,6 +151867,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -154193,6 +154354,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -159436,6 +159609,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -164199,6 +164384,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -174703,6 +174900,10 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 1480070270638434773, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_Name
+      value: CollectiblePerks
+      objectReference: {fileID: 0}
+    - target: {fileID: 1480070270638434773, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_TagString
       value: Player
       objectReference: {fileID: 0}
@@ -174713,6 +174914,14 @@ PrefabInstance:
     - target: {fileID: 1498725380706066021, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: near clip plane
       value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1554255245374647552, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1554255245374647552, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1677709596792652664, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: far clip plane
@@ -174746,6 +174955,22 @@ PrefabInstance:
       propertyPath: whatIsSwingable.m_Bits
       value: 1024
       objectReference: {fileID: 0}
+    - target: {fileID: 2903362214162353061, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: _duration
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 2903362214162353061, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: _meleeDamageMultiplier
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855449441454828066, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3855449441454828066, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4025764569831533287, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -174753,6 +174978,14 @@ PrefabInstance:
     - target: {fileID: 4526654186006609936, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777112942548604065, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 4777112942548604065, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4866017504137546270, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_Name
@@ -174842,6 +175075,14 @@ PrefabInstance:
       propertyPath: volume
       value: 
       objectReference: {fileID: 491849205}
+    - target: {fileID: 5584866119323709083, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: drinkCan
+      value: 
+      objectReference: {fileID: 117237128}
+    - target: {fileID: 5584866119323709083, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: perkType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5584866119323709083, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: musicController
       value: 
@@ -174935,6 +175176,18 @@ PrefabInstance:
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8211693197114897220, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8242464648983085986, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: ChimpexDuration
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8805159517396082475, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 8805159517396082475, guid: 00b3378a96db6422e80ed291a8dfeb9c, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -179338,6 +179591,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -181527,6 +181792,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -184763,6 +185040,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5254189878135890649, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
@@ -196623,6 +196912,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.g
+      value: 0.8040824
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
+      propertyPath: gizmosColor.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6877228081262940126, guid: ef4c0ab6acea2744284dd77deb4adebb, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -203628,6 +203929,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1031204853}
     - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: chimpexPrefab
+      value: 
+      objectReference: {fileID: 8811286191236660683, guid: efa0b5f9458382943b9460ea135ad6ba, type: 3}
+    - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: gorillaPrefab
+      value: 
+      objectReference: {fileID: 8811286191236660683, guid: 28b02cb8e9e803248a5e839c2225dd1a, type: 3}
+    - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: crazyapePrefab
+      value: 
+      objectReference: {fileID: 8811286191236660683, guid: 7bb24cf9f3ad02b45a8fe46fc72349c9, type: 3}
+    - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: monksterPrefab
+      value: 
+      objectReference: {fileID: 8811286191236660683, guid: 3e2c72f8516c54f41bacfec4b47514a0, type: 3}
+    - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: musicController
       value: 
       objectReference: {fileID: 1033046002}
@@ -204522,6 +204839,10 @@ PrefabInstance:
     - target: {fileID: 4863238726718896131, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5592157480748429877, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
+      propertyPath: MonksterFrenzyDuration
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 5677739966933632926, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: m_Name

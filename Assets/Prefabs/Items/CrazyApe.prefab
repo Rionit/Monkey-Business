@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 7036449633223612860}
   - component: {fileID: 2449120139720207456}
   m_Layer: 0
-  m_Name: Monkster
+  m_Name: CrazyApe
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -56,7 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b45df6803553424f9b88596ddfb252e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Perks.CollectiblePerks::MonkeyBusiness.Items.MonksterPickup
-  perkType: 0
+  perkType: 2
 --- !u!136 &2449120139720207456
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 39e3ec4d936ce8f41bcf7249d6229c8e, type: 2}
+  - {fileID: 2100000, guid: 58e725085977e1e4dbb6afe77c86cc51, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -218,6 +218,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 8cf9ce2b842e60e49a115645d70fb5d9, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 9121936880125738848, guid: bd42874c40be0d141a27894100aef289, type: 3}
     - target: {fileID: 919132149155446097, guid: 8cf9ce2b842e60e49a115645d70fb5d9, type: 3}
       propertyPath: m_Name
       value: monkster

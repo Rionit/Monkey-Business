@@ -39,7 +39,7 @@ namespace MonkeyBusiness.Perks.PerkEffects
                 if (entry.ProjectilePrefab == null) continue;
 
                 // Apply multiplier via StatsManager
-                StatsManager.Instance.AddDamageMultiplier(entry.ProjectilePrefab, entry.Multiplier);
+                StatsManager.Instance.AddWeaponDamageMultiplier(entry.ProjectilePrefab, entry.Multiplier);
             }
         }
         
@@ -56,7 +56,7 @@ namespace MonkeyBusiness.Perks.PerkEffects
                 if (entry.ProjectilePrefab == null) continue;
 
                 // Reset multiplier to default value
-                StatsManager.Instance.RemoveDamageMultiplier(entry.ProjectilePrefab, entry.Multiplier);
+                StatsManager.Instance.RemoveWeaponDamageMultiplier(entry.ProjectilePrefab, entry.Multiplier);
             }
         }
         
