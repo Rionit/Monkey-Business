@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _stickTime
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: _impactForce
       value: 0
       objectReference: {fileID: 0}
@@ -98,7 +102,7 @@ PrefabInstance:
       objectReference: {fileID: 8269699034371843587, guid: 8950982039e28785e9e6f898f2df6a65, type: 3}
     - target: {fileID: 5856281644080234995, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: m_Name
-      value: StaplerPProjectile
+      value: Staple
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
