@@ -25,15 +25,24 @@ namespace MonkeyBusiness.UI
         [SerializeField]
         RectTransform _content;
 
+        [SerializeField]
+        RectTransform _buttons;
+
         void Awake()
         {
             _visibleEntries = Mathf.RoundToInt((transform as RectTransform).sizeDelta.y / _scoreRowPrefab.GetComponent<RectTransform>().sizeDelta.y);
+            /*_buttons.localScale = Vector3.zero;
+
+            foreach(var button in _buttons.GetComponentsInChildren<Button>())
+            {
+                button.interactable = false;
+            }*/
+
         }
 
         void OnEnable()
         {
             //_content.localScale = Vector3.zero;
-
             Setup();
             AnimateRows();
         }
@@ -75,6 +84,17 @@ namespace MonkeyBusiness.UI
                 //Debug.Log("Animating row " + i);
                 //_scoreRows[i].Animate();
             }*/
+
+            if(_buttons != null)
+            {
+                _buttons.transform.DOScale(Vector3.one, 1f).SetEase(Ease.OutBack).SetUpdate(true).OnComplete(() =>
+                {
+                    foreach(var button in _buttons.GetComponentsInChildren<Button>())
+                    {
+                        button.interactable = true;
+                    }
+                } );
+            }
         }
 
         IEnumerator AnimateRowsCoroutine()
@@ -89,6 +109,7 @@ namespace MonkeyBusiness.UI
 
         void AddNewRow()
         {
+            Debug.Log("Adding new row");
             var newRowObj = Instantiate(_scoreRowPrefab, _content);
             var newRow = newRowObj.GetComponent<ScoreRow>();
             _scoreRows.Add(newRow);

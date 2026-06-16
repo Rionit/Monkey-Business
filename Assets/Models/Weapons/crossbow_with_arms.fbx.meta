@@ -23,7 +23,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: chimp mat
-    second: {fileID: 2100000, guid: 5f8cc09389d92454fab4d0b2340e2e3a, type: 2}
+    second: {fileID: 2100000, guid: b71bebff0aacfd9419e74a633573e0e7, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

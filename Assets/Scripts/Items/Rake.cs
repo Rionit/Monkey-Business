@@ -87,6 +87,8 @@ namespace MonkeyBusiness.Items
             }
             else
             {
+                Debug.Log("Collided with " + collider.gameObject.name + " from layer " + LayerMask.LayerToName(collider.gameObject.layer));
+
                 // we hit a non-enemy
                 _mainCollider.isTrigger = false;
                 _pickupCollider.enabled = true;
@@ -107,7 +109,7 @@ namespace MonkeyBusiness.Items
 
         void OnPickup(Transform parent)
         {
-            transform.rotation = Quaternion.LookRotation(parent.forward);
+            //transform.rotation = Quaternion.LookRotation(parent.forward);
         }
 
 

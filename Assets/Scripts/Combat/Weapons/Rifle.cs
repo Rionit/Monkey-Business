@@ -12,6 +12,7 @@ using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using MonkeyBusiness.Player;
+using MonkeyBusiness.Camera;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -232,14 +233,18 @@ namespace MonkeyBusiness.Combat.Weapons
             Debug.Log("Scoping on " + gameObject.name);
             _playerCamera.sensitivity = _defaultSensitivity;
             Camera.main.fieldOfView = 60f;
+            PlayerCamera.Instance.ViewmodelCamera.fieldOfView = 60f;
             _scopeTween = DOTween.Sequence();
 
             _scopeTween.Join(Camera.main.DOFieldOfView(_scopedFOV, _scopeTransitionTime));
+            _scopeTween.Join(PlayerCamera.Instance.ViewmodelCamera.DOFieldOfView(_scopedFOV, _scopeTransitionTime));
             _scopeTween.Join(DOTween.To(() => _playerCamera.sensitivity, x => _playerCamera.sensitivity = x, _defaultSensitivity * _mouseSensitivityModifier, _scopeTransitionTime));
             
-            _weaponMover.enabled = false;
-            _weaponMover.MoveTo(_scopePosition, _scopeTransitionTime, Ease.InOutQuad);
-
+            if(_weaponMover != null)
+            {
+                _weaponMover.enabled = false;
+                _weaponMover.MoveTo(_scopePosition, _scopeTransitionTime, Ease.InOutQuad);
+            }
             //_bulletSpawnMover.enabled = false;
             _bulletSpawnMover.MoveTo(_scopePosition + (_defaultMeshPosition - _defaultBulletSpawnPosition), _scopeTransitionTime, Ease.InOutQuad);
 
@@ -250,16 +255,25 @@ namespace MonkeyBusiness.Combat.Weapons
         {
             _playerCamera.sensitivity = _defaultSensitivity * _mouseSensitivityModifier;
             Camera.main.fieldOfView = _scopedFOV;
+            PlayerCamera.Instance.ViewmodelCamera.fieldOfView = _scopedFOV;
             _scopeTween = DOTween.Sequence();
             
             _scopeTween.Join(Camera.main.DOFieldOfView(60f, _scopeTransitionTime));
+            _scopeTween.Join(PlayerCamera.Instance.ViewmodelCamera.DOFieldOfView(60f, _scopeTransitionTime));
+
             _scopeTween.Join(DOTween.To(() => _playerCamera.sensitivity, x => _playerCamera.sensitivity = x, _defaultSensitivity, _scopeTransitionTime));
-            _weaponMover.MoveTo(_defaultMeshPosition, _scopeTransitionTime, Ease.InOutQuad);
+            if(_weaponMover != null)
+            {
+                _weaponMover.MoveTo(_defaultMeshPosition, _scopeTransitionTime, Ease.InOutQuad);
+            }
             _bulletSpawnMover.MoveTo(_bulletSpawnPoint.localPosition, _scopeTransitionTime, Ease.InOutQuad);
             _scopeTween.OnComplete(() => 
             {
                 _scopeTween = null;
-                _weaponMover.enabled = true;
+                if(_weaponMover != null)
+                {
+                    _weaponMover.enabled = true;
+                }
                 _bulletSpawnMover.enabled = true;
             });
         }
