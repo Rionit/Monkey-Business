@@ -12,6 +12,8 @@ namespace MonkeyBusiness.Combat.Attack
         private float _explosionRadius = 10.0f;
         [SerializeField]
         private float _explosionDamage = 400.0f;
+
+        [SerializeField] private float _playerDamageMultiplier = 0.1f;
         
         [SerializeField]
         private bool explodeOnStart = true;
@@ -70,16 +72,16 @@ namespace MonkeyBusiness.Combat.Attack
                     continue;
                 }
 
+                float explosionDamageFactor = Vector3.Distance(transform.position, collider.transform.position) / _explosionRadius;
+                explosionDamageFactor = 1 - explosionDamageFactor;
+                explosionDamageFactor = Mathf.Min(2 * explosionDamageFactor, 1.0f);
+                
                 if (targetEntityType == "Player")
                 {
-                    healthController.TakeDamage(healthController.CurrentHealth * 0.5f, Vector3.zero);
+                    healthController.TakeDamage(healthController.CurrentHealth * _playerDamageMultiplier * explosionDamageFactor, Vector3.zero);
                 }
                 else
                 {
-                    float explosionDamageFactor = Vector3.Distance(transform.position, collider.transform.position) / _explosionRadius;
-                    explosionDamageFactor = 1 - explosionDamageFactor;
-                    explosionDamageFactor = Mathf.Min(2 * explosionDamageFactor, 1.0f);
-                    
                     healthController.TakeDamage(_explosionDamage * explosionDamageFactor, (collider.transform.position - transform.position).normalized);
                 }
                 // prevent damaging the same enemy multiple times by hitting more than one of their hitboxes
