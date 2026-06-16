@@ -6,82 +6,45 @@ namespace Ami.BroAudio.Runtime
 {
     public class ShuffleClipStrategy : IClipSelectionStrategy
     {
-        private BroAudioClip _lastUsed;
-        private readonly HashSet<BroAudioClip> _used = new HashSet<BroAudioClip>();
+        private readonly List<BroAudioClip> _remaining = new List<BroAudioClip>();
 
         public IBroAudioClip SelectClip(BroAudioClip[] clips, ClipSelectionContext context, out int index)
         {
-            index = Random.Range(0, clips.Length);
-            BroAudioClip result;
-
-            if(Use(clips, index, out result, true))
+            if (clips == null || clips.Length == 0)
             {
-                bool hasAnyAvailable = false;
-                for (int i = 0; i < clips.Length; i++)
-                {
-                    var clip = clips[i];
-                    
-                    if (!_used.Contains(clip))
-                    {
-                        hasAnyAvailable = true;
-                    }
-                }
-                
-                if(!hasAnyAvailable)
-                {
-                    Reset();
-                    _lastUsed = result;
-                }
-                return result;
+                index = -1;
+                return null;
             }
 
-            // to avoid overusing the Random method when there are only a few clips left
-            int increment = Random.Range(0,2) == 0 ? -1 : 1;
-            bool checkRanOut = false;
-            for(int i = 0; i < clips.Length; i++)
-            {
-                index += increment;
-                index = (index + clips.Length) % clips.Length;
+            RefillIfNeeded(clips);
 
-                if (checkRanOut) 
-                {
-                    if(!_used.Contains(clips[index])) // if there are any available clips, return. Otherwise, proceed to ResetInUse
-                    {
-                        return result;
-                    }
-                }
-                else if (Use(clips, index, out result))
-                {
-                    checkRanOut = true;
-                }
-            }
+            int remainingIndex = Random.Range(0, _remaining.Count);
+            BroAudioClip selected = _remaining[remainingIndex];
+            _remaining.RemoveAt(remainingIndex);
 
-            _lastUsed = result;
-            Reset();
-            return result;
+            index = System.Array.IndexOf(clips, selected);
+            return selected;
         }
 
-        private bool Use(BroAudioClip[] clips, int index, out BroAudioClip result, bool checkLastUsed = false)
+        private void RefillIfNeeded(BroAudioClip[] clips)
         {
-            result = clips[index];
-            if (result == _lastUsed && checkLastUsed)
+            if (_remaining.Count > 0)
+                return;
+
+            _remaining.Clear();
+
+            for (int i = 0; i < clips.Length; i++)
             {
-                _lastUsed = null;
-                return false;
+                if (clips[i] != null && clips[i].IsSet)
+                {
+                    _remaining.Add(clips[i]);
+                }
             }
-            
-            if (result != _lastUsed && result.IsSet)
-            {
-                _used.Add(result);
-                return true;
-            }
-            result = null;
-            return false;
         }
 
         public void Reset()
         {
-            _used.Clear();
+            _remaining.Clear();
         }
     }
 }

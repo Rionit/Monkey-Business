@@ -17,6 +17,7 @@ namespace Ami.BroAudio.Runtime
         public override AudioPlayer Extract()
         {
             AudioPlayer player = base.Extract();
+            if (player == null) player = CreateObject();
             player.gameObject.SetActive(true);
             _currentPlayers.Add(player);
             return player;
