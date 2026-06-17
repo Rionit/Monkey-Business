@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 9035216442115021525}
   - component: {fileID: 8318241796546775501}
   - component: {fileID: 5207529217261365022}
+  - component: {fileID: 2349906269385344605}
   m_Layer: 0
   m_Name: AmmoPickup
   m_TagString: Untagged
@@ -141,6 +142,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2412dbbf4dcf42ac09511c51c152efd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.UI::MonkeyBusiness.UI.AmmoRegenBinder
+--- !u!114 &2349906269385344605
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4477180092756245541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: ee23bf06bebe4cb4e849157512a09f60, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 4477180092756245541}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1001 &212398833694505462
 PrefabInstance:
   m_ObjectHideFlags: 0

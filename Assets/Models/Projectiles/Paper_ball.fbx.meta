@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35e857f43c6415647a0ecc651a14fbac
+guid: 95dd87028aa48ca409ff95084bf38fa4
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,18 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: base
-    second: {fileID: 2100000, guid: eaf0181b2ef372f4bb3f6107774b5fc2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: health pack
-    second: {fileID: 2100000, guid: eaf0181b2ef372f4bb3f6107774b5fc2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: inside
-    second: {fileID: 2100000, guid: f9e03a789267fd94a9a9151d76e924a6, type: 2}
+      name: Paper ball
+    second: {fileID: 2100000, guid: 22486967782bfbf46a7bd7f493554553, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

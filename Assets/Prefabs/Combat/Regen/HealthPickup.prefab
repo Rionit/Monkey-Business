@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 5405575139451206019}
   - component: {fileID: 9169899621505922668}
   - component: {fileID: 8474142589978389272}
+  - component: {fileID: 7663241065880251879}
   m_Layer: 0
   m_Name: HealthPickup
   m_TagString: Untagged
@@ -128,6 +129,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Regen::MonkeyBusiness.Combat.Regen.SmallHealthPickup
   _healthRestored: 20
   _lifeTime: 10
+--- !u!114 &7663241065880251879
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3878638373698229944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 6e393863b3c97844a867699b1905ec9d, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 3878638373698229944}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1001 &2955798274885026581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -138,15 +162,15 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
       propertyPath: m_LocalScale.x
-      value: 20
+      value: 0.19
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
       propertyPath: m_LocalScale.y
-      value: 29.999998
+      value: 0.0285
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3.0000002
+      value: 0.285
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
       propertyPath: m_LocalPosition.x
@@ -159,22 +183,6 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071067
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 35e857f43c6415647a0ecc651a14fbac, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

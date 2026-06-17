@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35e857f43c6415647a0ecc651a14fbac
+guid: 97868784fda4d684c9f9b2e23aff0a26
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,18 +7,33 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: base
-    second: {fileID: 2100000, guid: eaf0181b2ef372f4bb3f6107774b5fc2, type: 2}
+      name: Cannon
+    second: {fileID: 2100000, guid: d55afb771a9d8b441b000c4bd4c22df9, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: health pack
-    second: {fileID: 2100000, guid: eaf0181b2ef372f4bb3f6107774b5fc2, type: 2}
+      name: Material.001
+    second: {fileID: 2100000, guid: e97d7b3237107db428799c95e1cdac9f, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: inside
-    second: {fileID: 2100000, guid: f9e03a789267fd94a9a9151d76e924a6, type: 2}
+      name: Pencil
+    second: {fileID: 2100000, guid: 73bc910770e038546a0354b6dadce747, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Stapler
+    second: {fileID: 2100000, guid: de7a558cd29382b41b74641c867cb4f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: box mat
+    second: {fileID: 2100000, guid: 7b7de4f1c46a7534c9165bd25cbfa3a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: metal table mat
+    second: {fileID: 2100000, guid: 5cd5d88a63da01140965f3bcfd7f0f7a, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

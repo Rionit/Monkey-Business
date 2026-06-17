@@ -1,6 +1,5 @@
 using System.Collections;
-using MonkeyBusiness.Combat.Health;
-using MonkeyBusiness.Combat.Weapons;
+using Ami.BroAudio;
 using MonkeyBusiness.Managers;
 using UnityEngine;
 using UnityEngine.Events;
@@ -23,10 +22,12 @@ namespace MonkeyBusiness.Combat.Regen
         private Coroutine _lifetimeCoroutine;
 
         public UnityEvent OnCollected { get; private set; } = new UnityEvent();
+        private SoundSource sound;
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
+            sound = GetComponent<SoundSource>();
             _lifetimeCoroutine = StartCoroutine(StartLifetime(_lifeTime));
         }
         
@@ -41,6 +42,7 @@ namespace MonkeyBusiness.Combat.Regen
         {
             if (other.gameObject.CompareTag("Player"))
             {
+                if(sound != null) sound.Play();
                 var equipManager = other.GetComponentInParent<EquipmentManager>();
                 (this as IAmmoRegen).RestoreAmmo(equipManager, _replenishmentPercentage);
                 

@@ -1,5 +1,7 @@
+using System;
 using UnityEngine;
 using System.Collections;
+using Ami.BroAudio;
 using MonkeyBusiness.Managers;
 using MonkeyBusiness.Misc;
 using Sirenix.OdinInspector;
@@ -33,15 +35,21 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Collider of the ammo regeneration pad to detect player stepping on it.")]
         Collider _collider;
 
+        private SoundSource sound;
         public UnityEvent OnCollected { get; private set; } = new UnityEvent();
 
         bool _canReplenish = true;
+
+        private void Start()
+        {
+            sound = GetComponent<SoundSource>();
+        }
 
         void OnTriggerEnter(Collider other)
         {
             if(_canReplenish && other.CompareTag("Player"))
             {
-                
+                if (sound != null) sound.Play();
                 StartCoroutine(ReplenishCoroutine(other.gameObject));
             }
         }
