@@ -1,4 +1,5 @@
 using System.Collections;
+using Ami.BroAudio;
 using MonkeyBusiness.Combat.Health;
 using UnityEngine;
 using UnityEngine.Events;
@@ -21,16 +22,13 @@ namespace MonkeyBusiness.Combat.Regen
 
         public UnityEvent OnCollected { get; private set; } = new UnityEvent();
 
+        private SoundSource sound;
+
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
         {
+            sound = GetComponent<SoundSource>();
             _lifetimeCoroutine = StartCoroutine(StartLifetime(_lifeTime));
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
         }
 
         private IEnumerator StartLifetime(float lifetime)
@@ -44,6 +42,7 @@ namespace MonkeyBusiness.Combat.Regen
         {
             if (other.gameObject.CompareTag("Player"))
             {
+                if(sound != null) sound.Play();
                 HealthController healthController = other.gameObject.GetComponentInParent<HealthController>();
                 //healthController.Heal(_healthRestored);
                 (this as IHealthRegen).RestoreHealth(healthController, _healthRestored);
