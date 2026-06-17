@@ -156,8 +156,8 @@ namespace MonkeyBusiness.UI
             var text = perkTexts[--currentPerkIndex];
             if(text != null)
             {
-                text.text = "";
-                text.color = Color.white;
+                Destroy(text.gameObject);
+                perkTexts.RemoveAt(currentPerkIndex);
             }
         }
 
