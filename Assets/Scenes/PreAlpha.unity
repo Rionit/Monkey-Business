@@ -102866,6 +102866,29 @@ MonoBehaviour:
   _overrideGroup: {fileID: 0}
   _positionMode: 0
   _delay: 0
+--- !u!114 &1033046008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 800344533}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 0f8af7c3ce6fd7f42bfb7ba87c3622bf, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 800344533}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
 --- !u!1001 &1033076936
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -204788,6 +204811,10 @@ PrefabInstance:
       propertyPath: monksterMusic
       value: 
       objectReference: {fileID: 1033046003}
+    - target: {fileID: 4205851760336660705, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
+      propertyPath: ncsMonksterMusic
+      value: 
+      objectReference: {fileID: 1033046008}
     - target: {fileID: 7414099156124772107, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
       propertyPath: m_Name
       value: Music
@@ -204799,6 +204826,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7414099156124772107, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1033046003}
+    - targetCorrespondingSourceObject: {fileID: 7414099156124772107, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1033046008}
   m_SourcePrefab: {fileID: 100100000, guid: bd0a7fca80524a940ba5e9f0d236def7, type: 3}
 --- !u!114 &5176473502407450525
 MonoBehaviour:

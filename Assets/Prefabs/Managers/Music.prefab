@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 1638530122181477715}
   - component: {fileID: 3767027602159551393}
   - component: {fileID: 4205851760336660705}
+  - component: {fileID: 2514578036572517931}
+  - component: {fileID: 753265319959263493}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -117,7 +119,56 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   mainMusic: {fileID: 7274953740694707979}
+  monksterMusic: {fileID: 2514578036572517931}
+  ncsMonksterMusic: {fileID: 753265319959263493}
   perkLoopMusic: {fileID: 1638530122181477715}
   perkTransitionSound: {fileID: 3767027602159551393}
+  mainMusicPitchRange: {x: 1, y: 1.3}
   bpm: 120
   perkTransitionDuration: 2.5
+--- !u!114 &2514578036572517931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7414099156124772107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 45d720f7c4c5bea438f7bfa726a90967, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 7414099156124772107}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0
+--- !u!114 &753265319959263493
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7414099156124772107}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385ffc06106304cc3824d5bcf25a7037, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.SoundSource
+  _onlyPlayOnce: 0
+  _playOnEnable: 0
+  _stopOnDisable: 0
+  _overrideFadeOut: -1
+  _sound:
+    _entity: {fileID: 11400000, guid: 0f8af7c3ce6fd7f42bfb7ba87c3622bf, type: 2}
+    ID: 0
+    <DebugObject>k__BackingField: {fileID: 7414099156124772107}
+  _overrideGroup: {fileID: 0}
+  _positionMode: 0
+  _delay: 0

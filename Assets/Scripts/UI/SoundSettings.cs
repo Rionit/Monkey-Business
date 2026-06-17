@@ -8,6 +8,7 @@ public class SoundSettingsUI : MonoBehaviour
     [SerializeField] private Slider musicSlider;
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Toggle muteToggle;
+    [SerializeField] private Toggle ncsToggle;
 
     [Header("Settings")]
     [Range(0f, 1f)] public float defaultVolume = 1f;
@@ -15,6 +16,7 @@ public class SoundSettingsUI : MonoBehaviour
     private const string MusicVolumeKey = "MusicVolume";
     private const string SfxVolumeKey = "SfxVolume";
     private const string MuteKey = "MasterMute";
+    private const string NCSKey = "UseNoCopyright";
 
     private float lastMusicVolume = 1f;
     private float lastSfxVolume = 1f;
@@ -25,6 +27,7 @@ public class SoundSettingsUI : MonoBehaviour
         float savedMusic = PlayerPrefs.GetFloat(MusicVolumeKey, defaultVolume);
         float savedSfx = PlayerPrefs.GetFloat(SfxVolumeKey, defaultVolume);
 
+        ncsToggle.SetIsOnWithoutNotify(PlayerPrefs.GetInt(NCSKey, 1) == 1);
         isMuted = PlayerPrefs.GetInt(MuteKey, 0) == 1;
 
         lastMusicVolume = savedMusic;
@@ -32,12 +35,13 @@ public class SoundSettingsUI : MonoBehaviour
 
         musicSlider.value = isMuted ? 0f : savedMusic;
         sfxSlider.value = isMuted ? 0f : savedSfx;
-        muteToggle.isOn = isMuted;
+        muteToggle.SetIsOnWithoutNotify(isMuted);
 
         ApplyVolume(isMuted ? 0f : savedMusic, isMuted ? 0f : savedSfx);
 
         musicSlider.onValueChanged.AddListener(OnMusicChanged);
         sfxSlider.onValueChanged.AddListener(OnSfxChanged);
+        ncsToggle.onValueChanged.AddListener(OnNCSToggleChanged);
         muteToggle.onValueChanged.AddListener(OnMuteToggleChanged);
     }
 
@@ -87,6 +91,11 @@ public class SoundSettingsUI : MonoBehaviour
         }
 
         PlayerPrefs.SetInt(MuteKey, isMuted ? 1 : 0);
+    }
+    
+    private void OnNCSToggleChanged(bool useNoCopyrightMusic)
+    {
+        PlayerPrefs.SetInt(NCSKey, useNoCopyrightMusic ?  1 : 0);
     }
 
     private void ApplyVolume(float musicVolume, float sfxVolume)

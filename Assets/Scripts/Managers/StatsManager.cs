@@ -21,6 +21,8 @@ namespace MonkeyBusiness.Managers
         public float MonksterFrenzyDuration = 30f;
 
         public bool IsChimpexActive = false;
+
+        public bool UseNoCopyrightMusic =>  PlayerPrefs.GetInt("UseNoCopyright", 1) == 1;
         
         [ShowInInspector] public float PlayerMaxHealth
         {
