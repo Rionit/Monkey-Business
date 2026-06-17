@@ -276,6 +276,12 @@ namespace MonkeyBusiness.Player
         private float _lastAimedAtGrapplePointLinger = 0.15f;
         private float _lastAimedAtGrapplePointLingerRemaining = 0.0f;
 
+        /// <summary>
+        /// How much to pull towards the swing anchor. 0 = Only Swing 
+        /// </summary>
+        [SerializeField]
+        private float _grapplePull = 500f;
+
 
         /// <summary>
         /// Initialize required components.
@@ -585,7 +591,7 @@ namespace MonkeyBusiness.Player
                 return;
             }
 
-            var ropeVector = _rb.position - _swingAnchor;
+            var ropeVector = _swingAnchor - _rb.position;
             var ropeDistance = ropeVector.magnitude;
             Debug.Log("Rope distance: " + ropeDistance + " Rope length: " + _swingRopeLength);
             if (swingCooldown - _swingCooldownRemaining > 0.2f && ropeDistance > 0.0001f && ropeDistance >= _swingRopeLength)
@@ -609,9 +615,15 @@ namespace MonkeyBusiness.Player
                 Vector3 v = _rb.linearVelocity;
                 
 
-                if(Vector3.Dot(ropeDir, v) > 0.0f)
+                if(Vector3.Dot(ropeDir, v) < 0.0f)
                 {
+                    // Player is moving away from the rope origin => Swing
                     v = Vector3.ProjectOnPlane(v, ropeDir);
+                }
+                else
+                {
+                    // Player is moving towards the rope origin => Grapple
+                    v += _grapplePull * Time.fixedDeltaTime * ropeDir;
                 }
 
                 // Speed cap

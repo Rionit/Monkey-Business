@@ -550,7 +550,8 @@ MonoBehaviour:
   _ropeAnimDuration: 0.165
   _ropeOrigin: {fileID: 6900974721951663654}
   _swingHoldDuration: 0.33
-  _lastAimedAtGrapplePointLinger: 0.15
+  _lastAimedAtGrapplePointLinger: 0.5
+  _grapplePull: 500
 --- !u!54 &2447207728374608361
 Rigidbody:
   m_ObjectHideFlags: 0
