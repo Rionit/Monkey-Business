@@ -1,0 +1,99 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad670d1adcf8be84f891f82b894c08a5, type: 3}
+  m_Name: monkster-ncs-alt
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
+  <ID>k__BackingField: 0
+  MulticlipsPlayMode: 3
+  _group: {fileID: 0}
+  Clips:
+  - AudioClip: {fileID: 8300000, guid: 01745986183598981bb76103b09e9013, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 35.36
+    EndPosition: 33.671
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: df58663fb45d0b03f9fecf3ba5903cdc, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 38.233
+    EndPosition: 0
+    FadeIn: 0.997
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 2fc0b506c2de5dd48911fb4b9381b353, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 51.457
+    EndPosition: 130.768
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 2743d4a0df2a1ecb9a22538ec6f696d3, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 43.692
+    EndPosition: 0
+    FadeIn: 0.91
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 94df1fa0c11e79c3c8996a72f3ddf261, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 52.272
+    EndPosition: 0
+    FadeIn: 1
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 819937f664d7ab5e79de44c3f3009b9f, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 64.771
+    EndPosition: 0
+    FadeIn: 1.5
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 3e5dfff9dfb1f3a43841459732f3ccc5, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 44.705
+    EndPosition: 0
+    FadeIn: 1.5
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: f02bfb298e9b94648b23c6b3997224a9, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 52.424
+    EndPosition: 73.76
+    FadeIn: 0.989
+    FadeOut: 1.131
+    Weight: 0
+  <AudioAsset>k__BackingField: {fileID: 11400000, guid: 09d3fc380ddfa5d45a47c19f235e8d46, type: 2}
+  <AudioType>k__BackingField: 1
+  <MasterVolume>k__BackingField: 1
+  <Loop>k__BackingField: 0
+  <SeamlessLoop>k__BackingField: 0
+  <TransitionTime>k__BackingField: 0
+  <SpatialSetting>k__BackingField: {fileID: 0}
+  <Priority>k__BackingField: 128
+  <Pitch>k__BackingField: 1
+  <PitchRandomRange>k__BackingField: 0
+  <VolumeRandomRange>k__BackingField: 0
+  <RandomFlags>k__BackingField: 0
+  SeamlessTransitionType: 0
+  TransitionTempo:
+    BPM: 0
+    Beats: 0
+  SnapToFullVolume: 0
