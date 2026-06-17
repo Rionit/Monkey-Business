@@ -733,7 +733,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 4518ba67a039bc3498bd58ac404d15e8, type: 2}
   - {fileID: 11400000, guid: 2325500a3cd283b44a9cc284780c3945, type: 2}
   - {fileID: 11400000, guid: 5c8532218065f79468fe1bf8a8274bf5, type: 2}
-  - {fileID: 11400000, guid: 6f5974ac6c23be449b8199ad8a1f81c6, type: 2}
   - {fileID: 11400000, guid: 819365c67261b3242bf499b3d34ef04b, type: 2}
   negativePerks:
   - {fileID: 11400000, guid: 882be58c83f9e05418ed9e741990be18, type: 2}

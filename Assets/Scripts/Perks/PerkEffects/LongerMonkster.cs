@@ -1,5 +1,6 @@
 using System;
 using MonkeyBusiness.Items;
+using MonkeyBusiness.Managers;
 using UnityEngine;
 
 namespace MonkeyBusiness.Perks.PerkEffects
@@ -11,7 +12,7 @@ namespace MonkeyBusiness.Perks.PerkEffects
         
         public override void Apply()
         {
-            MonksterController.frenzyDurationOverride += frenzyDurationBoost;
+            StatsManager.Instance.MonksterFrenzyDuration += frenzyDurationBoost;
         }
 
         public override void Update()
@@ -21,13 +22,13 @@ namespace MonkeyBusiness.Perks.PerkEffects
 
         public override void Reset()
         {
-            MonksterController.frenzyDurationOverride -= frenzyDurationBoost;
+            StatsManager.Instance.MonksterFrenzyDuration -= frenzyDurationBoost;
         }
          
         // You can also override this function to return text with your values
         public override string GetDescription()
         {
-            return description.Replace("<len>", (MonksterController.frenzyDurationOverride + frenzyDurationBoost).ToString());
+            return description.Replace("<len>", (StatsManager.Instance.MonksterFrenzyDuration + frenzyDurationBoost).ToString());
         }
         
         // Don't forget to tell the designers what <placeholder> types they can use!

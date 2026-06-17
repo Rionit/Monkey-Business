@@ -36,6 +36,12 @@ namespace MonkeyBusiness.Perks
         [LabelText("Is Unique")]
         [Tooltip("If true, this perk will not appear again after being picked")]
         public bool isUnique;
+        
+        [BoxGroup("Rules")]
+        [ShowIf(nameof(isUnique))]
+        [MinValue(1)]
+        [LabelText("Max Usages")]
+        public int maxUsages = 1;
     }
 
     public enum PerkAlignment

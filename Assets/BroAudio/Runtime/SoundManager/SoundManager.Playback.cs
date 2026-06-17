@@ -142,6 +142,7 @@ namespace Ami.BroAudio.Runtime
         {
             if(!target.IsActive)
             {
+                return;
                 throw new System.InvalidOperationException("Invalid target player");
             }
             

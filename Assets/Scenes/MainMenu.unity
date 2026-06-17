@@ -290,8 +290,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 1653.4, y: -815.7}
-  m_SizeDelta: {x: 432.6666, y: 213.0064}
+  m_AnchoredPosition: {x: 1653.4, y: -828.6}
+  m_SizeDelta: {x: 432.6666, y: 268}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &37515436
 MonoBehaviour:
@@ -7580,6 +7580,18 @@ PrefabInstance:
     - target: {fileID: 6303516770575028107, guid: c59dcf1227b06814fa82ff3b4815e307, type: 3}
       propertyPath: m_OnValueChanged.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554373301850324802, guid: c59dcf1227b06814fa82ff3b4815e307, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554373301850324802, guid: c59dcf1227b06814fa82ff3b4815e307, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6554373301850324802, guid: c59dcf1227b06814fa82ff3b4815e307, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6968184334925035286, guid: c59dcf1227b06814fa82ff3b4815e307, type: 3}
       propertyPath: m_AnchorMax.x

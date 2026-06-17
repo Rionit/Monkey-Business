@@ -1,6 +1,7 @@
 using System.Collections;
 using Ami.BroAudio;
 using DG.Tweening;
+using MonkeyBusiness.Managers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -21,6 +22,7 @@ namespace MonkeyBusiness.Misc
         [Header("Music")]
         [SerializeField] private SoundSource mainMusic;
         [SerializeField] private SoundSource monksterMusic;
+        [SerializeField] private SoundSource ncsMonksterMusic;
         [SerializeField] private SoundSource perkLoopMusic;
         [SerializeField] private SoundSource perkTransitionSound;
 
@@ -95,7 +97,10 @@ namespace MonkeyBusiness.Misc
             perkLoopMusic.Stop();
             currentState = MusicState.Monkster;
 
-            monksterMusic.Play();
+            if (StatsManager.Instance.UseNoCopyrightMusic)
+                ncsMonksterMusic.Play();
+            else
+                monksterMusic.Play();
 
             transitioning = false;
 

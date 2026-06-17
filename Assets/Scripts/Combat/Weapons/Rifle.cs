@@ -369,7 +369,7 @@ namespace MonkeyBusiness.Combat.Weapons
                 Debug.LogError("Projectile prefab shouldn't be null!");
             }
 
-            projectileController.DamageMultiplier = StatsManager.Instance.GetDamageMultiplier(_data.ProjectilePrefab);
+            projectileController.DamageMultiplier = StatsManager.Instance.GetWeaponDamageMultiplier(_data.ProjectilePrefab);
 
             var layersToCheck = projectileController.DestroyedBy;
             var maxRange = projectileController.MaxFlyDistance;
