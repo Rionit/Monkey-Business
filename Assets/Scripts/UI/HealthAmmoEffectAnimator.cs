@@ -45,6 +45,11 @@ namespace MonkeyBusiness.UI
             _actualHeight = _flyHeightBase + Random.Range(-_randomHeightOffset, _randomHeightOffset);
         }
 
+        public void SetColor(Color color)
+        {
+            _image.color = color;
+        }
+
         void OnEnable()
         {
             Animate();
