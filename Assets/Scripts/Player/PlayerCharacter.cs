@@ -258,6 +258,12 @@ namespace MonkeyBusiness.Player
         private float _ropeAnimDuration = 0.33f;
         private Coroutine _ropeAnimCoroutine;
 
+        /// <summary>
+        /// Specify where the rope should attach to the player. If left null, will use this object's transform.
+        /// </summary>
+        [SerializeField]
+        private Transform _ropeOrigin;
+
         
         private Vector3 _lastAimedAtGrapplePoint;
         private Vector3 _lastAimedAtNonGrapplePoint;
@@ -582,16 +588,14 @@ namespace MonkeyBusiness.Player
             var ropeVector = _rb.position - _swingAnchor;
             var ropeDistance = ropeVector.magnitude;
             Debug.Log("Rope distance: " + ropeDistance + " Rope length: " + _swingRopeLength);
-            if (swingCooldown - _swingCooldownRemaining > 0.2f && ropeDistance > 0.0001f && ropeDistance > _swingRopeLength)
+            if (swingCooldown - _swingCooldownRemaining > 0.2f && ropeDistance > 0.0001f && ropeDistance >= _swingRopeLength)
             {
                 var ropeDir = ropeVector / ropeDistance;
 
                 // Hard constraint: exact rope length, no springiness
                 //_rb.position = _swingAnchor + ropeDir * _swingRopeLength;
 
-                // Remove radial velocity so the rope stays rigid
-                var v = _rb.linearVelocity;
-                v = Vector3.ProjectOnPlane(v, ropeDir);
+            
 
                 // Player input only adds tangential swing force
                 if (_requestedMovement.sqrMagnitude > 0f)
@@ -600,9 +604,15 @@ namespace MonkeyBusiness.Player
                     if (inputDir.sqrMagnitude > 0f)
                         _rb.AddForce(inputDir.normalized * swingForce, ForceMode.Acceleration);
                 }
+                
+                // Remove radial velocity if the player is moving away from the rope anchor
+                Vector3 v = _rb.linearVelocity;
+                
 
-                v = _rb.linearVelocity;
-                v = Vector3.ProjectOnPlane(v, ropeDir);
+                if(Vector3.Dot(ropeDir, v) > 0.0f)
+                {
+                    v = Vector3.ProjectOnPlane(v, ropeDir);
+                }
 
                 // Speed cap
                 if (v.magnitude > swingMaxSpeed)
@@ -650,7 +660,7 @@ namespace MonkeyBusiness.Player
 
         private void LateUpdate()
         {
-            _lineRenderer.SetPosition(0,transform.position);
+            _lineRenderer.SetPosition(0,_ropeOrigin == null ? transform.position : _ropeOrigin.position);
             _lineRenderer.SetPosition(1,_ropeEnd);
         }
 
