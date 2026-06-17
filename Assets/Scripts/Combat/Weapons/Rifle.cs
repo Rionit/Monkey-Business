@@ -13,6 +13,7 @@ using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using MonkeyBusiness.Player;
 using MonkeyBusiness.Camera;
+using UnityEditor.SearchService;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -393,11 +394,34 @@ namespace MonkeyBusiness.Combat.Weapons
                 layersToCheck,
                 QueryTriggerInteraction.Collide);
 
+            var wallsLayers = LayerMask.GetMask("Default" , "Navigation", "Swingable");
+
+            bool hitWall = Physics.SphereCast(
+                cameraPos, projectileController.HitboxRadius,
+                testDir,
+                out RaycastHit firstWallHit,
+                maxRange,
+                wallsLayers,
+                QueryTriggerInteraction.Ignore);
+
+            Vector3 staticPos = Vector3.positiveInfinity;
+            float staticTime = float.PositiveInfinity;
+
+
+            if(hitWall)
+            {
+                Debug.Log("Hit wall!");
+                staticPos = firstWallHit.point;
+                var staticDist = firstWallHit.distance;
+                staticTime = staticDist / projectileController.Speed;
+            }
+
             bool hitDefault = false;
             bool hitStatic = false;
             var listOfTargets = new SortedSet<ProjectileHitInfo> (new ProjectileHitInfoComparer());
 
             Vector3 stickPos = Vector3.positiveInfinity;
+
             bool hitPlayer = false;
             if(hitsSomething)
             {
@@ -406,6 +430,13 @@ namespace MonkeyBusiness.Combat.Weapons
                 hitPlayer = objectHit.CompareTag("Player");
                 hitStatic = objectHit.isStatic;
                 stickPos = hit.point;
+
+                if(hitStatic)
+                {
+                    staticPos = hitPos;
+                    var staticDist = Vector3.Distance(cameraPos, staticPos);
+                    staticTime = staticDist / projectileController.Speed;
+                }
 
                 if(!hitPlayer)
                 { 
@@ -439,6 +470,12 @@ namespace MonkeyBusiness.Combat.Weapons
                         stickPos = target.point;
                         Debug.Log("Found new destruction point at distance " + distance);
                         hitStatic = target.collider.gameObject.isStatic;
+                        if(hitStatic && staticPos == Vector3.positiveInfinity)
+                        {
+                            staticPos = target.point;
+                            float staticDist = Vector3.Distance(cameraPos, staticPos);
+                            staticTime = staticDist / projectileController.Speed;
+                        }
                     }
 
                     if(target.collider.isTrigger && target.collider.CompareTag("Enemy"))
@@ -448,7 +485,6 @@ namespace MonkeyBusiness.Combat.Weapons
                     }
                 }
 
-                
                 for(int i = 0; i < listOfTargets.Count; i++)
                 {
                     var target = listOfTargets.Max;
@@ -456,7 +492,6 @@ namespace MonkeyBusiness.Combat.Weapons
                     {
                         listOfTargets.Remove(target);
                     }
-
                 }
             }
             else if(hit.collider.isTrigger && hit.collider.CompareTag("Enemy"))
@@ -466,7 +501,7 @@ namespace MonkeyBusiness.Combat.Weapons
                 listOfTargets.Add(new ProjectileHitInfo(hit.collider.gameObject, hitTime));
             }
             Debug.Log("Has targets? " + (listOfTargets.Count > 0));
-            projectileController.Initialize(GetAimDirection(testDir), deathTime, listOfTargets, hitStatic, stickPos);
+            projectileController.Initialize(GetAimDirection(testDir), deathTime, listOfTargets, hitStatic, stickPos, staticTime, staticPos);
 
             _isLoading = true;
 

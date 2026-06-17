@@ -171,6 +171,7 @@ GameObject:
   - component: {fileID: 8961619586941697689}
   - component: {fileID: 7492512815539673305}
   - component: {fileID: 1055059926324265701}
+  - component: {fileID: 1572731073676984153}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -234,6 +235,7 @@ MonoBehaviour:
   - {fileID: 6851109551111103640}
   - {fileID: 5536864796153290613}
   _playerCharacter: {fileID: 0}
+  musicController: {fileID: 0}
   OnWaveDefeated:
     m_PersistentCalls:
       m_Calls:
@@ -334,6 +336,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   canNonChimpPoop: 0
+  RateOfFireMultiplier: 1
 --- !u!114 &1083196947981140784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -513,6 +516,18 @@ MonoBehaviour:
   pressureThreshold: 100
   timeFactor: 0.2
   spawnersRoot: {fileID: 0}
+--- !u!114 &1572731073676984153
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5677739966933632926}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe66b6e977b7d7ffb271773085060f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: MonkeyBusiness.Effects::MonkeyBusiness.Effects.DecalManager
 --- !u!1 &6484089724411520133
 GameObject:
   m_ObjectHideFlags: 0

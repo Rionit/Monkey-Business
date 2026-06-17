@@ -104,6 +104,13 @@ namespace MonkeyBusiness.Combat.Weapons
         [Tooltip("Time for which the projectile sticks to the target after hitting, before being destroyed.")]
         float _stickTime = 1f;
 
+        [SerializeField]
+        GameObject _decalPrefab;
+
+        float _decalTime;
+
+        Vector3 _decalPos;
+
         public LayerMask DestroyedBy => _destroyedBy;
 
         float _travelTime = 0f;
@@ -120,6 +127,7 @@ namespace MonkeyBusiness.Combat.Weapons
 
         TrailRenderer _trailRenderer;
 
+        bool _spawnedDecal;
 
         void Awake()
         {
@@ -130,7 +138,7 @@ namespace MonkeyBusiness.Combat.Weapons
             OnTargetHit.AddListener(_ => StaticEvents.OnEnemyHit?.Invoke());
         }
 
-        public void Initialize(Vector3 firePointDirection, float deathTime, SortedSet<ProjectileHitInfo> targetsByTime, bool sticks, Vector3 stickPosition)  
+        public void Initialize(Vector3 firePointDirection, float deathTime, SortedSet<ProjectileHitInfo> targetsByTime, bool sticks, Vector3 stickPosition, float decalTime, Vector3 decalPosition)  
         {
             _sticks = sticks;
             Direction = firePointDirection.normalized;
@@ -139,6 +147,9 @@ namespace MonkeyBusiness.Combat.Weapons
             _deathTime = deathTime;
 
             _stickPosition = stickPosition;
+
+            _decalTime = decalTime;
+            _decalPos = decalPosition;
 
             if(_targetsByTime == null)
                 Debug.LogError("Projectile initialized with null targetsByTime set!");
@@ -152,6 +163,14 @@ namespace MonkeyBusiness.Combat.Weapons
             {
                 _renderer.enabled = true;
             }*/
+
+            if(!_spawnedDecal && _travelTime >= _decalTime)
+            {
+                // ProjectileParent object is gonna be the parent
+                var decalPrefabObj = Instantiate(_decalPrefab, transform.parent);
+                decalPrefabObj.transform.position = _decalPos - 0.3f * Direction; // Move the decal slightly back along the direction of travel to avoid z-fighting with the surface it is on.
+                decalPrefabObj.transform.forward = Direction;
+            }
 
             if(!_isStuck)
             {

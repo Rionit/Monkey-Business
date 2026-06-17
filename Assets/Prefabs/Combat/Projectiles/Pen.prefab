@@ -9,6 +9,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _decalPrefab
+      value: 
+      objectReference: {fileID: 5103007889165231013, guid: 42d3d1fa7426b20a4a74d66bbceafe31, type: 3}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: _impactForce
       value: 900
       objectReference: {fileID: 0}
@@ -90,7 +94,7 @@ PrefabInstance:
       objectReference: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: 5856281644080234995, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: m_Name
-      value: PenLauncherPProjectile
+      value: Pen
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
