@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 35e857f43c6415647a0ecc651a14fbac
+guid: 813e0ef79303ebd4e8325f84acf808f4
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
@@ -7,18 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: base
-    second: {fileID: 2100000, guid: eaf0181b2ef372f4bb3f6107774b5fc2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: health pack
-    second: {fileID: 2100000, guid: eaf0181b2ef372f4bb3f6107774b5fc2, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: inside
-    second: {fileID: 2100000, guid: f9e03a789267fd94a9a9151d76e924a6, type: 2}
+      name: large health mat
+    second: {fileID: 2100000, guid: bfd04d4244849f347b9f618edd09763c, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
