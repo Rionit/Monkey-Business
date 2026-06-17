@@ -258,6 +258,12 @@ namespace MonkeyBusiness.Player
         private float _ropeAnimDuration = 0.33f;
         private Coroutine _ropeAnimCoroutine;
 
+        /// <summary>
+        /// Specify where the rope should attach to the player. If left null, will use this object's transform.
+        /// </summary>
+        [SerializeField]
+        private Transform _ropeOrigin;
+
         
         private Vector3 _lastAimedAtGrapplePoint;
         private Vector3 _lastAimedAtNonGrapplePoint;
@@ -269,6 +275,12 @@ namespace MonkeyBusiness.Player
         [SerializeField]
         private float _lastAimedAtGrapplePointLinger = 0.15f;
         private float _lastAimedAtGrapplePointLingerRemaining = 0.0f;
+
+        /// <summary>
+        /// How much to pull towards the swing anchor. 0 = Only Swing 
+        /// </summary>
+        [SerializeField]
+        private float _grapplePull = 500f;
 
 
         /// <summary>
@@ -450,6 +462,9 @@ namespace MonkeyBusiness.Player
             }
         }
 
+        /// <summary>
+        /// StartSwing() method for TOGGLE swing mode
+        /// </summary>
         private void StartSwingAlt()
         {
             if(_lastAimedAtGrapplePointLingerRemaining > 0f)
@@ -479,6 +494,11 @@ namespace MonkeyBusiness.Player
                 _ropeAnimCoroutine = StartCoroutine(ShootHook(_swingAnchor, _ropeAnimDuration * (_swingRopeLength / _swingMaxDistance)));                
                 OnSwingInvoked?.Invoke();
                 _swingHoldDurationRemaining = 0f;
+                failedSwing = false;
+            }
+            else
+            {
+                failedSwing = true;
             }
         }
 
@@ -487,8 +507,6 @@ namespace MonkeyBusiness.Player
 
             if(swingMode == Player.SwingMode.TOGGLE)
             {
-                Debug.Log(_swingHoldDurationRemaining);
-
                 if(_lastAimedAtGrapplePointLingerRemaining > 0f)
                 {
                     _lastAimedAtGrapplePointLingerRemaining = Mathf.Max(_lastAimedAtGrapplePointLingerRemaining - Time.deltaTime, 0f);
@@ -581,19 +599,17 @@ namespace MonkeyBusiness.Player
                 return;
             }
 
-            var ropeVector = _rb.position - _swingAnchor;
+            var ropeVector = _swingAnchor - _rb.position;
             var ropeDistance = ropeVector.magnitude;
             Debug.Log("Rope distance: " + ropeDistance + " Rope length: " + _swingRopeLength);
-            if (swingCooldown - _swingCooldownRemaining > 0.2f && ropeDistance > 0.0001f && ropeDistance > _swingRopeLength)
+            if (swingCooldown - _swingCooldownRemaining > 0.2f && ropeDistance > 0.0001f && ropeDistance >= _swingRopeLength)
             {
                 var ropeDir = ropeVector / ropeDistance;
 
                 // Hard constraint: exact rope length, no springiness
                 //_rb.position = _swingAnchor + ropeDir * _swingRopeLength;
 
-                // Remove radial velocity so the rope stays rigid
-                var v = _rb.linearVelocity;
-                v = Vector3.ProjectOnPlane(v, ropeDir);
+            
 
                 // Player input only adds tangential swing force
                 if (_requestedMovement.sqrMagnitude > 0f)
@@ -602,9 +618,21 @@ namespace MonkeyBusiness.Player
                     if (inputDir.sqrMagnitude > 0f)
                         _rb.AddForce(inputDir.normalized * swingForce, ForceMode.Acceleration);
                 }
+                
+                // Remove radial velocity if the player is moving away from the rope anchor
+                Vector3 v = _rb.linearVelocity;
+                
 
-                v = _rb.linearVelocity;
-                v = Vector3.ProjectOnPlane(v, ropeDir);
+                if(Vector3.Dot(ropeDir, v) < 0.0f)
+                {
+                    // Player is moving away from the rope origin => Swing
+                    v = Vector3.ProjectOnPlane(v, ropeDir);
+                }
+                else
+                {
+                    // Player is moving towards the rope origin => Grapple
+                    v += _grapplePull * Time.fixedDeltaTime * ropeDir;
+                }
 
                 // Speed cap
                 if (v.magnitude > swingMaxSpeed)
@@ -652,7 +680,7 @@ namespace MonkeyBusiness.Player
 
         private void LateUpdate()
         {
-            _lineRenderer.SetPosition(0,transform.position);
+            _lineRenderer.SetPosition(0,_ropeOrigin == null ? transform.position : _ropeOrigin.position);
             _lineRenderer.SetPosition(1,_ropeEnd);
         }
 
@@ -1116,13 +1144,13 @@ namespace MonkeyBusiness.Player
         /// </summary>
         private void PlaySwingFail()
         {
-            Debug.Log("BLEH!");
             if (_ropeAnimCoroutine != null)
             {
                 StopCoroutine(_ropeAnimCoroutine);                    
             }
             _ropeAnimCoroutine = StartCoroutine(FailHook(_lastAimedAtNonGrapplePoint, _ropeAnimDuration));   
             _swingHoldDurationRemaining = 0.0f;
+            failedSwing = false;
         }
     }
 }

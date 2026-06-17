@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
+using MonkeyBusiness.Managers;
 using MonkeyBusiness.Misc;
 using Sirenix.OdinInspector;
 
@@ -71,7 +72,14 @@ namespace MonkeyBusiness.UI
         private void Start()
         {
             StaticEvents.OnPlayerHeal.AddListener(_ => ShowHealScreen());
-            StaticEvents.OnMonksterPicked.AddListener(() => ShowMonksterScreen());
+            StaticEvents.OnCollectiblePerkPicked.AddListener(perkType =>
+            {
+                switch (perkType)
+                {
+                    case StaticEvents.CollectiblePerkType.Monkster: ShowMonksterScreen(); break;
+                }
+            });
+            StaticEvents.OnCollectiblePerkStopped.AddListener((arg0 => arg0 = arg0));
         }
 
         /// <summary>
@@ -115,7 +123,7 @@ namespace MonkeyBusiness.UI
                 _monksterScreenAnimations.SetActive(false);
             }
             _monksterScreenAnimations.SetActive(true);
-            _monksterEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_monksterScreen, null));
+            _monksterEffectCoroutine = StartCoroutine(MonksterCoroutine(_monksterScreen, null));
         }
 
         public void ShowReloadScreen()
@@ -151,6 +159,35 @@ namespace MonkeyBusiness.UI
             sequence = DOTween.Sequence();
 
             sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 1f, 0.3f).SetEase(Ease.OutQuart));
+            sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 0f, .6f).SetEase(Ease.InQuart));
+
+            yield return sequence.WaitForCompletion();
+            screen.gameObject.SetActive(false);
+        }
+        
+        IEnumerator MonksterCoroutine(Image screen, Sequence sequence)
+        {
+            screen.gameObject.SetActive(true);
+            screen.color = new Color(screen.color.r, screen.color.g, screen.color.b, 0f);
+
+            if(sequence != null && sequence.IsActive())
+            {
+                sequence.Kill();
+            }
+            sequence = DOTween.Sequence();
+
+            sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 1f, 0.3f).SetEase(Ease.OutQuart));
+            sequence.AppendInterval(StatsManager.Instance.MonksterFrenzyDuration - 5f);
+            sequence.Append(
+                DOTween.ToAlpha(() => screen.color, x => screen.color = x, 0.2f, 0.5f)
+                    .SetEase(Ease.InOutSine)
+                    .SetLoops(4, LoopType.Yoyo)
+            ); // 2 seconds slow
+            sequence.Append(
+                DOTween.ToAlpha(() => screen.color, x => screen.color = x, 0.2f, 0.25f)
+                    .SetEase(Ease.InOutSine)
+                    .SetLoops(12, LoopType.Yoyo)
+            ); // 3 seconds fast
             sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 0f, .6f).SetEase(Ease.InQuart));
 
             yield return sequence.WaitForCompletion();

@@ -17,6 +17,10 @@ PrefabInstance:
       value: 900
       objectReference: {fileID: 0}
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _destroyedBy.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: <Speed>k__BackingField
       value: 1000
       objectReference: {fileID: 0}
@@ -31,6 +35,34 @@ PrefabInstance:
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: <MaxFlyDistance>k__BackingField
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _onTargetHit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _onTargetHit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _onTargetHit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 5042749168064723679}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _onTargetHit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _onTargetHit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SpawnExplosion
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _onTargetHit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: MonkeyBusiness.Combat.Weapons.ExplosionSpawner, MonkeyBusiness.Combat.Attack
+      objectReference: {fileID: 0}
+    - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      propertyPath: _onTargetHit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 241152784952802039, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: m_Enabled
@@ -106,6 +138,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5856281644080234995, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       insertIndex: -1
       addedObject: {fileID: 7336116342500022155}
+    - targetCorrespondingSourceObject: {fileID: 5856281644080234995, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5042749168064723679}
   m_SourcePrefab: {fileID: 100100000, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
 --- !u!1 &7513838708788746097 stripped
 GameObject:
@@ -263,3 +298,17 @@ TrailRenderer:
   m_Autodestruct: 0
   m_Emitting: 1
   m_ApplyActiveColorSpace: 1
+--- !u!114 &5042749168064723679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7513838708788746097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3a7b9a69712a3274abc857603ce22c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  explosionPrefab: {fileID: 4045664842276614417, guid: 2b1553d8a1be34b418fef3d07c814498, type: 3}
+  isChimpexNeeded: 1

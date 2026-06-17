@@ -10,6 +10,7 @@ using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
 using Ami.BroAudio;
+using MonkeyBusiness.Managers;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
@@ -147,7 +148,7 @@ namespace MonkeyBusiness.Combat.Weapons
             //_weaponHitbox.gameObject.SetActive(false);
             // _weaponHitbox.enabled = false;
 
-            yield return new WaitForSeconds(_shotCooldown - Time.fixedDeltaTime); // 1 frame is already waited, so subtracting it from cooldown
+            yield return new WaitForSeconds((_shotCooldown / StatsManager.Instance.RateOfFireMultiplier) - Time.fixedDeltaTime); // 1 frame is already waited, so subtracting it from cooldown
             _isLoading = false;
         }
 

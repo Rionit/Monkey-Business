@@ -548,8 +548,10 @@ MonoBehaviour:
   _swingMaxDistance: 20
   _lineRenderer: {fileID: 1379441799213273239}
   _ropeAnimDuration: 0.165
+  _ropeOrigin: {fileID: 6900974721951663654}
   _swingHoldDuration: 0.33
-  _lastAtimedAtGrapplePointLinger: 0.5
+  _lastAimedAtGrapplePointLinger: 0.5
+  _grapplePull: 500
 --- !u!54 &2447207728374608361
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -743,6 +745,7 @@ Transform:
   m_Children:
   - {fileID: 5173201346127674885}
   - {fileID: 7947508776778193010}
+  - {fileID: 6900974721951663654}
   m_Father: {fileID: 2148449546760214463}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &1677709596792652664
@@ -6526,6 +6529,37 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 10
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &8490674299174600912
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6900974721951663654}
+  m_Layer: 11
+  m_Name: Rope Origin
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6900974721951663654
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8490674299174600912}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1, y: -1, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1042423681157048141}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8638550942831813373
 GameObject:
   m_ObjectHideFlags: 0
@@ -6770,6 +6804,10 @@ PrefabInstance:
     - target: {fileID: 8634272603849787556, guid: 14eeb7aec888fce4cb7d945840c1be37, type: 3}
       propertyPath: m_Name
       value: SwingTargetIndicator
+      objectReference: {fileID: 0}
+    - target: {fileID: 8634272603849787556, guid: 14eeb7aec888fce4cb7d945840c1be37, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}

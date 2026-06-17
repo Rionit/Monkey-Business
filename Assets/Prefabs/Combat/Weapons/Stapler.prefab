@@ -5988,8 +5988,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6036fce6aa0859e1ab64c00ed598af0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.WeaponMover
-  _moveDistance: 0.4
-  _moveInstantly: 1
+  _moveDistance: -0.15
+  _moveInstantly: 0
 --- !u!4 &3554572132705927485 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5540186242777186948, guid: cf1cc06a5c351cfc587e41a501eeaf14, type: 3}

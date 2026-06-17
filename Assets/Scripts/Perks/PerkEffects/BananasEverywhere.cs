@@ -27,9 +27,9 @@ namespace MonkeyBusiness.Perks.PerkEffects
             for (int i = 0; i < bananaCount; i++)
             {
                 Vector3 spawnPos = new Vector3(
-                    UnityEngine.Random.Range(-spawnRadius, spawnRadius),
+                    UnityEngine.Random.Range(-spawnRadius, spawnRadius) - 17f,
                     spawnHeight,
-                    UnityEngine.Random.Range(-spawnRadius, spawnRadius)
+                    UnityEngine.Random.Range(-spawnRadius, spawnRadius) - 9.5f
                 );
 
                 GameObject bananaObj = UnityEngine.Object.Instantiate(

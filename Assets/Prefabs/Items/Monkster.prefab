@@ -56,6 +56,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b45df6803553424f9b88596ddfb252e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Perks.CollectiblePerks::MonkeyBusiness.Items.MonksterPickup
+  perkType: 0
 --- !u!136 &2449120139720207456
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -75,10 +76,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.63991845
-  m_Height: 2.8544033
+  m_Radius: 0.9
+  m_Height: 3.4073968
   m_Direction: 1
-  m_Center: {x: 0, y: 0.8399898, z: 0}
+  m_Center: {x: 0, y: 1.4920795, z: 0}
 --- !u!1 &8853256921986125434
 GameObject:
   m_ObjectHideFlags: 0

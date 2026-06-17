@@ -8,12 +8,27 @@ ModelImporter:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: chimp_texture
-    second: {fileID: 2800000, guid: 29b6d39831050934db105177643a8576, type: 3}
+    second: {fileID: 2800000, guid: 365e79634c94ef4418adc251384ed3f0, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: chimpex
+    second: {fileID: 2800000, guid: e3ba8845bd64eca499b5bcb5e58b524d, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: crazyape
+    second: {fileID: 2800000, guid: d2584c40553276543995685cc8e64731, type: 3}
+  - first:
+      type: UnityEngine:Texture2D
+      assembly: UnityEngine.CoreModule
+      name: gorilla
+    second: {fileID: 2800000, guid: b80b4b583ceb4b345a689b5001054fc9, type: 3}
   - first:
       type: UnityEngine:Texture2D
       assembly: UnityEngine.CoreModule
       name: monkster
-    second: {fileID: 2800000, guid: 66952956fe431ed429ad08172a041441, type: 3}
+    second: {fileID: 2800000, guid: 2fdd1f88a7a3e5b4f8be2999dea6afed, type: 3}
   materials:
     materialImportMode: 2
     materialName: 0

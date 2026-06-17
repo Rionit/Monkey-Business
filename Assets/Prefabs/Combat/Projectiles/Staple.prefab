@@ -12,6 +12,9 @@ PrefabInstance:
       propertyPath: _decalPrefab
       value: 
       objectReference: {fileID: 542031951127560755, guid: 6d205c58484cb07bfbb07f0d609653cf, type: 3}
+      propertyPath: _stickTime
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: -2453387744190696651, guid: 6817a0c2683d8439d88230b1e5c842ba, type: 3}
       propertyPath: _impactForce
       value: 0

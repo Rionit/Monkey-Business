@@ -83,10 +83,47 @@ namespace MonkeyBusiness.UI
         public void StoreScore()
         {
             if(_promptInput.text == string.Empty) return; // Score is not stored for empty names
-            Debug.Log("Storing score for " + _promptInput.text + ": " + GameManager.Score + " ... level = " + GameManager.LevelReached);
+            Debug.Log("Storing score for " + _promptInput.text.ToUpper() + ": " + GameManager.Score + " ... level = " + GameManager.LevelReached);
+            
+            var upperText = _promptInput.text.ToUpper();
+
+            // Checks if the player already has a record in the table
+            if(GameManager.ScoreboardNamesToScore.ContainsKey(upperText))
+            {
+                // If the newer score is better, it replaces the old one
+                if(GameManager.ScoreboardNamesToScore[upperText] < GameManager.Score)
+                {
+                    int previousScore = GameManager.ScoreboardNamesToScore[upperText];
+                    for(int i = 0; i < GameManager.Scoreboard[previousScore].Count; i++)
+                    {
+                        var entry = GameManager.Scoreboard[previousScore][i];
+                        if(entry.Name == upperText)
+                        {
+                            GameManager.Scoreboard[previousScore].RemoveAt(i);
+                            break;
+                        }
+                    }
+
+                    GameManager.ScoreboardNamesToScore[upperText] = GameManager.Score;
+                }
+                else return; // If the newer score is worse, it is not stored
+            }
+            else
+            {
+                GameManager.ScoreboardNamesToScore[_promptInput.text.ToUpper()] = GameManager.Score;
+            }
+
             if(GameManager.Scoreboard.ContainsKey(GameManager.Score))
             {
-                GameManager.Scoreboard[GameManager.Score].Add(new GameManager.ScoreEntry(_promptInput.text, GameManager.LevelReached));
+                for(int i = 0; i < GameManager.Scoreboard[GameManager.Score].Count; i++)
+                {
+                    var entry = GameManager.Scoreboard[GameManager.Score][i];
+                    if(entry.Name == _promptInput.text.ToUpper())
+                    {
+                        entry.Level = GameManager.LevelReached;
+                    }
+                }
+                GameManager.Scoreboard[GameManager.Score].Add(new GameManager.ScoreEntry(_promptInput.text.ToUpper(), GameManager.LevelReached));
             }
             else
             {
@@ -94,7 +131,7 @@ namespace MonkeyBusiness.UI
                     GameManager.Score,
                     new List<GameManager.ScoreEntry>()
                     { 
-                        new GameManager.ScoreEntry(_promptInput.text, GameManager.LevelReached) 
+                        new GameManager.ScoreEntry(_promptInput.text.ToUpper(), GameManager.LevelReached) 
                     });
             }
         }
@@ -117,7 +154,7 @@ namespace MonkeyBusiness.UI
             animSequence.Append(_scoreHeader.transform.DOScale(1, _headerAnimationDuration).From(0).SetEase(Ease.OutCubic));
             animSequence.AppendInterval(_headerScoreDelay);
             animSequence.Append(_scoreTextTransform.DOScale(1, _scoreTextAnimationDuration).From(0).SetEase(Ease.OutBack));
-            animSequence.Join(DOTween.To(() => _CurrentShownScore, x => _CurrentShownScore = x, GameManager.Score, 2f).SetEase(Ease.InOutCubic));
+            animSequence.Join(DOTween.To(() => _CurrentShownScore, x => _CurrentShownScore = x, GameManager.Score, _scoreTextAnimationDuration).SetEase(Ease.InOutCubic));
             animSequence.AppendInterval(_scorePromptDelay);
             animSequence.Append(_scorePrompt.DOScale(1, _promptAnimationDuration).From(0).SetEase(Ease.OutCubic));
             animSequence.onComplete += () => _confirmButton.interactable = true;

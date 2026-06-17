@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: chimp_hit
   m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
   <ID>k__BackingField: 0
-  MulticlipsPlayMode: 2
+  MulticlipsPlayMode: 3
   _group: {fileID: 0}
   Clips:
   - AudioClip: {fileID: 8300000, guid: 0a365d87428461d46b77a6bd7e3cd861, type: 3}

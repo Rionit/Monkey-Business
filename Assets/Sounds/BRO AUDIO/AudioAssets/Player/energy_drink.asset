@@ -32,10 +32,10 @@ MonoBehaviour:
   <TransitionTime>k__BackingField: 0
   <SpatialSetting>k__BackingField: {fileID: 0}
   <Priority>k__BackingField: 128
-  <Pitch>k__BackingField: 1
-  <PitchRandomRange>k__BackingField: 0
+  <Pitch>k__BackingField: 1.025
+  <PitchRandomRange>k__BackingField: 0.15000004
   <VolumeRandomRange>k__BackingField: 0
-  <RandomFlags>k__BackingField: 0
+  <RandomFlags>k__BackingField: 1
   SeamlessTransitionType: 0
   TransitionTempo:
     BPM: 0

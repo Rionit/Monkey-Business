@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad670d1adcf8be84f891f82b894c08a5, type: 3}
+  m_Name: monkster-ncs
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
+  <ID>k__BackingField: 0
+  MulticlipsPlayMode: 3
+  _group: {fileID: 0}
+  Clips:
+  - AudioClip: {fileID: 8300000, guid: f02bfb298e9b94648b23c6b3997224a9, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 52.424
+    EndPosition: 73.76
+    FadeIn: 0.989
+    FadeOut: 1.131
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: b6f7c3ef172028a49b4508621873eb38, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 109.569
+    EndPosition: 25.578
+    FadeIn: 0.182
+    FadeOut: 0.544
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 9a316b61178b28841b192f42ec8c554f, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 47.266
+    EndPosition: 3.34
+    FadeIn: 1.336
+    FadeOut: 1.838
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 83da58c34cb355541b975490ae0654bf, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 40.918
+    EndPosition: 0.671
+    FadeIn: 1.574
+    FadeOut: 0.336
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 5b1675673c5488141aa3089e7040508e, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 38.179
+    EndPosition: 4.047
+    FadeIn: 1.214
+    FadeOut: 1.08
+    Weight: 0
+  <AudioAsset>k__BackingField: {fileID: 11400000, guid: 09d3fc380ddfa5d45a47c19f235e8d46, type: 2}
+  <AudioType>k__BackingField: 1
+  <MasterVolume>k__BackingField: 1
+  <Loop>k__BackingField: 1
+  <SeamlessLoop>k__BackingField: 0
+  <TransitionTime>k__BackingField: 0
+  <SpatialSetting>k__BackingField: {fileID: 0}
+  <Priority>k__BackingField: 128
+  <Pitch>k__BackingField: 1
+  <PitchRandomRange>k__BackingField: 0
+  <VolumeRandomRange>k__BackingField: 0
+  <RandomFlags>k__BackingField: 0
+  SeamlessTransitionType: 0
+  TransitionTempo:
+    BPM: 0
+    Beats: 0
+  SnapToFullVolume: 0

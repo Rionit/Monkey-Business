@@ -18,6 +18,8 @@ namespace MonkeyBusiness.Perks
         public UnityEvent OnNegativePerkRemoved = new();
 
         [SerializeField] private SoundSource rollingSound;
+        [SerializeField] private SoundSource buffFanfare;
+        [SerializeField] private SoundSource debbuffFanfare;
         
         [BoxGroup("Setup")]
         [SerializeField] private GameObject perkPrefab;
@@ -105,13 +107,23 @@ namespace MonkeyBusiness.Perks
             while (selectedPerks.Count < 3 && selectedPerks.Count < positivePerks.Count)
             {
                 var perk = GetRandomPositivePerk();
-                if (!selectedPerks.Contains(perk) && !(perk.isUnique && StatsManager.Instance._perksUsage.ContainsKey(perk) && StatsManager.Instance._perksUsage[perk]))
-                    selectedPerks.Add(perk);
+
+                if (selectedPerks.Contains(perk))
+                    continue;
+
+                int usages = StatsManager.Instance._perksUsage.TryGetValue(perk, out var count)
+                    ? count
+                    : 0;
+
+                if (perk.isUnique && usages >= perk.maxUsages)
+                    continue;
+
+                selectedPerks.Add(perk);
             }
 
             foreach (var perk in selectedPerks)
                 activePerks.Add(InstantiatePerk(perk));
-            
+
             positivePerkText.gameObject.SetActive(true);
         }
 
@@ -149,12 +161,13 @@ namespace MonkeyBusiness.Perks
             if (selectedPerk != null) return;
 
             selectedPerk = perk;
+            activePerks.Remove(selectedPerk.gameObject);
 
             StopPositiveTimer();
 
             foreach (var obj in activePerks)
             {
-                if (obj.GetComponent<Perk>() != selectedPerk)
+                if (obj.GetComponent<Perk>() != selectedPerk) // just in case
                     StartCoroutine(FadeOut(obj));
             }
 
@@ -204,6 +217,8 @@ namespace MonkeyBusiness.Perks
             StopCoroutine(nameof(FadeArrows));
             StopCoroutine(nameof(FadeBackground));
             
+            buffFanfare.Play();
+            
             // show ONLY positive text
             positivePerkText.gameObject.SetActive(true);
             negativePerkText.gameObject.SetActive(false);
@@ -227,6 +242,8 @@ namespace MonkeyBusiness.Perks
             StopCoroutine(nameof(FadeArrows));
             StopCoroutine(nameof(FadeBackground));
 
+            debbuffFanfare.Play();
+            
             // show ONLY negative text
             negativePerkText.gameObject.SetActive(true);
             positivePerkText.gameObject.SetActive(false);
@@ -320,7 +337,7 @@ namespace MonkeyBusiness.Perks
             yield return FadeOutUI();
 
             if (selectedPerk != null)
-                StartCoroutine(FadeOut(selectedPerk.gameObject));
+                StartCoroutine(FadeOut(selectedPerk.gameObject, false));
 
             yield return new WaitForSeconds(0.25f);
 
@@ -408,7 +425,7 @@ namespace MonkeyBusiness.Perks
             waitingForNegativeConfirm = false;
 
             StartCoroutine(FadeOutUI());
-            StartCoroutine(FadeOut(negativePerk.gameObject));
+            StartCoroutine(FadeOut(negativePerk.gameObject, false));
 
             negativePerk = null;
 
@@ -516,10 +533,11 @@ namespace MonkeyBusiness.Perks
             background.color = new Color(c.r, c.g, c.b, a);
         }
 
-        private IEnumerator FadeOut(GameObject go)
+        private IEnumerator FadeOut(GameObject go, bool destroy = true)
         {
             CanvasGroup cg = go.GetComponent<CanvasGroup>();
-            if (cg == null) cg = go.AddComponent<CanvasGroup>();
+            if (cg == null)
+                cg = go.AddComponent<CanvasGroup>();
 
             RectTransform rt = go.GetComponent<RectTransform>();
 
@@ -539,7 +557,15 @@ namespace MonkeyBusiness.Perks
                 yield return null;
             }
 
-            Destroy(go);
+            if (destroy)
+            {
+                Destroy(go);
+            }
+            else
+            {
+                cg.alpha = 0f;
+                go.SetActive(false);
+            }
         }
 
         private IEnumerator MoveTweenWorld(RectTransform rt, Vector3 target, float duration)
@@ -600,7 +626,11 @@ namespace MonkeyBusiness.Perks
             foreach (var perk in temporaryPerks)
             {
                 if (perk != null)
+                {
                     perk.Reset();
+
+                    Destroy(perk.gameObject);
+                }
 
                 OnNegativePerkRemoved.Invoke();
             }

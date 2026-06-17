@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using MonkeyBusiness.Combat.Health;
+using MonkeyBusiness.Combat.Weapons;
 using MonkeyBusiness.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,9 +13,17 @@ namespace MonkeyBusiness.Managers
         public static StatsManager Instance { get; private set; }
 
         public UnityEvent<bool> onNonChimpCanPoop;
-
+        
         public bool canNonChimpPoop = false;
 
+        public float RateOfFireMultiplier = 1f;
+
+        public float MonksterFrenzyDuration = 30f;
+
+        public bool IsChimpexActive = false;
+
+        public bool UseNoCopyrightMusic =>  PlayerPrefs.GetInt("UseNoCopyright", 1) == 1;
+        
         [ShowInInspector] public float PlayerMaxHealth
         {
             // Null check is only to avoid error in the Editor
@@ -70,9 +79,9 @@ namespace MonkeyBusiness.Managers
         }
         
         [ShowInInspector]
-        public float GetDamageMultiplier(GameObject prefab)
+        public float GetWeaponDamageMultiplier(GameObject prefab)
         {
-            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers) || multipliers.Count == 0)
+            if (!_weaponDamageMultipliers.TryGetValue(prefab, out var multipliers) || multipliers.Count == 0)
                 return 1f;
 
             float positiveBonus = 0f;
@@ -94,38 +103,40 @@ namespace MonkeyBusiness.Managers
         }
 
         [ShowInInspector]
-        public void AddDamageMultiplier(GameObject prefab, float amount)
+        public void AddWeaponDamageMultiplier(GameObject prefab, float amount)
         {
-            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers))
+            if (!_weaponDamageMultipliers.TryGetValue(prefab, out var multipliers))
             {
                 multipliers = new List<float>();
-                _damageMultipliers[prefab] = multipliers;
+                _weaponDamageMultipliers[prefab] = multipliers;
             }
 
             multipliers.Add(amount);
         }
         
         [ShowInInspector]
-        public bool RemoveDamageMultiplier(GameObject prefab, float amount)
+        public bool RemoveWeaponDamageMultiplier(GameObject prefab, float amount)
         {
-            if (!_damageMultipliers.TryGetValue(prefab, out var multipliers))
+            if (!_weaponDamageMultipliers.TryGetValue(prefab, out var multipliers))
                 return false;
 
             bool removed = multipliers.Remove(amount);
 
             if (multipliers.Count == 0)
-                _damageMultipliers.Remove(prefab);
+                _weaponDamageMultipliers.Remove(prefab);
 
             return removed;
         }
         
-        [ShowInInspector] private Dictionary<GameObject, List<float>> _damageMultipliers = new();
+        [ShowInInspector] private Dictionary<GameObject, List<float>> _weaponDamageMultipliers = new();
         
-        [ShowInInspector] public Dictionary<ScriptableObject, bool> _perksUsage = new();
+        [ShowInInspector] public Dictionary<ScriptableObject, int> _perksUsage = new();
         
         private HealthController _healthController;
         public EquipmentManager _equipmentManager {get; private set;}
         private PlayerCharacter _characterController;
+        private PlayerCamera _camera;
+        private Player.Player _player;
         
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Awake()
@@ -139,28 +150,39 @@ namespace MonkeyBusiness.Managers
 
             GameManager gameManager = GetComponent<GameManager>();
 
+            
             if (gameManager == null)
             {
                 Debug.LogError("StatsManager requires GameManager on the same object.");
                 return;
             }
 
-            GameObject player = gameManager.PlayerCharacter;
+            GameObject playerCharacter = gameManager.PlayerCharacter;
 
-            if (player == null)
+            if (playerCharacter == null)
             {
                 Debug.LogError("GameManager PlayerCharacter is null.");
                 return;
             }
 
-            _characterController = player.GetComponent<PlayerCharacter>();
-            _healthController = player.GetComponentInParent<HealthController>();
-            _equipmentManager = player.GetComponentInParent<EquipmentManager>();
+            _player = playerCharacter.GetComponentInParent<Player.Player>();
+            _camera = _player.GetComponentInChildren<PlayerCamera>();
+            _characterController = playerCharacter.GetComponent<PlayerCharacter>();
+            _healthController = playerCharacter.GetComponentInParent<HealthController>();
+            _equipmentManager = playerCharacter.GetComponentInParent<EquipmentManager>();
 
             if (_characterController != null)
             {
                 _characterController.CanUseRope = canUseRope;
             }
+        }
+
+        public void SetCameraSensitivity(float sensitivity)
+        {
+            if(_camera != null)
+                _camera.sensitivity = sensitivity;
+            else
+                Debug.LogError("Camera is null.");
         }
     }
 }
