@@ -462,6 +462,9 @@ namespace MonkeyBusiness.Player
             }
         }
 
+        /// <summary>
+        /// StartSwing() method for TOGGLE swing mode
+        /// </summary>
         private void StartSwingAlt()
         {
             if(_lastAimedAtGrapplePointLingerRemaining > 0f)
@@ -491,6 +494,11 @@ namespace MonkeyBusiness.Player
                 _ropeAnimCoroutine = StartCoroutine(ShootHook(_swingAnchor, _ropeAnimDuration * (_swingRopeLength / _swingMaxDistance)));                
                 OnSwingInvoked?.Invoke();
                 _swingHoldDurationRemaining = 0f;
+                failedSwing = false;
+            }
+            else
+            {
+                failedSwing = true;
             }
         }
 
@@ -1136,13 +1144,13 @@ namespace MonkeyBusiness.Player
         /// </summary>
         private void PlaySwingFail()
         {
-            Debug.Log("BLEH!");
             if (_ropeAnimCoroutine != null)
             {
                 StopCoroutine(_ropeAnimCoroutine);                    
             }
             _ropeAnimCoroutine = StartCoroutine(FailHook(_lastAimedAtNonGrapplePoint, _ropeAnimDuration));   
             _swingHoldDurationRemaining = 0.0f;
+            failedSwing = false;
         }
     }
 }
