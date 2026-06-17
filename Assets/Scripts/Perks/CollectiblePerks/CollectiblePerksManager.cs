@@ -56,7 +56,8 @@ namespace MonkeyBusiness.Perks
             
             _pressure = 0f;
             _pressure += GameManager.Instance.AliveEnemies;
-            _pressure += _timeSinceLastSpawn * timeFactor * GameManager.Instance.CurrentWave;
+            _pressure += _timeSinceLastSpawn * timeFactor;
+            _pressure += GameManager.Instance.CurrentWave;
 
             if (_pressure > pressureThreshold)
             {

@@ -107,13 +107,23 @@ namespace MonkeyBusiness.Perks
             while (selectedPerks.Count < 3 && selectedPerks.Count < positivePerks.Count)
             {
                 var perk = GetRandomPositivePerk();
-                if (!selectedPerks.Contains(perk) && !(perk.isUnique && StatsManager.Instance._perksUsage.ContainsKey(perk) && StatsManager.Instance._perksUsage[perk]))
-                    selectedPerks.Add(perk);
+
+                if (selectedPerks.Contains(perk))
+                    continue;
+
+                int usages = StatsManager.Instance._perksUsage.TryGetValue(perk, out var count)
+                    ? count
+                    : 0;
+
+                if (perk.isUnique && usages >= perk.maxUsages)
+                    continue;
+
+                selectedPerks.Add(perk);
             }
 
             foreach (var perk in selectedPerks)
                 activePerks.Add(InstantiatePerk(perk));
-            
+
             positivePerkText.gameObject.SetActive(true);
         }
 

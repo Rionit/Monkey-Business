@@ -130,7 +130,7 @@ namespace MonkeyBusiness.Managers
         
         [ShowInInspector] private Dictionary<GameObject, List<float>> _weaponDamageMultipliers = new();
         
-        [ShowInInspector] public Dictionary<ScriptableObject, bool> _perksUsage = new();
+        [ShowInInspector] public Dictionary<ScriptableObject, int> _perksUsage = new();
         
         private HealthController _healthController;
         public EquipmentManager _equipmentManager {get; private set;}

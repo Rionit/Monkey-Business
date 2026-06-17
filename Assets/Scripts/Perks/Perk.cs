@@ -94,7 +94,12 @@ namespace MonkeyBusiness.Perks
         public void ApplyEffect()
         {
             Debug.Log("Applying effect " + this.name);
-            StatsManager.Instance._perksUsage[perkSO] = true;
+            
+            if (!StatsManager.Instance._perksUsage.ContainsKey(perkSO))
+                StatsManager.Instance._perksUsage[perkSO] = 0;
+
+            StatsManager.Instance._perksUsage[perkSO]++;
+            
             perkSO.effect?.Apply();
         }
 

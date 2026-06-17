@@ -204840,7 +204840,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: timeFactor
-      value: 0.2
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 1055059926324265701, guid: 56537f6b86bc4cd3f85329ea00ff5b9f, type: 3}
       propertyPath: spawnersRoot
