@@ -66,6 +66,10 @@ namespace MonkeyBusiness.Player
     /// </summary>
     public class PlayerCharacter : MonoBehaviour, ICharacterController, ITargetable
     {
+        [SerializeField]
+        [HideInInspector]
+        public Player.SwingMode swingMode;
+
         [Header("Core References")]
         [Tooltip("Kinematic motor responsible for movement and collisions.")]
         [SerializeField] private KinematicCharacterMotor motor;
@@ -186,7 +190,14 @@ namespace MonkeyBusiness.Player
 
         public UnityEvent OnSwingInvoked;
 
-        public bool IsSwingReady()
+        public static bool failedSwing = false;
+
+        public bool IsSwingOnCooldown()
+        {
+            return !(canUseRope && _swingTimeRemaining <= 0f && _swingCooldownRemaining <= 0f);
+        }
+
+        public bool AimingAtSwingable()
         {
             Debug.Log("Swing max distance: " + _swingMaxDistance);
             bool hitSwingableSurface = Physics.Raycast(
@@ -199,7 +210,7 @@ namespace MonkeyBusiness.Player
 
             Debug.Log("Swing ready check: canUseRope=" + canUseRope + " swingCooldownRemaining=" + _swingCooldownRemaining + " swingTimeRemaining=" + _swingTimeRemaining + " hitSwingableSurface=" + hitSwingableSurface);
 
-            return canUseRope && _swingTimeRemaining <= 0f && _swingCooldownRemaining <= 0f && hitSwingableSurface;
+            return hitSwingableSurface;
         }
 
         // Swing internals
@@ -247,6 +258,19 @@ namespace MonkeyBusiness.Player
         private float _ropeAnimDuration = 0.33f;
         private Coroutine _ropeAnimCoroutine;
 
+        
+        private Vector3 _lastAimedAtGrapplePoint;
+        private Vector3 _lastAimedAtNonGrapplePoint;
+
+        [SerializeField]
+        private float _swingHoldDuration = 0.33f;
+        private float _swingHoldDurationRemaining = 0.0f;
+
+        [SerializeField]
+        private float _lastAimedAtGrapplePointLinger = 0.15f;
+        private float _lastAimedAtGrapplePointLingerRemaining = 0.0f;
+
+
         /// <summary>
         /// Initialize required components.
         /// </summary>
@@ -273,10 +297,35 @@ namespace MonkeyBusiness.Player
         /// </summary>
         public void UpdateInput(CharacterInput input)
         {
-            // Handle swing input
-            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f) // && !motor.GroundingStatus.IsStableOnGround)
-                StartSwing();
+            if(!input.Swing)
+                failedSwing = false;
+            
+            // swing press coyote time
+            if(swingMode == Player.SwingMode.TOGGLE && _swingHoldDurationRemaining > 0f)
+            {
+                if (input.SwingSustain)
+                {
+                    StartSwing();
+                }
+                else
+                {
+                    PlaySwingFail();
+                }
+            }
 
+            // Handle swing input
+            if (input.Swing && _state.Stance != Stance.Swing && canUseRope && _swingCooldownRemaining <= 0f)
+            {
+                // && !motor.GroundingStatus.IsStableOnGround)
+                if(swingMode == Player.SwingMode.TOGGLE)
+                {
+                    _swingHoldDurationRemaining = _swingHoldDuration;
+                }
+                
+                StartSwing();
+            } 
+
+          
             if (!input.SwingSustain && _state.Stance == Stance.Swing)
                 StopSwing();
 
@@ -316,6 +365,12 @@ namespace MonkeyBusiness.Player
         /// </summary>
         void StartSwing()
         {
+            if(swingMode == Player.SwingMode.TOGGLE)
+            {
+                StartSwingAlt();
+                return; // todo cleanup code for remnants of toggle mode stuff
+            }
+
             if (!canUseRope || _swingCooldownRemaining > 0f)
                 return;
             var cam = UnityEngine.Camera.main;
@@ -325,19 +380,29 @@ namespace MonkeyBusiness.Player
             // Raycast to find swing anchor
             if (!Physics.Raycast(origin, dir, out RaycastHit hit, _swingMaxDistance, _swingRaycastLayerMask))
             {
-                // hit nothing
-                if(_ropeAnimCoroutine is not null)
+                
+                switch(swingMode)
                 {
-                    StopCoroutine(_ropeAnimCoroutine);
+                    case Player.SwingMode.HOLD:
+                        failedSwing =true;
+                        break;
+
+                    case Player.SwingMode.TOGGLE:  
+                        
+                        // hit nothing
+                        if(_ropeAnimCoroutine is not null)
+                        {
+                            StopCoroutine(_ropeAnimCoroutine);
+                        }
+
+                        _ropeAnimCoroutine = StartCoroutine(FailHook(origin + _swingMaxDistance * dir, _ropeAnimDuration));
+                        return;
                 }
-
-                _ropeAnimCoroutine = StartCoroutine(FailHook(origin + _swingMaxDistance * dir, _ropeAnimDuration));
-                return;
             }
-
-            if((whatIsSwingable & (1 << hit.transform.gameObject.layer)) != 0){
+            else if((whatIsSwingable & (1 << hit.transform.gameObject.layer)) != 0){
                 // hit swingable
                 OnSwingInvoked?.Invoke();
+                failedSwing = false;
 
                 _state.Stance = Stance.Swing;
 
@@ -363,25 +428,114 @@ namespace MonkeyBusiness.Player
                 _ropeAnimCoroutine = StartCoroutine(ShootHook(_swingAnchor, _ropeAnimDuration * (_swingRopeLength / _swingMaxDistance)));
                 //_ropeEnd = hit.point;
             }
-            else
+            else 
             {
                 // hit environment
-                if(_ropeAnimCoroutine is not null)
+
+                switch(swingMode)
+                {
+                    case Player.SwingMode.HOLD:
+                        failedSwing = true;
+                        break;
+                    case Player.SwingMode.TOGGLE:
+                        if(_ropeAnimCoroutine is not null)
+                        {
+                            StopCoroutine(_ropeAnimCoroutine);
+                        }
+
+                        var distance = Vector3.Distance(transform.position, hit.point);
+                        _ropeAnimCoroutine = StartCoroutine(FailHook(hit.point, _ropeAnimDuration * (distance / _swingMaxDistance)));
+                        break;
+                }
+            }
+        }
+
+        private void StartSwingAlt()
+        {
+            if(_lastAimedAtGrapplePointLingerRemaining > 0f)
+            {
+                _state.Stance = Stance.Swing;
+
+                _rb = GetComponent<Rigidbody>();
+                if (_rb != null)
+                {
+                    _rb.freezeRotation = true;
+                    _rb.linearVelocity = motor.Velocity;
+                    _rb.collisionDetectionMode = CollisionDetectionMode.ContinuousDynamic;
+                }
+                if (motor != null)
+                    motor.enabled = false;
+
+                _swingAnchor = _lastAimedAtGrapplePoint;
+                
+                _swingRopeLength = Vector3.Distance(transform.position, _swingAnchor);
+                _swingTimeRemaining = Mathf.Lerp(swingMinDuraion, swingDuration, _swingRopeLength / _swingMaxDistance);
+
+                if (_ropeAnimCoroutine is not null)
                 {
                     StopCoroutine(_ropeAnimCoroutine);
                 }
 
-                var distance = Vector3.Distance(transform.position, hit.point);
-                _ropeAnimCoroutine = StartCoroutine(FailHook(hit.point, _ropeAnimDuration * (distance / _swingMaxDistance)));
+                _ropeAnimCoroutine = StartCoroutine(ShootHook(_swingAnchor, _ropeAnimDuration * (_swingRopeLength / _swingMaxDistance)));                
+                OnSwingInvoked?.Invoke();
+                _swingHoldDurationRemaining = 0f;
             }
         }
 
-            /// <summary>
-            /// Stops swinging and restores motor control.
-            /// </summary>
-            void StopSwing()
+        void Update()
+        {
+
+            if(swingMode == Player.SwingMode.TOGGLE)
+            {
+                if(_lastAimedAtGrapplePointLingerRemaining > 0f)
+                {
+                    _lastAimedAtGrapplePointLingerRemaining = Mathf.Max(_lastAimedAtGrapplePointLingerRemaining - Time.deltaTime, 0f);
+                }
+
+                if(_swingHoldDurationRemaining > 0f)
+                {
+                    _swingHoldDurationRemaining = Mathf.Max(_swingHoldDurationRemaining - Time.deltaTime, 0f);
+                    if(_swingHoldDurationRemaining == 0f)
+                    {
+                        // It just ran out
+                        PlaySwingFail();
+                    }
+                }
+
+
+                if (canUseRope && _swingCooldownRemaining <= 0f)
+                {
+                    var cam = UnityEngine.Camera.main;
+                    var origin = cam.transform.position;
+                    var dir = cam.transform.forward;
+                    // Store raycast
+                    if(Physics.Raycast(origin, dir, out RaycastHit hit, _swingMaxDistance, _swingRaycastLayerMask)){                            
+                        if((whatIsSwingable & (1 << hit.transform.gameObject.layer)) != 0)
+                        {
+                            // hit swingable
+                            _lastAimedAtGrapplePoint = hit.point;
+                            _lastAimedAtGrapplePointLingerRemaining = _lastAimedAtGrapplePointLinger;
+                        }
+                        else
+                        {
+                            _lastAimedAtNonGrapplePoint = hit.point;
+                        }
+                    }
+                    else
+                    {
+                        _lastAimedAtNonGrapplePoint = origin + _swingMaxDistance * dir;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// Stops swinging and restores motor control.
+        /// </summary>
+        void StopSwing()
             {
                 _state.Stance = Stance.Stand;
+                failedSwing = false;
 
                 Vector3 currentPos = transform.position;
                 Vector3 exitVelocity = _rb != null ? _rb.linearVelocity : Vector3.zero;
@@ -930,6 +1084,11 @@ namespace MonkeyBusiness.Player
 
         public Vector3? HookScan()
         {
+            if(swingMode == Player.SwingMode.TOGGLE)
+            {
+                return _lastAimedAtGrapplePointLingerRemaining > 0f ? _lastAimedAtGrapplePoint : null;
+            }
+
             var cam = UnityEngine.Camera.main;
             var origin = cam.transform.position;
             var dir = cam.transform.forward;
@@ -948,6 +1107,20 @@ namespace MonkeyBusiness.Player
             {
                 return null;
             }
+        }
+
+        /// <summary>
+        /// Toggle mode ONLY
+        /// </summary>
+        private void PlaySwingFail()
+        {
+            Debug.Log("BLEH!");
+            if (_ropeAnimCoroutine != null)
+            {
+                StopCoroutine(_ropeAnimCoroutine);                    
+            }
+            _ropeAnimCoroutine = StartCoroutine(FailHook(_lastAimedAtNonGrapplePoint, _ropeAnimDuration));   
+            _swingHoldDurationRemaining = 0.0f;
         }
     }
 }

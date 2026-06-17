@@ -1,0 +1,75 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad670d1adcf8be84f891f82b894c08a5, type: 3}
+  m_Name: monkster
+  m_EditorClassIdentifier: BroAudio::Ami.BroAudio.Data.AudioEntity
+  <ID>k__BackingField: 0
+  MulticlipsPlayMode: 3
+  _group: {fileID: 0}
+  Clips:
+  - AudioClip: {fileID: 8300000, guid: 3ae4ceedcafad2b48ae767a59f3dadeb, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 24.962
+    EndPosition: 83.951
+    FadeIn: 1.291
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 46bfde84b88338d4697b4c2305fab2d7, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 0
+    EndPosition: 4.235
+    FadeIn: 0
+    FadeOut: 0.898
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: fce9c04c8ceed1e40b2ddae14b0278f7, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 0
+    EndPosition: 9.246
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 09bfd0d8b80ef0640b2a260afb3e1e7e, type: 3}
+    Volume: 1.3440168
+    Delay: 0
+    StartPosition: 275.439
+    EndPosition: 11.679
+    FadeIn: 1.46
+    FadeOut: 3.894
+    Weight: 0
+  - AudioClip: {fileID: 8300000, guid: 039759a2942ac6349b5de52f5912c3d0, type: 3}
+    Volume: 1
+    Delay: 0
+    StartPosition: 64.746
+    EndPosition: 1.522
+    FadeIn: 0
+    FadeOut: 0
+    Weight: 0
+  <AudioAsset>k__BackingField: {fileID: 11400000, guid: 09d3fc380ddfa5d45a47c19f235e8d46, type: 2}
+  <AudioType>k__BackingField: 1
+  <MasterVolume>k__BackingField: 1
+  <Loop>k__BackingField: 1
+  <SeamlessLoop>k__BackingField: 0
+  <TransitionTime>k__BackingField: 0
+  <SpatialSetting>k__BackingField: {fileID: 0}
+  <Priority>k__BackingField: 128
+  <Pitch>k__BackingField: 1
+  <PitchRandomRange>k__BackingField: 0
+  <VolumeRandomRange>k__BackingField: 0
+  <RandomFlags>k__BackingField: 0
+  SeamlessTransitionType: 0
+  TransitionTempo:
+    BPM: 0
+    Beats: 0
+  SnapToFullVolume: 0

@@ -1,7 +1,5 @@
-using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 using DG.Tweening;
 
@@ -25,6 +23,14 @@ namespace MonkeyBusiness.UI
         [BoxGroup("Health Bar Settings")]
         [ReadOnly, SerializeField, Tooltip("Previous health state used to detect transitions.")]
         private HealthState previousState = HealthState.HIGH;
+
+        [BoxGroup("Health Bar Settings")]
+        [SerializeField]
+        private Color overrideColor = Color.cyan;
+        
+        [BoxGroup("Health Bar Settings")]
+        [SerializeField]
+        private bool useOverrideColor = false;
         
         [BoxGroup("Health Bar Settings"), Required, Tooltip("Outline image of the health bar.")]
         [SerializeField] private Image outline;
@@ -155,6 +161,17 @@ namespace MonkeyBusiness.UI
             }
         }
 
+        public void OverrideColor(Color color)
+        {
+            overrideColor = color;
+            useOverrideColor = true;
+        }
+
+        public void ResetOverrideColor()
+        {
+            useOverrideColor = false;
+        }
+
         /// <summary>
         /// Sets the health value with tween animation.
         /// </summary>
@@ -255,6 +272,8 @@ namespace MonkeyBusiness.UI
         /// </summary>
         private Color GetFillColor()
         {
+            if(useOverrideColor) return overrideColor;
+            
             return currentState switch
             {
                 HealthState.HIGH => highHealthColor,

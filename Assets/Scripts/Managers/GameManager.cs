@@ -52,6 +52,8 @@ namespace MonkeyBusiness.Managers
 
         public static SortedDictionary<int,  List<ScoreEntry>> Scoreboard = new ();
 
+        public static Dictionary<string, int> ScoreboardNamesToScore = new();
+
         public static int LevelReached = 0;
 
         const int MAX_SCOREBOARD_ENTRIES = 10;
@@ -159,6 +161,9 @@ namespace MonkeyBusiness.Managers
         [SerializeField]
         private GameObject _playerCharacter;
 
+        [SerializeField]
+        private  MusicController musicController;
+        
         /// <summary>
         /// Player's character object, used for enemy targeting
         /// </summary>
@@ -216,6 +221,8 @@ namespace MonkeyBusiness.Managers
         /// Currently alive enemies
         /// </summary>
         private List<GameObject> _enemies = new();
+        
+        public float AliveEnemies => _enemies.Count;
 
         private InputAction _pauseAction;
 
@@ -226,6 +233,8 @@ namespace MonkeyBusiness.Managers
         List<SpawnInformation> _waveDefinitions = new();
 
         int _currentWave = 0;
+        
+        public int CurrentWave => _currentWave;
 
         Dictionary<GameObject, int> _typesToSpawn = new();
 
@@ -298,6 +307,11 @@ namespace MonkeyBusiness.Managers
             Cursor.lockState = Time.timeScale == 0f ? CursorLockMode.Confined : CursorLockMode.Locked;
 
             BlurBackground(Time.timeScale == 0f);
+            
+            if (Time.timeScale == 0f)
+                BroAudio.SetEffect(Effect.LowPass(500), BroAudioType.Music); 
+            else
+                BroAudio.SetEffect(Effect.ResetLowPass(), BroAudioType.Music);
 
             EnableHUD(Time.timeScale != 0f);
 
@@ -332,6 +346,11 @@ namespace MonkeyBusiness.Managers
 
             BlurBackground(isPaused);
             EnableHUD(!isPaused);
+            
+            if (isPaused)
+                BroAudio.SetEffect(Effect.LowPass(500), BroAudioType.Music); 
+            else
+                BroAudio.SetEffect(Effect.ResetLowPass(), BroAudioType.Music);
 
             foreach(var receiver in _inputReceivers)
             {
@@ -448,6 +467,9 @@ namespace MonkeyBusiness.Managers
             if(_enemiesRemaining == 0)
             {
                 Debug.Log("Wave defeated!");
+                StatsManager.Instance.PlayerHealth = StatsManager.Instance.PlayerMaxHealth;
+                StatsManager.Instance._equipmentManager.ReloadAllWeapons();
+                
                 _currentWave++;
                 OnWaveDefeated.Invoke();
                 OnWaveDefeatedNum.Invoke(_currentWave);
@@ -487,10 +509,12 @@ namespace MonkeyBusiness.Managers
                 receiver.CanReceiveInput = false;
             }
             Cursor.lockState = CursorLockMode.Confined;
+            _canPause = false;
             yield return new WaitUntil(() => _perkSelected);
             Cursor.lockState = CursorLockMode.Locked;
             _hud.SetActive(true);
             _perkSelected = false;
+            _canPause = true;
 
             foreach(var receiver in _inputReceivers)
             {
@@ -610,9 +634,9 @@ namespace MonkeyBusiness.Managers
             {
                 int score = PlayerPrefs.GetInt($"Scoreboard_{i}_Score", int.MinValue);
                 string name = PlayerPrefs.GetString($"Scoreboard_{i}_Name");
-
                 if(score > 0)
                 {
+                    ScoreboardNamesToScore[name] = score;
                     if(!scoreboard.ContainsKey(score))
                     {
                         scoreboard[score] = new List<string>();

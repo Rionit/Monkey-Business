@@ -4,13 +4,15 @@ using MonkeyBusiness.Managers;
 using MonkeyBusiness.Misc;
 using Sirenix.OdinInspector;
 using MonkeyBusiness.Combat.Weapons;
+using MonkeyBusiness.Combat.Regen;
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Combat
 {
     /// <summary>
     /// Handles rengeneration of ammo for the player when stepping on the ammo regeneration pad.
     /// </summary>
-    public class AmmoRegenController : MonoBehaviour
+    public class AmmoRegenController : MonoBehaviour, IAmmoRegen
     {
 
         [SerializeField]
@@ -31,6 +33,8 @@ namespace MonkeyBusiness.Combat
         [Tooltip("Collider of the ammo regeneration pad to detect player stepping on it.")]
         Collider _collider;
 
+        public UnityEvent OnCollected { get; private set; } = new UnityEvent();
+
         bool _canReplenish = true;
 
         void OnTriggerEnter(Collider other)
@@ -48,14 +52,9 @@ namespace MonkeyBusiness.Combat
             _ammoRegenMesh.enabled =false;
             _canReplenish = false;
             var equipManager = playerObject.GetComponentInParent<EquipmentManager>();
-            foreach(var item in equipManager.Items)
-            {
-                if(item is IWeapon weapon)
-                {
-                    weapon.ReloadPercent(_replenishmentPercentage);
-                }
-            }
-
+            
+            (this as IAmmoRegen).RestoreAmmo(equipManager, _replenishmentPercentage);
+            
             yield return new WaitForSeconds(_cooldown);
 
             Debug.Log("Ammo regen pad is ready to use again.");

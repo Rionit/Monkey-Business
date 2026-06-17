@@ -159,6 +159,14 @@ namespace MonkeyBusiness.Managers
             
             EquipSlot(itemSlot);
         }
+
+        public void ReloadAllWeapons()
+        {
+            Items.ForEach(item =>
+            {
+                if(item is IWeapon weapon) weapon.Reload(weapon.MaxAmmo);
+            });
+        }
         
         /// <summary>
         /// Equips the item in the provided slot. If we're holding an item already, unequip/drop it
@@ -204,6 +212,28 @@ namespace MonkeyBusiness.Managers
             Items[_currentItemSlot].Unequip();
             _previousItemSlot = _currentItemSlot;
             _currentItemSlot = -1;
+        }
+        
+        /// <summary>
+        /// Hides/unhides the currently equipped item.
+        /// </summary>
+        /// <param name="hide">True = hide, False = unhide</param>
+        public void SetCurrentItemHidden(bool hide)
+        {
+            // Hide equipped weapon/tool
+            if (_currentItemSlot >= 0 && _currentItemSlot < Items.Count)
+            {
+                if (Items[_currentItemSlot] is MonoBehaviour itemBehaviour)
+                {
+                    itemBehaviour.gameObject.SetActive(!hide);
+                }
+            }
+
+            // Hide currently held pickup item
+            if (_heldItem != null)
+            {
+                _heldItem.gameObject.SetActive(!hide);
+            }
         }
 
         /// <summary>

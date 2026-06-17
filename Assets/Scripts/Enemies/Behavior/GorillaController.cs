@@ -98,6 +98,9 @@ namespace MonkeyBusiness.Enemies.Behavior
         [FoldoutGroup("Rage")]
         int _enragedMaterialIndex = 0;
 
+        [SerializeField]
+        Animator _animator;
+
         void Awake()
         {
             _enragedMaterialIndex = _materialController.Order == EnemyMaterialController.MaterialOrder.SKIN_CLOTHING ? 0 : 1;
@@ -130,7 +133,7 @@ namespace MonkeyBusiness.Enemies.Behavior
                 _attackController.Damage *= _speedMultiplier; // Increase damage as well for more challenge
                 _attackController.ChargeTime *= _chargeTimeMultiplier; // Decrease charge time for more challenge
 
-
+                _animator.SetFloat("AttackMultiplier", 1.6f);
                 SetEnragedMaterital(true);
             }
         }

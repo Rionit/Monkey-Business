@@ -1,10 +1,11 @@
 using System.Collections;
 using MonkeyBusiness.Combat.Health;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace MonkeyBusiness.Combat.Regen
 {
-    public class SmallHealthPickup : MonoBehaviour
+    public class SmallHealthPickup : MonoBehaviour, IHealthRegen
     {
         /// <summary>
         /// How much to heal on pickup
@@ -17,6 +18,8 @@ namespace MonkeyBusiness.Combat.Regen
         [SerializeField]
         private float _lifeTime = 10f;
         private Coroutine _lifetimeCoroutine;
+
+        public UnityEvent OnCollected { get; private set; } = new UnityEvent();
 
         // Start is called once before the first execution of Update after the MonoBehaviour is created
         void Start()
@@ -42,7 +45,8 @@ namespace MonkeyBusiness.Combat.Regen
             if (other.gameObject.CompareTag("Player"))
             {
                 HealthController healthController = other.gameObject.GetComponentInParent<HealthController>();
-                healthController.Heal(_healthRestored);
+                //healthController.Heal(_healthRestored);
+                (this as IHealthRegen).RestoreHealth(healthController, _healthRestored);
                 StopCoroutine(_lifetimeCoroutine);
                 Destroy(gameObject);
             }

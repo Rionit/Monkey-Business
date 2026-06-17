@@ -18,6 +18,8 @@ namespace MonkeyBusiness.Perks
         public UnityEvent OnNegativePerkRemoved = new();
 
         [SerializeField] private SoundSource rollingSound;
+        [SerializeField] private SoundSource buffFanfare;
+        [SerializeField] private SoundSource debbuffFanfare;
         
         [BoxGroup("Setup")]
         [SerializeField] private GameObject perkPrefab;
@@ -42,6 +44,8 @@ namespace MonkeyBusiness.Perks
         [SerializeField] private Image arrow_down;
         [SerializeField] private TextMeshProUGUI positivePerkText;
         [SerializeField] private TextMeshProUGUI negativePerkText;
+
+        [SerializeField] private TimeBarAnimator timeBarAnimator;
 
         private readonly List<GameObject> activePerks = new();
 
@@ -72,7 +76,7 @@ namespace MonkeyBusiness.Perks
             {
                 GameManager.Instance.OnWaveDefeated.AddListener(ResetTemporaryPerks);
             }
-
+            //timeBarAnimator.gameObject.SetActive(true);
             InitNegativePool();
         }
 
@@ -82,6 +86,8 @@ namespace MonkeyBusiness.Perks
             {
                 GameManager.Instance.OnWaveDefeated.RemoveListener(ResetTemporaryPerks);
             }
+
+            timeBarAnimator.gameObject.SetActive(false);
         }
 
         private void InitNegativePool()
@@ -167,18 +173,21 @@ namespace MonkeyBusiness.Perks
 
         private IEnumerator AutoConfirmPositive()
         {
+            timeBarAnimator.Animate(5f);
             yield return new WaitForSeconds(5f);
             ConfirmPositivePerk();
         }
 
         private IEnumerator AutoConfirmNegative()
         {
+            timeBarAnimator.Animate(5f);
             yield return new WaitForSeconds(5f);
             ConfirmNegativePerk();
         }
 
         private void StopPositiveTimer()
         {
+            timeBarAnimator.StopAnimating();
             if (positiveTimerRoutine != null)
                 StopCoroutine(positiveTimerRoutine);
             positiveTimerRoutine = null;
@@ -186,6 +195,7 @@ namespace MonkeyBusiness.Perks
 
         private void StopNegativeTimer()
         {
+            timeBarAnimator.StopAnimating();
             if (negativeTimerRoutine != null)
                 StopCoroutine(negativeTimerRoutine);
             negativeTimerRoutine = null;
@@ -195,6 +205,8 @@ namespace MonkeyBusiness.Perks
         {
             StopCoroutine(nameof(FadeArrows));
             StopCoroutine(nameof(FadeBackground));
+            
+            buffFanfare.Play();
             
             // show ONLY positive text
             positivePerkText.gameObject.SetActive(true);
@@ -219,6 +231,8 @@ namespace MonkeyBusiness.Perks
             StopCoroutine(nameof(FadeArrows));
             StopCoroutine(nameof(FadeBackground));
 
+            debbuffFanfare.Play();
+            
             // show ONLY negative text
             negativePerkText.gameObject.SetActive(true);
             positivePerkText.gameObject.SetActive(false);
@@ -356,7 +370,7 @@ namespace MonkeyBusiness.Perks
 
             float duration = 1.2f;
             float elapsed = 0f;
-            
+
             rollingSound.Play();
 
             while (elapsed < duration)

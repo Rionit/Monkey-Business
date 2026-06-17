@@ -83,6 +83,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StunStar (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 519681688314796342, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8909555742987764290, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.866
@@ -149,6 +153,10 @@ PrefabInstance:
     - target: {fileID: 519681688314796342, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
       propertyPath: m_Name
       value: StunStar
+      objectReference: {fileID: 0}
+    - target: {fileID: 519681688314796342, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2309544519104798550, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
       propertyPath: m_Time
@@ -224,6 +232,10 @@ PrefabInstance:
     - target: {fileID: 519681688314796342, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
       propertyPath: m_Name
       value: StunStar (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 519681688314796342, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
+      propertyPath: m_Layer
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8909555742987764290, guid: 43ef0cccf4b88475ea1e0af5178b806f, type: 3}
       propertyPath: m_LocalPosition.x

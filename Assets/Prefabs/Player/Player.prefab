@@ -175,6 +175,7 @@ Transform:
   - {fileID: 6176943201396351488}
   - {fileID: 1039972640719630528}
   - {fileID: 531774328080636471}
+  - {fileID: 765488837802173316}
   m_Father: {fileID: 1042423681157048141}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1327886353562767839
@@ -503,6 +504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ae3644577ea2a44db2b1efddd0b95a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
+  swingMode: 1
   motor: {fileID: 3049860224932558447}
   root: {fileID: 5931992040774880335}
   cameraTarget: {fileID: 3765419234093669765}
@@ -546,6 +548,8 @@ MonoBehaviour:
   _swingMaxDistance: 20
   _lineRenderer: {fileID: 1379441799213273239}
   _ropeAnimDuration: 0.165
+  _swingHoldDuration: 0.33
+  _lastAtimedAtGrapplePointLinger: 0.5
 --- !u!54 &2447207728374608361
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -585,9 +589,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30dfbce98b9c56a489060ace333f816a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: MonkeyBusiness.Combat.Weapons::MonkeyBusiness.Combat.Weapons.PlayerMeleeWeapon
-  _meleeDamage: 10
+  _baseMeleeDamage: 10
   _attackDuration: 0.3
-  _attackCooldown: 5
+  _baseAttackCooldown: 5
   _knockbackForce: 35
   _knockbackDuration: 1.5
   _attackHitbox: {fileID: 5403299255457365124}
@@ -1018,6 +1022,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83b16222c9df2db47bb990364deb47e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Player
+  swingMode: 1
   playerCharacter: {fileID: 2211465859848255771}
   playerCamera: {fileID: 555698616238130017}
   cameraSpring: {fileID: 5176609808047444876}
@@ -7403,4 +7408,66 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 3554572132705927485, guid: 988f55859c304945e841cca4d61a9339, type: 3}
   m_PrefabInstance: {fileID: 4556192699136831997}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &4711903235544135448
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 5173201346127674885}
+    m_Modifications:
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6191973497591963341, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+      propertyPath: m_Name
+      value: Monkster
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+--- !u!4 &765488837802173316 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5475140256332682396, guid: 34ded300cf6865549aa37ccf36de1311, type: 3}
+  m_PrefabInstance: {fileID: 4711903235544135448}
   m_PrefabAsset: {fileID: 0}

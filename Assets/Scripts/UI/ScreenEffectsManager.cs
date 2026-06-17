@@ -1,7 +1,10 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
+using MonkeyBusiness.Misc;
+using Sirenix.OdinInspector;
 
 namespace MonkeyBusiness.UI
 {
@@ -9,7 +12,6 @@ namespace MonkeyBusiness.UI
     {
         
         public static ScreenEffectsManager Instance { get; private set; }
-
 
         [SerializeField]
         [Tooltip("Image component used for the poop splash screen effect.")]
@@ -19,9 +21,43 @@ namespace MonkeyBusiness.UI
         [Tooltip("Image component used for the hit screen effect.")]
         Image _hitScreen;
 
+        [BoxGroup("HealScreen")]
+        [SerializeField]
+        Image _healScreen;
+
+        [BoxGroup("HealScreen")]
+        [SerializeField]
+        GameObject _healScreenAnimations;
+
+
+        [BoxGroup("ReloadScreen")]
+        [SerializeField]
+        Image _reloadScreen;
+
+        [BoxGroup("ReloadScreen")]
+        [SerializeField]
+        GameObject _reloadScreenAnimations;
+
+        [BoxGroup("MonksterScreen")]
+        [SerializeField]
+        Image _monksterScreen;
+
+        [BoxGroup("MonksterScreen")]
+        [SerializeField]
+        GameObject _monksterScreenAnimations;
+
         Coroutine _poopEffectCoroutine;
 
         Coroutine _hitEffectCoroutine;
+
+        Coroutine _healEffectCoroutine;
+
+        Coroutine _reloadEffectCoroutine;
+        
+        Coroutine _monksterEffectCoroutine;
+
+        Sequence _healSequence;
+        Sequence _reloadSequence;
 
         void Awake()
         {
@@ -30,6 +66,12 @@ namespace MonkeyBusiness.UI
                 Debug.LogWarning("Multiple instances of ScreenEffectsManager detected! Replacing the old one.");
             }
             Instance = this;
+        }
+
+        private void Start()
+        {
+            StaticEvents.OnPlayerHeal.AddListener(_ => ShowHealScreen());
+            StaticEvents.OnMonksterPicked.AddListener(() => ShowMonksterScreen());
         }
 
         /// <summary>
@@ -44,13 +86,47 @@ namespace MonkeyBusiness.UI
             _poopEffectCoroutine = StartCoroutine(PoopSplashScreenRoutine(duration));
         }
 
-        public void ShowHitScreen(float duration)
+        public void ShowHitScreen()
         {
             if(_hitEffectCoroutine != null)
             {
                 StopCoroutine(_hitEffectCoroutine);
             }
-            _hitEffectCoroutine = StartCoroutine(HitScreenCoroutine(duration));
+            _hitEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_hitScreen, null));
+        }
+
+        public void ShowHealScreen()
+        {
+            if(_healEffectCoroutine != null)
+            {
+                StopCoroutine(_healEffectCoroutine);
+                _healScreenAnimations.SetActive(false);
+            }
+
+            _healScreenAnimations.SetActive(true);
+            _healEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_healScreen, _healSequence));
+        }
+        
+        public void ShowMonksterScreen()
+        {
+            if(_monksterEffectCoroutine != null)
+            {
+                StopCoroutine(_monksterEffectCoroutine);
+                _monksterScreenAnimations.SetActive(false);
+            }
+            _monksterScreenAnimations.SetActive(true);
+            _monksterEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_monksterScreen, null));
+        }
+
+        public void ShowReloadScreen()
+        {
+            if(_reloadEffectCoroutine != null)
+            {
+                StopCoroutine(_reloadEffectCoroutine);
+                _reloadScreenAnimations.SetActive(false);
+            }
+            _reloadScreenAnimations.SetActive(true);
+            _reloadEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_reloadScreen, _reloadSequence));
         }
 
         IEnumerator PoopSplashScreenRoutine(float duration)
@@ -63,14 +139,22 @@ namespace MonkeyBusiness.UI
             _poopEffectCoroutine = null;
         }
 
-        IEnumerator HitScreenCoroutine(float duration)
+        IEnumerator DamageHealAmmoCoroutine(Image screen, Sequence sequence)
         {
-            _hitScreen.gameObject.SetActive(true);
-            _hitScreen.color = new Color(_hitScreen.color.r, _hitScreen.color.g, _hitScreen.color.b, 1f);
-            var tween = DOTween.ToAlpha(() => _hitScreen.color, x => _hitScreen.color = x, 0f, duration).SetEase(Ease.InQuart);
-            yield return tween.WaitForCompletion();
-            _hitScreen.gameObject.SetActive(false);
-            _hitEffectCoroutine = null;
+            screen.gameObject.SetActive(true);
+            screen.color = new Color(screen.color.r, screen.color.g, screen.color.b, 0f);
+
+            if(sequence != null && sequence.IsActive())
+            {
+                sequence.Kill();
+            }
+            sequence = DOTween.Sequence();
+
+            sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 1f, 0.3f).SetEase(Ease.OutQuart));
+            sequence.Append(DOTween.ToAlpha(() => screen.color, x => screen.color = x, 0f, .6f).SetEase(Ease.InQuart));
+
+            yield return sequence.WaitForCompletion();
+            screen.gameObject.SetActive(false);
         }
 
     }
