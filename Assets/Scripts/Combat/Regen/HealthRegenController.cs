@@ -1,6 +1,8 @@
+using System;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using System.Collections;
+using Ami.BroAudio;
 using MonkeyBusiness.Combat.Health;
 using MonkeyBusiness.Combat.Regen;
 using UnityEngine.Events;
@@ -32,8 +34,14 @@ namespace MonkeyBusiness.Combat
 
         bool _canHeal = true;
 
+        private SoundSource sound;
 
         public UnityEvent OnCollected {get; private set; } = new UnityEvent();
+
+        private void Start()
+        {
+            sound = GetComponent<SoundSource>();
+        }
 
         void OnTriggerEnter(Collider other)
         {
@@ -43,6 +51,7 @@ namespace MonkeyBusiness.Combat
                 var healthController = other.GetComponentInParent<HealthController>();
                 if(healthController != null)
                 {
+                    if (sound != null) sound.Play(); 
                     StartCoroutine(HealCoroutine(healthController));
                 }
             }
