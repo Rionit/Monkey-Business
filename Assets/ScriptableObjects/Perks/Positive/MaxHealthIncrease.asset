@@ -18,6 +18,8 @@ MonoBehaviour:
     rid: 915476820060012761
   effectName: Health increase!
   isUnique: 0
+  maxUsages: 1
+  halfValue: 1
   references:
     version: 2
     RefIds:

@@ -670,11 +670,14 @@ namespace MonkeyBusiness.Perks
             perk.ApplyEffect();
 
             if (perkSO.perkAlignment == PerkAlignment.Positive)
+            {
                 permanentPerks.Add(perk);
+                OnPerkAdded.Invoke(perkSO.effect.GetDescription(), true);
+            }
             else
             {
                 temporaryPerks.Add(perk);
-                OnPerkAdded.Invoke(perkSO.effectName, false);
+                OnPerkAdded.Invoke(perkSO.effect.GetDescription(), false);
             }
         }
     }

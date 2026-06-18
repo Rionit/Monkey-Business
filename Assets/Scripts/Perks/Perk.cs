@@ -33,6 +33,7 @@ namespace MonkeyBusiness.Perks
             }
 
             perkSO = perk;
+            perkSO.effect.Initialize(perkSO, perkSO.halfValue);
 
             perkImage.sprite = perk.nftImage;
             perkEffectNameText.text = perk.effectName;
@@ -94,13 +95,12 @@ namespace MonkeyBusiness.Perks
         public void ApplyEffect()
         {
             Debug.Log("Applying effect " + this.name);
-            
             if (!StatsManager.Instance._perksUsage.ContainsKey(perkSO))
                 StatsManager.Instance._perksUsage[perkSO] = 0;
-
-            StatsManager.Instance._perksUsage[perkSO]++;
             
             perkSO.effect?.Apply();
+
+            StatsManager.Instance._perksUsage[perkSO]++;
         }
 
         public void Reset()

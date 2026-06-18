@@ -42,6 +42,11 @@ namespace MonkeyBusiness.Perks
         [MinValue(1)]
         [LabelText("Max Usages")]
         public int maxUsages = 1;
+        
+        [BoxGroup("Rules")]
+        [LabelText("Half Value")]
+        [Tooltip("If true, this perk will have its value halved how many times it has been already picked")]
+        public bool halfValue;
     }
 
     public enum PerkAlignment
