@@ -126,7 +126,7 @@ namespace MonkeyBusiness.Enemies.Behavior
         /// </summary>
         void EnrageIfLow(float currentHealth)
         {
-            if (!_hasRaged && currentHealth < AbsoluteHealthThreshold)
+            if (!_hasRaged && currentHealth > 0 && currentHealth < AbsoluteHealthThreshold)
             {
                 _hasRaged = true;
                 _followController.ChangeDefaultValues(_speedMultiplier);
