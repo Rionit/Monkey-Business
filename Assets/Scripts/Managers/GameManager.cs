@@ -53,7 +53,15 @@ namespace MonkeyBusiness.Managers
 
         public static int HighScore = 0;
 
-        public static SortedDictionary<int,  List<ScoreEntry>> Scoreboard = new ();
+        public static SortedDictionary<int,  List<ScoreEntry>> Scoreboard = new()
+        {
+            { 1458634, new() { new ScoreEntry("Richboy5cm", 15)} },
+            { 983348, new() { new ScoreEntry("Rionit", 13)} },
+            { 328529, new() { new ScoreEntry("Falcos", 5)}},
+            { 511278, new() { new ScoreEntry("Monke", 8)}},
+            { 214523, new() { new ScoreEntry("Chimpy", 3)}}
+
+        };
 
         public static Dictionary<string, int> ScoreboardNamesToScore = new();
 
