@@ -18,6 +18,8 @@ MonoBehaviour:
     rid: 915476820060012735
   effectName: Sharper your pens!
   isUnique: 0
+  maxUsages: 1
+  halfValue: 0
   references:
     version: 2
     RefIds:
