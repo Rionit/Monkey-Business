@@ -18,6 +18,8 @@ MonoBehaviour:
     rid: 915476820060012735
   effectName: Titanium staples!
   isUnique: 0
+  maxUsages: 1
+  halfValue: 0
   references:
     version: 2
     RefIds:
@@ -27,4 +29,4 @@ MonoBehaviour:
         description: 'Increased damage of projectile: <data>'
         _projectiles:
         - ProjectilePrefab: {fileID: 567913959279130811, guid: a82fc4fa1d3d3cba1a137cf855f28ee6, type: 3}
-          Multiplier: 3.5
+          Multiplier: 2
