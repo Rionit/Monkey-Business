@@ -17,6 +17,11 @@ namespace MonkeyBusiness.UI
         {
             Time.timeScale = 1f;
             GameManager.SetupScoreboard();
+
+            if(PlayerPrefs.HasKey("Sensitivity"))
+            {
+                PlayerCamera.sensitivityModifier = PlayerPrefs.GetFloat("Sensitivity");
+            }
             //_highScoreText.text = $"High Score: {GameManager.HighScore}";
         }
 

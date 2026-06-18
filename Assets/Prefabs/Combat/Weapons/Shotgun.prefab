@@ -181,6 +181,7 @@ MonoBehaviour:
   _shotEffect: {fileID: 3623329317787633865}
   _distanceTarget: {fileID: 0}
   _enemyTag: Enemy
+  _decalPrefab: {fileID: 542031951127560755, guid: 6d205c58484cb07bfbb07f0d609653cf, type: 3}
 --- !u!114 &2636991147828587218
 MonoBehaviour:
   m_ObjectHideFlags: 0

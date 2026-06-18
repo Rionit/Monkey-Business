@@ -13,7 +13,7 @@ namespace MonkeyBusiness.Misc
             Crazyape,
             Gorilla
         }
-        
+
         public static UnityEvent<GameObject> OnItemRegistered = new();
         public static UnityEvent<GameObject> OnItemUnregistered = new();
         public static UnityEvent OnPlayerMeleeAttackUsed = new();

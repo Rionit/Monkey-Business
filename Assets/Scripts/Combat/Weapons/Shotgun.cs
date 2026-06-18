@@ -65,6 +65,9 @@ namespace MonkeyBusiness.Combat.Weapons
         [SerializeField]
         string _enemyTag = "Enemy";
 
+        [SerializeField]
+        GameObject _decalPrefab;
+
         List<ParticleCollisionEvent> _events;
 
         TweenerCore<Vector3,Vector3,VectorOptions> _shootTween;
@@ -163,7 +166,21 @@ namespace MonkeyBusiness.Combat.Weapons
                     {
                         OnTargetHit(healthController);
                     }
+                }
+            }
 
+            if(other.isStatic)
+            {
+
+                bool skip = true;
+                foreach(var hit in _events)
+                {
+                    skip = !skip;
+                    if(skip) continue; // Skip every second hit to reduce the number of decals spawned, since each particle can generate multiple collision events in the same frame.
+
+                    var decalObj = Instantiate(_decalPrefab, ProjectileParentHolder.Instance.transform);
+                    decalObj.transform.position = hit.intersection - 0.3f * hit.velocity.normalized; // Move the decal slightly back along the direction of travel to avoid z-fighting with the surface it is on.
+                    decalObj.transform.forward = hit.velocity.normalized;
                 }
             }
         }

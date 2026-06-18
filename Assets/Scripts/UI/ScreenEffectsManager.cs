@@ -6,12 +6,21 @@ using DG.Tweening;
 using MonkeyBusiness.Managers;
 using MonkeyBusiness.Misc;
 using Sirenix.OdinInspector;
+using System.Collections.Generic;
+using Sirenix.Serialization;
 
 namespace MonkeyBusiness.UI
 {
     public class ScreenEffectsManager : MonoBehaviour
     {
         
+        [Serializable]
+        public class CollectiblePerkColor
+        {
+            public StaticEvents.CollectiblePerkType perkType;
+            public Color color;
+        }
+
         public static ScreenEffectsManager Instance { get; private set; }
 
         [SerializeField]
@@ -30,7 +39,6 @@ namespace MonkeyBusiness.UI
         [SerializeField]
         GameObject _healScreenAnimations;
 
-
         [BoxGroup("ReloadScreen")]
         [SerializeField]
         Image _reloadScreen;
@@ -47,6 +55,22 @@ namespace MonkeyBusiness.UI
         [SerializeField]
         GameObject _monksterScreenAnimations;
 
+        [BoxGroup("EnergyDrinkScreen")]
+        [SerializeField]
+        Image _energyDrinkScreen;
+
+        [BoxGroup("EnergyDrinkScreen")]
+        [SerializeField]
+        GameObject _energyDrinkScreenAnimations;
+
+        [BoxGroup("EnergyDrinkScreen")]
+        [SerializeField]
+        List<CollectiblePerkColor> _collectiblePerkColors;
+
+        [BoxGroup("EnergyDrinkScreen")]
+        [SerializeField]
+        List<Image> _energyDrinkScreenLightings;
+
         Coroutine _poopEffectCoroutine;
 
         Coroutine _hitEffectCoroutine;
@@ -57,8 +81,12 @@ namespace MonkeyBusiness.UI
         
         Coroutine _monksterEffectCoroutine;
 
+        Coroutine _energyDrinkEffectCoroutine;
+
         Sequence _healSequence;
         Sequence _reloadSequence;
+
+        Sequence _energyDrinkSequence;
 
         void Awake()
         {
@@ -77,9 +105,16 @@ namespace MonkeyBusiness.UI
                 switch (perkType)
                 {
                     case StaticEvents.CollectiblePerkType.Monkster: ShowMonksterScreen(); break;
+                    default: ShowEnergyDrinkScreen(perkType); break;
                 }
             });
             StaticEvents.OnCollectiblePerkStopped.AddListener((arg0 => arg0 = arg0));
+        }
+
+        Color GetPerkColor(StaticEvents.CollectiblePerkType perkType)
+        {
+            var perkColor = _collectiblePerkColors.Find(x => x.perkType == perkType);
+            return perkColor != null ? perkColor.color : Color.white;
         }
 
         /// <summary>
@@ -137,6 +172,25 @@ namespace MonkeyBusiness.UI
             _reloadEffectCoroutine = StartCoroutine(DamageHealAmmoCoroutine(_reloadScreen, _reloadSequence));
         }
 
+        public void ShowEnergyDrinkScreen(StaticEvents.CollectiblePerkType perkType)
+        {
+            if(_energyDrinkSequence != null)
+            {
+                _energyDrinkSequence.Kill();
+                _energyDrinkScreenAnimations.SetActive(false);
+            }
+
+            var color = GetPerkColor(perkType);
+
+            foreach(var image in _energyDrinkScreenLightings)
+            {
+                image.color = color;
+            }
+            
+            _energyDrinkScreenAnimations.SetActive(true);
+            _energyDrinkEffectCoroutine = StartCoroutine(EnergyDrinkCoroutine(color));
+        }
+
         IEnumerator PoopSplashScreenRoutine(float duration)
         {
             _poopSplashScreen.gameObject.SetActive(true);
@@ -192,6 +246,25 @@ namespace MonkeyBusiness.UI
 
             yield return sequence.WaitForCompletion();
             screen.gameObject.SetActive(false);
+        }
+
+        IEnumerator EnergyDrinkCoroutine(Color desiredColor)
+        {
+            _energyDrinkScreen.gameObject.SetActive(true);
+            _energyDrinkScreen.color = new Color(_energyDrinkScreen.color.r, _energyDrinkScreen.color.g, _energyDrinkScreen.color.b, 0f);
+
+
+            if(_energyDrinkSequence != null && _energyDrinkSequence.IsActive())
+            {
+                _energyDrinkSequence.Kill();
+            }
+            _energyDrinkSequence = DOTween.Sequence();
+
+            _energyDrinkSequence.Append(DOTween.ToAlpha(() => _energyDrinkScreen.color, x => _energyDrinkScreen.color = x, 1f, 0.3f).SetEase(Ease.OutQuart));
+            _energyDrinkSequence.Append(DOTween.ToAlpha(() => _energyDrinkScreen.color, x => _energyDrinkScreen.color = x, 0f, .6f).SetEase(Ease.InQuart));
+
+            yield return _energyDrinkSequence.WaitForCompletion();
+            _energyDrinkScreen.gameObject.SetActive(false);
         }
 
     }
