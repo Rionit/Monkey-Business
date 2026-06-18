@@ -55661,6 +55661,10 @@ PrefabInstance:
       value: map kaja version
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9e5206b1573f5b23f80f5b444cd39d5c, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -146885,6 +146889,10 @@ PrefabInstance:
     - target: {fileID: 1820696384762535887, guid: 37c8c60b02084f1a18b7ebfc15ccac13, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -283.29572
+      objectReference: {fileID: 0}
+    - target: {fileID: 2401708090250793750, guid: 37c8c60b02084f1a18b7ebfc15ccac13, type: 3}
+      propertyPath: _numDigits
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2488462337702213577, guid: 37c8c60b02084f1a18b7ebfc15ccac13, type: 3}
       propertyPath: m_fontAsset

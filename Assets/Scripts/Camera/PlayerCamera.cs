@@ -14,6 +14,8 @@ public class PlayerCamera : MonoBehaviour
     public static PlayerCamera Instance { get; private set; }
 
 
+    [SerializeField] public static float sensitivityModifier = 1f;
+
     [SerializeField] public float sensitivity = 0.1f;
     private Vector3 _eulerAngles;
 
@@ -32,7 +34,7 @@ public class PlayerCamera : MonoBehaviour
     public void UpdateRotation(CameraInput input)
     {
         
-        _eulerAngles += new Vector3(-input.Look.y, input.Look.x) * sensitivity;
+        _eulerAngles += new Vector3(-input.Look.y, input.Look.x) * sensitivity * sensitivityModifier;
         _eulerAngles.x = Mathf.Clamp(_eulerAngles.x, _pitchLimits.x, _pitchLimits.y);
         transform.eulerAngles = _eulerAngles;
     }
