@@ -37,7 +37,14 @@ namespace MonkeyBusiness.Perks
             SpawnCollectiblePerk(gorillaPrefab);
             SpawnCollectiblePerk(chimpexPrefab);
             
+            GameManager.Instance.OnWaveDefeated.AddListener(OnWaveDefeated);
+            
             StartCoroutine(RandomPerkSpawner());
+        }
+
+        public void OnWaveDefeated()
+        {
+            SpawnCollectiblePerk(monksterPrefab);
         }
 
         [Button("Spawn Monkster")]

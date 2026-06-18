@@ -9,9 +9,15 @@ namespace MonkeyBusiness.Perks.PerkEffects
     {
         [SerializeField] private float value;
         
+        private float halvedValue => halfValue ? value * Mathf.Pow(0.5f, GetUsages()) : value;
+        private float cachedValue;
+        private bool activated = false;
+                                     
         public override void Apply()
         {
-            StatsManager.Instance.PlayerMaxHealth += value;
+            activated = true;
+            cachedValue = halvedValue;
+            StatsManager.Instance.PlayerMaxHealth += halvedValue;
         }
         
         public override void Update()
@@ -20,12 +26,13 @@ namespace MonkeyBusiness.Perks.PerkEffects
 
         public override void Reset()
         {
-            StatsManager.Instance.PlayerMaxHealth -= value;
+            activated = false;
+            StatsManager.Instance.PlayerMaxHealth -= halvedValue;
         }
         
         public override string GetDescription()
         {
-            return description.Replace("<value>", value.ToString());
+            return description.Replace("<value>", activated ? cachedValue.ToString() : halvedValue.ToString());
         }
         
         protected override string GetTooltip()

@@ -18,6 +18,8 @@ MonoBehaviour:
     rid: 915476829971939328
   effectName: Gotta go fast!
   isUnique: 0
+  maxUsages: 1
+  halfValue: 1
   references:
     version: 2
     RefIds:
@@ -25,4 +27,4 @@ MonoBehaviour:
       type: {class: MaxPlayerSpeedEffect, ns: MonkeyBusiness.Perks.PerkEffects, asm: MonkeyBusiness.Perks.PerkEffects}
       data:
         description: Your speed is increased by <value>
-        value: 10
+        value: 8

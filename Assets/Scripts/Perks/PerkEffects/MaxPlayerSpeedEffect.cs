@@ -9,9 +9,11 @@ namespace MonkeyBusiness.Perks.PerkEffects
     {
         [SerializeField] private float value;
         
+        private float halvedValue => value * Mathf.Pow(0.5f, GetUsages());
+        
         public override void Apply()
         {
-            StatsManager.Instance.PlayerWalkSpeed += value;
+            StatsManager.Instance.PlayerWalkSpeed += halvedValue;
         }
         
         public override void Update()
@@ -20,12 +22,12 @@ namespace MonkeyBusiness.Perks.PerkEffects
 
         public override void Reset()
         {
-            StatsManager.Instance.PlayerWalkSpeed -= value;
+            StatsManager.Instance.PlayerWalkSpeed -= halvedValue;
         }
         
         public override string GetDescription()
         {
-            return description.Replace("<value>", value.ToString());
+            return description.Replace("<value>", halvedValue.ToString());
         }
         
         protected override string GetTooltip()
