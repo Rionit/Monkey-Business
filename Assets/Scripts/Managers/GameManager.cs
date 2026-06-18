@@ -46,6 +46,9 @@ namespace MonkeyBusiness.Managers
             }
         }
 
+        [SerializeField]
+        int _maxHealthPerRound = 25;
+
         public static int Score = 0;
 
         public static int HighScore = 0;
@@ -405,7 +408,7 @@ namespace MonkeyBusiness.Managers
 
             if(enemyObject.TryGetComponent<HealthController>(out HealthController healthController))
             {
-
+                healthController.SetMaxHealth(healthController.MaxHealth + _maxHealthPerRound * _currentWave); // Increase max health each wave
                 healthController.OnDeath.AddListener(OnEnemyDestroyed);
                 healthController.OnTakenDamage.AddListener(EnemyDamagedCallback);
             }
