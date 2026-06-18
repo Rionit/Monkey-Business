@@ -235,7 +235,7 @@ namespace MonkeyBusiness.Combat.Health
         {
             // Prevent invalid values
             MaxHealth = Mathf.Max(1f, amount);
-            CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+            CurrentHealth = MaxHealth;
             OnHealthChanged.Invoke(CurrentHealth);
             OnHealthRatioChanged.Invoke(CurrentHealth / MaxHealth);
         }
