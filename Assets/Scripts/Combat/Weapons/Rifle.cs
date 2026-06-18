@@ -11,9 +11,6 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using DG.Tweening.Core;
 using DG.Tweening.Plugins.Options;
-using MonkeyBusiness.Player;
-using MonkeyBusiness.Camera;
-using UnityEditor.SearchService;
 
 namespace MonkeyBusiness.Combat.Weapons
 {
